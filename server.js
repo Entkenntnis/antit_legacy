@@ -205,6 +205,11 @@ app.get('/doku',
   function(req, res){
     res.render('doku', { user: req.user });
   });
+
+app.get('/guide',
+  function(req, res){
+    res.render('guide', { user: req.user });
+  });
   
 
 app.get('/login',

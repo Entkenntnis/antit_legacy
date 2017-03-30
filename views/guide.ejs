@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <% include commonHead %>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron"><h1>Guide</h1>
+	    <p>Die Welt ist eine rechteckige Scheibe und dein Ziel ist es, das Volk zu ernähren und wachsen zu lassen. Lerne die Welt von AntMe! Schritt für Schritt kennen und werde zum Meister der Ameisen!</p></div>
+	    <ul class="nav nav-pills" role="tablist">
+        <li role="presentation"><a href="/">AntMe! Home</a></li>
+        <li role="presentation" class="active"><a href="/guide">Guide</a></li>
+        <li role="presentation"><a href="/doku">Dokumentation</a></li>
+        <% if(user) {%>
+        <li role="presentation"><a href="/logout">Logout</a></li>
+        <% } %>
+      </ul>
+	    
+	    <!-- Here comes the content -->
+	    
+	    <div class="page-header">
+        <h2 id="einleitung">Am Anfang der Zeit</h2>
+	    </div>
+	    
+	    <p>Bofei erblickte das Licht der Welt zur Runde 0. Er war der erste seiner Art und er stand am Rande eines Hügels. Über dem Hügel ragte eine Fahne, die in der selben Farbe leichtete wie sein Hinterleib. Er verstand: Das war seine Heimat. Es werden mehr kommen von seiner Art, vereint durch ihre gemeinsame Farbe. Sie werden gemeinsam das Unbekannte erkunden, wertvolle Nahrungsmittel finden und diese zum Bau zurücktragen. Es wird wunderbar sein, aber Bofei ahnte auch die möglichen Gefahren: Andere Wesen werden um die knappen Lebensmittel konkurrieren. Er spürte seine eigenen Grenzen, die er nicht überschreiten durfte. Und schließlich waren da noch diese Wanzen ...
+	    </p>
+	    
+	    <p>"Bofei" ist eine Ameise. Ameisen haben ganz witzige Namen wie "Heqaru", "Wauvebeiwei" oder "Kauzevo". Sie bestehen aus drei Körperteilen, an denen zwei Fühler und sechs Beine hängen. Auch wenn ich normalerweise keine Ameisen mag muss ich sagen, dass ich diese Ameisen doch ganz süß finde:
+	    </p>
+	    
+	    <p><img src="/images/01_bofei.jpg" class="img-thumbnail"></img></p>
+	    
+	    <p>Für Bofei ist seine Welt riesig. Während wir als Zuschauer das ganze Spielfeld einsehen können, sieht Bofei nur einen kleinen Kreis um ihn herum, etwa so weit wie vom Mittelpunkt des Ameisenbaus zu dessen Rand. Er kann nicht sehen, wo sich all die Zuckerhaufen und Äpfel befinden. Deshalb muss er sich auf den Weg machen in diese Welt hinaus. Er kann sich auf zwei Arten bewegen: Er kann entweder in gerader Linie nach vorne gehen oder sich um seine eigene Achse drehen. Seitwärts wie ein Krebs können die Ameisen nicht gehen - ich glaube auch noch nie eine Ameise seitwärts gehen gesehen zu haben.
+	    </p>
+	    
+	    <p>Bofei wurde am Anfang der Zeit geboren. Für Bofei vergeht die Zeit in einzelnen Schritten. In jeder Runde kann er sich um ein kleines Stückchen bewegen oder etwas nachdenken. Dass wir die Bewegung der Ameisen als flüssig wahrnehmen liegt daran, dass in jeder Sekunde 40 Runden vergehen. Das wirkt auf uns fast wie ein kontinuierlicher Verlauf. Was Bofei nicht weiß: Er ist Teil einer Simulation. Du als Programmierer hast die Kontrolle darüber, was Bofei denkt und wie er sich verhält. Du kannst nach belieben neue Simulationen starten und ausprobieren, wie sich deine Ameisen verhalten. Eine Simulation dauert insgesamt 7500 Runden. Danach friert alles ein und die Punkte können ausgewertet werden.
+	    </p>
+	    
+	    <div class="page-header">
+        <h2 id="einleitung">Die Welt von AntMe!</h2>
+	    </div>
+	    
+	    <p>Die Simulation spielt sich auf einem rechteckigen Stück Boden ab, mitten in einer wunderbaren Wiese unter freien Himmel. Es scheint immer die Sonne, es ist windstill und die Wolken bewegen sich nicht. (Manche Ameisen munkeln, dass der Boden gar nicht in der Wiese liegt, sondern ein paar Zentimeter über dem Gras schwebt. Sie haben Höhenangst bekommen, als sie vom Rand des Spielfelds runtergeschaut haben.) Das ist die Welt unserer Simulation:
+	    </p>
+	    
+	    <p><img src="/images/02_welt.jpg" class="img-thumbnail"></img></p>
+	    
+	    <p>Jedes Ameisenvolk, dass in der Simulation mitmacht, erhält einen eigenen Ameisenbau. Die Fahne auf dem Bau kennzeichnet die Farbe des Volkes. Die Hinterteile dieses Volkes ist in der selben Farbe. Ich persönlich mag die grünen Ameisen, finde aber auch die schwarzen und weißen ganz cool. Die Farbe wird von der Simulation festgelegt, je nachdem, wie viele Ameisenvölker daran teilnehmen.
+	    </p>
+	    
+	    <p>Ganz scharf sind die Ameisen auf Zucker und Äpfel. Wenn eine Ameise an einem Zuckerhaufen steht, dann kann er sich ein Stückchen Zucker aufladen und diesen zum Bau zurücktragen. Mit diesen Zucker können sich die Ameisen dann vermehren und Nachwuchs aufziehen - ihr wisst schon Bescheid. Das ist alles ziemlich kleinteilig. Dagegen bringt der Apfel auf einmal einfach viel viel mehr Energie. Doch um diesen riesigen Apfel tragen zu können braucht es mindest vier Ameisen von einem Volk. Selbst dann sind sie noch sehr träge. Je mehr Ameisen mithelfen, umso flott kann der Apfel zum Bau zurückgetragen werden und dort verarbeitet werden. Hier sieht du ganz viele Ameisen, die diesen riesigen Ameisen zum Bau tragen:
+	    </p>
+	    
+	    <p><img src="/images/02_nahrung.jpg" class="img-thumbnail"></img></p>
+	    
+	    <p>Hinten links sieht du noch etwas Grünliches aufblitzen. Das ist eine Wanze. Sie sind eigentlich ganz hübsch und nett, gäbe es da nicht einen Haken: Wanzen fressen gerne Ameisen. Sollte also eine Ameise den Weg einer Wanze kreuzen, dann wird das wohl ihre letzte Begegnung sein. Als Programmierer kann man das als Schicksal akzeptieren oder die Ameisen dazu programmieren, den Wanzen ausweichen. Das ist dir überlassen.
+	    </p>
+	    
+	    <div class="page-header">
+        <h2 id="einleitung">Der AntMe!-Server</h2>
+	    </div>
+	    
+	    <p>Ich gehe mal davon aus, dass du AntMe! in Rahmen eines Workshops kennengelernt hast. Dann hast du dort auch einen Zugang erhalten, mit dem du dich auf dem Server anmelden kannst. Solltest du ein Gast sein, der zufällig auf diese Seite gestoßen ist, dann erstmal: Herzlich Willkommen! Der Haken: Du hast wahrscheinlich noch keinen Zugang. Es gibt auch keine Möglichkeit, dir selber einen Account zu erstellen. Sollte dich das Thema trotzdem brennend interessien, kann du mir eine Mail schreiben:
+	    </p>
+	    
+	    <p><img src="/images/03_email.png" class="img-thumbnail"></img></p>
+	    
+	    <p>(Ja, das ist ein Bild. Man muss es den Spam-Bots doch nicht zu einfach machen ...) 
+	    </p>
+	    
+	    <p>Mit den Zugangsdaten kannst du dich, wie auf vielen anderen Websites auch, anmelden und mit einem Klick auf "neues Ameisenvolk" dein erstes Ameisenvolk erstellen. Dieses Volk hat standardmäßig den Namen "_neue Ameise_" und enthält eine Vorlage, in der du deinen Code einfügen kannst. So oder so ähnlich könnte es nun bei dir aussehen:
+	    </p>
+	    
+	    <p><img src="/images/03_home.png" class="img-thumbnail"></img></p>
+	    
+	    <p>Kleines Quiz: Wie bearbeitet man dieses Ameisenvolk? Richtig, mit einem Klick auf den blauen Button "Bearbeiten". Der Umgang mit dem Server ist im Grunde selbsterkärend, daher hier keine langen Worte. Vielleict nur eine Anmerkung: Du kannst deine Ameisen freigeben. Dann können auch alle anderen Teilnehmer auf diesem Server eine Simulation mit deiner Ameise starten. Diese Ameisen finden sich dann bei der Auswahl mit deinem Benutzernamen vorangeschrieben. Das wird dann ernst, wenn man anfängt, in Wettbewerben gegen andere Teilnehmer anzutreten. Freigegebene Ameisen erscheinen auch auf der Startseite für nicht-angemeldete Gäste. Die Freigabe kann jederzeit wieder gelöscht werden.
+	    </p>
+	    
+	    <p>lalala
+	    </p>
+	    
+      <div style="height:300px"></div>
+	    
+    </div>
+  </body>
+</html>
