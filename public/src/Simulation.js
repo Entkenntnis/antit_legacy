@@ -1491,13 +1491,12 @@ API.addFunc("BrauchtNochTräger", function (apfel) {
   return apfel.needHelp(API.curAnt);
 })
 
-API.addFunc("BringeApfelZuBau", function (apfel) {
-  if (!apfel || apfel.constructor.name !== "Apple") {
-    API.message("Die Funktion 'BringeApfelZuBau(apfel)' erwartet als Argument einen Apfelobjekt.");
-    return;
+API.addFunc("BringeApfelZuBau", function () {
+  var apple = closest(API.curAnt.getPos(), Sim.apples, API.curAnt.getRange());
+  if (apple) {
+    API.curAnt.addAppleJob(apple);
+    API.curAnt.goToHome();
   }
-  API.curAnt.addAppleJob(apfel);
-  API.curAnt.goToHome();
 });
 
 API.addFunc("RiecheNachZucker", function () {
