@@ -155,7 +155,7 @@ API.addFunc("BrauchtNochTräger", function (apfel) {
 })
 
 API.addFunc("BringeApfelZuBau", function () {
-  var apple = closest(API.curAnt.getPos(), Sim.apples, API.curAnt.getRange());
+  var apple = closest(API.curAnt.getPos(), Sim.apples, 20);
   if (apple) {
     API.curAnt.addAppleJob(apple);
     API.curAnt.goToHome();
