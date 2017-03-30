@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>AntMe!-Server</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap_metro.min.css">
+    
+  </head>
+  <body>
+
+
+<div class="container">
+
+  <div class="jumbotron"><h1>Dokumentation</h1>
+	<p> Sicherlich bist du nun gespannt darauf, wie man die Ameisen programmiert und ihr Verhalten kontrollieren kann. Auf dieser Seite werden dir alle Aspekte der Simulation beschrieben, die für dich als Entwickler von Bedeutung sind.</p></div>
+	<ul class="nav nav-pills" role="tablist">
+        <li role="presentation"><a href="/">AntMe! Home</a></li>
+        <li role="presentation" class="active"><a href="/doku">Dokumentation</a></li>
+	      <% if(user) {%>
+        <li role="presentation"><a href="/logout">Logout</a></li>
+	      <% } %>
+      </ul>
+	
+  <div style="height:20px"></div>
+  
+  <div class="well">
+    Update: Die API hat sich mit der Zeit weiterentwickelt. Für den aktuellen Stand gibt es hier eine <a href="/API.pdf">API-Übersicht</a>.
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-4">
+      <ul class="list-group">
+	      <li class="list-group-item active"><strong>Einsteiger</strong></li>
+	      <li class="list-group-item"><a href="#einleitung">Einleitung</a></li>
+	      <li class="list-group-item"><a href="#spielelemente">Spielelemente</a></li>
+	      <li class="list-group-item"><a href="#server">Der AntMe!-Server</a></li>
+	      <li class="list-group-item"><a href="#editor">Ameisen-Editor</a></li>
+	      <li class="list-group-item"><a href="#sprache">Ameisensprache Teil 1</a></li>
+	      <li class="list-group-item"><a href="#api">Die API</a></li>
+	      <li class="list-group-item"><a href="#warteschlange">Befehlswarteschlange</a></li>
+	      <li class="list-group-item"><a href="#leben">Lebenslauf der Ameise</a></li>
+	      <li class="list-group-item"><a href="#bewegung">Bewegung</a></li>
+	    </ul>
+    </div>
+    <div class="col-sm-4">
+      <ul class="list-group">
+	      <li class="list-group-item active"><strong>Fortgeschrittener</strong></li>
+	      <li class="list-group-item"><a href="#sprache2">Ameisensprache Teil 2</a></li>
+	      <li class="list-group-item"><a href="#sichtung">Sichtung</a></li>
+	      <li class="list-group-item"><a href="#ziele">Zielverfolgung</a></li>
+	      <li class="list-group-item"><a href="#nahrung">Nahrungsmittel</a></li>
+	      <li class="list-group-item"><a href="#wanzen">Wanzen</a></li>
+	      <li class="list-group-item"><a href="#müde">Müdigkeit</a></li>
+	      <li class="list-group-item"><a href="#sprache3">Ameisensprache Teil 3</a></li>
+	      <li class="list-group-item"><a href="#zufall">Zufall</a></li>
+	      <li class="list-group-item"><a href="#gedächtnis">Gedächtnis</a></li>
+	    </ul>
+    </div>
+    
+    <div class="col-sm-4">
+      <ul class="list-group">
+	      <li class="list-group-item active"><strong>Profi</strong></li>
+	      <li class="list-group-item"><a href="#sprache4">Ameisensprache Teil 4</a></li>
+	      <li class="list-group-item"><a href="#spezial">Spezialisierung des Volks</a></li>
+	      <li class="list-group-item"><a href="#runde">Eigene Ereignisse</a></li>
+	      <li class="list-group-item"><a href="#eigenschaften">Dynamische Eigenschaften</a></li>
+	      <li class="list-group-item"><a href="#eigenschaftenS">Statische Eigenschaften</a></li>
+	      <li class="list-group-item"><a href="#kommunikation">Kommunikation</a></li>
+	      <li class="list-group-item"><a href="#techniken">Weitere Techniken</a></li>
+	      <li class="list-group-item"><a href="#hacker"><em>fu3r h4ck3r</em></a></li>
+	    </ul>
+    </div>
+  </div>
+  
+	<h1><span class="label label-primary">Einsteiger</span></h1>
+	
+	<div class="page-header">
+    <h2 id="einleitung">Einleitung</h2>
+	</div>
+	
+	<p>
+    Herzlich Willkommen bei AntMe! Sei dabei im coolsten und spannendsten Programmierlernspiel, das die Welt jemals gesehen hat. In AntMe! übernimmst du die Rolle eines Ameisenvolkes, das in einer virtuellen Welt auf Nahrungssuche geht und sich gegen andere Völker und Wanzen durchsetzen muss. Gespielt wird dabei aber nicht mit Maus und Tastatur, sondern mit Hilfe von Sourcecode, der das eigenständige Verhalten jeder einzelnen Ameise kontrolliert.
+	</p>
+	
+	<h3>Danksagungen</h3>
+	
+	<p>Ich möchte mich bei der <a href="http://antme.net">Antme! GmbH</a> bedanken für das Konzept und die Idee zur Simulation. Diese Projekt steht auf den Schultern von Giganten: Danke an <a href="http://threejs.org/">three.js</a>, <a href="http://expressjs.com/">Express</a> und <a href="http://getbootstrap.com/">Bootstrap</a> für das Stemmen der Technik - insgesamt ein großes Dankeschön an alle Teilnehmer von Open-Source-Projekten!
+	</p>
+  
+  <div class="page-header">
+    <h2 id="spielelemente">Spielelemente</h2>
+	</div>
+	
+	<p>
+	  In AntMe! gibt es eine kleine Reihe von Spielelementen die fortwährend miteinander interagieren.
+	</p>
+	
+	<h3>Spielfeld</h3>
+	
+  <p><img src="/images/game.png" class="img-thumbnail"></img></p>
+	
+	<p>
+	Die Ameisensimulation findet auf einem kleinen Stück virtuellen Waldboden statt, der auf spacige Art in der Luft schwebt. Die Größe des Spielfeldes wird in Ameisenschritten berechnet und richtet sich an der Menge an Ameisenvölkern, die am Spiel beteiligt sind.
+	</p>
+	
+	<h3>Ameisenbau</h3>
+	
+	
+  <p><img src="/images/bau.jpg" class="img-thumbnail"></img></p>
+	
+	<p>
+	Der Ameisenbau ist das Zentrum jedes Volkes. Jeder Spieler bekommt einen zufällig platzierten Ameisenbau erstellt, in dem alle neuen Ameisen geboren werden. Ameisen, die zum Ameisenbau zurückkehren, regenerieren ihre Müdigkeitswerte. Auch gesammelte Nahrungsmittel müssen, damit sie im Punktesystem gewertet werden, in den Heimatbau gebracht werden. Zu welchem Spieler ein Hügel zugeordnet ist, lässt sich an der Farbe der Flagge erkennen.
+	</p>
+	
+	<h3>Ameise</h3>
+	
+  <p><img src="/images/ameise.jpg" class="img-thumbnail"></img></p>
+  
+	<p>
+	Ameisen sind das Herzstück des Spiels. Ameisen werden vom Spieler direkt per Programmcode gesteuert und durchkämmen anschließend das Spiel auf der Suche nach Nahrungsmittel. Am Anfang bekommt jeder Spieler eine bestimme Anzahl von Ameisen (normalerweise 20 Stück), die alle nach dem selben Programm arbeiten. Sie werden im Ameisenhügel geboren und sollten bei Müdigkeit oder beim Rücktransport von Nahrungsmitteln wieder dort hin zurück kehren. Der Körper der Ameise wird je nach Volk-Zugehörigkeit entsprechend eingefärbt. Durch gesammelte Nahrungsmittel können neue Ameisen geboren werden und das Volk kann bis zu einer Größe von 100 Ameisen anwachsen. Ameisn sterben, wenn sie von Wanzen gefressen werden oder ihre maximale Reichweite überschritten haben.
+	</p>
+	
+	<h3>Zucker</h3>
+	
+  <p><img src="/images/zucker.jpg" class="img-thumbnail"></img></p>
+	
+	<p>Zucker ist eines der beiden Nahrungsmittel die auf dem Spielfeld zu finden sind. Die Eigenheit von Zucker ist, dass einzelne Ameisen in der Lage sind kleine Teile davon mitzunehmen. Ameisen nehmen dann kleine Würfel vom großen Berg um damit zum Ameisenhügel zu laufen und Punkte für den Spieler zu sammeln.</p>
+	
+	<h3>Apfel</h3>
+	
+  <p><img src="/images/apfel.jpg" class="img-thumbnail"></img></p>
+	
+	<p>Als zweites Nahrungsmittel verteilen sich Äpfel auf dem Spielfeld. Im Gegensatz zum Zucker können Äpfel nur am Stück in den Ameisenhügel getragen werden. Mehrere Ameisen können den Apfel anheben und gemeinsam zum Bau tragen. Dabei darf das Volk den Apfel in seinen Bau tragen, welches zuerst vier Ameisen dort versammelt hat.</p>
+	
+	<h3>Wanze</h3>
+	
+  <p><img src="/images/wanze.jpg" class="img-thumbnail"></img></p>
+	
+	<p>Auf dem Spielfeld gibt es aber nicht nur verschiedene Nahrungsmittel, sondern auch die typischen Feinde der Ameisen - die Wanzen. Wanzen bewegen sich eher unkoordiniert auf dem Spielfeld, jagen also nicht aktiv. Treffen sie jedoch auf eine Ameise, so fressen sie diese auf. Im Kampf stehen die Chancen einer einzelnen Ameise gegen eine Wanze sehr schlecht. Aktuell die einzige Option: Weglaufen.</p>
+	
+	<div class="page-header">
+    <h2 id="server">Der AntMe!-Server</h2>
+	</div>
+	
+	<h3>Hauptseite</h3>
+	
+	<p>AntMe! lässt sich komplett über den Browser bedienen. Nachdem du dich mit deinen Zugangsdaten angemeldet hast, kommst du auf die Startseite. Hier kannst du deine Ameisen verwalten und Simulationen starten.</p>
+	
+  <p><img src="/images/hauptseite.png" class="img-thumbnail"></img></p>
+	
+	<h3>Verwaltung</h3>
+	
+	<p>Mit dem Button "neue Ameise" kannst du ein neues Programm erstellen. Du kannst bist zu 20 verschiedene Ameisen für deinen Benutzer anlegen. Wenn du die Ameisen bearbeiten möchtest, kannst du den Button "Bearbeiten" klicken. Dann öffnet sich der Ameisen-Editor, den wir gleich kennelernen werden. Ameisen können über den Button "Löschen" entfernt werden. Diese Ameisen sind dann weg und können nicht mehr verwendet werden.</p>
+	
+	<h3>Freigabe</h3>
+	
+	<p>Am meisten Spaß macht es, AntMe! gemeinsam mit anderen Programmierern zu spielen. Um das Teilen von Ameisen zu erleichtern gibt es die Möglichkeit, deine fertigen Ameisen freizugeben. Wenn du auf den Button "Freigeben" klickst, wird diese Ameise als freigegeben gekennzeichnet und kann nun von allen anderen Benutzern auf diesem Server in ihre Simulation geladen werden. Auch können Besucher ohne Anmeldung auf diese Ameisen zugreifen. Damit kannst du auch deiner Familie und deinen Freunden zeigen, was deine Ameisen drauf haben.</p>
+	
+	<h3>Simulation</h3>
+	
+	<p>Das Kernelement von AntMe! ist natürlich die Simulation. Bis zu acht Team können gleichzeitig an einem Spiel teilnehmen. Über das Menü kannst du deine eigenen Ameisen und die freigegebenen Ameisen der anderen Benutzer auswählen. Wenn du auf "Simulation starten" klickst, öffnet sich die Simulation. Manchmal braucht sie einen kleinen Moment, um alle Daten zu laden.</p>
+	
+	<p>Du kannst die Ansicht der Simulation frei bewegen. Mit der linken Maustaste kannst du das Bild drehen, mit der rechten Maustaste verschieben. Mit dem Mausrad kannst du ganz nah an deine Ameisen heranzoomen. Die Simulation ist auch komplett mobil bedienbar. Verschiebe das Bild mit einem Finger, zoome mit zwei Fingern und wenn du einen Finger länger gedrückt hälst, kannst du die Ansicht drehen.
+	</p>
+	
+	<div class="page-header">
+    <h2 id="editor">Ameisen-Editor</h2>
+	</div>
+	
+	<p>Wenn du deine Ameise bearbeiten möchtest, öffnet sich eine neue Seite mit dem Editor.</p>
+	
+  <p><img src="/images/editor.png" class="img-thumbnail"></img></p>
+	
+	<p>Wenn du eine neue Ameise erstellst, wurden dir schon viele vorgefertigte Funktionen eingefügt, in die du deinen Code schreiben kannst. Beginne damit, den Namen deines Volkes festzulegen. Dieser wird in der ersten Zeile des Programms festgelegt. Wenn du deine Ameise beispielsweise "Zuckermeise" nennen möchtest, dann ändere die erste Zeile um zu: 
+  <p><img src="/images/sourceName.png" class="img-thumbnail"></img></p>
+	Beim Speichern wird der Name auf der Hauptseite aktualierst. Auch wenn das noch nicht nach einer großen Aktion aussiehst, hast du damit schon die ersten Schritte in der Ameisenprogrammiersprache getan.</p>
+	
+	<p>Wenn du auf "Speichern" klickst, werden deine Änderungen auf den Server übertragen und dort gespeichert. Über "Abbrechen" verwirfst du deine Änderungen und kommst wieder zurück auf die Startseite. Während du tippst kann der Editor dir Vorschläge liefern, welche Befehle oder Eigenschaften du verwenden kannst. Die Vorschläge kann du mit den Pfeiltasten auswählen und mit Enter einfügen.</p>
+	
+ <div class="page-header">
+    <h2 id="sprache">Ameisensprache Teil 1</h2>
+	</div>
+	
+	<p>Vielleicht hast du mal in der Kindheit einen eigenen Geheimcode ausgedacht. Du hast für die Wörter neue Zeichen erfunden und damit Texte verfasst, die nur du lesen konntest. Ein bisschen ähnlich ist es mit dem Programmieren. Auf dem ersten Blick sieht das Programm aus wie ein Code, den Nicht-Programmierer nie lesen können und den man noch weniger selber schreiben kann.</p>
+	
+	<p>Mit Antme! wollen wir dir helfen, das Programmieren spielerisch zu lernen. Im Spiel siehst du sofort, welchen Effekt dein Code hat. Damit erlebst du Schritt für Schritt, wie die Zeichen, die du im Editor eingibt, zum Leben erwachen und deine Ameisen steuern. Du siehst genau, was der Computer verstanden hat und was nicht. Gib nicht auf, wenn am Anfang viele Fehler auftreten. Das ist ganz normal - und passiert selbst dem erfahrensten Programmierer. Versuche sie, zu korrigieren. Und mit der Zeit fängst du an, Vertrauen in deine Fähigkeiten zu erhalten. Ein Vertrauen, mit dem du später deine eigenen Programme außerhalb von Antme! schreiben kannst.</p>
+	
+	<h3>Kommentare</h3>
+  <p><img src="/images/sourceComments.png" class="img-thumbnail"></img></p>
+	
+	<p>Das erste Element der Programmiersprache ist gar kein Programmcode. Schau dir den Text in Zeile 5 an: Er beginnt mit den Zeichen '//' und ist braun eingefärbt. Diese Zeile ist ein Kommentar. Du kannst innerhalb eines Kommentars jeden beliebigen Text schreiben. Der Computer ignoriert sie. Damit kannst du Erklärungen in deinen Code einfügen. Den braucht der Computer nicht, aber kann für andere Programmierer oder für dich selber sehr nützlich sein.</p>
+	
+	<p>Ein Kommentar beginnt immer mit zwei Backslash // und geht bis zum Ende der Zeile. In der nächsten Zeile geht es dann mit dem Code weiter. Einen Backslash kannst du mit Shift und 7 eintippen.
+	</p>
+	
+	<h3>Blöcke</h3>
+  <p><img src="/images/sourceBlock.png" class="img-thumbnail"></img></p>
+  
+  <p>Auch das zweite Element tut noch nichts, aber hilft dabei, dein Programm zu gliedern. Ein Block ist der Teil deines Programms, der zwischen zwei geschweiften Klammern eingeschlossen ist {}. Der Code innerhalb eines Blocks gehört logisch zu einem gemeinsamen Teil des Programms. Deshalb ist es gut, diesen Zusammenhang früh zu erkennen.
+  </p>
+  
+  <p>Um einen Block noch klarer zu kennzeichen haben sich folgende Konventionen bewährt: Die öffnende Klammer { kommt mit der Einleitung des Blocks (dazu später mehr) auf eine Zeile. Die schließende Klammer bekommt seine eigene Zeile. Der Code innerhalb eines Blocks wird mit einem Tab eingerückt. Wenn du also Code in einen Block einfügst, achte darauf, dass er richtig eingerückt ist. Damit hälst du den Code übersichtlich und kannst schon viele Fehler vermeiden.</p>
+  
+  <p><img src="/images/sourceTab.png" class="img-thumbnail"></img></p>
+  
+   <p>Übrigens: Die geschweiften Klammern kannst du mit Alt Gr und 7 oder 0 eintippen. Die Tab-Taste befindet sich links und hat zwei Pfeile in entgegengesetzte Richtungen aufgedruckt.
+  </p>
+  
+  <h3>Funktionen</h3>
+  
+  <p><img src="/images/sourceFunction.png" class="img-thumbnail"></img></p>
+  
+  <p>Es wird Zeit, dass sich etwas bewegt! Befehle an Ameisen werden ausgeführt, in dem wir Funktionen aufrufen. Wir schreiben jeden Funktionsaufruf in eine eigene Zeile und beenden diese Zeile mit einem Semikolon ; (Shift und Komma-Taste). Der Funktionsaufruf besteht aus zwei Teilen: Er beginnt mit dem Namen der Funktion und anschließend einem Paar runder Klammern (). Jeder Funktionsaufruf hat die gleiche Struktur und es lohnt sich, das noch mal zu notieren:<pre>Funktionsname + runde Klammern + Semikolon + neue Zeile</pre>
+  Die Liste der möglichen Funktionsnamen ist vorgegeben. Diese Dokumentation enthält eine Liste von allen Funktionen, die man aufrufen kann. Der Editor unterstützt dich, indem er dir entsprechende Vorschläge macht:
+  </p>  
+  
+  <p><img src="/images/sourceAutoC.jpg" class="img-thumbnail"></img></p>
+  
+  <p>Kommen wir nun zu den runden Klammern. Es hängt von der Funktion ab, was in diese Klammern gehört. Jede Funktion braucht runde Klammern. Bei der Funktion GeheGeradeaus() bleiben sie leer. Es gibt aber Funktionen, die gewisse Informationen in den Klammern erwarten, wie zum Beispiel Drehe():
+  </p>
+ 
+  <p><img src="/images/sourceArguments.png" class="img-thumbnail"></img></p>
+  
+  <p>Die Zahl innerhalb der runden Klammer gibt an, um welchen Winkel sich die Ameise drehen soll. Diese zusätzlich Information wird zur Funktion übergeben und bestimmt ihr konkretes Verhalten. Das ist eine gute Möglichkeit, auch umfangreiche Funktionen zu entwickeln. Es gibt auch den entsprechenden Befehl zum Gehen:</p>
+  
+  <p><img src="/images/sourceGo.png" class="img-thumbnail"></img></p>
+  
+  <p>Dieser Code lässt nun die Ameise jedes Mal, wenn sie warten, um 90 Grad nach rechts drehen und 100 Schritte gehen. Die Zahlen, die wir an die Funktion übergeben, werden Argumente genannt. Hat eine Funktion keine Argumente, dann bleiben die runden Klammern leer und der Aufruf siehst so aus:<pre>Funktionsname + (); + neue Zeile</pre>
+  </p>
+  
+  <p>Wenn die Funktion ein Argument erwartet, wird dieses Argument zwischen die Klammern geschrieben:<pre>Funktionsname + ( + Argument + ) + Semikolon + neue Zeile</pre>
+  </p>
+  
+  <p>Es gibt auch Funktionen, die zwei oder mehr Argumente erwarten. Diese Argumente werden alle der Reihe nach in die Klammern geschrieben und mit einem einzelnen Komma getrennt. Es hat sich bewährt, nach jedem Komma ein Leerzeichen zu setzen:<pre>Funktionsname + ( + Argument1 + , + Argument2 + , + ... + ) + Semikolon + neue Zeile</pre>Keine Sorge: In AntMe! haben die Funktionen maximal zwei Argumente.</p>
+  
+  <h3>Zahlen und Zeichenketten</h3>
+  
+  <p><img src="/images/sourceLit.png" class="img-thumbnail"></img></p>
+  
+  <p>Es gibt mehrere Typen von Daten in der Programmiersprache. Jede davon wird auf seine Art eingegeben. Zahlen können einfach eingetippt werden. Dezimalzahlen werden nicht mit einem Komma, sondern mit einem Punkt getrennt. Zeichenketten werden immer in Anführungszeichen geschrieben. Diese Anführungszeichen gehören nicht zum Text dazu, sondern umschließen sie nur im Code, damit das Programm sie nicht als Code ausführt. Die Funktion alert() zeigt ein Popup-Fenster an, mit der man praktische Informationen darstellen kann.
+  </p>
+  
+  <div class="page-header">
+    <h2 id="api">Die API</h2>
+	</div>
+	
+	<p>Ein Wecker hat Tasten und Drehknöpfe, um ihn zu bedienen, ein Smartphone hat einen Touchbildschirm - wie bedient man aber eine Simulation wie Antme!, wenn schon nicht mit Maus und Tastatur? Dazu gibt es die API (aplication programming interface), auf deutsch die Anwendungs­programmier­schnittstelle. Hinter diesem langen Wort versteckt sich eine Reihe von Funktionen und Eigenschaften, die man über eine Programmiersprache ansteuern und damit wie bei einem Wecker seine Funktionen einrichten kann.</p>
+	
+	<p>Um die Übersicht die Verbessern werden Bestandteile der API in einzelnen Boxen dargestellt. Die Farbe der Boxen gibt dabei an, um was für einen Teil es sich handelt. Wir werden zwischen drei Elementen unterscheiden:
+	</p>
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>"Name des Befehls"</strong></p>
+    <p>In solchen Kästen werden dir Befehle vorgestellt, die du aufrufen kannst und mit denen du auf das Verhalten der Ameisen bestimmen kannst.</p></div>
+  </div>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>"Name des Ereignisses"</strong></p>
+    <p>In solchen Kästen werden dir Ereignisse vorgestellt, auf die du mit deiner Ameise reagieren kannst.</p></div>
+  </div>
+  
+  <div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>"Name der Eigenschaft"</strong></p>
+    <p>In solchen Kästen werden dir Eigenschaft vorgestellt, die du abfragen kannst um mehr über den Zustand deiner Ameise und deinem Volk zu erfahren.</p></div>
+  </div>
+  
+  <div class="page-header">
+    <h2 id="warteschlange">Befehlswarteschlange</h2>
+	</div>
+	
+	<p>Wenn man der Ameise Befehle gibt, dann ist es so, wie beim Bäcker: Die Befehle können meist nicht sofort ausgeführt werden. Daher müssen sie sich anstellen. Der Reihe nach werden die Befehle dann aufgerufen. Wir sprechen daher von einer Befehlswarteschlange:
+	</p>
+	
+  <p><img src="/images/queue.jpg" class="img-thumbnail"></img></p>
+  
+	<p>Der Vorteil von einer Warteschlange ist, dass du der Ameise auf einmal eine ganze Reihe von Befehlen geben kannst, die vielleicht einzeln länger brauchen, um ausgeführt zu werden. Wenn du beispielsweise ein kompliziertes Muster gehen willst, dass aus mehreren Strecken und Drehungen besteht, kannst du das gesamte Muster in die Warteschlange legen.
+	</p>
+	
+	<p>Mit der Warteschlange ist ein Ereignis verknüpft: Wartet.</p>
+	
+	<div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>Wartet()</strong></p>
+    <p>Dieses Ereignis wird aufgerufen, wenn die Befehlswarteschlange der Ameise leer ist.</p></div>
+  </div>
+  
+  <h3>Priorität neuer Befehle</h3>
+  
+  <p>Die Warteschlange besitzt eine Besonderheit, die uns später für viele Aufgaben nützlich ist, auf dem ersten Blick aber etwas eigentümlich erscheint: In jeder Runde dürfen sich die neuen Befehle <em>vor</em> den alten Befehlen einreihen. Wenn in der Warteschlange schon drei Befehle sind und noch mal zwei hinzukommen, dann dürfen sich die zwei vor den drei alten Befehlen einreihen. Diese Umkehrung ermöglicht es uns, kurz die aktuelle Aufgabe zu pausieren und davor Aufgaben zu erledigen, die gerade dringender sind.
+  </p>
+  
+  <h3>Automatisches Leeren der Warteschlange</h3>
+  
+  <p>Es gibt ein paar Befehle, die beim Aufruf automatisch die Warteschlange leeren. Das hilft, den Überblick über die Warteschlange zu verbessern und sie nicht ausversehen zu überfüllen. Diese Befehle sind nochmals besonders gekennzeichnet und werden ausführlich erklärt.
+  </p>
+  
+  <div class="page-header">
+    <h2 id="leben">Lebenslauf der Ameise</h2>
+	</div>
+	
+	<p>Eine Ameise wird geboren und kann sterben wenn sie übermüdet ist oder von einer Wanze gefressen wurde. Natürlich wirst du über diese Ereignisse informiert:
+	</p>
+	
+	<div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>IstGeboren()</strong></p>
+    <p>Dieses Ereignis wird einmal aufgerufen, wenn die Ameisen geboren wurde.</p></div>
+  </div>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>IstGestorben()</strong></p>
+    <p>Dieses Ereignis wird einmal aufgerufen, wenn die Ameisen gestorben ist. Du kannst keine weiteren Befehle mehr anlegen und die Ameise wird in dieser Runde vom Spielfeld entfernt.</p></div>
+  </div>
+  
+  <div class="page-header">
+    <h2 id="bewegung">Bewegung</h2>
+	</div>
+	
+	<p>Die Ameise ist in der Lage, zwei Bewegungen auszuführen: Drehung und gerades Gehen. Alle anderen Formen müssen sich aus diesen Bewegungen zusammensetzen. Eine Reihe von Befehlen können der Ameise gegeben werden, um sie gezielt zu bewegen:
+	</p>
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>Gehe(schritte)</strong></p>
+    <p>Wenn man die Funktion "Gehe()" aufruft, wird ein neuer Befehl in die Warteschlange gelegt. Die Funktion erwartet ein Argument, dass die Anzahl der Schritte bestimmt, die die Ameise geht:
+    <pre>Gehe(100); // geht hundert Schritte
+Gehe(10000); // geht zehntausend Schritte
+Gehe(0); // tut gar nichts</pre>Zur Orientierung: Das Spielfeld ist bei einem Spieler etwa 1000 Schritte breit. Wenn die Ameise die Anzahl Schritte gegangen ist, wird der Befehl abgeschlossen und der nächste Befehl kommt an die Reihe.</p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>GeheGeradeaus()</strong></p>
+    <p>Die Funktion "GeheGeradeaus()" lässt die Ameise ständig geradeaus gehen. Dieser Befehl ist an sich endlos und wird nur dann abgebrochen, wenn die Ameise an den Spielfeldrand stößt:
+    <pre>GeheGeradeaus(); // Ameise läuft immer geradeaus</pre></p></div>
+  </div>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>RandErreicht()</strong></p>
+    <p>Wenn die Ameise während des Laufens den Rand des Spielfelds erreicht, wird dieses Ereignis aufgerufen. Der aktuelle Befehl wird damit abgeschlossen. Du kannst der Ameise neue Befehle geben.</p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>Drehe(winkel)</strong></p>
+    <p>Die Funktion "Drehe" legt einen neuen Befehl in die Warteschlange, welcher die Ameise um einen gewissen Winkel drehen lässt. Der Winkel wird in Grad angegeben. Positive Winkel entsprechen einer Drehung im Uhrzeigersinn, negative Winkel einer Drehung gegen den Uhrzeigersinn.
+    <pre>Drehe(90); // rechtwinklige Drehung nach rechts
+Drehe(-90); // rechtwinklige Drehung nach links
+Drehe(180); // dreht die Ameise um
+Drehe(360); // einmal im Kreis ...</pre>
+    Dieser Befehl wird abgeschlossen, wenn die Ameise die entsprechende Drehung fertig gestellt hat.</p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>DreheZuRichtung(richtung)</strong></p>
+    <p>Mit der Funktion "DreheZuRichtung()" lässt sich ein Befehl anlegen, der die Ameise in eine bestimmte Himmelsrichtung drehen lässt. Die Richtungen sind mit Winkeln bezeichnet. 0 Grad entspricht dabei der Ausrichtung nach rechts (in der anfänglichen Ansicht). 90 Grad entspricht einer Ausrichtung nach unten. 180 Grad entspricht der Ausrichtung nach links und 270 Grad zeigt nach oben. Die Richtung wird in einer ganzen Zahl von 0 bis 359 angegeben. Die Ameise dreht sich bis zur übergebenen Richtung und schließt dann den Befehl ab.
+    <pre>DreheZuRichtung(0); // Ameise schaut nach rechts
+DreheZuRichtung(45); // Ameise schaut nach rechts unten
+DreheZuRichtung(315); // Ameise schaut nach rechts oben</pre></p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>GeheZuBau()</strong></p>
+    <p>Die Funktion "GeheZuBau()" lässt die Ameise zu ihrem Heimatbau zurückgekehren. Der Befehl ist abgeschlossen, wenn sich sich in der Mitte des Hügels befindet. Hinweis: Dieser Befehl löscht automatisch die alten Befehle, die sich noch in der Warteschlange befinden. Die Heimkehr ist für die Ameise wichtiger.
+    <pre>GeheZuBau(); // bricht aktuelle Befehle ab und geht zum Bau</pre></p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>Stehe(runden)</strong></p>
+    <p>Streng genommen ist Stehen keine Bewegung, aber dieser Befehl passt hier in die Aufzählung gut hinein. Die Funktion "Stehe()" legt einen neuen Befehl in die Warteschlange, der die Ameise die angegebene Anzahl von Runden warten lässt.
+    <pre>Stehe(40); // entspricht etwa einer Sekunde
+Stehe(5000); // bleibt die gesamte Simulation lang stehen</pre></p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>Stopp()</strong></p>
+    <p>Es wird ein neuer Befehl in die Warteschlange gelegt. Wenn die Ameise diesen Befehl ausführt, wird die gesamte Warteschlange geleert. Damit wird in der nächsten Runde wieder "Wartet()" aufgerufen.
+    <pre>Gehe(100);
+Stopp(); // geht 100 Schritte und bleibt dann stehen.</pre></p></div>
+  </div>
+  
+  <p>Probiere diese Befehle alle mal aus: Schreibe sie in die entsprechenden Blöcke im Editor. Achte auf Einrückung und das Semikolon am Schluss. Die Kommentare aus den obigen Beispielen muss du nicht übernehmen.
+  </p>  
+  
+	<h1><span class="label label-primary">Fortgeschrittener</span></h1>
+  
+  <div class="page-header">
+    <h2 id="sprache2">Ameisensprache Teil 2</h2>
+	</div>
+	
+	<p>Jetzt ist es soweit, noch ein weiteres Element der Programmiersprache kennenzulernen. Damit können wir gleich noch viel interessantere Funktionen ausführen und der Ameise das Nahrungssammeln beibringen.
+	</p>
+	
+	<h3>Objekte in Ereignissen</h3>
+	
+  <p><img src="/images/sourceEArgs.png" class="img-thumbnail"></img></p>
+  
+	<p>Wenn ein Ereignis aufgerufen wird, brauchen wir manchmal zusätzliche Informationen. Wenn die Ameise Zucker sieht, interessieren wird uns natürlich dafür, welcher Zuckerhaufen gemeint ist und wo er sich befindet. Diese Informationen werden dir bei einem Ereignis durch ein Objekt übergeben.</p>
+	
+	<p>Im obigen Ausschnitt wird dir beim Ereignis "SiehtZucker()" ein Objekt "zucker" übergeben, dass Informationen über den gesichteten Zuckerhaufen enthält. Der Name des Objekts ist dabei in blau markiert. Es gibt Befehle, die als Argument ein Zuckerobjekt annehmen können. Du kannst auf den Wert des Objekts zugreifen, indem du einfach den Namen des Objekts hinschreibst. Der Editor markiert ihn dabei hellblau:
+	</p>
+	
+  <p><img src="/images/sourceEAUse.png" class="img-thumbnail"></img></p>
+  
+  <p>Beachte, dass beide Namen genau gleich geschrieben werden müssen. Du musst auch auf Groß-/Kleinschreibung achten.</p>
+  
+  <div class="page-header">
+    <h2 id="sichtung">Sichtung</h2>
+	</div>
+	
+	<p>Wichtig für dein Volk ist das Sammeln von Nahrungsmitteln. Wenn sich deine Ameisen bisher auf dem Spielfeld bewegt haben, sind sie immer an den Zuckerhaufen und Äpfeln vorbeigelaufen. Das wollen wir jetzt ändern. Zwei Ereignisse informieren dich darüber, dass die Ameise gerade Nahrung in Sichtweite sieht:
+	</p>
+	
+	<div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>SiehtZucker(zucker)</strong></p>
+    <p>Wenn die Ameise innerhalb ihrer Sichtweite einen Zuckerhaufen wittert, wird dieses Ereignis ausgelöst. Der gewitterte Zuckerhaufen wird als Objekt an das Ereignis übergeben.</p></div>
+  </div>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>SiehtApfel(apfel)</strong></p>
+    <p>Analog wird dieses Ereignis ausgelöst, wenn die Ameise in ihrer Sichtweite einen Apfel wittert. Das Apfelobjekt wird an das Ereignis übergeben.</p></div>
+  </div>
+  
+  <p>Sichtungen werden wiederholt aufgerufen. Sobald allerdings die Ameise ein Ziel hat, werden alle Sichtungen unterdrückt.
+  </p>
+  
+  <div class="page-header">
+    <h2 id="ziele">Zielverfolgung</h2>
+	</div>
+	
+	<p>Das übergebene Zucker- oder Apfelobjekt kann als Ziel genutzt werden. Damit kann sich die Ameise automatisch auf die entsprechende Zielposition bewegen. Einige Befehle und Ereignisse steuern die Zielverfolgung:
+	</p>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>GeheZuZiel(ziel)</strong></p>
+    <p>Legt das übergebene Objekt als Ziel der Ameise fest und bewegt die Ameise an die entsprechende Position. Die Ameise kann dabei dem Objekt folgen, wenn es sich bewegen sollte (was beim Apfel der Fall sein kann). Wenn das Ziel erreicht ist, wird ein entsprechendes Ereignis aufgerufen. Als Objekte werden akzeptiert: Zuckerobjekt, Apfelobjekt, Ameisenbauobjekt oder Positionsobjekt.</p>
+    
+  <p><img src="/images/sourceDest.png" class="img-thumbnail"></img></p></div>
+  </div>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>ZuckerErreicht(zucker)</strong></p>
+    <p>Dieses Ereignis wird aufgerufen, wenn die Ameise als Ziel einen Zuckerhaufen anvisiert hat und diesen dann erreicht hat. Der entsprechende Zuckerhaufen wird übergeben.</p></div>
+  </div>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>ApfelErreicht(apfel)</strong></p>
+    <p>Dieses Ereignis wird aufgerufen, wenn die Ameise als Ziel einen Apfel anvisiert hat und diesen dann erreicht hat. Der entsprechende Apfel wird übergeben.</p></div>
+  </div>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>PositionErreicht()</strong></p>
+    <p>Dieses Ereignis wird aufgerufen, wenn die Ameise als Ziel eine Position anvisiert hat diese dann erreicht hat.</p></div>
+  </div>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>BauErreicht()</strong></p>
+    <p>Dieses Ereignis wird aufgerufen, wenn die Ameise seinen Heimatbau erreicht hat. Es ist das Ergebnis von "GeheZuBau()".</p></div>
+  </div>
+  
+  <div class="page-header">
+    <h2 id="nahrung">Nahrungsmittel</h2>
+	</div>
+	
+	<p>Jetzt fehlt dir noch die Möglichkeit, mit den Nahrungsmitteln zu interagieren.
+	</p>
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>Nimm(zucker)</strong></p>
+    <p>Fügt einen Befehl hinzu, der die Ameise einen Zucker aufnehmen lässt vom übergebenen Zuckerhaufen. Wirksam im Zusammenhang mit "ZuckerErreicht()":</p>
+  <p><img src="/images/sourceTake.png" class="img-thumbnail"></img></p>
+  Vergiss aber nicht, zum Heimatbau zurückzulaufen! Wenn der Bau erreicht ist, wird die Zuckerladung automatisch entladen.</div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>LasseZuckerFallen()</strong></p>
+    <p>Fügt einen Befehl hinzu, der die Ameise den gesamten geladen Zucker fallen lassen lässt. Dieser geht verloren. Damit kann die Ameise schneller laufen.</p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>BringeApfelZuBau(apfel)</strong></p>
+    <p>Stellt sich zum Apfel hinzu. Wenn mehr als vier Ameisen des Volks beim Apfel sind können sie anfangen, den Apfel zum Bau zu tragen. Wirksam im Zusammenhang mit "ApfelErreicht()":
+  <p><img src="/images/sourceApple.png" class="img-thumbnail"></img></p>
+  Die Ameise läuft automatisch zum Heimatbau zurück. Ist der Apfel nah genug, wird er automatisch gezählt. Die Aktion kann mit "Stopp()" abgebrochen werden.</div>
+  </div>
+  
+  <div class="page-header">
+    <h2 id="wanzen">Wanzen</h2>
+	</div>
+	
+	<p>Die Wanzen sind eine große Gefahr für die Ameisen. Kommen Sie in deren Nähe, sterben sie sehr schnell. Die Ameisen müssen also vorausschauend handeln. Nutze die folgenden Ereignisse und Befehle:
+	</p>
+	
+	<div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>SiehtWanze(wanze)</strong></p>
+    <p>Dieses Ereignis wird einamlig aufgerufen, wenn die Ameise eine Wanze in Sichtweite sieht.
+    <pre>Ameise.SiehtWanze = function(wanze){
+    // Befehle zum Ausweichen ...
+}</p></div>
+  </div>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>WirdAngegriffen(wanze)</strong></p>
+    <p>Jedes Mal, wenn die Ameise durch eine Wanze Energie verloren hat, wird dieses Ereignis aufgerufen. Wenn dieses Ereignis aufgerufen wird, ist Weglaufen meist schon zu spät.</p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>DreheWegVonObjekt(objekt)</strong></p>
+    <p>Fügt einen Befehl hinzu, der die Ameise vom Zielobjekt wegdreht.</p>
+  <pre>DreheWegVonObjekt(wanze); // innerhalb des entsprechenden Ereignisses</pre></div>
+  </div>
+  
+  <p>Wenn du der Ameise Befehle gibst, um der Wanze auszuweichen, kannst du die Eigenschaft von der Befehlswarteschlange nutzen, dass Befehle aus neuen Runden vor den alten ausgeführt werden. Denn damit werden die alten Befehle nicht überschrieben. Nach dem Ausweichen kann die Ameise wieder mit den alten Befehlen weitermachen.
+  </p>
+  
+  <p>Bis hierher bis du nun in der Lage, ein Ameisenvolk zu programmieren, das in der Lage ist, Zucker und Äpfel zu sammeln und den Wanzen auszuweichen. Damit hast du bereits den ersten Meilenstein erreicht. Wenn du dich bereit fühlst, kannst du mit den nächsten Einheiten fortfahren. Du lernst, dein Volk zu spezialisieren und die Nahrungssuche zu optimieren.
+  </p>
+  
+  
+  <div class="page-header">
+    <h2 id="müde">Müdigkeit</h2>
+	</div>
+	
+	<p>Die Ameisen sterben, wenn sie ihre Reichweite aufgebraucht haben. Um die Ameisen vor Übermüdung zu schützen, solltest du auf folgendes Ereignis achten:
+	</p>
+	
+	<div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>WirdMüde()</strong></p>
+    <p>Wenn die Ameise nur noch ein Drittel der Reichweite, wird dieses Ereignis einmal aufgerufen. Du kannst darauf reagieren:
+    <pre>Ameise.wirdMüde() = function(){
+    GeheZuBau();
+}</pre></p></div>
+  </div>
+	
+	<div class="page-header">
+    <h2 id="sprache3">Ameisensprache Teil 3</h2>
+	</div>
+	
+  <h3>Rückgabewerte</h3>
+  
+  <p>Bisher haben wir Funktionen nur dazu verwendet, Befehle auszuführen. In den folgenden Abschnitten werden wir auch eine Reihe von Funktionen kennenlernen, die wir für andere Zwecke verwenden.
+  </p>
+  
+  <p>Diese Funktionen geben einen Rückgabewert zurück. Dieser Wert kann eine Zahl sein, ein Objekt aus der Simulation oder ein Wahrheitswert. Diesen Wert kannst du überall dort einsetzen, wo du zuvor Variablen verwendet oder den Wert direkt ausgeschrieben hast. Schau dir den Abchnitt Zufall an, um eine erste solche Funktion kennenzulernen.
+  </p>
+  
+  <h3>Variabeln</h3>
+  
+  <p>Variablen ermöglichen es dir, deine Ameisen noch viel intelligenter zu machen. Sie helfen dir auch, dein Programm übersichtlicher zu gestalten. Ein kleines Beispiel:</p>
+  
+  <p><img src="/images/sourceVars.png" class="img-thumbnail"></img></p>
+  
+  <p>Eine Variable kannst du dir wie eine Box vorstellen. In diese Box kannst du alle möglichen Gegenstände hineinstecken. Allerdings stehen diese Boxen in einem riesigen Lager. Um auf eine Box zuzugreifen, muss du ihr einen Namen geben und diesen Namen aufrufen.
+  </p>
+  
+  <p>So kannst du dir den obigen Codeausschnitt erklären: Die Zeile 8 erzeugt dir eine neue Box. Du legst die Zahl 45 in diese Box. Du gibst der Box den Namen "winkel", damit du sie später im Lager finden kannst. Die Schreibweise ist immer:
+  <pre>var + Name der Variable + = + Wert der Variable + ;</pre>
+  </p>
+	
+	<p>Um auf den Inhalt einer Box zuzugreifen, schreiben wir den Namen der Box hin. Wenn der Computer einen Namen sieht, dann durchsucht er den Inhalt des Lagers. Findet er die Box, dann holt er sie und ersetzt den Namen mit dem Inhalt aus der Box. Dann erst führt er den weiteren Befehl aus. Die Zeile 9 verwandelt der Computer also zuerst in:
+	<pre>Drehe(45); // Wert aus der Box wurde eingefügt</pre>
+	Die Zeile 11 verwandelt der Computer in:
+	<pre>Drehe(-45); // auch hier wurde Wert aus der Box eingefügt</pre>
+	</p>
+	
+	<p>Beachte: Der Name einer Variable sollte am besten nur Buchstaben enthalten. Wenn du den Namen einer Variable aufrufst, die es nicht gibt, dann wird die Simulation mit einem Fehler abgebrochen. Beim Namen muss du auf Groß- und Kleinschreibung achten.
+	</p>
+	
+	<div class="page-header">
+    <h2 id="zufall">Zufall</h2>
+	</div>
+	
+	<p>Vielleicht würdest du die Ameisen gerne mit einem Würfel entscheiden lassen, wie sie sich bewegen? Mit dem Rückgabewert von zwei Funktionen lässt sich genau das erreichen:
+	</p>
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>Zufallszahl(maximum)</strong></p>
+    <p>Gibt eine Zahl zurück, die größer gleich null ist und kleiner als maximum ist. Um deine Ameise zwischen 0 und 99 Schritte laufen zu lassen, schreibe:<pre>Gehe(Zufallszahl(100)); // erzeugt Zufallszahl und nutzt Rückgabewert als Argument zu "Gehe"</pre>
+    Beachte, dass "Zufallszahl()" kein Befehl ist, sondern innerhalb von Befehlen eingesetzt werden kann. Diese Funktion wird auf keine eigene Zeile geschrieben, sondern mit Befehlen verschachtelt. Auch endet diese Funktion mit keinen Semikolon.</p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>Zufallszahl(minimum, maximum)</strong></p>
+    <p>Gibt eine Zahl zurück, die größer als minimum ist und kleiner ist als maximum.
+    <pre>Gehe(Zufallszahl(50, 100)); // geht zwischen 50 und 99 Schritte
+Drehe(Zufallszahl(-15, 16)); // dreht sich um einen Winkel von -15 bis 15 Grad</pre>
+    Die zwei Argumente der Funktionen werden mit einem Komma getrennt. Achte auf das Leerzeichen nach dem Komma.</p></div>
+  </div>
+  
+  <div class="page-header">
+    <h2 id="gedächtnis">Gedächtnis</h2>
+	</div>
+	
+	<p>Du kannst den Ameisen beibringen, sich Dinge zu merken. Jede Erinnerung ist dabei mit einem Schlüssel verknüpft. Der Schlüssel ist eine Zeichnenkette, über die du neue Erinnerungen anlegen kannst, diese Erinnerungen abfragen kannst und sie wieder löschst. Vier Funktionen helfen dir dabei:
+	</p>
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>Merke(schlüssel, wert)</strong></p>
+    <p>Legt einen neuen Eintrag im Gedächtnis an, auf den über die Zeichenkette schlüssel später zugegriffen werden kann. Der wert wird im Eintrag gespeichert.
+    <pre>Merke("Alter", 15); // legt Eintrag "Alter" an und speichert die Zahl 15
+Merke("Vorname", "Julia"); // der Wert darf auch eine Zeichenkette sein
+Merke("IstMüde"); // kann auch ohne Wert aufgerufen werden. Dann wird nur Eintrag angelegt</pre></p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>Erinnere(schlüssel)</strong></p>
+    <p>Gibt als Rückgabewert den Wert des Eintrags zurück unter dem übergebenen Schlüssel. sollte der Schlüssel nicht existieren, wird eine Fehlermeldung ausgegeben.
+    <pre>alert(Erinnere("Alter")); // zeigt 15 an
+alert(Erinnere("Vorname")); // zeigt "Julia" an
+alert(Erinnere("IstMüde")); // gibt den speziellen Wert undefined zurück</p></div>
+  </div>
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>HatErinnerung(schlüssel)</strong></p>
+    <p>Gibt als Rückgabewert einen Wahrheitswert zurück, also entweder true oder false. Dieser Wahrheitswert kann in Verzweigungen verwendet werden. Sie dazu Ameisensprache 4.
+    <pre>HatErinnerung("IstMüde") -> true
+HatErinnerung("unbekannt") -> false</pre></p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>Vergesse(schlüssel)</strong></p>
+    <p>Löscht den entsprechenden Eintrag. Sollte der Eintrag nicht existieren, tut die Funktion nichts.
+    <pre>Vergesse("IstMüde"); // löscht Eintrag
+Vergesse("IstMüde"); // kann wiederholt aufgerufen werden, tut nichts
+HatErinnerung("IstMüde") -> false</pre></p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>Vergesse(schlüssel)</strong></p>
+    <p>Löscht den entsprechenden Eintrag. Sollte der Eintrag nicht existieren, tut die Funktion nichts.
+    <pre>Vergesse("IstMüde"); // löscht Eintrag
+Vergesse("IstMüde"); // kann wiederholt aufgerufen werden, tut nichts
+HatErinnerung("IstMüde") -> false</pre></p></div>
+  </div>
+  
+  <p>Beachte, dass diese Funktion nicht in der Lage ist, Sichtungsobjekte wie Zucker, Apfel, Wanze und den Bau zu merken. Grund dafür ist, dass die übergebenen Objekte nur temporär sind und in der nächsten Runde nicht mehr erreichbar sind. Allerdings kannst du davor von den Objekten die Position bestimmen und damit arbeiten.
+  </p>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>BestimmePosition(objekt)</strong></p>
+    <p>Gibt ein speicherbares Positionsobjekt zurück.
+    <pre>Merke("Apfelort", BestimmePosition(apfel)); // speichert Position des Apfels</pre></p></div>
+  </div>
+	
+  
+	<h1><span class="label label-primary">Profi</span></h1>
+	
+	<div class="page-header">
+    <h2 id="sprache4">Ameisensprache Teil 4</h2>
+	</div>
+	
+	<p>Soweit sind wir in der Lage, der Ameise viele Befehle zu geben. Nun brauchen wir noch die Möglichkeit, anhand der vorliegenden Informationen Entscheidungen zu treffen. Das funktioniert mit Verzweigungen.
+	</p>
+	
+	<h3>If-Verzweigung</h3>
+	
+  <p><img src="/images/sourceIfS.png" class="img-thumbnail"></img></p>
+  
+	<p>Aus dem vorherigen Teil kennen wir schon die Verwendung von Variablen. Wir definieren hier die Variable mit dem Namen "zahl" und weisen ihr den Rückgabewert von Zufallszahl zu. Die Zahl ist dabei mit einer Wahrscheinlichkeit von 50% entweder 0 oder 1. Wir wollen nun verschiedene Sachen tun, je nach dem, welchen Wert die Zahl hat.
+	</p>
+	
+	<p>Das erreichen wir mit einer Verzweigung. Jede Verzweigung beginnt mit dem Schlüsselwort "if". Danach kommt ein Leerzeichen und darauf ein Paar runder Klammern. Der Code innerhalb dieser Klammern bestimmt, ob der darauffolgende Block ausgeführt wird oder nicht. Wie mit Blöcken üblich wird der Code innerhalb der geschweiften Klammern eingerückt. Die öffnende Klammer steht mit dem "if" in der gleichen Zeile, die schließende Klammer steht auf einer eigenen Zeile. Wenn du neue Verzweigungen schreibst empfiehlt es sich, zuerst beide geschweiften Klammern hinzuschreiben und dann mit dem Code innerhalb des Blocks fortzufahren.
+	</p>
+	
+	
+	<h3>Bedingungen</h3>
+	
+	<p>Es gibt verschiedene Vergleichsoperatoren. Um Werte auf Gleichheit zu überprüfen, verwenden wir ein <strong>doppeltes Gleichheitszeichen</strong>. Ein einzelnes Gleichheitszeichen ist schon mit einer anderen Bedeutung verwendet:
+	<pre>var x = 4; // einzelnes Gleichheitszeichen bedeutet Zuweisung
+if (x == 4) { // doppeltes Gleichheitszeichen ist Vergleich
+    // dieser Block wird ausgeführt
+}
+if (x == 5) {
+    // dieser Block wird nicht ausgeführt
+}</pre>
+	</p>
+	
+	<p>Zahlen können mit "<", ">" "<=" und ">=" verglichen werden:
+	<pre>var x = 4;
+var y = 6;
+if (x > 0) {
+    // dieser Block wird ausgeführt
+}
+if (x > y) {
+    // dieser Block wird nicht ausgeführt, weil 4 nicht größer ist als 6
+}</pre>
+	</p>
+	
+	<p>Mit dem Operator "!=" kann man auf Ungleichheit prüfen:
+	<pre>var x = 4;
+if (x != 4) {
+    // dieser Block wird nicht ausgeführt, weil x nicht 4 ist
+}</pre>
+	</p>
+	
+	<p>Außerdem kann man direkt mit Wahrheitswerten arbeiten. Bisher kennen wir nur die Funktion "HatErinnerung()", die solche Werte zurückgibt. Wir werden später noch mehr kennenlernen:
+	<pre>Merke("Toll");
+if (HatErinnerung("Toll")) { // Rückgabewert ist ein Wahrheitswert
+    // dieser Block wird ausgeführt
+}</pre>Ein Wahrheitswert kann true oder false sein und direkt im Code ausgeschrieben werden.
+<pre>var WAHR = true;
+if (false) {
+    // dieser Block wird nicht ausgeführt
+}
+if (WAHR) {
+    // dieser Block wird ausgeführt
+}</pre></p>
+
+  <h3>else-Block</h3>
+  
+  <p><img src="/images/sourceIf.png" class="img-thumbnail"></img></p>
+  
+	<p>Man kann einen zweiten Block mit "else" an die Verzweigung angeführt. Dieser Block wird ausgeführt, wenn der erste Block <em>nicht</em> ausgeführt wurde. Diese Technik ist nützlich in Situationen, in denen du Dinge entweder/oder ausführen willst.
+	</p>
+	
+	<h3>Globale Variablen</h3>
+	
+	<p>Stellst dir vor, du willst zählen, wie viele Ameisen dein Volk enthält. Mit den bisherigen Mitteln konntest du zwar auf das Gedächtnis der einzelnen Ameisen zugreifen, aber nie über eine einzelne Ameise hinaus. Mithilfe von globalen Variablen bist du in der Lage, Informationen über das gesamte Volk zu sammeln.</p>
+	
+  <p><img src="/images/sourceGlob.png" class="img-thumbnail"></img></p>
+  
+  <p>Globale Variablen werden wie ganz normale Variablen definiert, allerdings <em>außerhalb</em> von allen Ereignissen, genauso wie die Variable "AnzahlAmeisen" in Zeile 55. Wir geben der Variable am Anfang den Wert 0.
+  </p>
+  
+  <p>In den zwei Ereignissen verändern wir dann dessen Wert. Wenn eine Ameise geboren wurde, zählen wir eins hoch. Wenn eine Ameise gestorben ist, zählen wir eins runter. Mit der Variable "AnzahlAmeisen" erhalten wir also stets die genau Anzahl der Ameisen im Volk.
+  </p>
+  
+  <div class="page-header">
+    <h2 id="spezial">Spezialisierung des Volks</h2>
+	</div>
+	
+	<p>Mithilfe des Gedächtnisses und von Verzweigungen können wir den Ameisen eines Volkes unterschiedliche Aufgaben geben. Davor brauchen wir noch die Möglichkeit, ein Teil des Volkes einen besonderen Beruf zu geben. Stell dir vor, du möchtest in deinem Volk immer mindestens 10 Späher haben. Um diese Spezialisierung durchzuführen brauchst du mehrere Elemente:
+	</p>
+	
+  <p><img src="/images/sourceSpez.png" class="img-thumbnail"></img></p>
+  
+  <h3>Globaler Zähler</h3>
+  
+  <p>In Zeile 55 definieren wir eine globale Variabel, die die Anzahl der Späher mitverfolgt. In Zeile 61 und 70 wird entweder ein Späher hinzugezählt, wenn ein neuer Späher geboren wurde, oder eins abgezogen, wenn ein Späher gestorben ist. In Zeile 59 erfolgt die Prüfung, ob genügend Späher vorhanden sind.
+  </p>
+  
+  <h3>Zuweisung des Berufs</h3>
+  
+  <p>Der Beruf wird über einen Eintrag im Gedächtnis festgelegt. In Zeile 60 wird der Eintrag "Späher" angelegt, wenn es sich um eine Spähmeise handeln soll. In der else-Verzweigung geben wir allen anderen Ameisen den Beruf "Normal".
+  </p>
+  
+  <h3>Differenzierung der Aufgaben</h3>
+  
+  <p>Um Aktionen auszuführen, die nur Ameisen mit einem bestimmten Beruf ausführen, müssen wir prüfen, ob ein bestimmter Eintrag im Gedächtnis vorhanden ist. Diese Prüfung nutzt immer folgende Verzweigung:
+  <pre>if (HatErinnerung("Name des Berufs")) {
+    // Block wird nur ausgeführt, wenn Ameise diesen Beruf hat.
+}</pre>
+  </p>
+  
+  <p>Damit kannst du für alle Aspekte der Ameise unterschiedliche Aktionen zuweisen. In Zeile 69 - 71 sieht du ein solches Beispiel, wo nur für Spähmeisen der Zähler verändert wird.
+  </p>
+
+	<div class="page-header">
+    <h2 id="runde">Eigene Ereignissse</h2>
+	</div>
+	
+	<p>Die Simulation läuft wie ein Brettspiel in Runden ab. Mit Hilfe von Verzweigungen können wir Code schreiben, der zwar jede Runde aufgerufen wird, aber nur unter bestimmten Umständen aktiviert wird. Dadurch wirst du in der Lage sein, deine eigenen Ereignisse zu definieren.
+	</p>
+	
+	<div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>Tick()</strong></p>
+    <p>Wird bedingungslos jede Runde aufgerufen. Startpunkt für deine eigenen Ereignisse.</p></div>
+  </div>
+  
+  <p>Das Ereignis "Tick()" lässt sich besonders mit den Eigenschaften verknüpfen, die du im nächsten Abschnitt kennenlernst.
+  </p>
+	
+	<div class="page-header">
+    <h2 id="eigenschaften">Dynamische Eigenschaften</h2>
+	</div>
+	
+	<p>Es folgt jetzt eine ganze Reihe von Eigenschaften, die du über die Ameisen abfragen kannst. Sie sind dynamisch, weil sie immer den aktuellen Zustand wiedergeben.
+	</p>
+	
+	<div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>Blickrichtung</strong></p>
+    <p>Gibt die aktuelle Blickrichtung der Ameise zurück. Der Wert entspricht dem Argument zu "DreheZuRichtung()".<pre>if (Blickrichtung > 90) {
+    Drehe(-15); // sobald Ameise nach unten schaut, drehe zurück nach rechts
+}</pre></p></div>
+  </div>
+  
+  <div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>Untätig</strong></p>
+    <p>Gibt einen Wahrheitswert zurück. Wenn Auftragswarteschlange leer ist, ist der Wert true. Ansonsten ist er false. Man kann damit das Ereignis "Wartet()" selbst programmieren:<pre>Ameise.Tick = function(){
+    if (Untätig) {
+        // entspricht dem Ereignis "Wartet()"
+    }
+}</pre></p></div>
+  </div>
+ 
+  <div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>AktuellesZiel</strong></p>
+    <p>Gibt eine Zeichenkette zurück, mit der man das aktuelle Ziel abfragen kann. Mithilfe von Konstanten, die in großen Buchstaben geschrieben werden, kann der Typ erfragt werden. Der Wert ist undefined wenn kein Ziel definiert ist.
+<pre>if (AktuellesZiel == undefined) {
+    alert("kein Ziel");
+}
+if (AktuellesZiel == BAU) {
+    alert("Ameise geht auf Bau zu");
+}
+if (AktuellesZiel == APFEL) {
+    alert("Ameise geht auf Apfel zu");
+}
+if (AktuellesZiel == ZUCKER) {
+    alert("Ameise geht auf Zucker zu");
+}
+if (AktuellesZiel == POSITION) {
+    alert("Ameise geht auf gespeicherte Position zu");
+}</pre></p></div>
+  </div>
+  
+  <div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>AktuellePosition</strong></p>
+    <p>Gibt ein Positionsobjekt zurück, dass der aktuellen Position der Ameise entspricht. Diese Positionen können über "Merke()" gespeichert werden und im Bau an andere Ameisen gesendet werden.<pre>Merke("wichtiger Ort", AktuellePosition); // speichert Positionsobjekt unter "wichtiger Ort"
+
+...
+
+// später, im Bau
+SendeNachricht("ORT!", Erinnere("wichtiger Ort"));</pre></p></div>
+  </div>
+	
+	<div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>AktuelleReichweite</strong></p>
+    <p>Gibt eine Zahl zurück, die angibt, wie viele Ameisenschritte diese Ameise noch gehen kann, bevor sie stirbt. Kann genutzt werden, um die Ameise vor dem verhungern zu schützen:<pre>if (AktuelleReichweite < 1000) {
+    GeheZuBau();
+}</pre></p></div>
+  </div>
+	
+	<div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>AktuelleLast</strong></p>
+    <p>Gibt zurück, wie viel Zucker die Ameise geladen hat.</p><pre>if (AktuelleLast < 2) {
+    if (AktuellesZiel == BAU) {
+        Stopp(); // Ameise soll nicht ohne volle Last zurückkehren.
+    }
+}</div>
+  </div>
+	
+	<div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>AktuelleEnergie</strong></p>
+    <p>Gibt zurück, wie viel Energie die Ameise noch hat. Wird bei Wanzenangriffen abgezogen.
+<pre>if (AktuelleEnergie < 0) {
+    alert("RIP");
+}</p></div>
+  </div>
+	
+	<div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>GetragenerApfel</strong></p>
+    <p>Gibt aktuell getragenen Apfel zurück. Ergibt undefined, wenn gerade kein Apfel getragen wird.
+<pre>DreheWegVonObjekt(GetragenerApfel); // hört auf, den Apfel zu tragen</pre></p></div>
+  </div>
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>BrauchtNochTräger(apfel)</strong></p>
+    <p>Diese Funktion gibt an, ob der Apfel noch Träger braucht. Er gibt true zurück, wenn der Apfel noch nicht vom Gegner getragen wird und die maximale Anzahl Ameisen noch nicht erreicht wurde.
+<pre>if (BrauchtNochTräger(apfel)) {
+  GeheZuZiel(apfel);
+}</pre></p></div>
+  </div>
+  
+  <div class="page-header">
+    <h2 id="eigenschaftenS">Statische Eigenschaften</h2>
+	</div>
+	
+	<p>Diese Eigenschaften ändern sich während einer Simulation nicht:
+	</p>
+	
+	 <div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>HeimatBau</strong></p>
+    <p>Gibt den Heimatbau der Ameise zurück. Damit lässt sich "GeheZuBau()" selber programmieren:<pre>GeheZuZiel(HeimatBau); // entspricht "GeheZuBau()"</pre></p></div>
+  </div>
+	
+	<div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>AmeisenSichtweite</strong></p>
+    <p>Gibt die Sichtweite der Ameisen in Schritten zurück.</p><pre>alert(AmeisenSichtweite); // zeigt 70 an</pre></div>
+  </div>
+  
+  <div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>MaximaleLast</strong></p>
+    <p>Gibt die maximale Zuckerladung einer Ameise zurück.<pre>alert(MaximaleLast); // zeigt 5 an</pre></p></div>
+  </div>
+	
+	<div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>MaximaleEnergie</strong></p>
+    <p>Gibt die Energie einer Ameise zurück, wenn sie voll regeneriert ist.<pre>alert(MaximaleEnergie); // zeigt 60 an</pre></p></div>
+  </div>
+	
+	<div class="panel panel-warning">
+    <div class="panel-heading">Eigenschaft</div>
+    <div class="panel-body">
+    <p><strong>MaximaleReichweite</strong></p>
+    <p>Gibt die Reichweite einer Ameise an, die voll regeneriert ist.<pre>alert(MaximaleReichweite); // zeigt 3000 an</pre></p></div>
+  </div>
+	
+	<div class="page-header">
+    <h2 id="kommunikation">Kommunikation</h2>
+	</div>
+	
+	<p>Wenn eine Ameise im Ameisenbau steht, kann sie den anderen Ameisen, die sich ebenfalls im Bau befinden, eine Nachricht schicken. Die Nachricht besteht aus zwei Teilen: Einmal einen Betreff, der eine Zeichenkette ist und das Thema der Nachricht beschreibt. Außerdem aus einem Wert, dem eigentlichen Inhalt der Nachricht:
+	</p>
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>SendeNachricht(betreff, wert)</strong></p>
+    <p>Legt einen Befehl in die Warteschlange, der an alle Ameisen im Bau eine Nachrichten mit dem übergebenen betreff und wert sendet. Ausführung funktioniert nur innerhalb des Baus.
+    <pre>GeheZuBau();
+SendeNachricht("Gruß", "Hi, wie gehts euch?"); // sendet eine Nachricht</pre></p></div>
+  </div>
+	
+	<div class="panel panel-info">
+    <div class="panel-heading">Ereignis</div>
+    <div class="panel-body">
+    <p><strong>EmpfängtNachricht(betreff, wert)</strong></p>
+    <p>Die Ameise hat innerhalb des Baus eine Nachricht erhalten.
+    <pre>Ameise.EmpfängtNachricht = function(betreff, wert){
+    if (betreff == "Apfelort") {
+        GeheZuZiel(wert);
+    }
+}</pre></p></div>
+  </div>
+	
+	<div class="page-header">
+    <h2 id="techniken">Weitere Techniken</h2>
+	</div>
+	
+	<h3>Aktive Umgebungswahrnehmung</h3>
+	
+	<p>Mithilfe von drei Funktionen kannst du aktiv die Umgebung absuchen. Sie geben dir mehr Kontrolle darüber, unter welchen Umständen die entsprechenden Ereignisse aufgerufen werden:
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>RiecheNachZucker()</strong></p>
+    <p>Gibt den nächsten Zuckerhaufen in Sichtweite zurück. Wenn kein Zucker in Sicht, gibt diese Funktion den Wert undefined zurück.
+    <pre>var zucker = RiecheNachZucker();
+if (AktuellesZiel == undefined) {
+    if (zucker != undefined) {
+        // entspricht SiehtZucker();
+    }
+}</pre></p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>RiecheNachApfel()</strong></p>
+    <p>Gibt den nächsten Apfel in Sichtweite zurück. Wenn kein Apfel in Sicht, gibt diese Funktion den Wert undefined zurück.
+    <pre>var apfel = RiecheNachApfel();
+if (AktuellesZiel == undefined) {
+    if (apfel != undefined) {
+        // entspricht SiehtApfel();
+    }
+}</pre></p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>RiecheNachWanze()</strong></p>
+    <p>Gibt die nächste Wanze in Sichtweite zurück. Wenn keine Wanze in Sicht, gibt diese Funktion den Wert undefined zurück.
+    <pre>var wanze = RiecheNachWanze();
+if (wanze != undefined) {
+    // renn weg!
+}</pre></p></div>
+  </div>
+	
+	<h3>Vermessung</h3>
+	
+	<p>Auch kannst du die Entfernung in die Richtung zwischen verschiedenen Objekten der Simulation bestimmen:
+	</p>
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>BestimmeEntfernung(a, b)</strong></p>
+    <p>Gibt die Entfernung zwischen den Objekten a und b zurück in Ameisenschritten. Mit this kann auf die Ameise selber zugegriffen werden:
+    <pre>BestimmeEntfernung(apfel, HeimatBau); // Entfernung des Apfels vom Bau
+BestimmeEntfernung(this, HeimatBau); // Entfernung von Ameise zu Bau</pre></p></div>
+  </div>
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading">Funktion</div>
+    <div class="panel-body">
+    <p><strong>BestimmeRichtung(a, b)</strong></p>
+    <p>Gibt die Richtung an, unter der man vom Objekt a aus das Objekt b sieht. Mit this kann auf die Ameise selber zugegriffen werden:
+    <pre>BestimmeRichtung(this, apfel); // Rinchtung zum Apfel
+BestimmeRichtung(this, HeimatBau); // Richtung zum Bau</pre></p></div>
+  </div>
+	
+	<h3>Eigene Befehle</h3>
+	
+	<p>Schließlich gibt es die Möglichkeiten, einen Block von Code als Befehl abzuspeichern und von der Warteschlange aus auszuführen. Dazu gibt es folgenden Befehl:
+	</p>
+	
+	<div class="panel panel-primary">
+    <div class="panel-heading">Befehl</div>
+    <div class="panel-body">
+    <p><strong>FühreAus(code)</strong></p>
+    <p>Führt den Code zu einem späteren Zeitpunkt aus. Achte auf die besondere Schreibweise:
+    <pre>FühreAus(function(){
+    // Block an Befehlen, die später ausgeführt wird
+}</pre></p></div>
+  </div>
+	
+	<div class="page-header">
+    <h2 id="hacker">Für Hacker</h2>
+	</div>
+	
+	<p>Herzlichen Glückwunsch! Du hast alle Lektionen dieser Dokumentationen. Damit hast du schon die ersten großen Schritte auf dem Weg zum Programmierer getan. Du willst aber mehr?
+	</p>
+	
+	<p>Als nächstes würden wir dir empfehlen, zuhause deinen eigenen AntMe!-Server zu installieren. Eine Schritt-für-Schritt-Anleitung gibt es <a href="https://github.com/Entkenntnis/antme-js">hier</a>.
+	</p>
+	
+	<p>Wenn du den Server installiert hast, dann schau dir die Datei <a href="/src/Optionen.js">/public/src/Optionen.js</a> an: Dort sind alle Einstellungen der Simulation verzeichnet. Auf deinem eigenen Server kannst du diese Datei verändern und schauen, wie sich die Simulation verhält (natürlich verfällt dabei die Garantie *grins*). Wenn du mutig bist, kannst du auch einen Blick in die Datei <a href="/src/Simulation.js">/public/src/Simulation.js</a> werfen. Dort befindet sich der gesamte Quellcode der Simulation. Sie funktioniert im Grunde sehr ähnlich, wie du auch deine Ameisen programmierst, nutzt allerdings noch einige weitere Funktionen der Sprache.
+	</p>
+	
+	<p>Die Programmiersprache, auf der Antme! basiert, heißt <a href="https://de.wikipedia.org/wiki/JavaScript">JavaScript</a>. Sie wird meist für Websiten verwendet, eignet sich aber auch hervorragend für Spiele und Animationen. Du kannst nach <a href="http://lmgtfy.com/?q=javascript+game+tutorial">Tutorials suchen</a>, die dich interessieren.
+	</p>
+	
+	<p>Wenn du den Willen hast, etwas zu schaffen, dann werden sich für dich Wege eröffnen. Das Internet ist eine riesige Gemeinschaft und du findest überall <a href="http://stackoverflow.com">Hilfe</a>.
+	</p>
+	
+	<p>Vielleicht sehen wir ja eines Tages ein Projekt von Dir?</p>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  
+  
+  <div style="height:300px"></div>
+
+</div>
+  </body>
+</html>

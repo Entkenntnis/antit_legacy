@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>AntMe!-Server</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap_metro.min.css">
+    
+  </head>
+  <body>
+
+
+<div class="container">
+
+<div class="jumbotron"><h1>Ameisen-Editor</h1>
+	<p>Bearbeite den Code deines Volks und bestimme das Verhalten deiner Ameisen.</p></div>
+<form method="POST" action="/save?id=<%=id%>"><input type="submit" value="Speichern" class="btn btn-success">
+<a class="btn btn-danger" href="/">Abbrechen</a><br><br>
+<textarea rows="50" id="editor" name="data"><%-data;%></textarea><br>
+</form>
+<a href="#">hoch</a>
+<link rel="stylesheet" href="codemirror.css">
+<link rel="stylesheet" href="show-hint.css">
+<script src="/codemirror.js"></script>
+<script>var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {mode: {name:"javascript",globalVars:true},lineNumbers:true,styleActiveLine:true,smartIndent:false,indentUnit:4,matchBrackets:true,autoCloseBrackets:true});
+var x = function(cm) {
+        var cur = cm.getCursor();
+        var token = cm.getTokenAt(cur);
+        var vars = [
+            "Gehe"
+          , "Drehe"
+          , "GeheZuBau"
+          , "GeheZuZiel"
+          , "GeheGeradeaus"
+          , "DreheZuRichtung"
+          , "DreheZuObjekt"
+          , "DreheWegVonObjekt"
+          , "Stehe"
+          , "Stopp"
+          , "Nimm"
+          , "LasseZuckerFallen"
+          , "BringeApfelZuBau"
+          , "BrauchtNochTräger"
+          , "Gedächtnis"
+          , "SendeNachricht"
+          , "Zufallszahl"
+          , "Zufallsname"
+          , "BestimmeEntfernung"
+          , "BestimmeRichtung"
+          , "BestimmePosition"
+          , "FühreAus"
+          , "AktuelleReichweite"
+          , "AktuelleLast"
+          , "GetragenerApfel"
+          , "AktuellePosition"
+          , "Blickrichtung"
+          , "AktuellesZiel"
+          , "HeimatBau"
+          , "Untätig"
+          , "BAU"
+          , "POSITION"
+          , "APFEL"
+          , "ZUCKER"
+          , "if"
+          , "function"
+          , "alert"
+          , "console.log"
+          , "undefined"
+          , "delete"
+        ];
+        var completions = [];
+        if (token.type == "variable") {
+          vars.forEach(function(f) {
+            if (f.startsWith(token.string))
+            completions.push(f);
+          });
+        }
+        return {list: completions,
+          from: CodeMirror.Pos(cur.line, token.start),
+          to: CodeMirror.Pos(cur.line, token.end)};
+      };
+      
+      editor.on("inputRead", function(cm) {
+      	var filter = new RegExp('[\.a-zA-ZäüöÄÜÖ]','i');
+      	if(cm.display.input.textarea.value.slice(-1).match(filter)){
+      		CodeMirror.showHint(cm, x, {completeSingle:false});
+      	}
+      });
+
+</script>
+
+</div>
+
+  <div style="height:300px"></div>
+  </body>
+</html>

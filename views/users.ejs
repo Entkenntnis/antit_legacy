@@ -1,0 +1,23 @@
+<strong>Benutzer</strong>
+<br>
+<br>
+<%users.forEach(function(user){%>
+  Benutzername: "<%=user.username%>" 
+  Anzeigename: "<%=user.displayName%>" 
+  Superuser: "<%=user.superuser%>"
+  Passwort: "<span style="color:white"><%=user.password%></span>" 
+  _id: "<%=user._id%>"
+  <button onClick="var r = confirm('Willst du den Benutzer \'<%=user.displayName%>\' sicher löschen?\nBenutzerdaten und Ameisenvölker gehen unwiderruflich verloren!');if (r == true) {window.location.href='/deleteUser?id=<%=user._id%>';}" href="#" >Löschen</button>
+  <br>
+<%});%>
+<br>
+<strong>Benutzer anlegen / ändern</strong>
+<br>
+<form method="POST" action="/addUser">
+Benutzername: <input name="username"><br>
+Anzeigename: <input name="displayName"><br>
+Passwort: <input name="password"><br>
+Superuser: <input type="checkbox" name="superuser">
+<input type="submit" value="Hinzufügen">
+</form>
+<a href="/">zurück</a>
