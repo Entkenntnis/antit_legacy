@@ -53,6 +53,7 @@ MongoClient.connect(dbUrl, {authSource:"admin"}, function(err, database) {
   }
   db.setDB(database);
   app.listen(process.env.NODE_PORT || 3000, process.env.NODE_IP || "localhost");
+  console.log("app started")
 });
 
 // Define routes.
