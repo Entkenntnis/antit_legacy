@@ -19,7 +19,7 @@
 	    <!-- Here comes the content -->
 	    
 	    <div class="page-header">
-        <h2 id="einleitung">Am Anfang der Zeit</h2>
+        <h2 id="01">Am Anfang der Zeit</h2>
 	    </div>
 	    
 	    <p>Bofei erblickte das Licht der Welt zur Runde 0. Er war der erste seiner Art und er stand am Rande eines Hügels. Über dem Hügel ragte eine Fahne, die in der selben Farbe leichtete wie sein Hinterleib. Er verstand: Das war seine Heimat. Es werden mehr kommen von seiner Art, vereint durch ihre gemeinsame Farbe. Sie werden gemeinsam das Unbekannte erkunden, wertvolle Nahrungsmittel finden und diese zum Bau zurücktragen. Es wird wunderbar sein, aber Bofei ahnte auch die möglichen Gefahren: Andere Wesen werden um die knappen Lebensmittel konkurrieren. Er spürte seine eigenen Grenzen, die er nicht überschreiten durfte. Und schließlich waren da noch diese Wanzen ...
@@ -37,7 +37,7 @@
 	    </p>
 	    
 	    <div class="page-header">
-        <h2 id="einleitung">Die Welt von AntMe!</h2>
+        <h2 id="02">Die Welt von AntMe!</h2>
 	    </div>
 	    
 	    <p>Die Simulation spielt sich auf einem rechteckigen Stück Boden ab, mitten in einer wunderbaren Wiese unter freien Himmel. Es scheint immer die Sonne, es ist windstill und die Wolken bewegen sich nicht. (Manche Ameisen munkeln, dass der Boden gar nicht in der Wiese liegt, sondern ein paar Zentimeter über dem Gras schwebt. Sie haben Höhenangst bekommen, als sie vom Rand des Spielfelds runtergeschaut haben.) Das ist die Welt unserer Simulation:
@@ -57,7 +57,7 @@
 	    </p>
 	    
 	    <div class="page-header">
-        <h2 id="einleitung">Der AntMe!-Server</h2>
+        <h2 id="03">Der AntMe!-Server</h2>
 	    </div>
 	    
 	    <p>Ich gehe mal davon aus, dass du AntMe! in Rahmen eines Workshops kennengelernt hast. Dann hast du dort auch einen Zugang erhalten, mit dem du dich auf dem Server anmelden kannst. Solltest du ein Gast sein, der zufällig auf diese Seite gestoßen ist, dann erstmal: Herzlich Willkommen! Der Haken: Du hast wahrscheinlich noch keinen Zugang. Es gibt auch keine Möglichkeit, dir selber einen Account zu erstellen. Sollte dich das Thema trotzdem brennend interessien, kann du mir eine Mail schreiben:
@@ -85,7 +85,7 @@
 	    </p>
 	    
 	    <div class="page-header">
-        <h2 id="einleitung">Ameisen und Programmieren</h2>
+        <h2 id="04">Ameisen und Programmieren</h2>
 	    </div>
 	    
 	    <p>Was haben nun Ameisen mit Programmieren zu tun? Eigentlich nichts - und genau deshalb verwenden wir sie in AntMe!. Unser Ziel ist es, jungen Menschen einen Einblick in die Welt des Programmierens zu geben. Diese Leute haben meist keine Erfahrung mit "Computertechnik" und würden nur den Kopf schütteln bei Begriffen wie Shell, Port, Server oder SSL. Vor allem haben sie kein Bild davon, was man sich unter diesen Konzepten vorstellen soll. Bei Ameisen ist das nicht so. Jeder von uns hat schon mal Ameisen gesehen und beobachtet. Jeder kann sich eine Vorstellung davon machen, welches Verhalten für so eine Ameise normal ist oder nicht. Und mithilfer dieser Vorstellung wollen wir dich in das Programmieren einführen.
@@ -116,7 +116,30 @@
 	    </p>
 	    
 	    <div class="page-header">
-        <h2 id="einleitung">Erste Schritte</h2>
+        <h2 id="05">Erste Schritte</h2>
+	    </div>
+	    
+	    <p>Wir wollen jetzt unsere ersten Schritte wagen. Erstellt ein neues Ameisenvolk und geht in den Editor. Dort finden sich bereits alle Ereignisse vorgefertigt. Jedes Ereignis besteht aus einer Definitionszeile und einem <strong>Block</strong>, der von geschweiften Klammern (die so { und so } aussehen) umschlossen ist. Innerhalb dieses Blocks findet sich eine leere, eingerückte Zeile. Befehle, die zu diesem Ereignis gehören, kommen innerhalb dieses Blocks. Hier lasse ich die Ameisen ein wenig gehen und drehen:
+	    </p>
+	    
+	    <p><img src="/images/05_quadrat.png" class="img-thumbnail"></img></p>
+	    
+	    <p>Jeder Befehl kommt auf eine eigene Zeile. Befehle können der <a href="/doku">Dokumentation</a> entnommen und von dort abgeschrieben werden. Man muss nur ein wenig auf die Parameter achten. Wenn in der Dokumentation steht Gehe(<strong>Zahl</strong>), dann stellt das fettgedruckte Wort einen Parameter dar, der mit einer eigentlichen Zahl, z.B. 100, ersetzt werden muss. Als Befehl kommt dann Gehe(100) heraus. Alle Befehle brauchen am Ende ein Paar runder Klammern. Wenn kein Parameter übergeben wird, dann bleiben die runden Klammern leer.
+	    </p>
+	    
+	    <p>Was macht jetzt das Programm oben? Nachdem die Ameise geboren werden, haben sie erstmal nichts zu tun. Dann wird das Ereignis "Wartet" aufgerufen. Der Ameise wird aufgetragen, 100 Schritte zu gehen und dann sich um 90 Grad im Uhrzeigersinn zu drehen. Wenn sie damit fertig ist, hat sie wieder nichts zu tun. Nun wird wieder das Ereignis "Wartet" aufgerufen und die Ameise geht wieder 100 Schrite und dreht sich um 90 Grad. Hier ist ein weiteres kleines Programm:
+	    </p>
+	    
+	    <p><img src="/images/05_strahlen.png" class="img-thumbnail"></img></p>
+	    
+	    <p>Die Zeile 7 ist neu. Hier steht in der Dokumentation DreheWegVonObjekt(<strong>Objekt</strong>). Ein Objekt kann entweder eine Ameise, ein Bau, ein Zuckerhaufen, ein Apfel oder eine Wanze sein. Objekte haben immer eine Position auf dem Spielfeld. Man kann zu einem Objekt hinlaufen, sich davon wegdrehen oder Entfernungen und Winkel dazwischen messen. Allerdings hat die Ameise nur auf wenige Objekte Zugriff. Sie kann mit "HeimatBau" jederzeit auf ihren eigenen Bau zugreifen. Außerdem kann sie über "this" auf sich selber als Objekt zugreifen. Auf Nahrungsmittel kann sie nur zugreifen, wenn sie sich innerhalb eines entsprechenden Ereignisses befindet.
+	    </p>
+	    
+	    <p>Die Ameise im obigen Beispiel sieht dreht sich also vom Bau weg, geht 100 Schritte, dreht sich um und geht wieder ein paar Schritte. Dann wiederholt sie das ganze von vorne. Überlege dir mal, welche Bewegungsform sich am besten dazu eignet, das Spielfeld zu erkunden und Nahrung zu sammeln.
+	    </p>
+	    
+	    <div class="page-header">
+        <h2 id="06">Zucker und Apfel</h2>
 	    </div>
 	    
       <div style="height:300px"></div>
