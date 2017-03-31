@@ -79,8 +79,45 @@
 	    <p>So sieht es aus, wenn du den Editor geöffnet hast:
 	    </p>
 	    
-	    <p>In der ersten Zeile kannst du den Namen deines Volkes eintragen, in dem du ihn zwischen die Anführungsstriche setzt (und er in dunkelroter Schrift erscheint). Ich habe dieses Ameisenvolk auf den Namen "Coolmeise" getauft. Deiner Kreativität ist bei der Wahl des Namens keine Grenzen gesetzt. Zahlen, Sonderzeichen und Umlaute sind alles im Namen erlaubt. "Gäng$ta-^-^!2!" ist durchaus ein gültiger Name. Die Unterstriche, die anfangs vorhanden waren, darfst du getrost weglassen. Diese sind nur dazu da, dass du neue Ameisen schnell findest. Sie erscheinen in der alphabetischen Übersicht ganz oben. Man darf auch zwei Ameisen mit den gleichen Namen benennen - dann wird es schwierig, sie zu unterscheiden.
+	    <p><img src="/images/03_name.png" class="img-thumbnail"></img></p>
+	    
+	    <p>In der ersten Zeile kannst du den Namen deines Volkes eintragen, den du zwischen die Anführungsstriche setzt (und der in dunkelroter Schrift erscheint). Ich habe dieses Ameisenvolk auf den Namen "Coolmeise" getauft. Deiner Kreativität ist bei der Wahl des Namens keine Grenzen gesetzt. Zahlen, Sonderzeichen und Umlaute sind alles erlaubt. "Gäng$ta-^-^!2!" ist durchaus ein gültiger Name. Die Unterstriche, die anfangs vorhanden waren, darfst du getrost weglassen. Diese sind nur dazu da, dass du neue Ameisen schnell findest. Sie erscheinen in der alphabetischen Übersicht ganz oben. Man darf auch zwei Ameisen mit den gleichen Namen benennen - dann wird es schwierig, sie zu unterscheiden.
 	    </p>
+	    
+	    <div class="page-header">
+        <h2 id="einleitung">Ameisen und Programmieren</h2>
+	    </div>
+	    
+	    <p>Was haben nun Ameisen mit Programmieren zu tun? Eigentlich nichts - und genau deshalb verwenden wir sie in AntMe!. Unser Ziel ist es, jungen Menschen einen Einblick in die Welt des Programmierens zu geben. Diese Leute haben meist keine Erfahrung mit "Computertechnik" und würden nur den Kopf schütteln bei Begriffen wie Shell, Port, Server oder SSL. Vor allem haben sie kein Bild davon, was man sich unter diesen Konzepten vorstellen soll. Bei Ameisen ist das nicht so. Jeder von uns hat schon mal Ameisen gesehen und beobachtet. Jeder kann sich eine Vorstellung davon machen, welches Verhalten für so eine Ameise normal ist oder nicht. Und mithilfer dieser Vorstellung wollen wir dich in das Programmieren einführen.
+	    </p>
+	    
+	    <p>Natürlich stimmen unsere Ameisen biologisch nicht vollkommen mit der Natur überein. Das wäre viel zu komplex und unübersichtlich. Stattdessen sind unsere Ameisen an Konzepte aus der Informatik angelehnt. Die Bauteile dieser Ameisen sind also keine Zellen oder Neuronen, sondern Ideen aus der Informatik. Das ist das wunderbare am Programmieren: Man kann tatsächlich aus Ideen allein (und etwas Hardware) großartige Dinge bauen. Es würde uns freuen, wenn du am Ende dieses Workshops besser verstehen kannst, wie das funktioniert.
+	    </p>
+	    
+	    <p>Als erstes sind unsere Ameisen <strong>ereignisbasiert</strong>. Ein Ereignis ist ein besonderer Moment im Leben der Ameise. An diesem Moment kann sie wichtige Entscheidungen treffen, die große Auswirkungen haben. Ein Beispiel: die Ameise geht die ganze Zeit geradeaus. Die Momente, in denen sie nur geradeaus geht, sind nicht besonders. Sie hat keinen Grund, ihr Verhalten ändern. Doch dann sieht die Ameise plötzlich einen Zuckerhaufen. Dieser Moment ist ganz besonders. Denn hier muss sich die Ameise entscheiden: Gehe ich weiter geradeaus? Oder soll ich zum Zucker laufen? An diesem Punkt finden also ein Ereignis statt.
+	    </p>
+	    
+	    <p>Um über <strong>Ereignisse</strong> sprechen zu können, erhalten sie von uns Namen. Der Moment, wenn eine Ameise durch die Gegend läuft und plötzlich einen Zuckerhaufen sieht, nennen wir "SiehtZucker", wenn sie einen Apfel sieht, heißt das Ereignis entsprechen "SiehtApfel". Wenn die Ameise nichts zu tun hat, erhält sie das Ereignis "Wartet". Wenn die Ameise geboren wird, erhält sie das Ereignis "IstGeboren", usw ... In der Dokumentation sind alle Ereignisse detailliert beschrieben.
+	    </p>
+	    
+	    <p>Eine Ameise kann genau dann ihr <strong>Verhalten</strong> steuern, wenn ein Ereignis eingetreten ist. Beim Programmieren überlegt man sich also zuerst, bei welchem Ereignis man ansetzen möchte. Innerhalb von diesem Ereignis kannst du dann deinen Code schreiben. Diese Methode ist in der Informatik sehr gängig. Sie hat den großen Vorteil, dass jedes Ereignis ziemlich unabhängig von den anderen funktioniert und man dadurch sein Programm gut strukturieren kann. Zum Beispiel arbeitet auch der AntMe!-Server überwiegend mit solchen "Events", wie sie im Fachjargon heißen.
+	    </p>
+	    
+	    <p>Das Verhalten der Ameisen programmierst du <strong>imperativ</strong>. Imperativ heißt Befehlsform. Du kannst deiner Ameise also Befehle geben und sie führt diese aus. Wenn du ihr eine Reihe von Befehlen gibst, dann führt sie diese Befehle auch in dieser Reihenfolge aus. Grundlegende Befehle sind solche wie "Gehe", "Drehe", "GeheZuBau". Viele Befehle nehmen noch einen <em>Parameter</em>, der z.B. darüber bestimmt, um wie viele Schritte oder um welchen Winkel sich die Ameise bewegen soll. 
+	    </p>
+	    
+	    <p>Darüber hinaus hast du Zugriff auf verschiedene <strong>Funktionen</strong>. Funktionen sind Werkzeuge, die dir bei bestimmten Aufgaben helfen. Du kannst mit der Funktion "Zufallszahl" Zufallszahlen erzeugen, mit der Funktion "BestimmeEntfernung" das Spielfeld vermessen, usw ... Sie arbeiten meist mit bestimmten Daten und sind selber keine Befehle. Sie steuern also nicht das Verhalten der Ameise direkt, sondern helfen dir bei der Steuerung.
+	    </p>
+	    
+	    <p>Du hast auch die Möglichkeit, mit einem <strong>Speicher</strong> zu arbeiten. Der Speicher entspricht dem Gedächtnis deiner einzelnen Ameise. Dort kannst du dir ganz viele Dinge merken und sie später wieder aufrufen.
+	    </p>
+	    
+	    <p>Um die vielen Funktionen und den Speicher optimal nutzen zu können, brauchst du <strong>Bedingungen</strong>. Das ist der Punkt, an dem die Herausforderung beginnt, denn Bedingungen sind alles andere als ein einfaches Pflaster. Aber genau diese Bedingungen sind es, die die Informatik so vielseitig und letztlich auch intelligent macht. Für die Ameisen heißt das: Wenn sie z.B. einen Apfel sehen, dann ist es nicht immer gut, sofort dorthin zu laufen. Um das zu entscheiden, brauchen sie Bedingungen. Das unterscheidet letztlich eine schlaue Ameise von einer nicht so schlauen ...
+	    </p>
+	    
+	    <div class="page-header">
+        <h2 id="einleitung">Erste Schritte</h2>
+	    </div>
 	    
       <div style="height:300px"></div>
 	    
