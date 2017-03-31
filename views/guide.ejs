@@ -19,6 +19,19 @@
 	    <!-- Here comes the content -->
 	    
 	    <div class="page-header">
+        <h2 id="01">Inhaltsverzeichnis</h2>
+	    </div>
+	    
+	    <p><a href="#01">Am Anfang der Zeit</a></p>
+	    <p><a href="#02">Die Welt von AntMe!</a></p>
+	    <p><a href="#03">Der AntMe!-Server</a></p>
+	    <p><a href="#04">Ameisen und Programmieren</a></p>
+	    <p><a href="#05">Erste Schritte</a></p>
+	    <p><a href="#06">Zucker und Apfel</a></p>
+	    <p><a href="#07">Wachstum und Sterben</a></p>
+	    <p><a href="#08">Gedächtnis und Kommunikation</a></p>
+	    
+	    <div class="page-header">
         <h2 id="01">Am Anfang der Zeit</h2>
 	    </div>
 	    
@@ -139,8 +152,43 @@
 	    </p>
 	    
 	    <div class="page-header">
-        <h2 id="06">Zucker und Apfel</h2>
+        <h2 id="06">Apfel und Zucker</h2>
 	    </div>
+	    
+	    <p>Unser lieber Bofei bewegt sich über das Spielfeld und sieht plötzlich einen Zuckerhaufen in seiner Nähe. Das Ereignis "SiehtZucker" wird aufgerufen und innerhalb dieses Ereignises kann man über "zucker" auf das aktuelle Zuckerobjekt zugreifen. Also, lieber Bofei, auf zum Zucker:
+	    </p>
+	    
+	    <p><img src="/images/06_zucker.png" class="img-thumbnail"></img></p>
+	    
+	    <p>Erreicht Bofei den Zuckerhaufen, dann wird das Ereignis "ZuckerErreicht" aufgerufen. Auch hier können wir über "zucker" auf das Zuckerobjekt zugreifen. Bofei nimmt sich also ein Stückchen Zucker und kehrt zum Ameisenbau zurück:
+	    </p>
+	    
+	    <p><img src="/images/06_zuckererreicht.png" class="img-thumbnail"></img></p>
+	    
+	    <p>Im Ameisenbau wird der Zucker automatisch abgeladen. Ist doch süß, wie die Ameisen ihre Zuckerwürfelchen tragen, nicht? Ein Zuckerhaufen besteht aus 50 Zuckerstücken. Bofei kann also 50 Mal zum Zucker zurücklaufen und sich ein neues Stückchen holen. Aber halt: Wir haben uns gar nicht gemerkt, wo der Zuckerhaufen war! Mist, wir müssen also neu suchen ...
+	    </p>
+	    
+	    <p><img src="/images/06_mitZucker.png" class="img-thumbnail"></img></p>
+	    
+	    <p>Mit dem Apfel geht es ganz ähnlich. Nur heißt hier der Befehl "BringeApfelZuBau". Dieser Befehl braucht kein Apfelobjekt, hat aber auch nur Wirkung, wenn Bofei sich direkt bei einem Apfel befindet. Dann stellt sich Bofei zum Apfel und wartet, bis 4 Träger zusammengekommen sind. Gemeinsam tragen sie den Apfel zum Bau und liefern ihn dort ab.
+	    </p>
+	    
+	    <div class="page-header">
+        <h2 id="07">Wachstum und Sterben</h2>
+	    </div>
+	    
+	    <p>Die anstrengende Suche nach Nahrung wird natürlich belohnt: Für vier Zuckerwürfel vergrößert sich das Volk um eine Ameise. Mit einem Apfel vergrößert sich das Volk um ganze 10 Ameisen. Das ganze ist eine positive Rückkopplung: Je mehr Ameisen, umso schnell kann das Volk Nahrung sammeln und umso schneller wächst es. Es ist nicht unüblich, dass ein Ameisenvolk die Grenze von 100 Ameisen erreicht. Dann ist der Ameisenbau leider voll, die Energie aus der Nahrung wird aber gespeichert. Sobald eine Ameise stirbt, kann sie mit dieser Energie sofort ersetzt werden.
+	    </p>
+	    
+	    <p>Wie sterben Ameisen eigentlich? Eine Ameise kann auf zwei Arten sterben, durch Übermüdung oder durch eine Wanze. Jede Ameise hat eine Reichweite von 3000 Schritten. Sobald diese Reichweite aufgebraucht ist, stirbt sie auf der Stelle. Um die Reichweite aufzuladen, muss sie einmal zum Bau zurückkehren. Dabei reicht es nicht, wenn sie sich zufälligerweise durch den Bau bewegt, sondern sie muss bewusst den Befehl "GeheZuBau" ausführen. Dann wird ihre Reichweite sofort wieder auf die 3000 Schritte aufgeladen. Überlege dir, wie man das geschickt machen kann. Die zweite Art zu sterben ist durch den Angriff einer Wanze. Hier hat sie eine Chance, wenn sie auf das Ereignis "SiehtWanze" entsprechend reagiert.
+	    </p>
+	    
+	    <div class="page-header">
+        <h2 id="08">Gedächtnis und Kommunikation</h2>
+	    </div>
+	    
+	    <p>
+	    </p>
 	    
       <div style="height:300px"></div>
 	    
