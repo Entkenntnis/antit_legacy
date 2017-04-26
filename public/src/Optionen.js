@@ -56,6 +56,7 @@
     , WanzenHügelAbstand : 250
     , ZufallRichtungsVerschiebung : 11
     , EntwicklerModus : true
+    , Toleranz : 3
   }
  
   //export

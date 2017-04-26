@@ -745,12 +745,13 @@ function Ant(_pos, playerid) {
   }
   
   function reachedHome() {
-    myPlayer().addPoints(my.load*Optionen.PunkteProZucker);
-    myHill().addEnergy(my.load*Optionen.EnergieProZucker);
-    myPlayer().addSugar(my.load);
-    my.load = 0;
     my.lap = 0;
-    my.energy = Optionen.AmeisenEnergie;
+  }
+  
+  function addSugar(load) {
+    myPlayer().addPoints(load*Optionen.PunkteProZucker);
+    myHill().addEnergy(load*Optionen.EnergieProZucker);
+    myPlayer().addSugar(load);
   }
   
   // visuals
@@ -777,8 +778,15 @@ function Ant(_pos, playerid) {
   }
   
   // jobs - general
-  this.addJob = function(job) {
-    my.jobs.splice(my.insertionPoint, 0, job);
+  this.addJob = function(name, val, cb) {
+    my.jobs.splice(my.insertionPoint, 0, new Job(name, val, cb));
+  }
+  
+  this.addSimpleJob = function(f) {
+    this.addJob("SIMPLE", undefined, function(){
+      f.apply(this)
+      return true
+    })
   }
   
   this.stop = function() {
@@ -788,7 +796,7 @@ function Ant(_pos, playerid) {
   
   // jobs - basic movement
   this.addGoJob = function(steps) {
-    this.addJob(new Job("GO", undefined, function(){
+    this.addJob("GO", undefined, function(){
       var toMove = 0;
       var finished = false;
       var curSpeed = Optionen.AmeiseGeschwindigkeit;
@@ -804,18 +812,18 @@ function Ant(_pos, playerid) {
       var oldx = my.pos.x;
       var oldy = my.pos.y;
       var newpos = moveDir(my.pos, my.heading, toMove);
-      if (Sim.playground.isInBound(newpos, 2)) {
+      if (Sim.playground.isInBound(newpos, Optionen.Toleranz)) {
         this.setPos(newpos);
       } else {
         finished = true;
         API.callUserFunc("RandErreicht");
       }
       return finished;
-    }))
+    })
   }
   
   this.addTurnJob = function(degree) {
-    this.addJob(new Job("TURN", undefined, function(){
+    this.addJob("TURN", undefined, function(){
       var toTurn = 0;
       var finished = false;
       if (Math.abs(degree) < Optionen.AmeiseDrehgeschwindigkeit) {
@@ -827,19 +835,50 @@ function Ant(_pos, playerid) {
       }
       this.turn(toTurn);
       return finished;
-    }))
+    })
   }
   
+  // jobs - helper
   this.addTurnToJob = function(angle) {
     var rotation = getRotation(my.heading, angle)
     if (rotation != 0)
       this.addTurnJob(rotation)
   }
   
+  this.addWaitJob = function(_rounds) {
+    this.addJob("WAIT", undefined, function(){
+      return rounds-- <= 0
+    })
+  }
   
+  // jobs - Nahrung
+  this.addTakeJob = function(sugar) {
+    this.addSimpleJob(function(){
+      var d = dist(my.pos, sugar.getPos());
+      if (d <= Optionen.Toleranz) {
+        while(my.load < Optionen.AmeiseTragkraft) {
+          var t = sugar.unload1Sugar();
+          if (t) {
+            my.load++;
+          } else {
+            break;
+          }
+        }
+      }
+      updateGO();
+    })
+  }
   
-  
-  
+  this.addDropJob = function() {
+    this.addSimpleJob(function(){
+      var d = dist(my.pos, myHill().getPos())
+      if (d <= Optionen.Toleranz) {
+        addSugar(my.load)
+      }
+      my.load = 0;
+      updateGO();
+    })
+  }
   
   
   
@@ -879,46 +918,6 @@ function Ant(_pos, playerid) {
     return destination;
   }
   
-  this.addTakeJob = function(sugar) {
-    var cb = function() {
-      var d = dist(my.pos, sugar.getPos());
-      if (d < 2) {
-        while(my.load < Optionen.AmeiseTragkraft) {
-          var t = sugar.unload1Sugar();
-          if (t) {
-            my.load++;
-          } else {
-            break;
-          }
-        }
-      }
-      updateGO();
-      return true;
-    };
-    this.addJob(new Job("TAKE", sugar, cb));
-  }
-  
-  this.addDropJob = function() {
-    var cb = function() {
-      my.load = 0;
-      updateGO();
-      return true;
-    };
-    this.addJob(new Job("DROP", undefined, cb));
-  }
-  
-  this.addWaitJob = function(_rounds) {
-    var rounds = _rounds;
-    var cb = function() {
-      if (rounds-- > 0) {
-        return false;
-      } else {
-        return true;
-      }
-    };
-    this.addJob(new Job("WAIT", rounds, cb));
-  }
-  
   this.addSendMemoryJob = function() {
     var cb = function() {
       if (dist(my.pos, myHill().getPos()) < Optionen.HügelRadius) {
@@ -944,7 +943,7 @@ function Ant(_pos, playerid) {
       }
       return true;
     }; 
-    this.addJob(new Job("SENDMEMORY", {}, cb));
+    this.addJob("SENDMEMORY", {}, cb);
   }
   
   this.addAppleJob = function() {
@@ -974,7 +973,7 @@ function Ant(_pos, playerid) {
       this.setPos({x:my.pos.x + apple.dx, y:my.pos.y + apple.dy});
       return false;
     };
-    this.addJob(new Job("APPLE", apple, cb));
+    this.addJob("APPLE", apple, cb);
   }
   
   this.addCustomJob = function(_f) {
@@ -985,7 +984,7 @@ function Ant(_pos, playerid) {
         return ret;
       return true;
     };
-    this.addJob(new Job("CUSTOM", f, cb));
+    this.addJob("CUSTOM", f, cb);
   }
   
   var gotoHelper = function(obj, snap, f, col) {
@@ -1012,7 +1011,7 @@ function Ant(_pos, playerid) {
     };
     my.jobs.splice(0, my.insertionPoint);
     my.insertionPoint = 0;
-    this.addJob(new Job("DEST", obj, cb));
+    this.addJob("DEST", obj, cb);
   }.bind(this);
   
   this.goToSugar = function(sugar, parent) {
@@ -1035,7 +1034,7 @@ function Ant(_pos, playerid) {
   
   this.goToHome = function(parent) {
     if (this.getDestination() != HILL) {
-      gotoHelper(myHill(), Optionen.BauErreichtRadius, function() {
+      gotoHelper(myHill(), 1, function() {
         reachedHome();
         API.callUserFunc("BauErreicht", [myHill()]);
       });
