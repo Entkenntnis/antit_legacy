@@ -270,7 +270,7 @@ API.addFunc("Zufallsname", function() {
     name += consonants[Math.floor(Math.random()*consonants.length)]
     name += vocals[Math.floor(Math.random()*vocals.length)]
   }
-  return name.charAt(0).toUpperCase() + name.slice(1);;
+  return capitalize(name);
 });
 
 Global.ZUCKER = SUGAR;

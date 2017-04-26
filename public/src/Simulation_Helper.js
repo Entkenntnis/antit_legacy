@@ -58,3 +58,22 @@ function removeIf(arr, f) {
       }
   }
 }
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+function makeAttributes(obj, opts) {
+  var output = {}
+  for (var k in opts) {
+    output[k] = opts[k]
+    obj['get' + capitalize(k)] = makeGetter(output, k)
+  }
+  return output
+}
+
+function makeGetter(output, key) {
+  return function(){
+    return output[key]
+  }
+}

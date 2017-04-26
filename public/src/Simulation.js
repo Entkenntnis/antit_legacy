@@ -69,6 +69,25 @@ function removeIf(arr, f) {
       }
   }
 }
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+function makeAttributes(obj, opts) {
+  var output = {}
+  for (var k in opts) {
+    output[k] = opts[k]
+    obj['get' + capitalize(k)] = makeGetter(output, k)
+  }
+  return output
+}
+
+function makeGetter(output, key) {
+  return function(){
+    return output[key]
+  }
+}
 // Constants
 
 var SUGAR = "Sugar";
@@ -664,142 +683,90 @@ function Bug(_pos) {
 function Ant(_pos, _playerid) {
   
   Ant.counter = Ant.counter || 1;
-  var speed = Optionen.AmeiseGeschwindigkeit;
-  var rotationSpeed = Optionen.AmeiseDrehgeschwindigkeit;
-  var range = Optionen.AmeiseSichtweite;
-  var maxLoad = Optionen.AmeiseTragkraft;
-  var pos = _pos;
-  var playerid = _playerid;
-  var key = playerid + ":" + Ant.counter++;
-  var heading = Math.floor(Math.random()*360);
-  var load = 0;
-  var jobs = [];
-  var insertionPoint = 0;
-  var maxDistance = Optionen.AmeisenReichweite;
-  var lap = 0;
-  var tired = false;
-  var maxEnergy = Optionen.AmeisenEnergie;
-  var energy = maxEnergy;
-  var previousBug = undefined;
-  var memory = {};
+  
+  var my = makeAttributes(this, {
+    speed: Optionen.AmeiseGeschwindigkeit,
+    rotationSpeed: Optionen.AmeiseDrehgeschwindigkeit,
+    range: Optionen.AmeiseSichtweite,
+    maxLoad: Optionen.AmeiseTragkraft,
+    maxDistance: Optionen.AmeisenReichweite,
+    maxEnergy: Optionen.AmeisenEnergie,
+    pos: _pos,
+    playerid: _playerid,
+    key: _playerid + ":" + Ant.counter++,
+    heading: Math.floor(Math.random()*360),
+    load: 0,
+    jobs: [],
+    insertionPoint: 0,
+    lap: 0,
+    tired: false,
+    energy: Optionen.AmeisenEnergie,
+    previousBug: undefined,
+    memory:{}
+  })
   
   function updateGO() {
-    Vw.antStore.get(key).position.copy(Sim.playground.toViewPos(pos));
-    Vw.antStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
-    if (load > 0) {
-      var sugar = Vw.sugarBoxStore.get(key);
-      sugar.position.copy(Sim.playground.toViewPos(pos, 5.5));
-    } else if (Vw.sugarBoxStore.has(key)) {
-      Vw.sugarBoxStore.remove(key);
+    var antBody = Vw.antStore.get(my.key)
+    antBody.position.copy(Sim.playground.toViewPos(my.pos));
+    antBody.rotation.y = -my.heading / 180 * Math.PI + Math.PI;
+    if (my.load > 0) {
+      var sugarBox = Vw.sugarBoxStore.get(my.key);
+      sugarBox.position.copy(Sim.playground.toViewPos(my.pos, 5.5));
+    } else if (Vw.sugarBoxStore.has(my.key)) {
+      Vw.sugarBoxStore.remove(my.key);
     }
   }
   
   function reachedHome() {
-    Sim.players[playerid].addPoints(load*Optionen.PunkteProZucker);
-    Sim.hills[playerid].addEnergy(load*Optionen.EnergieProZucker);
-    Sim.players[playerid].addSugar(load);
-    load = 0;
-    lap = 0;
-    tired = false;
-    energy = maxEnergy;
-  }
-  
-  this.getPos = function() {
-    return pos;
-  }
-  
-  this.getPlayerid = function() {
-    return playerid;
-  }
-  
-  this.getJobs = function() {
-    return jobs;
-  }
-  
-  this.getRange = function() {
-    return range;
-  }
-  
-  this.getLoad = function() {
-    return load;
-  }
-  
-  this.getHeading = function() {
-    return heading;
-  }
-  
-  this.getMaxLoad = function() {
-    return maxLoad;
-  }
-  
-  this.getKey = function() {
-    return key;
-  }
-  
-  this.getMaxSpeed = function() {
-    return speed;
-  }
-  
-  this.getMaxDistance = function() {
-    return maxDistance;
-  }
-  
-  this.getLap = function() {
-    return lap;
-  }
-  
-  this.getEnergy = function() {
-    return energy;
+    Sim.players[my.playerid].addPoints(my.load*Optionen.PunkteProZucker);
+    Sim.hills[my.playerid].addEnergy(my.load*Optionen.EnergieProZucker);
+    Sim.players[my.playerid].addSugar(my.load);
+    my.load = 0;
+    my.lap = 0;
+    my.tired = false;
+    my.energy = my.maxEnergy;
   }
   
   this.subEnergy = function(val, obj) {
-    energy -= val;
+    my.energy -= val;
     API.setAnt(this);
     API.callUserFunc("WirdAngegriffen", [obj]);
     API.close();
-  }
-  
-  this.getMaxEnergy = function() {
-    return maxEnergy;
-  }
-  
-  this.getMemory = function() {
-    return memory;
   }
   
   this.die = function() {
     API.setAnt(this);
     API.callUserFunc("IstGestorben");
     API.close();
-    Vw.antStore.remove(key);
-    if (Vw.sugarBoxStore.has(key))
-      Vw.sugarBoxStore.remove(key);
-    Sim.players[playerid].subAnt();
+    Vw.antStore.remove(my.key);
+    if (Vw.sugarBoxStore.has(my.key))
+      Vw.sugarBoxStore.remove(my.key);
+    Sim.players[my.playerid].subAnt();
   }
   
   this.setPos = function(newpos) {
-    lap += dist(pos, newpos);
-    pos.x = newpos.x;
-    pos.y = newpos.y;
+    my.lap += dist(my.pos, newpos);
+    my.pos.x = newpos.x;
+    my.pos.y = newpos.y;
     updateGO();
   }
   
   this.turn = function(degree) {
-    heading += Math.round(degree);
-    heading %= 360;
-    while (heading < 0)
-      heading += 360;
-    heading = Math.round(heading);
+    my.heading += Math.round(degree);
+    my.heading %= 360;
+    while (my.heading < 0)
+      my.heading += 360;
+    my.heading = Math.round(my.heading);
     updateGO();
   }
   
   this.addJob = function(job) {
-    jobs.splice(insertionPoint, 0, job);
+    my.jobs.splice(my.insertionPoint, 0, job);
   }
   
   this.stop = function() {
-    jobs = [];
-    insertionPoint = 0;
+    my.jobs = [];
+    my.insertionPoint = 0;
   }
   
   this.getDestination = function() {
@@ -831,8 +798,8 @@ function Ant(_pos, _playerid) {
     var cb = function() {
       var toMove = 0;
       var finished = false;
-      var curSpeed = speed;
-      if (load > 0)
+      var curSpeed = my.speed;
+      if (my.load > 0)
           curSpeed *= Optionen.ZuckerVerlangsamung;
       if (steps < curSpeed) {
         finished = true;
@@ -841,9 +808,9 @@ function Ant(_pos, _playerid) {
         toMove = curSpeed;
         steps -= curSpeed;
       }
-      var oldx = pos.x;
-      var oldy = pos.y;
-      var newpos = moveDir(pos, heading, toMove);
+      var oldx = my.pos.x;
+      var oldy = my.pos.y;
+      var newpos = moveDir(my.pos, my.heading, toMove);
       if (Sim.playground.isInBound(newpos, 2)) {
         this.setPos(newpos);
       } else {
@@ -857,7 +824,7 @@ function Ant(_pos, _playerid) {
   
   this.addGoStraightJob = function() {
     var cb = function () {
-      var newpos = moveDir(pos, heading, speed);
+      var newpos = moveDir(my.pos, my.heading, my.speed);
       if (Sim.playground.isInBound(newpos, 2)) {
         this.setPos(newpos);
       } else {
@@ -874,12 +841,12 @@ function Ant(_pos, _playerid) {
     var cb = function() {
       var toTurn = 0;
       var finished = false;
-      if (Math.abs(degree) < rotationSpeed) {
+      if (Math.abs(degree) < my.rotationSpeed) {
         finished = true;
         toTurn = degree;
       } else {
-        toTurn = rotationSpeed * Math.sign(degree);
-        degree -= rotationSpeed * Math.sign(degree);
+        toTurn = my.rotationSpeed * Math.sign(degree);
+        degree -= my.rotationSpeed * Math.sign(degree);
       }
       this.turn(toTurn);
       return finished;
@@ -889,12 +856,12 @@ function Ant(_pos, _playerid) {
   
   this.addTakeJob = function(sugar) {
     var cb = function() {
-      var d = dist(pos, sugar.getPos());
+      var d = dist(my.pos, sugar.getPos());
       if (d < 2) {
-        while(load < maxLoad) {
+        while(my.load < my.maxLoad) {
           var t = sugar.unload1Sugar();
           if (t) {
-            load++;
+            my.load++;
           } else {
             break;
           }
@@ -908,7 +875,7 @@ function Ant(_pos, _playerid) {
   
   this.addDropJob = function() {
     var cb = function() {
-      load = 0;
+      my.load = 0;
       updateGO();
       return true;
     };
@@ -930,7 +897,7 @@ function Ant(_pos, _playerid) {
   this.addTurnToJob = function(_angle) {
     var angle = _angle;
     var cb = function() {
-      var rotation = getRotation(heading, angle);
+      var rotation = getRotation(my.heading, angle);
       if (rotation != 0)
         this.addTurnJob(rotation);
       return true;
@@ -940,12 +907,12 @@ function Ant(_pos, _playerid) {
   
   this.addSendMsgJob = function(_topic, _value) {
     var cb = function() {
-      if (dist(this.getPos(), Sim.hills[playerid].getPos()) < Optionen.HügelRadius) {
+      if (dist(my.pos, Sim.hills[my.playerid].getPos()) < Optionen.HügelRadius) {
         var curAnts = [];
         Sim.ants.forEach(function (ant) {
-          if (ant.getPlayerid() != playerid)
+          if (ant.getPlayerid() != my.playerid)
             return;
-          if (dist(ant.getPos(), Sim.hills[playerid].getPos()) < Optionen.AmeiseSichtweite)
+          if (dist(ant.getPos(), Sim.hills[my.playerid].getPos()) < Optionen.AmeiseSichtweite)
             curAnts.push(ant);
         });
         curAnts.forEach(function (ant) {
@@ -966,12 +933,12 @@ function Ant(_pos, _playerid) {
   
   this.addSendMemoryJob = function() {
     var cb = function() {
-      if (dist(this.getPos(), Sim.hills[playerid].getPos()) < Optionen.HügelRadius) {
+      if (dist(my.pos, Sim.hills[my.playerid].getPos()) < Optionen.HügelRadius) {
         var curAnts = [];
         Sim.ants.forEach(function (ant) {
-          if (ant.getPlayerid() != playerid)
+          if (ant.getPlayerid() != my.playerid)
             return;
-          if (dist(ant.getPos(), Sim.hills[playerid].getPos()) < Optionen.AmeiseSichtweite)
+          if (dist(ant.getPos(), Sim.hills[my.playerid].getPos()) < Optionen.AmeiseSichtweite)
             curAnts.push(ant);
         });
         curAnts.forEach(function (ant) {
@@ -1015,7 +982,7 @@ function Ant(_pos, _playerid) {
         this.goToHome();
         return true;
       }
-      heading = apple.heading;
+      my.heading = apple.heading;
       this.setPos({x:pos.x + apple.dx, y:pos.y + apple.dy});
       return false;
     };
@@ -1040,13 +1007,13 @@ function Ant(_pos, _playerid) {
           return true;
       }
       var des = obj.getPos();
-      var d = dist(pos, des);
+      var d = dist(my.pos, des);
       if (d < snap) {
         f.bind(this)();
         return true;
       } else {
-        var angle = getDir(pos, des);
-        var rotation = getRotation(heading, angle);
+        var angle = getDir(my.pos, des);
+        var rotation = getRotation(my.heading, angle);
         var v = Optionen.ZufallRichtungsVerschiebung;
         rotation += Math.floor(Math.random()*v*2-v);
         if (rotation != 0)
@@ -1055,8 +1022,8 @@ function Ant(_pos, _playerid) {
         return false;
       }
     };
-    jobs.splice(0, insertionPoint);
-    insertionPoint = 0;
+    my.jobs.splice(0, my.insertionPoint);
+    my.insertionPoint = 0;
     this.addJob(new Job("DEST", obj, cb));
   }.bind(this);
   
@@ -1080,7 +1047,7 @@ function Ant(_pos, _playerid) {
   
   this.goToHome = function(parent) {
     if (this.getDestination() != HILL) {
-      var hill = Sim.hills[playerid];
+      var hill = Sim.hills[my.playerid];
       gotoHelper(hill, Optionen.BauErreichtRadius, function() {
         reachedHome();
         API.callUserFunc("BauErreicht", [hill]);
@@ -1089,6 +1056,8 @@ function Ant(_pos, _playerid) {
   }
   
   this.update = function() {
+    var jobs = my.jobs
+    var insertionPoint = my.insertionPoint
     insertionPoint = jobs.length;
     API.setAnt(this);
     
@@ -1109,33 +1078,33 @@ function Ant(_pos, _playerid) {
     
     // sights
     if (this.getDestination() === undefined) {
-      var sugar = closest(pos, Sim.sugars, range);
+      var sugar = closest(my.pos, Sim.sugars, my.range);
       if (sugar != undefined) {
         API.callUserFunc("SiehtZucker", [sugar]);
       }
     }
     
     if (this.getDestination() === undefined) {
-      var apple = closest(pos, Sim.apples, range);
+      var apple = closest(my.pos, Sim.apples, my.range);
       if (apple != undefined) {
         API.callUserFunc("SiehtApfel", [apple]);
       }
     }
     
-    var bug = closest(pos, Sim.bugs, range);
+    var bug = closest(my.pos, Sim.bugs, my.range);
     if (bug) {
-      if (bug != previousBug) {
+      if (bug != my.previousBug) {
         API.callUserFunc("SiehtWanze", [bug]);
-        previousBug = bug;
+        my.previousBug = bug;
       }
     } else {
-      previousBug = undefined;
+      my.previousBug = undefined;
     }
     
-    if (lap > Optionen.AmeisenReichweite * 2 / 3) {
-      if (!tired) {
+    if (my.lap > Optionen.AmeisenReichweite * 2 / 3) {
+      if (!my.tired) {
         API.callUserFunc("WirdMüde");
-        tired = true;
+        my.tired = true;
       }
     }
     
@@ -1146,19 +1115,19 @@ function Ant(_pos, _playerid) {
     API.callUserFunc("Tick");
     
     // manage memory
-    for (var property in memory) {
-      if (memory.hasOwnProperty(property)) {
-        var cur = memory[property]
+    for (var property in my.memory) {
+      if (my.memory.hasOwnProperty(property)) {
+        var cur = my.memory[property]
         if (typeof cur == "object" && cur.get) {
           var obj = cur.get(Sim);
           if (obj !== undefined) {
             if (obj.constructor.name == "Apple" || obj.constructor.name == "Sugar" ||
                 obj.constructor.name == "Bug" || obj.constructor.name == "Hill") {
               API.message("Das Gedächtnis kann als Wert kein Sichtungsobjekt speichern.");
-              delete memory[property];
+              delete my.memory[property];
             }
           }
-          memory[property] = obj;
+          my.memory[property] = obj;
         }
       }
     }
@@ -1167,7 +1136,7 @@ function Ant(_pos, _playerid) {
   }
   
   // constructor
-  Vw.setAntBodyColor(Vw.antStore.get(key), Optionen.SpielerFarben[playerid]);
+  Vw.setAntBodyColor(Vw.antStore.get(my.key), Optionen.SpielerFarben[my.playerid]);
   updateGO();
 }
 // JOB
@@ -1610,7 +1579,7 @@ API.addFunc("Zufallsname", function() {
     name += consonants[Math.floor(Math.random()*consonants.length)]
     name += vocals[Math.floor(Math.random()*vocals.length)]
   }
-  return name.charAt(0).toUpperCase() + name.slice(1);;
+  return capitalize(name);
 });
 
 Global.ZUCKER = SUGAR;
@@ -1714,7 +1683,7 @@ if (Optionen.EntwicklerModus) {
 // end of Simulation.js
 
 // access for SimPulse
-am._sim = Sim;
+AntMe._sim = Sim;
 
 // end of encapsulation
 })();
