@@ -192,9 +192,18 @@ function Playground(_width, _height) {
     });
     
     removeIf(Sim.ants, function(ant) {
-      if (ant.getLap() > Optionen.AmeisenReichweite || ant.getEnergy() <= 0) {
-        ant.die();
-        return true;
+      var reason = undefined
+      if (ant.getLap() > Optionen.AmeisenReichweite) {
+        reason = "Müdigkeit"
+      } else if (ant.getEnergy() <= 0) {
+        reason = "Wanze"
+      }
+      if (reason) {
+        API.setAnt(ant)
+        API.callUserFunc("IstGestorben", [reason])
+        API.close()
+        ant.die()
+        return true
       }
       return false;
     })

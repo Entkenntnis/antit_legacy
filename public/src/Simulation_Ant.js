@@ -1,13 +1,14 @@
 // ANT
 
-function Ant(_pos, _playerid) {
+function Ant(_pos, playerid) {
   
   Ant.counter = Ant.counter || 1;
   
+  // attributes
   var my = makeAttributes(this, {
     pos: _pos,
-    playerid: _playerid,
-    key: _playerid + ":" + Ant.counter++,
+    playerid: playerid,
+    key: playerid + ":" + Ant.counter++,
     heading: Math.floor(Math.random()*360),
     load: 0,
     jobs: [],
@@ -18,6 +19,7 @@ function Ant(_pos, _playerid) {
     memory:{}
   })
   
+  // helper
   function myPlayer() {
     return Sim.players[my.playerid]
   }
@@ -26,49 +28,7 @@ function Ant(_pos, _playerid) {
     return Sim.hills[my.playerid]
   }
   
-  
-  
-  
-  
-  
-  function updateGO() {
-    var antBody = Vw.antStore.get(my.key)
-    antBody.position.copy(Sim.playground.toViewPos(my.pos));
-    antBody.rotation.y = -my.heading / 180 * Math.PI + Math.PI;
-    if (my.load > 0) {
-      var sugarBox = Vw.sugarBoxStore.get(my.key);
-      sugarBox.position.copy(Sim.playground.toViewPos(my.pos, 5.5));
-    } else if (Vw.sugarBoxStore.has(my.key)) {
-      Vw.sugarBoxStore.remove(my.key);
-    }
-  }
-  
-  function reachedHome() {
-    myPlayer().addPoints(my.load*Optionen.PunkteProZucker);
-    myHill().addEnergy(my.load*Optionen.EnergieProZucker);
-    myPlayer().addSugar(my.load);
-    my.load = 0;
-    my.lap = 0;
-    my.energy = Optionen.AmeisenEnergie;
-  }
-  
-  this.subEnergy = function(val, obj) {
-    my.energy -= val;
-    API.setAnt(this);
-    API.callUserFunc("WirdAngegriffen", [obj]);
-    API.close();
-  }
-  
-  this.die = function() {
-    API.setAnt(this);
-    API.callUserFunc("IstGestorben");
-    API.close();
-    Vw.antStore.remove(my.key);
-    if (Vw.sugarBoxStore.has(my.key))
-      Vw.sugarBoxStore.remove(my.key);
-    myPlayer().subAnt();
-  }
-  
+  // movement
   this.setPos = function(newpos) {
     my.lap += dist(my.pos, newpos);
     my.pos.x = newpos.x;
@@ -85,6 +45,49 @@ function Ant(_pos, _playerid) {
     updateGO();
   }
   
+  // life
+  this.subEnergy = function(val, obj) {
+    my.energy -= val;
+  }
+  
+  this.die = function() {
+    removeGO()
+    myPlayer().subAnt();
+  }
+  
+  function reachedHome() {
+    myPlayer().addPoints(my.load*Optionen.PunkteProZucker);
+    myHill().addEnergy(my.load*Optionen.EnergieProZucker);
+    myPlayer().addSugar(my.load);
+    my.load = 0;
+    my.lap = 0;
+    my.energy = Optionen.AmeisenEnergie;
+  }
+  
+  // visuals
+  function setColor() {
+    Vw.setAntBodyColor(Vw.antStore.get(my.key), Optionen.SpielerFarben[my.playerid]);
+  }
+  
+  function updateGO() {
+    var antBody = Vw.antStore.get(my.key)
+    antBody.position.copy(Sim.playground.toViewPos(my.pos));
+    antBody.rotation.y = -my.heading / 180 * Math.PI + Math.PI;
+    if (my.load > 0) {
+      var sugarBox = Vw.sugarBoxStore.get(my.key);
+      sugarBox.position.copy(Sim.playground.toViewPos(my.pos, 5.5));
+    } else if (Vw.sugarBoxStore.has(my.key)) {
+      Vw.sugarBoxStore.remove(my.key);
+    }
+  }
+  
+  function removeGO() {
+    Vw.antStore.remove(my.key);
+    if (Vw.sugarBoxStore.has(my.key))
+      Vw.sugarBoxStore.remove(my.key);
+  }
+  
+  // jobs - general
   this.addJob = function(job) {
     my.jobs.splice(my.insertionPoint, 0, job);
   }
@@ -93,6 +96,57 @@ function Ant(_pos, _playerid) {
     my.jobs = [];
     my.insertionPoint = 0;
   }
+  
+  // jobs - movement
+  this.addGoJob = function(steps) {
+    this.addJob(new Job("GO", undefined, function(){
+      var toMove = 0;
+      var finished = false;
+      var curSpeed = Optionen.AmeiseGeschwindigkeit;
+      if (my.load > 0)
+          curSpeed *= Optionen.ZuckerVerlangsamung;
+      if (steps < curSpeed) {
+        finished = true;
+        toMove = steps;
+      } else {
+        toMove = curSpeed;
+        steps -= curSpeed;
+      }
+      var oldx = my.pos.x;
+      var oldy = my.pos.y;
+      var newpos = moveDir(my.pos, my.heading, toMove);
+      // Rand mit einer Toleranz von 2 pixel
+      if (Sim.playground.isInBound(newpos, 2)) {
+        this.setPos(newpos);
+      } else {
+        finished = true;
+        API.callUserFunc("RandErreicht", [steps]);
+      }
+      return finished;
+    }))
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   this.getDestination = function() {
     var destination = undefined;
@@ -118,34 +172,7 @@ function Ant(_pos, _playerid) {
     return destination;
   }
   
-  this.addGoJob = function(_steps) {
-    var steps = _steps;
-    var cb = function() {
-      var toMove = 0;
-      var finished = false;
-      var curSpeed = Optionen.AmeiseGeschwindigkeit;
-      if (my.load > 0)
-          curSpeed *= Optionen.ZuckerVerlangsamung;
-      if (steps < curSpeed) {
-        finished = true;
-        toMove = steps;
-      } else {
-        toMove = curSpeed;
-        steps -= curSpeed;
-      }
-      var oldx = my.pos.x;
-      var oldy = my.pos.y;
-      var newpos = moveDir(my.pos, my.heading, toMove);
-      if (Sim.playground.isInBound(newpos, 2)) {
-        this.setPos(newpos);
-      } else {
-        finished = true;
-        API.callUserFunc("RandErreicht", [steps]);
-      }
-      return finished;
-    };
-    this.addJob(new Job("GO", steps, cb));
-  }
+
   
   this.addGoStraightJob = function() {
     var cb = function () {
@@ -425,6 +452,6 @@ function Ant(_pos, _playerid) {
   }
   
   // constructor
-  Vw.setAntBodyColor(Vw.antStore.get(my.key), Optionen.SpielerFarben[my.playerid]);
+  setColor()
   updateGO();
 }
