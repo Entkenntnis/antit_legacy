@@ -1,0 +1,1 @@
+while inotifywait -e modify .; do sleep 2; bash combine; done
