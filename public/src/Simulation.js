@@ -96,11 +96,14 @@ var APPLE = "Apple";
 var POSITION = "Position";
 // PLAYER 
   
-function Player(_id, _KI) {
+function Player(id, KI) {
 
-  var id = _id;
-  var KI = _KI;
-  var points = 0;
+  var my = makeAttributes(this, {
+    id: id,
+    KI: KI,
+    points: 0
+  })
+  
   var collectedSugar = 0;
   var ants = 0;
   var collectedApples = 0;
@@ -111,17 +114,17 @@ function Player(_id, _KI) {
   function initHTML() {
     var para = document.createElement("DIV");
     var nameE =document.createElement("DIV");
-    nameE.innerHTML = KI.Name;
+    nameE.innerHTML = my.KI.Name;
     nameE.style.minWidth = "180px";
     para.appendChild(nameE);
     para.style.display = "flex";
     para.style.fontWeight = "bold";
-    var hex = Optionen.SpielerFarben[id];
+    var hex = Optionen.SpielerFarben[my.id];
     var hexS = hex.toString(16);
     while (hexS.length < 6)
       hexS = "0" + hexS;
     para.style.color = "#" + hexS;
-    pointsE.id = "player" + id;
+    pointsE.id = "player" + my.id;
     pointsE.style.marginLeft = "10px";
     para.appendChild(pointsE);
     details.style.fontWeight = "normal";
@@ -157,21 +160,9 @@ function Player(_id, _KI) {
     updateDetails();
   }
   
-  this.getId = function() {
-    return id;
-  }
-  
-  this.getKI = function() {
-    return KI;
-  }
-  
-  this.getPoints = function() {
-    return points;
-  }
-  
   this.addPoints = function(amount) {
-    points = Math.max(0, points + amount);
-    pointsE.innerHTML = points + " Punkte";
+    my.points = Math.max(0, my.points + amount);
+    pointsE.innerHTML = my.points + " Punkte";
   }
   
   // constructor
@@ -397,62 +388,53 @@ function Playground(_width, _height) {
 }
 // HILL
 
-function Hill(_pos, _playerid) {
+function Hill(pos, playerid) {
 
   Hill.counter = Hill.counter || 1;
-  var pos = _pos;
-  var playerid = _playerid;
-  var key = Hill.counter++;
-  var energy = Optionen.AnfangsEnergie;
-  var cfi = 0;
-  var timeToNextAnt = Optionen.AmeiseWartezeit;
+  
+  var my = makeAttributes(this, {
+    pos: pos,
+    playerid: playerid,
+    key: Hill.counter++,
+    energy: Optionen.AnfangsEnergie,
+    feedIndex: 0,
+    timeToNextAnt: Optionen.AmeiseWartezeit
+  })
   
   function updateGO() {
-    Vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(pos));
+    Vw.hillStore.get(my.key).position.copy(Sim.playground.toViewPos(my.pos));
   }
   
-  this.getPos = function() {
-    return pos;
-  }
-  
-  this.getPlayerid = function() {
-    return playerid;
-  }
-  
-  this.getEnergy = function() {
-    return energy;
+  function setFlagColor() {
+    Vw.setHillFlagColor(Vw.hillStore.get(my.key), Optionen.SpielerFarben[my.playerid]);
   }
   
   this.addEnergy = function(val) {
-    energy += val;
-  }
-  
-  this.getFeedIndex = function() {
-    return cfi;
+    my.energy += val;
   }
   
   this.addFeed = function(val) {
-    cfi += val;
+    my.feedIndex += val;
   }
   
   this.update = function() {
     var ownAnts = 0;
     Sim.ants.forEach(function(ant) {
-      if (ant.getPlayerid() == playerid)
+      if (ant.getPlayerid() == my.playerid)
         ownAnts++;
     });
-    if (timeToNextAnt-- <= 0 && ownAnts < Optionen.AmeisenMaximum
-          && energy >= Optionen.EnergieFürAmeise) {
-      timeToNextAnt = Optionen.AmeiseWartezeit;
-      energy -= Optionen.EnergieFürAmeise;
+    if (my.timeToNextAnt-- <= 0 && ownAnts < Optionen.AmeisenMaximum
+          && my.energy >= Optionen.EnergieFürAmeise) {
+      my.timeToNextAnt = Optionen.AmeiseWartezeit;
+      my.energy -= Optionen.EnergieFürAmeise;
       var antPos = {x:pos.x,y:pos.y};
       var angle = Math.random()*Math.PI*2;
       var radius = Optionen.HügelRadius + (Math.random()*10 - 5);
       antPos.x += Math.cos(angle)*radius;
       antPos.y += Math.sin(angle)*radius;
-      var newAnt = new Ant(antPos, playerid)
+      var newAnt = new Ant(antPos, my.playerid)
       Sim.ants.push(newAnt);
-      Sim.players[playerid].addAnt();
+      Sim.players[my.playerid].addAnt();
       API.setAnt(newAnt);
       API.callUserFunc("IstGeboren");
       API.close();
@@ -460,7 +442,7 @@ function Hill(_pos, _playerid) {
   }
   
   // constructor
-  Vw.setHillFlagColor(Vw.hillStore.get(key), Optionen.SpielerFarben[playerid]);
+  setFlagColor()
   updateGO();
 }
 // SUGAR
@@ -621,9 +603,12 @@ function Apple(_pos) {
 }
 // BUG
 
-function Bug(_pos) {
+function Bug(pos) {
   
-  Bug.Counter = Bug.Counter || 1;
+  Bug.counter = Bug.counter || 1;
+  
+  var my = makeAttributes(this, {pos: pos})
+  
   var key = Bug.Counter++;
   var heading = Math.floor(Math.random()*360);
   var pos = _pos;
@@ -632,16 +617,12 @@ function Bug(_pos) {
   var towait = 0;
   
   function updateGO() {
-    Vw.bugStore.get(key).position.copy(Sim.playground.toViewPos(pos));
+    Vw.bugStore.get(key).position.copy(Sim.playground.toViewPos(my.pos));
     Vw.bugStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
   }
   
-  this.getPos = function() {
-    return pos;
-  }
-  
   this.update = function() {
-    var ant = closest(pos, Sim.ants, Optionen.WanzenKampfweite);
+    var ant = closest(my.pos, Sim.ants, Optionen.WanzenKampfweite);
     if (ant !== undefined) {
       ant.subEnergy(Optionen.WanzenAngriff, this);
     }
@@ -649,12 +630,12 @@ function Bug(_pos) {
       heading += Math.sign(torotate) * Optionen.WanzeDrehgeschwindigkeit;
       torotate -= Math.sign(torotate);
     } else if (togo > 0) {
-      var newpos = moveDir(pos, heading, Optionen.WanzeGeschwindigkeit);
+      var newpos = moveDir(my.pos, heading, Optionen.WanzeGeschwindigkeit);
       if (!Sim.playground.isInBound(newpos, 10)) {
         torotate = Math.round(180 / Optionen.WanzeDrehgeschwindigkeit);
         togo = 0;
       } else {
-        pos = newpos;
+        my.pos = newpos;
       }
       togo--;
     } else if (towait != 0){
@@ -663,14 +644,14 @@ function Bug(_pos) {
       towait = 30;
       torotate = Math.floor(Math.random()*40-20);
       togo = 60;
-      var destHill = closest(pos, Sim.hills, Optionen.WanzenHügelAbstand);
+      var destHill = closest(my.pos, Sim.hills, Optionen.WanzenHügelAbstand);
       if (destHill !== undefined) {
-        var angle = getDir(pos, destHill.getPos()) + 180;
+        var angle = getDir(my.pos, destHill.getPos()) + 180;
         torotate = Math.round(getRotation(heading, angle)/Optionen.WanzeDrehgeschwindigkeit);
       } else {
-        ant = closest(pos, Sim.ants, Optionen.WanzeSichtweite);
+        ant = closest(my.pos, Sim.ants, Optionen.WanzeSichtweite);
         if (ant!= undefined) {
-          var dir = getDir(pos, ant.getPos());
+          var dir = getDir(my.pos, ant.getPos());
           var rot = getRotation(heading, dir);
           torotate = Math.round(rot/Optionen.WanzeDrehgeschwindigkeit);
         }

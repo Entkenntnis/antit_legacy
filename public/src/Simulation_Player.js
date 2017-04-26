@@ -1,10 +1,13 @@
 // PLAYER 
   
-function Player(_id, _KI) {
+function Player(id, KI) {
 
-  var id = _id;
-  var KI = _KI;
-  var points = 0;
+  var my = makeAttributes(this, {
+    id: id,
+    KI: KI,
+    points: 0
+  })
+  
   var collectedSugar = 0;
   var ants = 0;
   var collectedApples = 0;
@@ -15,17 +18,17 @@ function Player(_id, _KI) {
   function initHTML() {
     var para = document.createElement("DIV");
     var nameE =document.createElement("DIV");
-    nameE.innerHTML = KI.Name;
+    nameE.innerHTML = my.KI.Name;
     nameE.style.minWidth = "180px";
     para.appendChild(nameE);
     para.style.display = "flex";
     para.style.fontWeight = "bold";
-    var hex = Optionen.SpielerFarben[id];
+    var hex = Optionen.SpielerFarben[my.id];
     var hexS = hex.toString(16);
     while (hexS.length < 6)
       hexS = "0" + hexS;
     para.style.color = "#" + hexS;
-    pointsE.id = "player" + id;
+    pointsE.id = "player" + my.id;
     pointsE.style.marginLeft = "10px";
     para.appendChild(pointsE);
     details.style.fontWeight = "normal";
@@ -61,21 +64,9 @@ function Player(_id, _KI) {
     updateDetails();
   }
   
-  this.getId = function() {
-    return id;
-  }
-  
-  this.getKI = function() {
-    return KI;
-  }
-  
-  this.getPoints = function() {
-    return points;
-  }
-  
   this.addPoints = function(amount) {
-    points = Math.max(0, points + amount);
-    pointsE.innerHTML = points + " Punkte";
+    my.points = Math.max(0, my.points + amount);
+    pointsE.innerHTML = my.points + " Punkte";
   }
   
   // constructor

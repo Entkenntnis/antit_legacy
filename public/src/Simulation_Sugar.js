@@ -1,36 +1,31 @@
 // SUGAR
 
-function Sugar(_pos) {
+function Sugar(pos) {
 
   Sugar.counter = Sugar.counter || 1;
-  var pos = _pos;
-  var key = Sugar.counter++;
-  var amount = Optionen.ZuckerGröße;
+  
+  var my = makeAttributes(this, {
+    pos: pos,
+    key: Sugar.counter++,
+    amount: Optionen.ZuckerGröße
+  })
   
   function updateGO() {
-    var GO = Vw.sugarStore.get(key);
-    GO.position.copy(Sim.playground.toViewPos(pos));
-    var linScale = amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung;
+    var GO = Vw.sugarStore.get(my.key);
+    GO.position.copy(Sim.playground.toViewPos(my.pos));
+    var linScale = my.amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung;
     var scale = Math.max(Math.pow(linScale, 1/2), 0.000001);
     GO.scale.set(scale, scale, scale);
   }
   
-  this.getAmount = function() {
-    return amount;
-  }
-  
-  this.getPos = function() {
-    return pos;
-  }
-  
   this.unload1Sugar = function() {
-    if (amount > 0) {
-      amount--;
+    if (my.amount > 0) {
+      my.amount--;
       updateGO();
       return true;
     } else {
-      if (Vw.sugarStore.has(key))
-        Vw.sugarStore.remove(key);
+      if (Vw.sugarStore.has(my.key))
+        Vw.sugarStore.remove(my.key);
       return false;
     }
   }

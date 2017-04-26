@@ -1,61 +1,52 @@
 // HILL
 
-function Hill(_pos, _playerid) {
+function Hill(pos, playerid) {
 
   Hill.counter = Hill.counter || 1;
-  var pos = _pos;
-  var playerid = _playerid;
-  var key = Hill.counter++;
-  var energy = Optionen.AnfangsEnergie;
-  var cfi = 0;
-  var timeToNextAnt = Optionen.AmeiseWartezeit;
+  
+  var my = makeAttributes(this, {
+    pos: pos,
+    playerid: playerid,
+    key: Hill.counter++,
+    energy: Optionen.AnfangsEnergie,
+    feedIndex: 0,
+    timeToNextAnt: Optionen.AmeiseWartezeit
+  })
   
   function updateGO() {
-    Vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(pos));
+    Vw.hillStore.get(my.key).position.copy(Sim.playground.toViewPos(my.pos));
   }
   
-  this.getPos = function() {
-    return pos;
-  }
-  
-  this.getPlayerid = function() {
-    return playerid;
-  }
-  
-  this.getEnergy = function() {
-    return energy;
+  function setFlagColor() {
+    Vw.setHillFlagColor(Vw.hillStore.get(my.key), Optionen.SpielerFarben[my.playerid]);
   }
   
   this.addEnergy = function(val) {
-    energy += val;
-  }
-  
-  this.getFeedIndex = function() {
-    return cfi;
+    my.energy += val;
   }
   
   this.addFeed = function(val) {
-    cfi += val;
+    my.feedIndex += val;
   }
   
   this.update = function() {
     var ownAnts = 0;
     Sim.ants.forEach(function(ant) {
-      if (ant.getPlayerid() == playerid)
+      if (ant.getPlayerid() == my.playerid)
         ownAnts++;
     });
-    if (timeToNextAnt-- <= 0 && ownAnts < Optionen.AmeisenMaximum
-          && energy >= Optionen.EnergieFürAmeise) {
-      timeToNextAnt = Optionen.AmeiseWartezeit;
-      energy -= Optionen.EnergieFürAmeise;
+    if (my.timeToNextAnt-- <= 0 && ownAnts < Optionen.AmeisenMaximum
+          && my.energy >= Optionen.EnergieFürAmeise) {
+      my.timeToNextAnt = Optionen.AmeiseWartezeit;
+      my.energy -= Optionen.EnergieFürAmeise;
       var antPos = {x:pos.x,y:pos.y};
       var angle = Math.random()*Math.PI*2;
       var radius = Optionen.HügelRadius + (Math.random()*10 - 5);
       antPos.x += Math.cos(angle)*radius;
       antPos.y += Math.sin(angle)*radius;
-      var newAnt = new Ant(antPos, playerid)
+      var newAnt = new Ant(antPos, my.playerid)
       Sim.ants.push(newAnt);
-      Sim.players[playerid].addAnt();
+      Sim.players[my.playerid].addAnt();
       API.setAnt(newAnt);
       API.callUserFunc("IstGeboren");
       API.close();
@@ -63,6 +54,6 @@ function Hill(_pos, _playerid) {
   }
   
   // constructor
-  Vw.setHillFlagColor(Vw.hillStore.get(key), Optionen.SpielerFarben[playerid]);
+  setFlagColor()
   updateGO();
 }
