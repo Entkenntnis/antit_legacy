@@ -273,10 +273,10 @@ API.addFunc("Zufallsname", function() {
   return name.charAt(0).toUpperCase() + name.slice(1);;
 });
 
-global.ZUCKER = SUGAR;
-global.BAU = HILL;
-global.APFEL = APPLE;
-global.POSITION = POSITION;
+Global.ZUCKER = SUGAR;
+Global.BAU = HILL;
+Global.APFEL = APPLE;
+Global.POSITION = POSITION;
 
 API.antProp('AktuellesZiel', function(){
   return API.curAnt.getDestination();
@@ -347,7 +347,7 @@ API.antProp('Gedächtnis', function(){
 
   
   
-am.NeueAmeise = function (name) {
+AntMe.NeueAmeise = function (name) {
   var newAnt = {Name:name};
   if (API.ants.length < Optionen.MaximaleSpieler) {
     API.ants.push(newAnt);
@@ -355,7 +355,7 @@ am.NeueAmeise = function (name) {
   return newAnt;
 }
 
-am._abortSimulation = function () {
+AntMe._abortSimulation = function () {
   var error =  document.createElement("DIV");
   error.innerHTML = "Simulationsfehler";
   error.style.color = "red";
@@ -367,7 +367,7 @@ am._abortSimulation = function () {
 }
 
 if (Optionen.EntwicklerModus) {
-  am.Sim = Sim;
-  am.Vw = vw;
-  am.Optionen = Optionen;
+  AntMe.Sim = Sim;
+  AntMe.Vw = Vw;
+  AntMe.Optionen = Optionen;
 }

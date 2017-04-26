@@ -201,7 +201,7 @@ function Playground(_width, _height) {
   }
   
   // constructor
-  vw.gamefloor.geometry = new THREE.PlaneGeometry(width, height, 1, 1);
-  vw.gamefloor.geometry.verticesNeedUpdate = true;
-  vw.setControlsBounds(width/2, height/2);
+  Vw.gamefloor.geometry = new THREE.PlaneGeometry(width, height, 1, 1);
+  Vw.gamefloor.geometry.verticesNeedUpdate = true;
+  Vw.setControlsBounds(width/2, height/2);
 }

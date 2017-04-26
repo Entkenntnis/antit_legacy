@@ -11,7 +11,7 @@ function Hill(_pos, _playerid) {
   var timeToNextAnt = Optionen.AmeiseWartezeit;
   
   function updateGO() {
-    vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(pos));
+    Vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(pos));
   }
   
   this.getPos = function() {
@@ -63,6 +63,6 @@ function Hill(_pos, _playerid) {
   }
   
   // constructor
-  vw.setHillFlagColor(vw.hillStore.get(key), Optionen.SpielerFarben[playerid]);
+  Vw.setHillFlagColor(Vw.hillStore.get(key), Optionen.SpielerFarben[playerid]);
   updateGO();
 }

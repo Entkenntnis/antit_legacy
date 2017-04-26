@@ -11,8 +11,8 @@ function Bug(_pos) {
   var towait = 0;
   
   function updateGO() {
-    vw.bugStore.get(key).position.copy(Sim.playground.toViewPos(pos));
-    vw.bugStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
+    Vw.bugStore.get(key).position.copy(Sim.playground.toViewPos(pos));
+    Vw.bugStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
   }
   
   this.getPos = function() {

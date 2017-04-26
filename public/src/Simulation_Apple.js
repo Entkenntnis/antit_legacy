@@ -14,7 +14,7 @@ function Apple(_pos) {
   this.heading = 0;
   
   function updateGO() {
-    var GO = vw.appleStore.get(key);
+    var GO = Vw.appleStore.get(key);
     var height = moving?5:0;
     GO.position.copy(Sim.playground.toViewPos(pos, height));
   }
@@ -43,7 +43,7 @@ function Apple(_pos) {
   }
   
   this.reachHome = function(id) {
-    vw.appleStore.remove(key);
+    Vw.appleStore.remove(key);
     Sim.players[id].addPoints(Optionen.PunkteProApfel);
     Sim.hills[id].addEnergy(Optionen.EnergieProApfel);
     Sim.players[id].addApple();

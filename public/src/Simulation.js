@@ -4,10 +4,10 @@
 
 "use strict";
   
-var vw = AntMe._vw;
+var Vw = AntMe._vw;
 var Optionen = AntMe._optionen;
-var global = window;
-var am = AntMe;
+var Global = window;
+var Am = AntMe;
 
 // Helper functions
 
@@ -363,9 +363,9 @@ function Playground(_width, _height) {
   }
   
   // constructor
-  vw.gamefloor.geometry = new THREE.PlaneGeometry(width, height, 1, 1);
-  vw.gamefloor.geometry.verticesNeedUpdate = true;
-  vw.setControlsBounds(width/2, height/2);
+  Vw.gamefloor.geometry = new THREE.PlaneGeometry(width, height, 1, 1);
+  Vw.gamefloor.geometry.verticesNeedUpdate = true;
+  Vw.setControlsBounds(width/2, height/2);
 }
 // HILL
 
@@ -380,7 +380,7 @@ function Hill(_pos, _playerid) {
   var timeToNextAnt = Optionen.AmeiseWartezeit;
   
   function updateGO() {
-    vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(pos));
+    Vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(pos));
   }
   
   this.getPos = function() {
@@ -432,7 +432,7 @@ function Hill(_pos, _playerid) {
   }
   
   // constructor
-  vw.setHillFlagColor(vw.hillStore.get(key), Optionen.SpielerFarben[playerid]);
+  Vw.setHillFlagColor(Vw.hillStore.get(key), Optionen.SpielerFarben[playerid]);
   updateGO();
 }
 // SUGAR
@@ -445,7 +445,7 @@ function Sugar(_pos) {
   var amount = Optionen.ZuckerGröße;
   
   function updateGO() {
-    var GO = vw.sugarStore.get(key);
+    var GO = Vw.sugarStore.get(key);
     GO.position.copy(Sim.playground.toViewPos(pos));
     var linScale = amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung;
     var scale = Math.max(Math.pow(linScale, 1/2), 0.000001);
@@ -466,8 +466,8 @@ function Sugar(_pos) {
       updateGO();
       return true;
     } else {
-      if (vw.sugarStore.has(key))
-        vw.sugarStore.remove(key);
+      if (Vw.sugarStore.has(key))
+        Vw.sugarStore.remove(key);
       return false;
     }
   }
@@ -491,7 +491,7 @@ function Apple(_pos) {
   this.heading = 0;
   
   function updateGO() {
-    var GO = vw.appleStore.get(key);
+    var GO = Vw.appleStore.get(key);
     var height = moving?5:0;
     GO.position.copy(Sim.playground.toViewPos(pos, height));
   }
@@ -520,7 +520,7 @@ function Apple(_pos) {
   }
   
   this.reachHome = function(id) {
-    vw.appleStore.remove(key);
+    Vw.appleStore.remove(key);
     Sim.players[id].addPoints(Optionen.PunkteProApfel);
     Sim.hills[id].addEnergy(Optionen.EnergieProApfel);
     Sim.players[id].addApple();
@@ -609,8 +609,8 @@ function Bug(_pos) {
   var towait = 0;
   
   function updateGO() {
-    vw.bugStore.get(key).position.copy(Sim.playground.toViewPos(pos));
-    vw.bugStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
+    Vw.bugStore.get(key).position.copy(Sim.playground.toViewPos(pos));
+    Vw.bugStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
   }
   
   this.getPos = function() {
@@ -684,13 +684,13 @@ function Ant(_pos, _playerid) {
   var memory = {};
   
   function updateGO() {
-    vw.antStore.get(key).position.copy(Sim.playground.toViewPos(pos));
-    vw.antStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
+    Vw.antStore.get(key).position.copy(Sim.playground.toViewPos(pos));
+    Vw.antStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
     if (load > 0) {
-      var sugar = vw.sugarBoxStore.get(key);
+      var sugar = Vw.sugarBoxStore.get(key);
       sugar.position.copy(Sim.playground.toViewPos(pos, 5.5));
-    } else if (vw.sugarBoxStore.has(key)) {
-      vw.sugarBoxStore.remove(key);
+    } else if (Vw.sugarBoxStore.has(key)) {
+      Vw.sugarBoxStore.remove(key);
     }
   }
   
@@ -771,9 +771,9 @@ function Ant(_pos, _playerid) {
     API.setAnt(this);
     API.callUserFunc("IstGestorben");
     API.close();
-    vw.antStore.remove(key);
-    if (vw.sugarBoxStore.has(key))
-      vw.sugarBoxStore.remove(key);
+    Vw.antStore.remove(key);
+    if (Vw.sugarBoxStore.has(key))
+      Vw.sugarBoxStore.remove(key);
     Sim.players[playerid].subAnt();
   }
   
@@ -1167,7 +1167,7 @@ function Ant(_pos, _playerid) {
   }
   
   // constructor
-  vw.setAntBodyColor(vw.antStore.get(key), Optionen.SpielerFarben[playerid]);
+  Vw.setAntBodyColor(Vw.antStore.get(key), Optionen.SpielerFarben[playerid]);
   updateGO();
 }
 // JOB
@@ -1275,7 +1275,7 @@ var APIWrapper = function() {
   }
   
   this.antProp = function(name, f) {
-    Object.defineProperty(global, name, {
+    Object.defineProperty(Global, name, {
       get: function() {
         if (API.staticPlayerId === undefined) {
           console.warn("Die Eigenschaft '" + name + "' kann nur innerhalb einer Ameise aufgerufen werden.");
@@ -1288,7 +1288,7 @@ var APIWrapper = function() {
   };
   
   this.addFunc = function(name, f) {
-    global[name] = function() {
+    Global[name] = function() {
       if (API.staticPlayerId === undefined) {
         console.warn("Die Funktion '" + name + "()' kann nur innerhalb einer Ameise aufgerufen werden.");
         return;
@@ -1613,10 +1613,10 @@ API.addFunc("Zufallsname", function() {
   return name.charAt(0).toUpperCase() + name.slice(1);;
 });
 
-global.ZUCKER = SUGAR;
-global.BAU = HILL;
-global.APFEL = APPLE;
-global.POSITION = POSITION;
+Global.ZUCKER = SUGAR;
+Global.BAU = HILL;
+Global.APFEL = APPLE;
+Global.POSITION = POSITION;
 
 API.antProp('AktuellesZiel', function(){
   return API.curAnt.getDestination();
@@ -1687,7 +1687,7 @@ API.antProp('Gedächtnis', function(){
 
   
   
-am.NeueAmeise = function (name) {
+AntMe.NeueAmeise = function (name) {
   var newAnt = {Name:name};
   if (API.ants.length < Optionen.MaximaleSpieler) {
     API.ants.push(newAnt);
@@ -1695,7 +1695,7 @@ am.NeueAmeise = function (name) {
   return newAnt;
 }
 
-am._abortSimulation = function () {
+AntMe._abortSimulation = function () {
   var error =  document.createElement("DIV");
   error.innerHTML = "Simulationsfehler";
   error.style.color = "red";
@@ -1707,9 +1707,9 @@ am._abortSimulation = function () {
 }
 
 if (Optionen.EntwicklerModus) {
-  am.Sim = Sim;
-  am.Vw = vw;
-  am.Optionen = Optionen;
+  AntMe.Sim = Sim;
+  AntMe.Vw = Vw;
+  AntMe.Optionen = Optionen;
 }
 // end of Simulation.js
 

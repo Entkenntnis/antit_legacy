@@ -23,13 +23,13 @@ function Ant(_pos, _playerid) {
   var memory = {};
   
   function updateGO() {
-    vw.antStore.get(key).position.copy(Sim.playground.toViewPos(pos));
-    vw.antStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
+    Vw.antStore.get(key).position.copy(Sim.playground.toViewPos(pos));
+    Vw.antStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
     if (load > 0) {
-      var sugar = vw.sugarBoxStore.get(key);
+      var sugar = Vw.sugarBoxStore.get(key);
       sugar.position.copy(Sim.playground.toViewPos(pos, 5.5));
-    } else if (vw.sugarBoxStore.has(key)) {
-      vw.sugarBoxStore.remove(key);
+    } else if (Vw.sugarBoxStore.has(key)) {
+      Vw.sugarBoxStore.remove(key);
     }
   }
   
@@ -110,9 +110,9 @@ function Ant(_pos, _playerid) {
     API.setAnt(this);
     API.callUserFunc("IstGestorben");
     API.close();
-    vw.antStore.remove(key);
-    if (vw.sugarBoxStore.has(key))
-      vw.sugarBoxStore.remove(key);
+    Vw.antStore.remove(key);
+    if (Vw.sugarBoxStore.has(key))
+      Vw.sugarBoxStore.remove(key);
     Sim.players[playerid].subAnt();
   }
   
@@ -506,6 +506,6 @@ function Ant(_pos, _playerid) {
   }
   
   // constructor
-  vw.setAntBodyColor(vw.antStore.get(key), Optionen.SpielerFarben[playerid]);
+  Vw.setAntBodyColor(Vw.antStore.get(key), Optionen.SpielerFarben[playerid]);
   updateGO();
 }

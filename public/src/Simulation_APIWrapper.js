@@ -43,7 +43,7 @@ var APIWrapper = function() {
   }
   
   this.antProp = function(name, f) {
-    Object.defineProperty(global, name, {
+    Object.defineProperty(Global, name, {
       get: function() {
         if (API.staticPlayerId === undefined) {
           console.warn("Die Eigenschaft '" + name + "' kann nur innerhalb einer Ameise aufgerufen werden.");
@@ -56,7 +56,7 @@ var APIWrapper = function() {
   };
   
   this.addFunc = function(name, f) {
-    global[name] = function() {
+    Global[name] = function() {
       if (API.staticPlayerId === undefined) {
         console.warn("Die Funktion '" + name + "()' kann nur innerhalb einer Ameise aufgerufen werden.");
         return;

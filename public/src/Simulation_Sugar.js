@@ -8,7 +8,7 @@ function Sugar(_pos) {
   var amount = Optionen.ZuckerGröße;
   
   function updateGO() {
-    var GO = vw.sugarStore.get(key);
+    var GO = Vw.sugarStore.get(key);
     GO.position.copy(Sim.playground.toViewPos(pos));
     var linScale = amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung;
     var scale = Math.max(Math.pow(linScale, 1/2), 0.000001);
@@ -29,8 +29,8 @@ function Sugar(_pos) {
       updateGO();
       return true;
     } else {
-      if (vw.sugarStore.has(key))
-        vw.sugarStore.remove(key);
+      if (Vw.sugarStore.has(key))
+        Vw.sugarStore.remove(key);
       return false;
     }
   }
