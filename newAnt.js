@@ -53,7 +53,7 @@ Ameise.Tick = function(){
 }
 
 // Wird aufgerufen, wenn Ameise im Bau eine Nachricht erhält
-Ameise.EmpfängtNachricht = function(wert){
+Ameise.EmpfängtNachricht = function(info){
 	
 }
 

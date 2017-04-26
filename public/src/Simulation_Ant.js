@@ -331,10 +331,13 @@ function Ant(_pos, _playerid) {
     this.addJob(new Job("SENDMEMORY", {}, cb));
   }
   
-  this.addAppleJob = function(_apple) {
-    var apple = _apple;
+  this.addAppleJob = function() {
+    var apple = undefined;
     var setup = false;
     var cb = function() {
+      var apple = closest(API.curAnt.getPos(), Sim.apples, 30);
+      if (!apple)
+        return true;
       var d = dist(this.getPos(), apple.getPos());
       if (d > 11)
         return true;

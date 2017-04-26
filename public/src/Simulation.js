@@ -992,10 +992,13 @@ function Ant(_pos, _playerid) {
     this.addJob(new Job("SENDMEMORY", {}, cb));
   }
   
-  this.addAppleJob = function(_apple) {
-    var apple = _apple;
+  this.addAppleJob = function() {
+    var apple = undefined;
     var setup = false;
     var cb = function() {
+      var apple = closest(API.curAnt.getPos(), Sim.apples, 30);
+      if (!apple)
+        return true;
       var d = dist(this.getPos(), apple.getPos());
       if (d > 11)
         return true;
@@ -1492,11 +1495,11 @@ API.addFunc("BrauchtNochTräger", function (apfel) {
 })
 
 API.addFunc("BringeApfelZuBau", function () {
-  var apple = closest(API.curAnt.getPos(), Sim.apples, 20);
-  if (apple) {
-    API.curAnt.addAppleJob(apple);
-    API.curAnt.goToHome();
-  }
+  //var apple = closest(API.curAnt.getPos(), Sim.apples, 100);
+  //if (apple) {
+    API.curAnt.addAppleJob();
+    //API.curAnt.goToHome();
+  //}
 });
 
 API.addFunc("RiecheNachZucker", function () {
