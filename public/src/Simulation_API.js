@@ -10,10 +10,6 @@ API.addFunc("Gehe", function (schritte) {
     API.curAnt.addGoJob(schritte);
 })
 
-API.addFunc("GeheGeradeaus", function(){
-  API.curAnt.addGoStraightJob();
-});
-
 API.addFunc("Stopp", function(){
   API.curAnt.addCustomJob(function(){
     API.curAnt.stop();

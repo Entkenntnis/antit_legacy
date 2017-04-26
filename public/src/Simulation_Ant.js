@@ -97,7 +97,7 @@ function Ant(_pos, playerid) {
     my.insertionPoint = 0;
   }
   
-  // jobs - movement
+  // jobs - basic movement
   this.addGoJob = function(steps) {
     this.addJob(new Job("GO", undefined, function(){
       var toMove = 0;
@@ -115,19 +115,37 @@ function Ant(_pos, playerid) {
       var oldx = my.pos.x;
       var oldy = my.pos.y;
       var newpos = moveDir(my.pos, my.heading, toMove);
-      // Rand mit einer Toleranz von 2 pixel
       if (Sim.playground.isInBound(newpos, 2)) {
         this.setPos(newpos);
       } else {
         finished = true;
-        API.callUserFunc("RandErreicht", [steps]);
+        API.callUserFunc("RandErreicht");
       }
       return finished;
     }))
   }
   
+  this.addTurnJob = function(degree) {
+    this.addJob(new Job("TURN", undefined, function(){
+      var toTurn = 0;
+      var finished = false;
+      if (Math.abs(degree) < Optionen.AmeiseDrehgeschwindigkeit) {
+        finished = true;
+        toTurn = degree;
+      } else {
+        toTurn = Optionen.AmeiseDrehgeschwindigkeit * Math.sign(degree);
+        degree -= Optionen.AmeiseDrehgeschwindigkeit * Math.sign(degree);
+      }
+      this.turn(toTurn);
+      return finished;
+    }))
+  }
   
-  
+  this.addTurnToJob = function(angle) {
+    var rotation = getRotation(my.heading, angle)
+    if (rotation != 0)
+      this.addTurnJob(rotation)
+  }
   
   
   
@@ -172,40 +190,6 @@ function Ant(_pos, playerid) {
     return destination;
   }
   
-
-  
-  this.addGoStraightJob = function() {
-    var cb = function () {
-      var newpos = moveDir(my.pos, my.heading, Optionen.AmeiseGeschwindigkeit);
-      if (Sim.playground.isInBound(newpos, 2)) {
-        this.setPos(newpos);
-      } else {
-        API.callUserFunc("RandErreicht", [0]);
-        return true;
-      }
-      return false;
-    }
-    this.addJob(new Job("GOSTRAIGHT", undefined, cb));
-  }
-  
-  this.addTurnJob = function(_degree) {
-    var degree = _degree;
-    var cb = function() {
-      var toTurn = 0;
-      var finished = false;
-      if (Math.abs(degree) < Optionen.AmeiseDrehgeschwindigkeit) {
-        finished = true;
-        toTurn = degree;
-      } else {
-        toTurn = Optionen.AmeiseDrehgeschwindigkeit * Math.sign(degree);
-        degree -= Optionen.AmeiseDrehgeschwindigkeit * Math.sign(degree);
-      }
-      this.turn(toTurn);
-      return finished;
-    };
-    this.addJob(new Job("TURN", degree, cb));
-  }
-  
   this.addTakeJob = function(sugar) {
     var cb = function() {
       var d = dist(my.pos, sugar.getPos());
@@ -244,17 +228,6 @@ function Ant(_pos, playerid) {
       }
     };
     this.addJob(new Job("WAIT", rounds, cb));
-  }
-  
-  this.addTurnToJob = function(_angle) {
-    var angle = _angle;
-    var cb = function() {
-      var rotation = getRotation(my.heading, angle);
-      if (rotation != 0)
-        this.addTurnJob(rotation);
-      return true;
-    };
-    this.addJob(new Job("TURNTO", angle, cb));
   }
   
   this.addSendMemoryJob = function() {
