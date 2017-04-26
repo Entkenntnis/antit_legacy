@@ -1,12 +1,13 @@
 // APPLE
 
-function Apple(_pos) {
+function Apple(pos) {
   
   Apple.counter = Apple.counter || 1;
-  var pos = _pos;
+  
+  var my = makeAttributes(this, {pos:pos, pid:undefined})
+  
   var key = Apple.counter++;
   var moving = false;
-  var pid = undefined;
   
   this.ants = [];
   this.dx = 0;
@@ -16,11 +17,7 @@ function Apple(_pos) {
   function updateGO() {
     var GO = Vw.appleStore.get(key);
     var height = moving?5:0;
-    GO.position.copy(Sim.playground.toViewPos(pos, height));
-  }
-  
-  this.getPos = function() {
-    return pos;
+    GO.position.copy(Sim.playground.toViewPos(my.pos, height));
   }
   
   this.addAnt = function(ant) {
@@ -29,14 +26,10 @@ function Apple(_pos) {
     }
   }
   
-  this.getPid = function() {
-    return pid;
-  }
-  
   this.needHelp = function(ant) {
-    if (pid === undefined) {
+    if (my.pid === undefined) {
       return true;
-    } else if (ant.getPlayerid() === pid && this.ants.length < Optionen.MaximumAmeisenFürApfel) {
+    } else if (ant.getPlayerid() === my.pid && this.ants.length < Optionen.MaximumAmeisenFürApfel) {
       return true;
     }
     return false;
@@ -50,16 +43,16 @@ function Apple(_pos) {
   }
   
   this.update = function() {
-    if (pid !== undefined) {
-      this.heading = getDir(this.getPos(), Sim.hills[pid].getPos());
+    if (my.pid !== undefined) {
+      this.heading = getDir(this.getPos(), Sim.hills[my.pid].getPos());
       // Geschwindigkeit zwischen 0.2 und 1
       var speed = Optionen.ApfelMinGeschwindigkeit +
         (Optionen.ApfelMaxGeschwindigkeit - Optionen.ApfelMinGeschwindigkeit) *
         (this.ants.length / Optionen.MaximumAmeisenFürApfel);
       this.dx =  speed*Math.cos(this.heading/180*Math.PI);
       this.dy = speed*Math.sin(this.heading/180*Math.PI);
-      pos.x += this.dx;
-      pos.y += this.dy;
+      my.pos.x += this.dx;
+      my.pos.y += this.dy;
       updateGO();
       return;
     }
@@ -109,10 +102,10 @@ function Apple(_pos) {
       });
       this.ants = toKeep;
       moving = true;
-      pid = bestid;
+      my.pid = bestid;
     } else {
       moving = false;
-      pid = undefined;
+      my.pid = undefined;
     }
   }
   

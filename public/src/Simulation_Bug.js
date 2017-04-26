@@ -8,7 +8,6 @@ function Bug(pos) {
   
   var key = Bug.Counter++;
   var heading = Math.floor(Math.random()*360);
-  var pos = _pos;
   var togo = 0;
   var torotate = 0;
   var towait = 0;

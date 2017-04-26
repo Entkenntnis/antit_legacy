@@ -6,12 +6,13 @@ function Sugar(pos) {
   
   var my = makeAttributes(this, {
     pos: pos,
-    key: Sugar.counter++,
     amount: Optionen.ZuckerGröße
   })
   
+  var key = Sugar.counter++
+  
   function updateGO() {
-    var GO = Vw.sugarStore.get(my.key);
+    var GO = Vw.sugarStore.get(key);
     GO.position.copy(Sim.playground.toViewPos(my.pos));
     var linScale = my.amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung;
     var scale = Math.max(Math.pow(linScale, 1/2), 0.000001);
@@ -24,8 +25,8 @@ function Sugar(pos) {
       updateGO();
       return true;
     } else {
-      if (Vw.sugarStore.has(my.key))
-        Vw.sugarStore.remove(my.key);
+      if (Vw.sugarStore.has(key))
+        Vw.sugarStore.remove(key);
       return false;
     }
   }

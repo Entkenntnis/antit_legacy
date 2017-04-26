@@ -172,10 +172,10 @@ function Player(id, KI) {
 }
 // PLAYGROUND
 
-function Playground(_width, _height) {
+function Playground(width, height) {
 
-  var width = _width;
-  var height = _height;
+  var my = makeAttributes(this, {width:width, height:height})
+  
   var timeToNextFeed = 30;
   var timeToNextBug = Optionen.WanzenWartezeit;
   
@@ -195,18 +195,10 @@ function Playground(_width, _height) {
     return {apples:appleCount, sugars:sugarCount};
   }
   
-  this.getWidth = function() {
-    return width;
-  }
-  
-  this.getHeight = function() {
-    return height;
-  }
-  
   this.randomPos = function() {
     return {
-      x:Math.random()*width,
-      y:Math.random()*height};
+      x:Math.random()*my.width,
+      y:Math.random()*my.height};
   }
   
   this.isInBound = function(pos, margin) {
@@ -214,7 +206,7 @@ function Playground(_width, _height) {
       margin = 0;
     if (pos.x < margin || pos.y < margin)
         return false;
-    if (width - pos.x < margin || height - pos.y < margin)
+    if (my.width - pos.x < margin || my.height - pos.y < margin)
       return false;
     return true;
   }
@@ -224,14 +216,14 @@ function Playground(_width, _height) {
       h = 0;
     }
     return new THREE.Vector3(
-      pos.x - width / 2.0,
+      pos.x - my.width / 2.0,
       h,
-      pos.y - height / 2.0);
+      pos.y - my.height / 2.0);
   }
   
   this.getHillPos = function() {
-    var topW = width - Optionen.EckenAbstand*2;
-    var leftH = height - Optionen.EckenAbstand * 2;     
+    var topW = my.width - Optionen.EckenAbstand*2;
+    var leftH = my.height - Optionen.EckenAbstand * 2;     
     var pos = {};
     var limit = 100;
     while(limit-- > 0) {
@@ -239,7 +231,7 @@ function Playground(_width, _height) {
       pos.y = Math.random()*Optionen.HügelStreifenBreite * 2;
       if (pos.x < topW) {
         if (pos.y >= Optionen.HügelStreifenBreite) {
-          pos.y += (height - Optionen.HügelStreifenBreite*2 - Optionen.HügelRandAbstand*2);
+          pos.y += (my.height - Optionen.HügelStreifenBreite*2 - Optionen.HügelRandAbstand*2);
         } 
         pos.x += Optionen.EckenAbstand;
         pos.y += Optionen.HügelRandAbstand;
@@ -248,7 +240,7 @@ function Playground(_width, _height) {
         pos.y = pos.x - topW;
         pos.x = t;
         if (pos.x >= Optionen.HügelStreifenBreite) {
-          pos.x += (width - Optionen.HügelStreifenBreite * 2 - Optionen.HügelRandAbstand * 2);
+          pos.x += (my.width - Optionen.HügelStreifenBreite * 2 - Optionen.HügelRandAbstand * 2);
         }
         pos.x += Optionen.HügelRandAbstand;
         pos.y += Optionen.EckenAbstand;
@@ -382,9 +374,9 @@ function Playground(_width, _height) {
   }
   
   // constructor
-  Vw.gamefloor.geometry = new THREE.PlaneGeometry(width, height, 1, 1);
+  Vw.gamefloor.geometry = new THREE.PlaneGeometry(my.width, my.height, 1, 1);
   Vw.gamefloor.geometry.verticesNeedUpdate = true;
-  Vw.setControlsBounds(width/2, height/2);
+  Vw.setControlsBounds(my.width/2, my.height/2);
 }
 // HILL
 
@@ -395,18 +387,19 @@ function Hill(pos, playerid) {
   var my = makeAttributes(this, {
     pos: pos,
     playerid: playerid,
-    key: Hill.counter++,
     energy: Optionen.AnfangsEnergie,
     feedIndex: 0,
     timeToNextAnt: Optionen.AmeiseWartezeit
   })
   
+  var key = Hill.counter++
+  
   function updateGO() {
-    Vw.hillStore.get(my.key).position.copy(Sim.playground.toViewPos(my.pos));
+    Vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(my.pos));
   }
   
   function setFlagColor() {
-    Vw.setHillFlagColor(Vw.hillStore.get(my.key), Optionen.SpielerFarben[my.playerid]);
+    Vw.setHillFlagColor(Vw.hillStore.get(key), Optionen.SpielerFarben[my.playerid]);
   }
   
   this.addEnergy = function(val) {
@@ -453,12 +446,13 @@ function Sugar(pos) {
   
   var my = makeAttributes(this, {
     pos: pos,
-    key: Sugar.counter++,
     amount: Optionen.ZuckerGröße
   })
   
+  var key = Sugar.counter++
+  
   function updateGO() {
-    var GO = Vw.sugarStore.get(my.key);
+    var GO = Vw.sugarStore.get(key);
     GO.position.copy(Sim.playground.toViewPos(my.pos));
     var linScale = my.amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung;
     var scale = Math.max(Math.pow(linScale, 1/2), 0.000001);
@@ -471,8 +465,8 @@ function Sugar(pos) {
       updateGO();
       return true;
     } else {
-      if (Vw.sugarStore.has(my.key))
-        Vw.sugarStore.remove(my.key);
+      if (Vw.sugarStore.has(key))
+        Vw.sugarStore.remove(key);
       return false;
     }
   }
@@ -482,13 +476,14 @@ function Sugar(pos) {
 }
 // APPLE
 
-function Apple(_pos) {
+function Apple(pos) {
   
   Apple.counter = Apple.counter || 1;
-  var pos = _pos;
+  
+  var my = makeAttributes(this, {pos:pos, pid:undefined})
+  
   var key = Apple.counter++;
   var moving = false;
-  var pid = undefined;
   
   this.ants = [];
   this.dx = 0;
@@ -498,11 +493,7 @@ function Apple(_pos) {
   function updateGO() {
     var GO = Vw.appleStore.get(key);
     var height = moving?5:0;
-    GO.position.copy(Sim.playground.toViewPos(pos, height));
-  }
-  
-  this.getPos = function() {
-    return pos;
+    GO.position.copy(Sim.playground.toViewPos(my.pos, height));
   }
   
   this.addAnt = function(ant) {
@@ -511,14 +502,10 @@ function Apple(_pos) {
     }
   }
   
-  this.getPid = function() {
-    return pid;
-  }
-  
   this.needHelp = function(ant) {
-    if (pid === undefined) {
+    if (my.pid === undefined) {
       return true;
-    } else if (ant.getPlayerid() === pid && this.ants.length < Optionen.MaximumAmeisenFürApfel) {
+    } else if (ant.getPlayerid() === my.pid && this.ants.length < Optionen.MaximumAmeisenFürApfel) {
       return true;
     }
     return false;
@@ -532,16 +519,16 @@ function Apple(_pos) {
   }
   
   this.update = function() {
-    if (pid !== undefined) {
-      this.heading = getDir(this.getPos(), Sim.hills[pid].getPos());
+    if (my.pid !== undefined) {
+      this.heading = getDir(this.getPos(), Sim.hills[my.pid].getPos());
       // Geschwindigkeit zwischen 0.2 und 1
       var speed = Optionen.ApfelMinGeschwindigkeit +
         (Optionen.ApfelMaxGeschwindigkeit - Optionen.ApfelMinGeschwindigkeit) *
         (this.ants.length / Optionen.MaximumAmeisenFürApfel);
       this.dx =  speed*Math.cos(this.heading/180*Math.PI);
       this.dy = speed*Math.sin(this.heading/180*Math.PI);
-      pos.x += this.dx;
-      pos.y += this.dy;
+      my.pos.x += this.dx;
+      my.pos.y += this.dy;
       updateGO();
       return;
     }
@@ -591,10 +578,10 @@ function Apple(_pos) {
       });
       this.ants = toKeep;
       moving = true;
-      pid = bestid;
+      my.pid = bestid;
     } else {
       moving = false;
-      pid = undefined;
+      my.pid = undefined;
     }
   }
   
@@ -611,7 +598,6 @@ function Bug(pos) {
   
   var key = Bug.Counter++;
   var heading = Math.floor(Math.random()*360);
-  var pos = _pos;
   var togo = 0;
   var torotate = 0;
   var towait = 0;
@@ -665,13 +651,13 @@ function Bug(pos) {
 }
 // ANT
 
-function Ant(_pos, playerid) {
+function Ant(pos, playerid) {
   
   Ant.counter = Ant.counter || 1;
   
   // attributes
   var my = makeAttributes(this, {
-    pos: _pos,
+    pos: pos,
     playerid: playerid,
     key: playerid + ":" + Ant.counter++,
     heading: Math.floor(Math.random()*360),

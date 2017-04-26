@@ -1,12 +1,12 @@
 // ANT
 
-function Ant(_pos, playerid) {
+function Ant(pos, playerid) {
   
   Ant.counter = Ant.counter || 1;
   
   // attributes
   var my = makeAttributes(this, {
-    pos: _pos,
+    pos: pos,
     playerid: playerid,
     key: playerid + ":" + Ant.counter++,
     heading: Math.floor(Math.random()*360),

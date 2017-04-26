@@ -7,18 +7,19 @@ function Hill(pos, playerid) {
   var my = makeAttributes(this, {
     pos: pos,
     playerid: playerid,
-    key: Hill.counter++,
     energy: Optionen.AnfangsEnergie,
     feedIndex: 0,
     timeToNextAnt: Optionen.AmeiseWartezeit
   })
   
+  var key = Hill.counter++
+  
   function updateGO() {
-    Vw.hillStore.get(my.key).position.copy(Sim.playground.toViewPos(my.pos));
+    Vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(my.pos));
   }
   
   function setFlagColor() {
-    Vw.setHillFlagColor(Vw.hillStore.get(my.key), Optionen.SpielerFarben[my.playerid]);
+    Vw.setHillFlagColor(Vw.hillStore.get(key), Optionen.SpielerFarben[my.playerid]);
   }
   
   this.addEnergy = function(val) {

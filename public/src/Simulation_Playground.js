@@ -1,9 +1,9 @@
 // PLAYGROUND
 
-function Playground(_width, _height) {
+function Playground(width, height) {
 
-  var width = _width;
-  var height = _height;
+  var my = makeAttributes(this, {width:width, height:height})
+  
   var timeToNextFeed = 30;
   var timeToNextBug = Optionen.WanzenWartezeit;
   
@@ -23,18 +23,10 @@ function Playground(_width, _height) {
     return {apples:appleCount, sugars:sugarCount};
   }
   
-  this.getWidth = function() {
-    return width;
-  }
-  
-  this.getHeight = function() {
-    return height;
-  }
-  
   this.randomPos = function() {
     return {
-      x:Math.random()*width,
-      y:Math.random()*height};
+      x:Math.random()*my.width,
+      y:Math.random()*my.height};
   }
   
   this.isInBound = function(pos, margin) {
@@ -42,7 +34,7 @@ function Playground(_width, _height) {
       margin = 0;
     if (pos.x < margin || pos.y < margin)
         return false;
-    if (width - pos.x < margin || height - pos.y < margin)
+    if (my.width - pos.x < margin || my.height - pos.y < margin)
       return false;
     return true;
   }
@@ -52,14 +44,14 @@ function Playground(_width, _height) {
       h = 0;
     }
     return new THREE.Vector3(
-      pos.x - width / 2.0,
+      pos.x - my.width / 2.0,
       h,
-      pos.y - height / 2.0);
+      pos.y - my.height / 2.0);
   }
   
   this.getHillPos = function() {
-    var topW = width - Optionen.EckenAbstand*2;
-    var leftH = height - Optionen.EckenAbstand * 2;     
+    var topW = my.width - Optionen.EckenAbstand*2;
+    var leftH = my.height - Optionen.EckenAbstand * 2;     
     var pos = {};
     var limit = 100;
     while(limit-- > 0) {
@@ -67,7 +59,7 @@ function Playground(_width, _height) {
       pos.y = Math.random()*Optionen.HügelStreifenBreite * 2;
       if (pos.x < topW) {
         if (pos.y >= Optionen.HügelStreifenBreite) {
-          pos.y += (height - Optionen.HügelStreifenBreite*2 - Optionen.HügelRandAbstand*2);
+          pos.y += (my.height - Optionen.HügelStreifenBreite*2 - Optionen.HügelRandAbstand*2);
         } 
         pos.x += Optionen.EckenAbstand;
         pos.y += Optionen.HügelRandAbstand;
@@ -76,7 +68,7 @@ function Playground(_width, _height) {
         pos.y = pos.x - topW;
         pos.x = t;
         if (pos.x >= Optionen.HügelStreifenBreite) {
-          pos.x += (width - Optionen.HügelStreifenBreite * 2 - Optionen.HügelRandAbstand * 2);
+          pos.x += (my.width - Optionen.HügelStreifenBreite * 2 - Optionen.HügelRandAbstand * 2);
         }
         pos.x += Optionen.HügelRandAbstand;
         pos.y += Optionen.EckenAbstand;
@@ -210,7 +202,7 @@ function Playground(_width, _height) {
   }
   
   // constructor
-  Vw.gamefloor.geometry = new THREE.PlaneGeometry(width, height, 1, 1);
+  Vw.gamefloor.geometry = new THREE.PlaneGeometry(my.width, my.height, 1, 1);
   Vw.gamefloor.geometry.verticesNeedUpdate = true;
-  Vw.setControlsBounds(width/2, height/2);
+  Vw.setControlsBounds(my.width/2, my.height/2);
 }
