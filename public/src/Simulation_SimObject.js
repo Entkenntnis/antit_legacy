@@ -1,7 +1,7 @@
 // SimObject
-function SimObject(_obj) {
+function SimObject(obj) {
+  
   var roundId = API.callId;
-  var obj = _obj;
   
   this.get = function(key) {
     if (key === Sim && API.callId == roundId) {

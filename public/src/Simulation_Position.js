@@ -1,9 +1,7 @@
 // Position
-function Position(_pos) {
-
-  var pos = {x:_pos.x,y:_pos.y};
+function Position(pos) {
   
-  this.getPos = function() {
-    return pos;
-  }
+  makeAttributes(this, {
+    pos: {x:pos.x,y:pos.y}
+  })
 }
