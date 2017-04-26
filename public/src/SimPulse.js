@@ -57,8 +57,6 @@
   }
   
   document.onkeypress = function(e){
-    if (!Optionen.EntwicklerModus)
-      return;
     var newFps = undefined;
     if (e.charCode == 49)
       newFps = 40;

@@ -238,7 +238,7 @@ API.addFunc("Vergesse", function (schlüssel) {
 });
 
 API.addFunc("SendeNachricht", function(betreff, wert) {
-  return API.curAnt.addSendMemoryJob();
+  return API.curAnt.addSendMemoryJob(betreff);
 });
 
 API.addFunc("Zufallsname", function() {

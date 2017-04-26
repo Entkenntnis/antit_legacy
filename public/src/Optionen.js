@@ -56,7 +56,7 @@
     , WanzeSichtweite : 60
     , WanzenHügelAbstand : 250
     , ZufallRichtungsVerschiebung : 11
-    , EntwicklerModus : true
+    , EntwicklerModus : false
     , Toleranz : 3
     , GrabToleranz : 10
   }

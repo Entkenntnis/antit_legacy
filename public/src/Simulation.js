@@ -871,7 +871,7 @@ function Ant(_pos, playerid) {
     })
   }
   
-  // jobs - Nahrung
+  // jobs - food
   this.addTakeJob = function(sugar) {
     this.addSimpleJob(function(){
       var d = dist(my.pos, sugar.getPos());
@@ -927,7 +927,7 @@ function Ant(_pos, playerid) {
   }
   
   // jobs - communication
-  this.addSendMemoryJob = function() {
+  this.addSendMemoryJob = function(topic) {
     this.addJob("SEND", undefined, function() {
       if (dist(my.pos, myHill().getPos()) < Optionen.HügelRadius) {
         var curAnts = [];
@@ -938,14 +938,13 @@ function Ant(_pos, playerid) {
             curAnts.push(ant);
         });
         curAnts.forEach(function (ant) {
-          if (ant == API.curAnt)
+          if (ant == API.curAnt || !ant.isSensing())
             return
-          // TODO condition: Ameise muss wach sein, um Nachricht zu empfangen
           var bkup = API.curAnt;
           if (bkup !== undefined)
             API.close();
           API.setAnt(ant);
-          API.callUserFunc("EmpfängtNachricht", [bkup.getMemory()], true);
+          API.callUserFunc("EmpfängtNachricht", [bkup.getMemory(), topic], true);
           API.close();
           if (bkup !== undefined)
             API.setAnt(bkup);
@@ -955,7 +954,7 @@ function Ant(_pos, playerid) {
     })
   }
   
-  // jobs - zielverfolgung
+  // jobs - aiming
   this.addGotoJob = function(destination, col, type, senses) {
     removeOldJobs()
     this.addJob("DEST", [destination, senses], function(){
@@ -1525,7 +1524,7 @@ API.addFunc("Vergesse", function (schlüssel) {
 });
 
 API.addFunc("SendeNachricht", function(betreff, wert) {
-  return API.curAnt.addSendMemoryJob();
+  return API.curAnt.addSendMemoryJob(betreff);
 });
 
 API.addFunc("Zufallsname", function() {
