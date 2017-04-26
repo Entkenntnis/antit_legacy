@@ -192,7 +192,7 @@ function Playground(_width, _height) {
     });
     
     removeIf(Sim.ants, function(ant) {
-      if (ant.getLap() > ant.getMaxDistance() || ant.getEnergy() <= 0) {
+      if (ant.getLap() > Optionen.AmeisenReichweite || ant.getEnergy() <= 0) {
         ant.die();
         return true;
       }

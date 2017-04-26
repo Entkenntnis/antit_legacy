@@ -163,7 +163,7 @@ API.addFunc("BringeApfelZuBau", function () {
 });
 
 API.addFunc("RiecheNachZucker", function () {
-  var sugar = closest(API.curAnt.getPos(), Sim.sugars, API.curAnt.getRange());
+  var sugar = closest(API.curAnt.getPos(), Sim.sugars, Optionen.AmeiseSichtweite);
   if (sugar)
     return API.pushObj(sugar);
   else
@@ -171,7 +171,7 @@ API.addFunc("RiecheNachZucker", function () {
 });
 
 API.addFunc("RiecheNachApfel", function () {
-  var apple = closest(API.curAnt.getPos(), Sim.apples, API.curAnt.getRange());
+  var apple = closest(API.curAnt.getPos(), Sim.apples, Optionen.AmeiseSichtweite);
   if (apple)
     return API.pushObj(apple);
   else
@@ -179,7 +179,7 @@ API.addFunc("RiecheNachApfel", function () {
 });
 
 API.addFunc("RiecheNachWanze", function () {
-  var bug = closest(API.curAnt.getPos(), Sim.bugs, API.curAnt.getRange());
+  var bug = closest(API.curAnt.getPos(), Sim.bugs, Optionen.AmeiseSichtweite);
   if (bug)
     return API.pushObj(bug);
   else
@@ -250,14 +250,7 @@ API.addFunc("Vergesse", function (schlüssel) {
 });
 
 API.addFunc("SendeNachricht", function(betreff, wert) {
-  if (betreff == undefined && wert == undefined) {
-    return API.curAnt.addSendMemoryJob();
-  }
-  if (!(typeof betreff == "string") || betreff.length <= 0) {
-    API.message("VERALTET Die Funktion 'SendeNachricht(betreff, wert)' erwartet als erstes Argument eine Zeichenkette.");
-    return;
-  }
-  API.curAnt.addSendMsgJob(betreff, wert);
+  return API.curAnt.addSendMemoryJob();
 });
 
 API.addFunc("Zufallsname", function() {
@@ -295,31 +288,11 @@ API.antProp('AktuelleLast', function(){
 });
 
 API.antProp('AktuelleReichweite', function(){
-  return API.curAnt.getMaxDistance() - API.curAnt.getLap();
+  return Optionen.AmeisenReichweite - API.curAnt.getLap();
 });
 
 API.antProp('Blickrichtung', function(){
   return API.curAnt.getHeading();
-});
-
-API.antProp('AmeisenSichtweite', function(){
-  return API.curAnt.getRange();
-});
-
-API.antProp('MaximaleLast', function(){
-  return API.curAnt.getMaxLoad();
-});
-
-API.antProp('MaximaleGeschwindigkeit', function(){
-  return API.curAnt.getMaxSpeed();
-});
-
-API.antProp('AmeisenReichweite', function(){
-  return API.curAnt.getMaxDistance();
-});
-
-API.antProp('MaximaleEnergie', function(){
-  return API.curAnt.getMaxEnergy();
 });
 
 API.antProp('HeimatBau', function(){

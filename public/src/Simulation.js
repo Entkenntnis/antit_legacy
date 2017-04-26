@@ -373,7 +373,7 @@ function Playground(_width, _height) {
     });
     
     removeIf(Sim.ants, function(ant) {
-      if (ant.getLap() > ant.getMaxDistance() || ant.getEnergy() <= 0) {
+      if (ant.getLap() > Optionen.AmeisenReichweite || ant.getEnergy() <= 0) {
         ant.die();
         return true;
       }
@@ -685,12 +685,6 @@ function Ant(_pos, _playerid) {
   Ant.counter = Ant.counter || 1;
   
   var my = makeAttributes(this, {
-    speed: Optionen.AmeiseGeschwindigkeit,
-    rotationSpeed: Optionen.AmeiseDrehgeschwindigkeit,
-    range: Optionen.AmeiseSichtweite,
-    maxLoad: Optionen.AmeiseTragkraft,
-    maxDistance: Optionen.AmeisenReichweite,
-    maxEnergy: Optionen.AmeisenEnergie,
     pos: _pos,
     playerid: _playerid,
     key: _playerid + ":" + Ant.counter++,
@@ -699,11 +693,23 @@ function Ant(_pos, _playerid) {
     jobs: [],
     insertionPoint: 0,
     lap: 0,
-    tired: false,
     energy: Optionen.AmeisenEnergie,
     previousBug: undefined,
     memory:{}
   })
+  
+  function myPlayer() {
+    return Sim.players[my.playerid]
+  }
+  
+  function myHill() {
+    return Sim.hills[my.playerid]
+  }
+  
+  
+  
+  
+  
   
   function updateGO() {
     var antBody = Vw.antStore.get(my.key)
@@ -718,13 +724,12 @@ function Ant(_pos, _playerid) {
   }
   
   function reachedHome() {
-    Sim.players[my.playerid].addPoints(my.load*Optionen.PunkteProZucker);
-    Sim.hills[my.playerid].addEnergy(my.load*Optionen.EnergieProZucker);
-    Sim.players[my.playerid].addSugar(my.load);
+    myPlayer().addPoints(my.load*Optionen.PunkteProZucker);
+    myHill().addEnergy(my.load*Optionen.EnergieProZucker);
+    myPlayer().addSugar(my.load);
     my.load = 0;
     my.lap = 0;
-    my.tired = false;
-    my.energy = my.maxEnergy;
+    my.energy = Optionen.AmeisenEnergie;
   }
   
   this.subEnergy = function(val, obj) {
@@ -741,7 +746,7 @@ function Ant(_pos, _playerid) {
     Vw.antStore.remove(my.key);
     if (Vw.sugarBoxStore.has(my.key))
       Vw.sugarBoxStore.remove(my.key);
-    Sim.players[my.playerid].subAnt();
+    myPlayer().subAnt();
   }
   
   this.setPos = function(newpos) {
@@ -798,7 +803,7 @@ function Ant(_pos, _playerid) {
     var cb = function() {
       var toMove = 0;
       var finished = false;
-      var curSpeed = my.speed;
+      var curSpeed = Optionen.AmeiseGeschwindigkeit;
       if (my.load > 0)
           curSpeed *= Optionen.ZuckerVerlangsamung;
       if (steps < curSpeed) {
@@ -824,7 +829,7 @@ function Ant(_pos, _playerid) {
   
   this.addGoStraightJob = function() {
     var cb = function () {
-      var newpos = moveDir(my.pos, my.heading, my.speed);
+      var newpos = moveDir(my.pos, my.heading, Optionen.AmeiseGeschwindigkeit);
       if (Sim.playground.isInBound(newpos, 2)) {
         this.setPos(newpos);
       } else {
@@ -841,12 +846,12 @@ function Ant(_pos, _playerid) {
     var cb = function() {
       var toTurn = 0;
       var finished = false;
-      if (Math.abs(degree) < my.rotationSpeed) {
+      if (Math.abs(degree) < Optionen.AmeiseDrehgeschwindigkeit) {
         finished = true;
         toTurn = degree;
       } else {
-        toTurn = my.rotationSpeed * Math.sign(degree);
-        degree -= my.rotationSpeed * Math.sign(degree);
+        toTurn = Optionen.AmeiseDrehgeschwindigkeit * Math.sign(degree);
+        degree -= Optionen.AmeiseDrehgeschwindigkeit * Math.sign(degree);
       }
       this.turn(toTurn);
       return finished;
@@ -858,7 +863,7 @@ function Ant(_pos, _playerid) {
     var cb = function() {
       var d = dist(my.pos, sugar.getPos());
       if (d < 2) {
-        while(my.load < my.maxLoad) {
+        while(my.load < Optionen.AmeiseTragkraft) {
           var t = sugar.unload1Sugar();
           if (t) {
             my.load++;
@@ -905,40 +910,14 @@ function Ant(_pos, _playerid) {
     this.addJob(new Job("TURNTO", angle, cb));
   }
   
-  this.addSendMsgJob = function(_topic, _value) {
-    var cb = function() {
-      if (dist(my.pos, Sim.hills[my.playerid].getPos()) < Optionen.HügelRadius) {
-        var curAnts = [];
-        Sim.ants.forEach(function (ant) {
-          if (ant.getPlayerid() != my.playerid)
-            return;
-          if (dist(ant.getPos(), Sim.hills[my.playerid].getPos()) < Optionen.AmeiseSichtweite)
-            curAnts.push(ant);
-        });
-        curAnts.forEach(function (ant) {
-          var bkup = API.curAnt;
-          if (bkup !== undefined)
-            API.close();
-          API.setAnt(ant);
-          API.callUserFunc("EmpfängtNachricht", [_topic, _value]);
-          API.close();
-          if (bkup !== undefined)
-            API.setAnt(bkup);
-        })
-      }
-      return true;
-    }; 
-    this.addJob(new Job("SEND", {topic:_topic,value:_value}, cb));
-  }
-  
   this.addSendMemoryJob = function() {
     var cb = function() {
-      if (dist(my.pos, Sim.hills[my.playerid].getPos()) < Optionen.HügelRadius) {
+      if (dist(my.pos, myHill().getPos()) < Optionen.HügelRadius) {
         var curAnts = [];
         Sim.ants.forEach(function (ant) {
           if (ant.getPlayerid() != my.playerid)
             return;
-          if (dist(ant.getPos(), Sim.hills[my.playerid].getPos()) < Optionen.AmeiseSichtweite)
+          if (dist(ant.getPos(), myHill().getPos()) < Optionen.AmeiseSichtweite)
             curAnts.push(ant);
         });
         curAnts.forEach(function (ant) {
@@ -983,7 +962,7 @@ function Ant(_pos, _playerid) {
         return true;
       }
       my.heading = apple.heading;
-      this.setPos({x:pos.x + apple.dx, y:pos.y + apple.dy});
+      this.setPos({x:my.pos.x + apple.dx, y:my.pos.y + apple.dy});
       return false;
     };
     this.addJob(new Job("APPLE", apple, cb));
@@ -1047,30 +1026,27 @@ function Ant(_pos, _playerid) {
   
   this.goToHome = function(parent) {
     if (this.getDestination() != HILL) {
-      var hill = Sim.hills[my.playerid];
-      gotoHelper(hill, Optionen.BauErreichtRadius, function() {
+      gotoHelper(myHill(), Optionen.BauErreichtRadius, function() {
         reachedHome();
-        API.callUserFunc("BauErreicht", [hill]);
+        API.callUserFunc("BauErreicht", [myHill()]);
       });
     }
   }
   
   this.update = function() {
-    var jobs = my.jobs
-    var insertionPoint = my.insertionPoint
-    insertionPoint = jobs.length;
+    my.insertionPoint = my.jobs.length;
     API.setAnt(this);
     
     // jobs
-    if (jobs.length > 0) {
-      var curJob = jobs[jobs.length - 1];
+    if (my.jobs.length > 0) {
+      var curJob = my.jobs[my.jobs.length - 1];
       var finished = curJob.callback.bind(this)();
       if (finished) {
-        var index = jobs.indexOf(curJob);
+        var index = my.jobs.indexOf(curJob);
         if (index >= 0) {
-          jobs.splice(index, 1);
-          if (insertionPoint > index) {
-            insertionPoint--
+          my.jobs.splice(index, 1);
+          if (my.insertionPoint > index) {
+            my.insertionPoint--
           }
         }
       }
@@ -1099,13 +1075,6 @@ function Ant(_pos, _playerid) {
       }
     } else {
       my.previousBug = undefined;
-    }
-    
-    if (my.lap > Optionen.AmeisenReichweite * 2 / 3) {
-      if (!my.tired) {
-        API.callUserFunc("WirdMüde");
-        my.tired = true;
-      }
     }
     
     if(this.getJobs().length == 0) {
@@ -1472,7 +1441,7 @@ API.addFunc("BringeApfelZuBau", function () {
 });
 
 API.addFunc("RiecheNachZucker", function () {
-  var sugar = closest(API.curAnt.getPos(), Sim.sugars, API.curAnt.getRange());
+  var sugar = closest(API.curAnt.getPos(), Sim.sugars, Optionen.AmeiseSichtweite);
   if (sugar)
     return API.pushObj(sugar);
   else
@@ -1480,7 +1449,7 @@ API.addFunc("RiecheNachZucker", function () {
 });
 
 API.addFunc("RiecheNachApfel", function () {
-  var apple = closest(API.curAnt.getPos(), Sim.apples, API.curAnt.getRange());
+  var apple = closest(API.curAnt.getPos(), Sim.apples, Optionen.AmeiseSichtweite);
   if (apple)
     return API.pushObj(apple);
   else
@@ -1488,7 +1457,7 @@ API.addFunc("RiecheNachApfel", function () {
 });
 
 API.addFunc("RiecheNachWanze", function () {
-  var bug = closest(API.curAnt.getPos(), Sim.bugs, API.curAnt.getRange());
+  var bug = closest(API.curAnt.getPos(), Sim.bugs, Optionen.AmeiseSichtweite);
   if (bug)
     return API.pushObj(bug);
   else
@@ -1559,14 +1528,7 @@ API.addFunc("Vergesse", function (schlüssel) {
 });
 
 API.addFunc("SendeNachricht", function(betreff, wert) {
-  if (betreff == undefined && wert == undefined) {
-    return API.curAnt.addSendMemoryJob();
-  }
-  if (!(typeof betreff == "string") || betreff.length <= 0) {
-    API.message("VERALTET Die Funktion 'SendeNachricht(betreff, wert)' erwartet als erstes Argument eine Zeichenkette.");
-    return;
-  }
-  API.curAnt.addSendMsgJob(betreff, wert);
+  return API.curAnt.addSendMemoryJob();
 });
 
 API.addFunc("Zufallsname", function() {
@@ -1604,31 +1566,11 @@ API.antProp('AktuelleLast', function(){
 });
 
 API.antProp('AktuelleReichweite', function(){
-  return API.curAnt.getMaxDistance() - API.curAnt.getLap();
+  return Optionen.AmeisenReichweite - API.curAnt.getLap();
 });
 
 API.antProp('Blickrichtung', function(){
   return API.curAnt.getHeading();
-});
-
-API.antProp('AmeisenSichtweite', function(){
-  return API.curAnt.getRange();
-});
-
-API.antProp('MaximaleLast', function(){
-  return API.curAnt.getMaxLoad();
-});
-
-API.antProp('MaximaleGeschwindigkeit', function(){
-  return API.curAnt.getMaxSpeed();
-});
-
-API.antProp('AmeisenReichweite', function(){
-  return API.curAnt.getMaxDistance();
-});
-
-API.antProp('MaximaleEnergie', function(){
-  return API.curAnt.getMaxEnergy();
 });
 
 API.antProp('HeimatBau', function(){
