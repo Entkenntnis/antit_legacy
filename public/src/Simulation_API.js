@@ -11,9 +11,7 @@ API.addFunc("Gehe", function (schritte) {
 })
 
 API.addFunc("Stopp", function(){
-  API.curAnt.addCustomJob(function(){
-    API.curAnt.stop();
-  })
+  API.curAnt.addStopJob();
 });
 
 API.addFunc("Drehe", function (winkel) {
@@ -136,7 +134,7 @@ API.addFunc("Nimm", function (zucker) {
   API.curAnt.addTakeJob(zucker);
 })
 
-API.addFunc("LasseZuckerFallen", function() {
+API.addFunc("LadeZuckerAb", function() {
   if (API.curAnt.getLoad() > 0) {
     API.curAnt.addDropJob();
   }

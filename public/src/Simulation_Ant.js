@@ -76,7 +76,7 @@ function Ant(_pos, playerid) {
     antBody.rotation.y = -my.heading / 180 * Math.PI + Math.PI;
     if (my.load > 0) {
       var sugarBox = Vw.sugarBoxStore.get(my.key);
-      sugarBox.position.copy(Sim.playground.toViewPos(my.pos, 5.5));
+      sugarBox.position.copy(Sim.playground.toViewPos(my.pos, Optionen.ZuckerStückchenHöhe));
     } else if (Vw.sugarBoxStore.has(my.key)) {
       Vw.sugarBoxStore.remove(my.key);
     }
@@ -98,11 +98,6 @@ function Ant(_pos, playerid) {
       f.apply(this)
       return true
     })
-  }
-  
-  this.stop = function() {
-    my.jobs = [];
-    my.insertionPoint = 0;
   }
   
   // jobs - basic movement
@@ -149,16 +144,32 @@ function Ant(_pos, playerid) {
     })
   }
   
-  // jobs - helper
+  // jobs - utils
   this.addTurnToJob = function(angle) {
     var rotation = getRotation(my.heading, angle)
     if (rotation != 0)
       this.addTurnJob(rotation)
   }
   
-  this.addWaitJob = function(_rounds) {
+  this.addWaitJob = function(rounds) {
     this.addJob("WAIT", undefined, function(){
       return rounds-- <= 0
+    })
+  }
+  
+  this.addStopJob = function() {
+    this.addSimpleJob(function(){
+      my.jobs = [];
+      my.insertionPoint = 0;
+    })
+  }
+  
+  this.addCustomJob = function(f) {
+    this.addJob("CUSTOM", undefined, function(){
+      var ret = f.apply(API.pushObj(API.curAnt));
+      if (ret !== undefined)
+        return ret;
+      return true;
     })
   }
   
@@ -183,12 +194,38 @@ function Ant(_pos, playerid) {
   this.addDropJob = function() {
     this.addSimpleJob(function(){
       var d = dist(my.pos, myHill().getPos())
-      if (d <= Optionen.Toleranz) {
+      if (d <= Optionen.GrabToleranz) {
         addSugar(my.load)
       }
       my.load = 0;
       updateGO();
     })
+  }
+  
+  this.addAppleJob = function() {
+    var apple = undefined;
+    var setup = false;
+    var cb = function() {
+      apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz);
+      if (!apple)
+        return true;
+      var index = Sim.apples.indexOf(apple);
+      if (index < 0) {
+        return true;
+      }
+      if (!setup) {
+        setup = true;
+        apple.addAnt(this);
+        return false;
+      }
+      if (apple.ants.indexOf(this) < 0) {
+        return true;
+      }
+      my.heading = apple.heading;
+      this.setPos({x:my.pos.x + apple.dx, y:my.pos.y + apple.dy});
+      return false;
+    };
+    this.addJob("APPLE", apple, cb);
   }
   
   
@@ -255,47 +292,6 @@ function Ant(_pos, playerid) {
       return true;
     }; 
     this.addJob("SENDMEMORY", {}, cb);
-  }
-  
-  this.addAppleJob = function() {
-    var apple = undefined;
-    var setup = false;
-    var cb = function() {
-      var apple = closest(API.curAnt.getPos(), Sim.apples, 30);
-      if (!apple)
-        return true;
-      var d = dist(this.getPos(), apple.getPos());
-      if (d > 11)
-        return true;
-      var index = Sim.apples.indexOf(apple);
-      if (index < 0) {
-        return true;
-      }
-      if (!setup) {
-        setup = true;
-        apple.addAnt(this);
-        return false;
-      }
-      if (apple.ants.indexOf(this) < 0) {
-        this.goToHome();
-        return true;
-      }
-      my.heading = apple.heading;
-      this.setPos({x:my.pos.x + apple.dx, y:my.pos.y + apple.dy});
-      return false;
-    };
-    this.addJob("APPLE", apple, cb);
-  }
-  
-  this.addCustomJob = function(_f) {
-    var f = _f;
-    var cb = function() {
-      var ret = f.apply(API.pushObj(API.curAnt));
-      if (ret !== undefined)
-        return ret;
-      return true;
-    };
-    this.addJob("CUSTOM", f, cb);
   }
   
   var gotoHelper = function(obj, snap, f, col) {

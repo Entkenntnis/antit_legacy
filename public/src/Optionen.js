@@ -20,6 +20,7 @@
                        0xffff00, 0xff00ff, 0xffffff, 0x000000]
     , ZuckerGröße : 250
     , ZuckerVergrößerung : 0.1
+    , ZuckerStückchenHöhe : 5.5
     , NahrungMindestEntfernung : 450
     , NahrungMaximalEntfernung : 1000
     , NahrungAbstand : 150
@@ -56,7 +57,8 @@
     , WanzenHügelAbstand : 250
     , ZufallRichtungsVerschiebung : 11
     , EntwicklerModus : true
-    , Toleranz : 3
+    , Toleranz : 4
+    , GrabToleranz : 7
   }
  
   //export
