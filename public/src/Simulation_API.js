@@ -118,14 +118,6 @@ API.addFunc("BestimmeRichtung", function (a, b) {
   return Math.round(getDir(a.getPos(), b.getPos()));
 });
 
-API.addFunc("BestimmePosition", function(objekt) {
-  if (!(typeof objekt == "object") || !("getPos" in objekt)) {
-    API.message("Die Funktion 'BestimmePosition(objekt)' konnte für das übergebene Objekt keine Position bestimmen.");
-    return;
-  }
-  return API.pushObj(new Position(objekt.getPos()));
-})
-
 API.addFunc("Nimm", function (zucker) {
   if (!zucker || zucker.constructor.name !== "Sugar") {
     API.message("Die Funktion 'Nimm(zucker)' erwartet als Argument einen Zuckerobjekt.");
@@ -181,61 +173,6 @@ API.addFunc("FühreAus", function (funktion) {
   }
   API.curAnt.addCustomJob(funktion);
 })
-
-API.addFunc("Merke", function(schlüssel, wert) {
-  if (!(typeof schlüssel == "string") || schlüssel.length <= 0) {
-    API.message("VERALTET Die Funktion 'Merke(schlüssel, wert)' erwartet als erstes Argument eine Zeichenkette.");
-    return;
-  }
-  if (wert !== undefined) {
-    if (wert.constructor.name == "Apple" || wert.constructor.name == "Sugar" ||
-        wert.constructor.name == "Bug" || wert.constructor.name == "Hill") {
-      API.message("VERALTET Die Funktion 'Merke(schlüssel, wert)' kann als Wert kein Sichtungsobjekt speichern.");
-      return;
-    }
-  }
-  
-  var key = API.curAnt.getKey();
-  if (!(key in Sim.memories)) {
-    Sim.memories[key] = {};
-  }
-  Sim.memories[key][schlüssel] = wert;
-});
-
-API.addFunc("Erinnere", function(schlüssel) {
-  if (!(typeof schlüssel == "string") || schlüssel.length <= 0) {
-    API.message("VERALTET Die Funktion 'Erinnere(schlüssel)' erwartet als Argument eine Zeichenkette.");
-    return;
-  }
-  var key = API.curAnt.getKey();
-  if (key in Sim.memories && schlüssel in Sim.memories[key]) {
-    return Sim.memories[key][schlüssel];
-  }
-  API.message("VERALTET Die Funktion 'Erinnere(schlüssel)' konnte den übergebenen Schlüssel nicht finden.");
-})
-
-API.addFunc("HatErinnerung", function (schlüssel) {
-  if (!(typeof schlüssel == "string") || schlüssel.length <= 0) {
-    API.message("VERALTET Die Funktion 'Erinnere(schlüssel)' erwartet als Argument eine Zeichenkette.");
-    return;
-  }
-  var key = API.curAnt.getKey();
-  if (key in Sim.memories) {
-    return schlüssel in Sim.memories[key];
-  }
-  return false;
-})
-
-API.addFunc("Vergesse", function (schlüssel) {
-  if (!(typeof schlüssel == "string") || schlüssel.length <= 0) {
-    API.message("VERALTET Die Funktion 'Vergesse(schlüssel)' erwartet als Argument eine Zeichenkette.");
-    return;
-  }
-  var key = API.curAnt.getKey();
-  if (key in Sim.memories && schlüssel in Sim.memories[key]) {
-    delete Sim.memories[key][schlüssel];
-  }
-});
 
 API.addFunc("SendeNachricht", function(betreff, wert) {
   return API.curAnt.addSendMemoryJob(betreff);
@@ -305,8 +242,6 @@ API.antProp('AktuellePosition', function(){
 API.antProp('Gedächtnis', function(){
   return API.curAnt.getMemory();
 });
-
-  
   
 AntMe.NeueAmeise = function (name) {
   var newAnt = {Name:name};
