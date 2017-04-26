@@ -14,7 +14,7 @@ function closest(pos, objs, range) {
       best = d;
     }
   });
-  if (best < range) {
+  if (best <= range) {
     return bestobj;
   }
   return undefined;

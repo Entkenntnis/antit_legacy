@@ -36,8 +36,8 @@ API.addFunc("DreheZuRichtung", function (richtung) {
   API.curAnt.addTurnToJob(richtung);
 });
 
-API.addFunc("GeheZuBau", function () {
-  API.curAnt.gotoHome();
+API.addFunc("GeheZuBau", function (sense) {
+  API.curAnt.gotoHome(sense);
 })
 
 API.addFunc("Zufallszahl", function (a, b) {
@@ -88,17 +88,17 @@ API.addFunc("DreheWegVonObjekt", function (objekt) {
   API.curAnt.addTurnToJob(angle);
 })
 
-API.addFunc("GeheZuZiel", function (ziel)  {
+API.addFunc("GeheZuZiel", function (ziel, sense)  {
   if (arguments.length != 1)
     return API.message("Die Funktion 'GeheZuZiel(ziel)' wurde ohne Argument aufgerufen");
   if (ziel.constructor.name == "Sugar")
-    return API.curAnt.addGotoJob(ziel, Sim.sugars, "Zucker");
+    return API.curAnt.addGotoJob(ziel, Sim.sugars, "Zucker", sense);
   if (ziel.constructor.name == "Hill")
-    return API.curAnt.addGotoJob(ziel, Sim.hills, "Bau");
+    return API.curAnt.addGotoJob(ziel, Sim.hills, "Bau", sense);
   if (ziel.constructor.name == "Apple")
-    return API.curAnt.addGotoJob(ziel, Sim.apples, "Apfel");
+    return API.curAnt.addGotoJob(ziel, Sim.apples, "Apfel", sense);
   if (ziel.constructor.name == "Position")
-    return API.curAnt.gotoHome();
+    return API.curAnt.gotoHome(sense);
    API.message("Die Funktion 'GeheZuZiel(ziel)' konnte das unbekannte Ziel nicht anvisieren.");
 });
 
@@ -135,9 +135,7 @@ API.addFunc("Nimm", function (zucker) {
 })
 
 API.addFunc("LadeZuckerAb", function() {
-  if (API.curAnt.getLoad() > 0) {
-    API.curAnt.addDropJob();
-  }
+  API.curAnt.addDropJob();
 });
 
 API.addFunc("BrauchtNochTräger", function (apfel) {
@@ -149,11 +147,7 @@ API.addFunc("BrauchtNochTräger", function (apfel) {
 })
 
 API.addFunc("BringeApfelZuBau", function () {
-  //var apple = closest(API.curAnt.getPos(), Sim.apples, 100);
-  //if (apple) {
-    API.curAnt.addAppleJob();
-    //API.curAnt.goToHome();
-  //}
+  API.curAnt.addAppleJob();
 });
 
 API.addFunc("RiecheNachZucker", function () {

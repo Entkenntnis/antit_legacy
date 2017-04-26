@@ -100,6 +100,15 @@ function Ant(_pos, playerid) {
     })
   }
   
+  function removeOldJobs() {
+    my.jobs.splice(0, my.insertionPoint);
+    my.insertionPoint = 0;
+  }
+  
+  function refreshInsertionPoint() {
+    my.insertionPoint = my.jobs.length;
+  }
+  
   // jobs - basic movement
   this.addGoJob = function(steps) {
     this.addJob("GO", undefined, function(){
@@ -228,42 +237,6 @@ function Ant(_pos, playerid) {
     this.addJob("APPLE", apple, cb);
   }
   
-  // jobs - zielverfolgung
-  this.addGotoJob = function(destination, col, type, senses) {
-    my.jobs.splice(0, my.insertionPoint);
-    my.insertionPoint = 0;
-    this.addJob("DEST", [destination, senses], function(){
-      if (col !== undefined) {
-        if (col.indexOf(destination) < 0)
-          return true
-      }
-      var snap = Optionen.Toleranz
-      if (type == "Apfel")
-        snap = Optionen.ApfelRadius
-      var des = destination.getPos()
-      var d = dist(my.pos, des)
-      if (d <= snap){
-        API.callUserFunc(type + "Erreicht", [destination]);
-        if (type == "Bau")
-          reachedHome()
-        return true;
-      } else {
-        var angle = getDir(my.pos, des);
-        var rotation = getRotation(my.heading, angle);
-        var v = Optionen.ZufallRichtungsVerschiebung;
-        rotation += Math.floor(Math.random()*v*2-v);
-        if (rotation != 0)
-          this.addTurnJob(rotation);
-        this.addGoJob(Math.min(50, d));
-        return false;
-      }
-    })
-  }
-  
-  this.gotoHome = function(){
-    this.addGotoJob(myHill(), undefined, "Bau")
-  }
-  
   // jobs - communication
   this.addSendMemoryJob = function() {
     this.addJob("SEND", undefined, function() {
@@ -293,106 +266,57 @@ function Ant(_pos, playerid) {
     })
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  
-  
-
-  
-  this.update = function() {
-    my.insertionPoint = my.jobs.length;
-    API.setAnt(this);
-    
-    // jobs
-    if (my.jobs.length > 0) {
-      var curJob = my.jobs[my.jobs.length - 1];
-      var finished = curJob.callback.bind(this)();
-      if (finished) {
-        var index = my.jobs.indexOf(curJob);
-        if (index >= 0) {
-          my.jobs.splice(index, 1);
-          if (my.insertionPoint > index) {
-            my.insertionPoint--
-          }
-        }
+  // jobs - zielverfolgung
+  this.addGotoJob = function(destination, col, type, senses) {
+    removeOldJobs()
+    this.addJob("DEST", [destination, senses], function(){
+      if (col !== undefined) {
+        if (col.indexOf(destination) < 0)
+          return true
       }
-    }
-    
-    // sights
-    if (this.getDestination() === undefined) {
-      var sugar = closest(my.pos, Sim.sugars, my.range);
-      if (sugar != undefined) {
-        API.callUserFunc("SiehtZucker", [sugar]);
+      var snap = Optionen.Toleranz
+      if (type == "Apfel")
+        snap = Optionen.ApfelRadius
+      var des = destination.getPos()
+      var d = dist(my.pos, des)
+      if (d <= snap){
+        API.callUserFunc(type + "Erreicht", [destination]);
+        if (type == "Bau")
+          reachedHome()
+        return true;
+      } else {
+        var angle = getDir(my.pos, des);
+        var rotation = getRotation(my.heading, angle);
+        var v = Optionen.ZufallRichtungsVerschiebung;
+        rotation += Math.floor(Math.random()*v*2-v);
+        if (rotation != 0)
+          this.addTurnJob(rotation);
+        this.addGoJob(Math.min(50, d));
+        return false;
       }
-    }
-    
-    if (this.getDestination() === undefined) {
-      var apple = closest(my.pos, Sim.apples, my.range);
-      if (apple != undefined) {
-        API.callUserFunc("SiehtApfel", [apple]);
-      }
-    }
-    
-    var bug = closest(my.pos, Sim.bugs, my.range);
-    if (bug) {
-      if (bug != my.previousBug) {
-        API.callUserFunc("SiehtWanze", [bug]);
-        my.previousBug = bug;
-      }
-    } else {
-      my.previousBug = undefined;
-    }
-    
-    if(this.getJobs().length == 0) {
-      API.callUserFunc("Wartet");
-    }
-    
-    API.callUserFunc("Tick");
-    
-    // manage memory
-    for (var property in my.memory) {
-      if (my.memory.hasOwnProperty(property)) {
-        var cur = my.memory[property]
-        if (typeof cur == "object" && cur.get) {
-          var obj = cur.get(Sim);
-          if (obj !== undefined) {
-            if (obj.constructor.name == "Apple" || obj.constructor.name == "Sugar" ||
-                obj.constructor.name == "Bug" || obj.constructor.name == "Hill") {
-              API.message("Das Gedächtnis kann als Wert kein Sichtungsobjekt speichern.");
-              delete my.memory[property];
-            }
-          }
-          my.memory[property] = obj;
-        }
-      }
-    }
-    
-    API.close();
+    })
   }
   
+  this.gotoHome = function(sense){
+    if (this.getDestination != HILL) {
+      this.addGotoJob(myHill(), undefined, "Bau", sense)
+    }
+  }
   
+  // jobs - sensing
+  this.isSensing = function() {
+    var sensing = true
+    for (var i = my.jobs.length - 1; i >= 0; i--) {
+      var curCmd = my.jobs[i]
+      if (curCmd.type == "DEST" && curCmd.value[1] !== true) {
+        sensing = false
+        break
+      }
+    }
+    return sensing
+  }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    this.getDestination = function() {
+  this.getDestination = function() {
     var destination = undefined;
     var jobs = API.curAnt.getJobs();
     if (jobs.length > 0) {
@@ -415,6 +339,90 @@ function Ant(_pos, playerid) {
     }
     return destination;
   }
+  
+  // event loop
+  function execJob() {
+    if (my.jobs.length > 0) {
+      var curJob = my.jobs[my.jobs.length - 1];
+      var finished = curJob.callback.bind(this)();
+      if (finished) {
+        var index = my.jobs.indexOf(curJob);
+        if (index >= 0) {
+          my.jobs.splice(index, 1);
+          if (my.insertionPoint > index) {
+            my.insertionPoint--
+          }
+        }
+      }
+    }
+  }
+  
+  function validateMemory() {
+    for (var property in my.memory) {
+      if (my.memory.hasOwnProperty(property)) {
+        var cur = my.memory[property]
+        if (typeof cur == "object" && cur.get) {
+          var obj = cur.get(Sim);
+          if (obj !== undefined) {
+            if (obj.constructor.name == "Apple" || obj.constructor.name == "Sugar" ||
+                obj.constructor.name == "Bug" || obj.constructor.name == "Hill") {
+              API.message("Das Gedächtnis kann als Wert kein Sichtungsobjekt speichern.");
+              delete my.memory[property];
+            }
+          }
+          my.memory[property] = obj;
+        }
+      }
+    }
+  }
+  
+  function senseSugar() {
+    var sugar = closest(my.pos, Sim.sugars, Optionen.AmeiseSichtweite);
+    if (sugar != undefined) {
+      API.callUserFunc("SiehtZucker", [sugar]);
+    }
+  }
+  
+  function senseApple() {
+    var apple = closest(my.pos, Sim.apples, Optionen.AmeiseSichtweite);
+    if (apple != undefined) {
+      API.callUserFunc("SiehtApfel", [apple]);
+    }
+  }
+  
+  function senseBug() {
+    var bug = closest(my.pos, Sim.bugs, Optionen.AmeiseSichtweite);
+    if (bug) {
+      if (bug != my.previousBug) {
+        API.callUserFunc("SiehtWanze", [bug]);
+        my.previousBug = bug;
+      }
+    } else {
+      my.previousBug = undefined;
+    }
+  }
+  
+  function wait() {
+    if(my.jobs.length == 0) {
+      API.callUserFunc("Wartet");
+    }
+  }
+  
+  // update
+  this.update = function() {
+    refreshInsertionPoint()
+    API.setAnt(this);
+    execJob.bind(this)()
+    if (this.isSensing()) {
+      senseSugar()
+      senseApple()
+    }
+    senseBug()
+    wait()
+    API.callUserFunc("Tick");
+    validateMemory()
+    API.close();
+  }  
   
   // constructor
   setColor()
