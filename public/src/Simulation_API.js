@@ -37,7 +37,7 @@ API.addFunc("DreheZuRichtung", function (richtung) {
 });
 
 API.addFunc("GeheZuBau", function () {
-  API.curAnt.goToHome();
+  API.curAnt.gotoHome();
 })
 
 API.addFunc("Zufallszahl", function (a, b) {
@@ -92,13 +92,13 @@ API.addFunc("GeheZuZiel", function (ziel)  {
   if (arguments.length != 1)
     return API.message("Die Funktion 'GeheZuZiel(ziel)' wurde ohne Argument aufgerufen");
   if (ziel.constructor.name == "Sugar")
-    return API.curAnt.goToSugar(ziel);
+    return API.curAnt.addGotoJob(ziel, Sim.sugars, "Zucker");
   if (ziel.constructor.name == "Hill")
-    return API.curAnt.goToHome();
+    return API.curAnt.addGotoJob(ziel, Sim.hills, "Bau");
   if (ziel.constructor.name == "Apple")
-    return API.curAnt.goToApple(ziel);
+    return API.curAnt.addGotoJob(ziel, Sim.apples, "Apfel");
   if (ziel.constructor.name == "Position")
-    return API.curAnt.goToPos(ziel);
+    return API.curAnt.gotoHome();
    API.message("Die Funktion 'GeheZuZiel(ziel)' konnte das unbekannte Ziel nicht anvisieren.");
 });
 

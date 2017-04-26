@@ -228,82 +228,24 @@ function Ant(_pos, playerid) {
     this.addJob("APPLE", apple, cb);
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  this.getDestination = function() {
-    var destination = undefined;
-    var jobs = API.curAnt.getJobs();
-    if (jobs.length > 0) {
-      var index = jobs.length - 1;
-      var curCmd = jobs[index];
-      while(index > 0 && curCmd.type != "DEST") {
-        curCmd = jobs[--index];
-      }
-      if (curCmd.type == "DEST") {
-        if (curCmd.value.constructor.name == "Sugar") {
-          destination = SUGAR;
-        } else if (curCmd.value.constructor.name == "Hill") {
-          destination = HILL;
-        } else if (curCmd.value.constructor.name == "Apple") {
-          destination = APPLE;
-        } else if (curCmd.value.constructor.name == "Position") {
-          destination = POSITION;
-        }
-      }
-    }
-    return destination;
-  }
-  
-  this.addSendMemoryJob = function() {
-    var cb = function() {
-      if (dist(my.pos, myHill().getPos()) < Optionen.HügelRadius) {
-        var curAnts = [];
-        Sim.ants.forEach(function (ant) {
-          if (ant.getPlayerid() != my.playerid)
-            return;
-          if (dist(ant.getPos(), myHill().getPos()) < Optionen.AmeiseSichtweite)
-            curAnts.push(ant);
-        });
-        curAnts.forEach(function (ant) {
-          if (ant == API.curAnt)
-            return
-          var bkup = API.curAnt;
-          if (bkup !== undefined)
-            API.close();
-          API.setAnt(ant);
-          API.callUserFunc("EmpfängtNachricht", [bkup.getMemory()], true);
-          API.close();
-          if (bkup !== undefined)
-            API.setAnt(bkup);
-        })
-      }
-      return true;
-    }; 
-    this.addJob("SENDMEMORY", {}, cb);
-  }
-  
-  var gotoHelper = function(obj, snap, f, col) {
-    var cb = function() {
+  // jobs - zielverfolgung
+  this.addGotoJob = function(destination, col, type, senses) {
+    my.jobs.splice(0, my.insertionPoint);
+    my.insertionPoint = 0;
+    this.addJob("DEST", [destination, senses], function(){
       if (col !== undefined) {
-        if (col.indexOf(obj) < 0)
-          return true;
+        if (col.indexOf(destination) < 0)
+          return true
       }
-      var des = obj.getPos();
-      var d = dist(my.pos, des);
-      if (d < snap) {
-        f.bind(this)();
+      var snap = Optionen.Toleranz
+      if (type == "Apfel")
+        snap = Optionen.ApfelRadius
+      var des = destination.getPos()
+      var d = dist(my.pos, des)
+      if (d <= snap){
+        API.callUserFunc(type + "Erreicht", [destination]);
+        if (type == "Bau")
+          reachedHome()
         return true;
       } else {
         var angle = getDir(my.pos, des);
@@ -315,38 +257,56 @@ function Ant(_pos, playerid) {
         this.addGoJob(Math.min(50, d));
         return false;
       }
-    };
-    my.jobs.splice(0, my.insertionPoint);
-    my.insertionPoint = 0;
-    this.addJob("DEST", obj, cb);
-  }.bind(this);
-  
-  this.goToSugar = function(sugar, parent) {
-    gotoHelper(sugar, 1, function() {
-      API.callUserFunc("ZuckerErreicht", [sugar]);
-    }, Sim.sugars);
+    })
   }
   
-  this.goToApple = function(apple, parent) {
-    gotoHelper(apple, Optionen.ApfelRadius, function() {
-      API.callUserFunc("ApfelErreicht", [apple]);
-    }, Sim.apples)
+  this.gotoHome = function(){
+    this.addGotoJob(myHill(), undefined, "Bau")
   }
   
-  this.goToPos = function(pos, parent) {
-    gotoHelper(pos, 1, function () {
-      API.callUserFunc("PositionErreicht");
-    });
+  // jobs - communication
+  this.addSendMemoryJob = function() {
+    this.addJob("SEND", undefined, function() {
+      if (dist(my.pos, myHill().getPos()) < Optionen.HügelRadius) {
+        var curAnts = [];
+        Sim.ants.forEach(function (ant) {
+          if (ant.getPlayerid() != my.playerid)
+            return;
+          if (dist(ant.getPos(), myHill().getPos()) < Optionen.AmeiseSichtweite)
+            curAnts.push(ant);
+        });
+        curAnts.forEach(function (ant) {
+          if (ant == API.curAnt)
+            return
+          // TODO condition: Ameise muss wach sein, um Nachricht zu empfangen
+          var bkup = API.curAnt;
+          if (bkup !== undefined)
+            API.close();
+          API.setAnt(ant);
+          API.callUserFunc("EmpfängtNachricht", [bkup.getMemory()], true);
+          API.close();
+          if (bkup !== undefined)
+            API.setAnt(bkup);
+        })
+      }
+      return true;
+    })
   }
   
-  this.goToHome = function(parent) {
-    if (this.getDestination() != HILL) {
-      gotoHelper(myHill(), 1, function() {
-        reachedHome();
-        API.callUserFunc("BauErreicht", [myHill()]);
-      });
-    }
-  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+
   
   this.update = function() {
     my.insertionPoint = my.jobs.length;
@@ -417,6 +377,43 @@ function Ant(_pos, playerid) {
     }
     
     API.close();
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    this.getDestination = function() {
+    var destination = undefined;
+    var jobs = API.curAnt.getJobs();
+    if (jobs.length > 0) {
+      var index = jobs.length - 1;
+      var curCmd = jobs[index];
+      while(index > 0 && curCmd.type != "DEST") {
+        curCmd = jobs[--index];
+      }
+      if (curCmd.type == "DEST") {
+        if (curCmd.value[0].constructor.name == "Sugar") {
+          destination = SUGAR;
+        } else if (curCmd.value[0].constructor.name == "Hill") {
+          destination = HILL;
+        } else if (curCmd.value[0].constructor.name == "Apple") {
+          destination = APPLE;
+        } else if (curCmd.value[0].constructor.name == "Position") {
+          destination = POSITION;
+        }
+      }
+    }
+    return destination;
   }
   
   // constructor

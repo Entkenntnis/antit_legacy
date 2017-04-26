@@ -57,8 +57,8 @@
     , WanzenHügelAbstand : 250
     , ZufallRichtungsVerschiebung : 11
     , EntwicklerModus : true
-    , Toleranz : 4
-    , GrabToleranz : 7
+    , Toleranz : 3
+    , GrabToleranz : 10
   }
  
   //export
