@@ -19,6 +19,12 @@
 <link rel="stylesheet" href="show-hint.css">
 <script src="/codemirror.js"></script>
 <script>
+
+      function startsWith(str, searchString, position){
+          position = position || 0;
+          return str.substr(position, searchString.length) === searchString;
+      }
+
       var editor = CodeMirror.fromTextArea(
         document.getElementById("editor"),
         {
@@ -40,13 +46,12 @@
           , "Drehe"
           , "GeheZuBau"
           , "GeheZuZiel"
-          , "GeheGeradeaus"
           , "DreheZuRichtung"
           , "DreheZuObjekt"
           , "DreheWegVonObjekt"
           , "Stehe"
           , "Stopp"
-          , "Nimm"
+          , "NimmZucker"
           , "LadeZuckerAb"
           , "BringeApfelZuBau"
           , "BrauchtNochTräger"
@@ -56,12 +61,12 @@
           , "Zufallsname"
           , "BestimmeEntfernung"
           , "BestimmeRichtung"
-          , "BestimmePosition"
           , "FühreAus"
           , "AktuelleReichweite"
           , "AktuelleLast"
           , "GetragenerApfel"
           , "AktuellePosition"
+          , "AktuelleRunde"
           , "Blickrichtung"
           , "AktuellesZiel"
           , "HeimatBau"
@@ -72,7 +77,6 @@
           , "ZUCKER"
           , "if"
           , "function"
-          , "alert"
           , "console.log"
           , "undefined"
           , "delete"
@@ -80,7 +84,7 @@
         var completions = [];
         if (token.type == "variable") {
           vars.forEach(function(f) {
-            if (f.startsWith(token.string))
+            if (startsWith(f, token.string))
             completions.push(f);
           });
         }
