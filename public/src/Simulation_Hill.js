@@ -74,7 +74,6 @@ function Hill(pos, playerid) {
       m.cycle++
       if (m.cycle >= Optionen.MarkerDauer) {
         Vw.markerStore.remove(m.key)
-        console.log("end")
         return true
       }
       var s = marker.scale.x * Optionen.MarkerVergrößerung
