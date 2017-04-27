@@ -28,12 +28,12 @@ Ameise.SiehtWanze = function(wanze){
 }
 
 // Ameise hat Zuckerhaufen erreicht
-Ameise.ZuckerErreicht = function(zucker){
+Ameise.ZuckerErreicht = function(){
 	
 }
 
 // Ameise hat Apfel erreicht
-Ameise.ApfelErreicht = function(apfel){
+Ameise.ApfelErreicht = function(){
 	
 }
 
@@ -63,6 +63,6 @@ Ameise.IstGeboren = function(){
 }
 
 // Wird einmal aufgerufen, wenn Ameise stirbt
-Ameise.IstGestorben = function(){
+Ameise.IstGestorben = function(ursache){
 	
 }

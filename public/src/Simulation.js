@@ -834,17 +834,17 @@ function Ant(pos, playerid) {
   }
   
   // jobs - food
-  this.addTakeJob = function(sugar) {
+  this.addTakeJob = function() {
     this.addSimpleJob(function(){
-      var d = dist(my.pos, sugar.getPos());
-      if (d <= Optionen.Toleranz) {
-        while(my.load < Optionen.AmeiseTragkraft) {
-          var t = sugar.unload1Sugar();
-          if (t) {
-            my.load++;
-          } else {
-            break;
-          }
+      var sugar = closest(my.pos, Sim.sugars, Optionen.GrabToleranz)
+      if (!sugar)
+        return true
+      while(my.load < Optionen.AmeiseTragkraft) {
+        var t = sugar.unload1Sugar();
+        if (t) {
+          my.load++;
+        } else {
+          break;
         }
       }
       updateGO();
@@ -930,7 +930,7 @@ function Ant(pos, playerid) {
       var des = destination.getPos()
       var d = dist(my.pos, des)
       if (d <= snap){
-        API.callUserFunc(type + "Erreicht", [destination]);
+        API.callUserFunc(type + "Erreicht");
         if (type == "Bau")
           reachedHome()
         return true;
@@ -948,9 +948,7 @@ function Ant(pos, playerid) {
   }
   
   this.gotoHome = function(sense){
-    if (this.getDestination != HILL) {
-      this.addGotoJob(myHill(), undefined, "Bau", sense)
-    }
+    this.addGotoJob(myHill(), undefined, "Bau", sense)
   }
   
   // jobs - sensing
@@ -1020,13 +1018,13 @@ function Ant(pos, playerid) {
               delete my.memory[property];
             }
           }
-          my.memory[property] = obj;
         }
       }
     }
   }
   
   function senseSugar() {
+    if (!this.isSensing()) return
     var sugar = closest(my.pos, Sim.sugars, Optionen.AmeiseSichtweite);
     if (sugar != undefined) {
       API.callUserFunc("SiehtZucker", [sugar]);
@@ -1034,8 +1032,9 @@ function Ant(pos, playerid) {
   }
   
   function senseApple() {
+    if (!this.isSensing()) return
     var apple = closest(my.pos, Sim.apples, Optionen.AmeiseSichtweite);
-    if (apple != undefined) {
+    if (apple != undefined && apple.needHelp(API.curAnt)) {
       API.callUserFunc("SiehtApfel", [apple]);
     }
   }
@@ -1063,10 +1062,8 @@ function Ant(pos, playerid) {
     refreshInsertionPoint()
     API.setAnt(this);
     execJob.bind(this)()
-    if (this.isSensing()) {
-      senseSugar()
-      senseApple()
-    }
+    senseSugar.bind(this)()
+    senseApple.bind(this)()
     senseBug()
     wait()
     API.callUserFunc("Tick");
@@ -1232,12 +1229,12 @@ function Position(pos) {
   })
 }
 // SimObject
-function SimObject(obj) {
+function SimObject(obj, timeless) {
   
   var roundId = API.callId;
   
   this.get = function(key) {
-    if (key === Sim && API.callId == roundId) {
+    if (key === Sim && (API.callId == roundId || timeless === true)) {
       return obj;
     }
     API.message("Objekt ist abgelaufen und kann nicht mehr verwendet werden.")
@@ -1364,25 +1361,13 @@ API.addFunc("BestimmeRichtung", function (a, b) {
   return Math.round(getDir(a.getPos(), b.getPos()));
 });
 
-API.addFunc("Nimm", function (zucker) {
-  if (!zucker || zucker.constructor.name !== "Sugar") {
-    API.message("Die Funktion 'Nimm(zucker)' erwartet als Argument einen Zuckerobjekt.");
-    return;
-  }
+API.addFunc("NimmZucker", function (zucker) {
   API.curAnt.addTakeJob(zucker);
 })
 
 API.addFunc("LadeZuckerAb", function() {
   API.curAnt.addDropJob();
 });
-
-API.addFunc("BrauchtNochTräger", function (apfel) {
-  if (!apfel || apfel.constructor.name !== "Apple") {
-    API.message("Die Funktion 'BrauchtNochTräger(apfel)' erwartet als Argument einen Apfelobjekt.");
-    return;
-  }
-  return apfel.needHelp(API.curAnt);
-})
 
 API.addFunc("BringeApfelZuBau", function () {
   API.curAnt.addAppleJob();
@@ -1398,7 +1383,7 @@ API.addFunc("RiecheNachZucker", function () {
 
 API.addFunc("RiecheNachApfel", function () {
   var apple = closest(API.curAnt.getPos(), Sim.apples, Optionen.AmeiseSichtweite);
-  if (apple)
+  if (apple && apple.needHelp(API.curAnt))
     return API.pushObj(apple);
   else
     return undefined;
@@ -1482,7 +1467,11 @@ API.antProp('GetragenerApfel', function(){
 });
 
 API.antProp('AktuellePosition', function(){
-  return API.pushObj(new Position(API.curAnt.getPos()));
+  return API.pushObj(new Position(API.curAnt.getPos(), true));
+});
+
+API.antProp('AktuelleRunde', function(){
+  return Sim.cycles
 });
 
 API.antProp('Gedächtnis', function(){
