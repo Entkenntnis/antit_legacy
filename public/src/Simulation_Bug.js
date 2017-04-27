@@ -6,7 +6,7 @@ function Bug(pos) {
   
   var my = makeAttributes(this, {pos: pos})
   
-  var key = Bug.Counter++;
+  var key = Bug.counter++;
   var heading = Math.floor(Math.random()*360);
   var togo = 0;
   var torotate = 0;

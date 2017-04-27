@@ -3,6 +3,7 @@
 function Hill(pos, playerid) {
 
   Hill.counter = Hill.counter || 1;
+  Hill.markerCounter = Hill.markerCounter || 1
   
   var my = makeAttributes(this, {
     pos: pos,
@@ -13,6 +14,7 @@ function Hill(pos, playerid) {
   })
   
   var key = Hill.counter++
+  var markers = []
   
   function updateGO() {
     Vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(my.pos));
@@ -20,6 +22,21 @@ function Hill(pos, playerid) {
   
   function setFlagColor() {
     Vw.setHillFlagColor(Vw.hillStore.get(key), Optionen.SpielerFarben[my.playerid]);
+  }
+  
+  this.addMarker = function() {
+    var key = Hill.markerCounter++
+    var marker = Vw.markerStore.get(key)
+    Vw.setMarkerColor(marker, Optionen.SpielerFarben[my.playerid])
+    marker.position.copy(Sim.playground.toViewPos(my.pos))
+    var s = Optionen.MarkerGröße
+    marker.scale.set(s, s, s)
+    marker.material.opacity = Optionen.MarkerDurchsichtigkeit
+    marker.material.needsUpdate = true
+    markers.push({
+      key: key,
+      cycle: 0
+    })
   }
   
   this.addEnergy = function(val) {
@@ -52,7 +69,22 @@ function Hill(pos, playerid) {
       API.callUserFunc("IstGeboren");
       API.close();
     }
+    removeIf(markers, function(m){
+      var marker = Vw.markerStore.get(m.key)
+      m.cycle++
+      if (m.cycle >= Optionen.MarkerDauer) {
+        Vw.markerStore.remove(m.key)
+        console.log("end")
+        return true
+      }
+      var s = marker.scale.x * Optionen.MarkerVergrößerung
+      marker.scale.set(s, s, s)
+      marker.material.opacity *= Optionen.MarkerFading
+      marker.material.needsUpdate = true
+      return false
+    })
   }
+  
   
   // constructor
   setFlagColor()

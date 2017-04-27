@@ -25,8 +25,14 @@ var AntMe = {};
     , ApfelGröße : 2.0
     , HügelGröße : 1.0
     , AmeisenGröße : 2.5
-    , WanzenGröße : 1.3
-    , ZuckerStückchenHöhe : 8.5
+    , WanzenGröße : 1.5
+    , ZuckerBoxGröße : 3.0
+    , MarkerGröße : 0.6
+    , MarkerDauer : 25
+    , MarkerVergrößerung : 1.04
+    , MarkerDurchsichtigkeit : 0.3
+    , MarkerFading : 0.92
+    , ZuckerStückchenHöhe : 7.3
     , NahrungMindestEntfernung : 450
     , NahrungMaximalEntfernung : 1000
     , NahrungAbstand : 150

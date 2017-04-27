@@ -229,11 +229,12 @@
       // sugar box
       var sugarBoxGeo = new THREE.BoxGeometry( 1, 1, 1);
       this.sugarBox0 = new THREE.Mesh( sugarBoxGeo, new THREE.MeshPhongMaterial({color:0xffffff}) );
-      this.sugarBox0.scale.set(2,2,2);
+      var s = Optionen.ZuckerBoxGröße
+      this.sugarBox0.scale.set(s, s, s);
       
       // marker-sphere
       var geometry1 = new THREE.SphereGeometry(40,32,24);
-      var material1 = new THREE.MeshLambertMaterial({color: 0x00ff00, transparent: true, opacity: 0.2});
+      var material1 = new THREE.MeshLambertMaterial();
       var sphere1 = new THREE.Mesh(geometry1, material1);
       this.marker0 = sphere1;
 
@@ -277,6 +278,10 @@
       [6, 7].forEach(function(id){
         bug.children[0].children[id].material.color.setHex(color);
       });
+    }
+    
+    this.setMarkerColor = function(marker, color) {
+      marker.material = new THREE.MeshLambertMaterial({color: color, transparent: true});
     }
     
     this.setControlsBounds = function(x, y){

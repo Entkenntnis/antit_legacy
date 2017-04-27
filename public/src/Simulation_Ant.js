@@ -241,6 +241,7 @@ function Ant(pos, playerid) {
   this.addSendMemoryJob = function(topic) {
     this.addJob("SEND", undefined, function() {
       if (dist(my.pos, myHill().getPos()) < Optionen.HügelRadius) {
+        myHill().addMarker()
         var curAnts = [];
         Sim.ants.forEach(function (ant) {
           if (ant.getPlayerid() != my.playerid)
