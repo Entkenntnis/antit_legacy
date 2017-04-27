@@ -59,9 +59,9 @@
   document.onkeypress = function(e){
     var newFps = undefined;
     if (e.charCode == 49)
-      newFps = 40;
+      newFps = 4
     if (e.charCode == 50)
-      newFps = 80;
+      newFps = 40;
     if (e.charCode == 51)
       newFps = 140;
     if (newFps) {

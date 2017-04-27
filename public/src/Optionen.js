@@ -1,6 +1,8 @@
-// File 2: exports SimOpts with static parameters
+// File 1: exports SimOpts with static parameters
 
 // TONS OF options to tune
+
+var AntMe = {};
 
 (function(){
   "use strict";
@@ -20,7 +22,11 @@
                        0xffff00, 0xff00ff, 0xffffff, 0x000000]
     , ZuckerGröße : 250
     , ZuckerVergrößerung : 0.1
-    , ZuckerStückchenHöhe : 5.5
+    , ApfelGröße : 2.0
+    , HügelGröße : 1.0
+    , AmeisenGröße : 2.5
+    , WanzenGröße : 1.3
+    , ZuckerStückchenHöhe : 8.5
     , NahrungMindestEntfernung : 450
     , NahrungMaximalEntfernung : 1000
     , NahrungAbstand : 150

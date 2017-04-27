@@ -1,10 +1,10 @@
-// File 1: exports _vw into AntMe, which is the interface to all graphic objects
+// File 2: exports _vw into AntMe, which is the interface to all graphic objects
 //         and the init function to start everything
-
-var AntMe = {};
 
 (function() {  
   "use strict";
+  var Optionen = AntMe._optionen
+  
   // project-wide variables
   var scene, camera, renderer, stats, controls, manager;
 
@@ -123,7 +123,7 @@ var AntMe = {};
     this.sugar0 = undefined
     this.apple0 = undefined
     this.sugarBox0 = undefined
-    //this.marker0 = undefined
+    this.marker0 = undefined
     this.gamefloor = undefined
     this.skybox = undefined
     this.antStore = undefined
@@ -132,7 +132,7 @@ var AntMe = {};
     this.appleStore = undefined
     this.bugStore = undefined
     this.sugarBoxStore = undefined
-    //this.markerStore = undefined
+    this.markerStore = undefined
     this.needRedraw = true
     this.onExtLoad = function(){}
     this.onExtTick = function(){};
@@ -190,7 +190,8 @@ var AntMe = {};
         });
         obj.children[0].children[10].rotation.set(-Math.PI/2, -Math.PI/2, 0);
         obj.children[0].children[10].position.set(2.4, -0.63, 1.68);*/
-        obj.scale.set(1.6,1.6,1.6);
+        var s = Optionen.AmeisenGröße
+        obj.scale.set(s, s, s);
         this.ant0 = obj;
       }.bind(this));
       objectLoader.load("models/anthill.json", function ( obj ) {
@@ -200,12 +201,15 @@ var AntMe = {};
         obj.children[0].children[1].material = mat;
         obj.children[0].children[0].material.color.setHex(0x000000);
         obj.children[0].children[2].material.color.setHex(0xffffff);
+        var s = Optionen.HügelGröße
+        obj.scale.set(s, s, s)
         this.hill0 = obj;
       }.bind(this));
       objectLoader.load("models/apple.json", function ( obj ) {
         obj.children[0].children[0].material.color.setHex(0x00cc00);
         obj.children[0].children[1].material.color.setHex(0x66aa00);
-        obj.scale.set(2, 2, 2);
+        var s = Optionen.ApfelGröße
+        obj.scale.set(s, s, s);
         this.apple0 = obj;
       }.bind(this));
       objectLoader.load("models/bug.json", function ( obj ) {
@@ -213,7 +217,8 @@ var AntMe = {};
           o.material.color.setHex(0x000000);
           o.material.specular.setHex(0x00dddd);
         });
-        obj.scale.set(1.3,1.3,1.3);
+        var s = Optionen.WanzenGröße
+        obj.scale.set(s, s, s);
         this.bug0 = obj;
       }.bind(this));
       objectLoader.load("models/sugar.json", function ( obj ) {
@@ -226,13 +231,13 @@ var AntMe = {};
       this.sugarBox0 = new THREE.Mesh( sugarBoxGeo, new THREE.MeshPhongMaterial({color:0xffffff}) );
       this.sugarBox0.scale.set(2,2,2);
       
-      /*// marker-sphere
+      // marker-sphere
       var geometry1 = new THREE.SphereGeometry(40,32,24);
       var material1 = new THREE.MeshLambertMaterial({color: 0x00ff00, transparent: true, opacity: 0.2});
       var sphere1 = new THREE.Mesh(geometry1, material1);
       this.marker0 = sphere1;
 
-      // debugging circle
+      /*// debugging circle
       var radius   = 100,
       segments = 64,
       material = new THREE.LineBasicMaterial( { color: 0x0000ff } ),
@@ -255,7 +260,7 @@ var AntMe = {};
       this.bugStore = new UnitStore(this.bug0);
       this.sugarStore = new UnitStore(this.sugar0);
       this.sugarBoxStore = new UnitStore(this.sugarBox0);
-      //this.markerStore = new UnitStore(this.marker0);
+      this.markerStore = new UnitStore(this.marker0);
     }
     
     this.setAntBodyColor = function(ant, c){
