@@ -106,7 +106,6 @@ function Apple(pos) {
       this.ants = this.ants.filter(function(a){
         return a.getPlayerid() == winnerID
       })
-      console.log("winning: " + winnerID + " " + this.ants.length)
       moving = true
       my.pid = winnerID
     } else {

@@ -613,7 +613,6 @@ function Apple(pos) {
       this.ants = this.ants.filter(function(a){
         return a.getPlayerid() == winnerID
       })
-      console.log("winning: " + winnerID + " " + this.ants.length)
       moving = true
       my.pid = winnerID
     } else {
@@ -1003,7 +1002,12 @@ function Ant(pos, playerid) {
     var sensing = true
     for (var i = my.jobs.length - 1; i >= 0; i--) {
       var curCmd = my.jobs[i]
-      if (curCmd.type == "DEST" && curCmd.value[1] !== true) {
+      if (curCmd.type == "DEST") {
+        if (curCmd.value[1] !== true)
+          sensing = false
+        break
+      }
+      if (i == my.jobs.length - 1 && curCmd.type == "APPLE") {
         sensing = false
         break
       }
@@ -1263,7 +1267,7 @@ var APIWrapper = function() {
       details = "\nVolk: " + Sim.players[API.staticPlayerId].getKI().Name + "\nAufruf: " + API.ctxt;
     }
     alert("MELDUNG\n" + text + details);
-    am._abortSimulation();
+    Antme._abortSimulation();
   }
 }
 
@@ -1379,7 +1383,7 @@ API.addFunc("DreheWegVonObjekt", function (objekt) {
 })
 
 API.addFunc("GeheZuZiel", function (ziel, sense)  {
-  if (arguments.length != 1)
+  if (arguments.length < 1)
     return API.message("Die Funktion 'GeheZuZiel(ziel)' wurde ohne Argument aufgerufen");
   if (ziel.constructor.name == "Sugar")
     return API.curAnt.addGotoJob(ziel, Sim.sugars, "Zucker", sense);

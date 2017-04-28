@@ -89,7 +89,7 @@ API.addFunc("DreheWegVonObjekt", function (objekt) {
 })
 
 API.addFunc("GeheZuZiel", function (ziel, sense)  {
-  if (arguments.length != 1)
+  if (arguments.length < 1)
     return API.message("Die Funktion 'GeheZuZiel(ziel)' wurde ohne Argument aufgerufen");
   if (ziel.constructor.name == "Sugar")
     return API.curAnt.addGotoJob(ziel, Sim.sugars, "Zucker", sense);

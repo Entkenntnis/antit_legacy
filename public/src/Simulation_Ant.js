@@ -310,7 +310,12 @@ function Ant(pos, playerid) {
     var sensing = true
     for (var i = my.jobs.length - 1; i >= 0; i--) {
       var curCmd = my.jobs[i]
-      if (curCmd.type == "DEST" && curCmd.value[1] !== true) {
+      if (curCmd.type == "DEST") {
+        if (curCmd.value[1] !== true)
+          sensing = false
+        break
+      }
+      if (i == my.jobs.length - 1 && curCmd.type == "APPLE") {
         sensing = false
         break
       }
