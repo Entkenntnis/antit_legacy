@@ -586,8 +586,6 @@ function Apple(pos) {
       }
       return true;
     });
-    if (Sim.cycles % 10 == 0)
-      console.log("active ants: "+ this.ants.length)
   }
   
   function decideWinningTeam() {
