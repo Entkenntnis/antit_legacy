@@ -34,8 +34,8 @@ var APIWrapper = function() {
     }));
   }
   
-  this.pushObj = function(obj) {
-    return new SimObject(obj);
+  this.pushObj = function(obj, timeless) {
+    return new SimObject(obj, timeless);
   }
   
   this.getObj = function(simObj) {
@@ -79,7 +79,7 @@ var APIWrapper = function() {
       details = "\nVolk: " + Sim.players[API.staticPlayerId].getKI().Name + "\nAufruf: " + API.ctxt;
     }
     alert("MELDUNG\n" + text + details);
-    Antme._abortSimulation();
+    AntMe._abortSimulation();
   }
 }
 

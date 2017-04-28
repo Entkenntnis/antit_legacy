@@ -19,7 +19,7 @@ var AntMe = {};
     , HügelRadius : 40
     , BauErreichtRadius : 10
     , SpielerFarben : [0xff0000, 0x00ff00, 0x0000ff, 0x00ffff,
-                       0xffff00, 0xff00ff, 0xaaaaaa, 0x333333]
+                       0xffff00, 0xff00ff, 0xffffff, 0x000000]
     , ZuckerGröße : 250
     , ZuckerVergrößerung : 0.1
     , ApfelGröße : 2.0
@@ -58,7 +58,7 @@ var AntMe = {};
     , EnergieProApfel : 2000
     , EnergieProZucker : 10
     , AmeisenReichweite : 3000
-    , WanzenProSpieler : 1.2
+    , WanzenProSpieler : 1
     , WanzenWartezeit : 300
     , AmeisenEnergie : 60
     , WanzenKampfweite : 12

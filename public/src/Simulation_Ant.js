@@ -302,7 +302,7 @@ function Ant(pos, playerid) {
   }
   
   this.gotoHome = function(sense){
-    this.addGotoJob(myHill(), undefined, "Bau", sense)
+    this.addGotoJob(myHill(), Sim.hills, "Bau", sense)
   }
   
   // jobs - sensing
@@ -315,7 +315,7 @@ function Ant(pos, playerid) {
           sensing = false
         break
       }
-      if (i == my.jobs.length - 1 && curCmd.type == "APPLE") {
+      if (curCmd.type == "APPLE") {
         sensing = false
         break
       }

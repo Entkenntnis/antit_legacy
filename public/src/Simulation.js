@@ -994,7 +994,7 @@ function Ant(pos, playerid) {
   }
   
   this.gotoHome = function(sense){
-    this.addGotoJob(myHill(), undefined, "Bau", sense)
+    this.addGotoJob(myHill(), Sim.hills, "Bau", sense)
   }
   
   // jobs - sensing
@@ -1007,7 +1007,7 @@ function Ant(pos, playerid) {
           sensing = false
         break
       }
-      if (i == my.jobs.length - 1 && curCmd.type == "APPLE") {
+      if (curCmd.type == "APPLE") {
         sensing = false
         break
       }
@@ -1222,8 +1222,8 @@ var APIWrapper = function() {
     }));
   }
   
-  this.pushObj = function(obj) {
-    return new SimObject(obj);
+  this.pushObj = function(obj, timeless) {
+    return new SimObject(obj, timeless);
   }
   
   this.getObj = function(simObj) {
@@ -1267,7 +1267,7 @@ var APIWrapper = function() {
       details = "\nVolk: " + Sim.players[API.staticPlayerId].getKI().Name + "\nAufruf: " + API.ctxt;
     }
     alert("MELDUNG\n" + text + details);
-    Antme._abortSimulation();
+    AntMe._abortSimulation();
   }
 }
 
@@ -1388,11 +1388,11 @@ API.addFunc("GeheZuZiel", function (ziel, sense)  {
   if (ziel.constructor.name == "Sugar")
     return API.curAnt.addGotoJob(ziel, Sim.sugars, "Zucker", sense);
   if (ziel.constructor.name == "Hill")
-    return API.curAnt.addGotoJob(ziel, Sim.hills, "Bau", sense);
+    return API.curAnt.gotoHome(sense);
   if (ziel.constructor.name == "Apple")
     return API.curAnt.addGotoJob(ziel, Sim.apples, "Apfel", sense);
   if (ziel.constructor.name == "Position")
-    return API.curAnt.gotoHome(sense);
+    return API.curAnt.addGotoJob(ziel, undefined, "Position", sense);
    API.message("Die Funktion 'GeheZuZiel(ziel)' konnte das unbekannte Ziel nicht anvisieren.");
 });
 
@@ -1424,30 +1424,6 @@ API.addFunc("BringeApfelZuBau", function () {
   API.curAnt.addAppleJob();
 });
 
-API.addFunc("RiecheNachZucker", function () {
-  var sugar = closest(API.curAnt.getPos(), Sim.sugars, Optionen.AmeiseSichtweite);
-  if (sugar)
-    return API.pushObj(sugar);
-  else
-    return undefined;
-});
-
-API.addFunc("RiecheNachApfel", function () {
-  var apple = closest(API.curAnt.getPos(), Sim.apples, Optionen.AmeiseSichtweite);
-  if (apple && apple.needHelp(API.curAnt))
-    return API.pushObj(apple);
-  else
-    return undefined;
-});
-
-API.addFunc("RiecheNachWanze", function () {
-  var bug = closest(API.curAnt.getPos(), Sim.bugs, Optionen.AmeiseSichtweite);
-  if (bug)
-    return API.pushObj(bug);
-  else
-    return undefined;
-});
-
 API.addFunc("FühreAus", function (funktion) {
   if (typeof funktion != "function") {
     API.message("Die Funktion 'FühreAus(funktion)' erwartet als Argument eine Funktion.");
@@ -1477,6 +1453,7 @@ Global.ZUCKER = SUGAR;
 Global.BAU = HILL;
 Global.APFEL = APPLE;
 Global.POSITION = POSITION;
+Global.OFFEN = true
 
 API.antProp('AktuellesZiel', function(){
   return API.curAnt.getDestination();
@@ -1518,7 +1495,7 @@ API.antProp('GetragenerApfel', function(){
 });
 
 API.antProp('AktuellePosition', function(){
-  return API.pushObj(new Position(API.curAnt.getPos(), true));
+  return API.pushObj(new Position(API.curAnt.getPos()), true);
 });
 
 API.antProp('AktuelleRunde', function(){
@@ -1528,6 +1505,28 @@ API.antProp('AktuelleRunde', function(){
 API.antProp('Gedächtnis', function(){
   return API.curAnt.getMemory();
 });
+
+var env = {}
+
+Object.defineProperty(env, "Zucker", {
+  get: function() {
+    var sugar = closest(API.curAnt.getPos(), Sim.sugars, Optionen.AmeiseSichtweite)
+    return sugar ? API.pushObj(sugar) : undefined
+  },
+  set: function() {}
+})
+
+Object.defineProperty(env, "Apfel", {
+  get: function() {
+    var apple = closest(API.curAnt.getPos(), Sim.apples, Optionen.AmeiseSichtweite)
+    return apple ? API.pushObj(apple) : undefined
+  },
+  set: function() {}
+})
+
+API.antProp('Umgebung', function(){
+  return env
+})
   
 AntMe.NeueAmeise = function (name) {
   var newAnt = {Name:name};
