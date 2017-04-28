@@ -1508,26 +1508,26 @@ API.antProp('Gedächtnis', function(){
 
 var env = {}
 
-Object.defineProperty(env, "Zucker", {
+Object.defineProperty(env, "ZuckerPosition", {
   get: function() {
     var sugar = closest(API.curAnt.getPos(), Sim.sugars, Optionen.AmeiseSichtweite)
-    return sugar ? API.pushObj(sugar) : undefined
+    return sugar ? API.pushObj(new Position(sugar.getPos()), true) : undefined
   },
   set: function() {}
 })
 
-Object.defineProperty(env, "Apfel", {
+Object.defineProperty(env, "ApfelPosition", {
   get: function() {
     var apple = closest(API.curAnt.getPos(), Sim.apples, Optionen.AmeiseSichtweite)
-    return apple ? API.pushObj(apple) : undefined
+    return apple ? API.pushObj(new Position(apple.getPos()), true) : undefined
   },
   set: function() {}
 })
 
-Object.defineProperty(env, "Wanze", {
+Object.defineProperty(env, "WanzePosition", {
   get: function() {
     var bug = closest(API.curAnt.getPos(), Sim.bugs, Optionen.AmeiseSichtweite)
-    return bug ? API.pushObj(bug) : undefined
+    return bug ? API.pushObj(new Position(bug.getPos()), true) : undefined
   },
   set: function() {}
 })
