@@ -1,7 +1,5 @@
 var Ameise = AntMe.NeueAmeise("_neue Ameise_"); // gib den Namen deiner Ameise ein
 
-// ab hier kommt dein Code
-
 // Ameise hat nichts mehr zu tun
 Ameise.Wartet = function(){
 	
