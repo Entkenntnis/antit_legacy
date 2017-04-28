@@ -1524,6 +1524,14 @@ Object.defineProperty(env, "Apfel", {
   set: function() {}
 })
 
+Object.defineProperty(env, "Wanze", {
+  get: function() {
+    var bug = closest(API.curAnt.getPos(), Sim.bugs, Optionen.AmeiseSichtweite)
+    return bug ? API.pushObj(bug) : undefined
+  },
+  set: function() {}
+})
+
 API.antProp('Umgebung', function(){
   return env
 })
