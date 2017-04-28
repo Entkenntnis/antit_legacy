@@ -1519,6 +1519,8 @@ Object.defineProperty(env, "ZuckerPosition", {
 Object.defineProperty(env, "ApfelPosition", {
   get: function() {
     var apple = closest(API.curAnt.getPos(), Sim.apples, Optionen.AmeiseSichtweite)
+    if (apple && !apple.needHelp(API.curAnt))
+      return undefined
     return apple ? API.pushObj(new Position(apple.getPos()), true) : undefined
   },
   set: function() {}
