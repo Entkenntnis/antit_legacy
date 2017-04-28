@@ -216,7 +216,7 @@ function Ant(pos, playerid) {
     var setup = false;
     var cb = function() {
       apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz);
-      if (!apple)
+      if (!apple || !apple.needHelp(API.curAnt))
         return true;
       var index = Sim.apples.indexOf(apple);
       if (index < 0) {
@@ -230,7 +230,8 @@ function Ant(pos, playerid) {
       if (apple.ants.indexOf(this) < 0) {
         return true;
       }
-      my.heading = apple.heading;
+      if (apple.heading !== undefined)
+        my.heading = apple.heading;
       this.setPos({x:my.pos.x + apple.dx, y:my.pos.y + apple.dy});
       return false;
     };
@@ -275,8 +276,11 @@ function Ant(pos, playerid) {
           return true
       }
       var snap = Optionen.Toleranz
-      if (type == "Apfel")
+      if (type == "Apfel") {
         snap = Optionen.ApfelRadius
+        if (!destination.needHelp(API.curAnt))
+          return true
+      }
       var des = destination.getPos()
       var d = dist(my.pos, des)
       if (d <= snap){

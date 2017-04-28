@@ -12,7 +12,7 @@ function Apple(pos) {
   this.ants = [];
   this.dx = 0;
   this.dy = 0;
-  this.heading = 0;
+  this.heading = undefined;
   
   function updateGO() {
     var GO = Vw.appleStore.get(key);
@@ -42,7 +42,16 @@ function Apple(pos) {
     Sim.players[id].addApple();
   }
   
-  this.update = function() {
+  this.letDown = function(){
+    moving = false
+    my.pid = undefined
+    this.heading = undefined
+    this.dx = 0
+    this.dy = 0
+    updateGO()
+  }
+  
+  function moveApple() {
     if (my.pid !== undefined) {
       this.heading = getDir(this.getPos(), Sim.hills[my.pid].getPos());
       // Geschwindigkeit zwischen 0.2 und 1
@@ -56,7 +65,9 @@ function Apple(pos) {
       updateGO();
       return;
     }
-    // remove inactive ants
+  }
+  
+  function removeInactiveAnts() {
     removeIf(this.ants, function(ant){
       if (Sim.ants.indexOf(ant) < 0)
         return true;
@@ -68,45 +79,47 @@ function Apple(pos) {
       }
       return true;
     });
-    // check parties
-    var stats = {};
-    var parties = [];
-    this.ants.forEach(function(ant){
-      var id = ant.getPlayerid();
-      if (id in stats) {
-        stats[id].push(ant);
-      } else {
-        stats[id] = [ant];
-        parties.push(id);
-      }
-    });
-    var vals = parties.map(function(e){
-      return {id:e, len:stats[e].length};
-    });
-    var bestid = undefined;
-    var bestlen = -1;
-    vals.forEach(function(e){
-      if (bestlen == e.len)
-        bestlen = -1;
-      else if (bestlen < e.len) {
-        bestlen = e.len
-        bestid = e.id;
-      }
-    });
-    if (bestlen >= Optionen.AmeisenFürApfel) {
-      var toKeep = [];
-      this.ants.forEach(function(a){
-        if (a.getPlayerid() == bestid) {
-          toKeep.push(a);
-        }
-      });
-      this.ants = toKeep;
-      moving = true;
-      my.pid = bestid;
-    } else {
-      moving = false;
-      my.pid = undefined;
+    if (Sim.cycles % 10 == 0)
+      console.log("active ants: "+ this.ants.length)
+  }
+  
+  function decideWinningTeam() {
+    if (this.ants.length == 0) {
+      this.letDown()
+      return
     }
+    var antsPerTeam = {}
+    var teams = []
+    this.ants.forEach(function(ant){
+      var id = ant.getPlayerid()
+      if (id in antsPerTeam) {
+        antsPerTeam[id]++
+      } else {
+        antsPerTeam[id] = 1
+        teams.push(id)
+      }
+    })
+    teams = teams.sort(function(a, b){
+      return antsPerTeam[b]-antsPerTeam[a]
+    })
+    var winnerID = teams[0]
+    var winnerCount = antsPerTeam[winnerID]
+    if (winnerCount >= Optionen.AmeisenFürApfel) {
+      this.ants = this.ants.filter(function(a){
+        return a.getPlayerid() == winnerID
+      })
+      console.log("winning: " + winnerID + " " + this.ants.length)
+      moving = true
+      my.pid = winnerID
+    } else {
+      this.letDown()
+    }
+  }
+  
+  this.update = function() {
+    removeInactiveAnts.bind(this)()
+    decideWinningTeam.bind(this)()
+    moveApple.bind(this)()
   }
   
   // constructor

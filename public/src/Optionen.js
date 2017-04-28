@@ -58,7 +58,7 @@ var AntMe = {};
     , EnergieProApfel : 2000
     , EnergieProZucker : 10
     , AmeisenReichweite : 3000
-    , WanzenProSpieler : 1
+    , WanzenProSpieler : 1.2
     , WanzenWartezeit : 300
     , AmeisenEnergie : 60
     , WanzenKampfweite : 12
