@@ -228,33 +228,27 @@ function Ant(pos, playerid) {
     })
   }
   
-  this.addAppleJob = function() {
-    var apple = undefined;
-    var setup = false;
-    var cb = function() {
-      if (!apple) {
-        apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz * 2);
-        if (!apple || !apple.needHelp(API.curAnt))
-          return true;
+  this.addAppleSetupJob = function() {
+    this.addSimpleJob(function(){
+      var apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz * 2)
+      if (apple && apple.needHelp(API.curAnt)) {
+        apple.addAnt(API.curAnt)
+        this.addAppleJob(apple)
       }
-      var index = Sim.apples.indexOf(apple);
-      if (index < 0) {
-        return true;
-      }
-      if (!setup) {
-        setup = true;
-        apple.addAnt(this);
-        return false;
-      }
-      if (apple.ants.indexOf(this) < 0) {
-        return true;
-      }
+    })
+  }
+  
+  this.addAppleJob = function(apple) {
+    this.addJob("APPLE", apple, function(){
+      if (Sim.apples.indexOf(apple) < 0)
+        return true
+      if (apple.ants.indexOf(this) < 0)
+        return true
       if (apple.heading !== undefined)
-        my.heading = apple.heading;
+        my.heading = apple.heading
       this.setPos({x:my.pos.x + apple.dx, y:my.pos.y + apple.dy});
       return false;
-    };
-    this.addJob("APPLE", undefined, cb);
+    })
   }
   
   // jobs - communication

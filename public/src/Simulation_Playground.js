@@ -172,15 +172,7 @@ function Playground(width, height) {
     })
     
     removeIf(Sim.apples, function(apple){
-      var id = apple.getPid();
-      if (id !== undefined) {
-        var d = dist(apple.getPos(), Sim.hills[id].getPos());
-        if (d < 10) {
-          apple.reachHome(id);
-          return true;
-        }
-      }
-      return false;
+      return apple.reachedHome()
     });
     
     removeIf(Sim.ants, function(ant) {

@@ -344,15 +344,7 @@ function Playground(width, height) {
     })
     
     removeIf(Sim.apples, function(apple){
-      var id = apple.getPid();
-      if (id !== undefined) {
-        var d = dist(apple.getPos(), Sim.hills[id].getPos());
-        if (d < 10) {
-          apple.reachHome(id);
-          return true;
-        }
-      }
-      return false;
+      return apple.reachedHome()
     });
     
     removeIf(Sim.ants, function(ant) {
@@ -511,10 +503,10 @@ function Apple(pos) {
   
   Apple.counter = Apple.counter || 1;
   
-  var my = makeAttributes(this, {pos:pos, pid:undefined})
+  var my = makeAttributes(this, {pos:pos})
   
+  var pid = undefined
   var key = Apple.counter++;
-  var moving = false;
   
   this.ants = [];
   this.dx = 0;
@@ -522,9 +514,9 @@ function Apple(pos) {
   this.heading = undefined;
   
   function updateGO() {
-    var GO = Vw.appleStore.get(key);
-    var height = moving?5:0;
-    GO.position.copy(Sim.playground.toViewPos(my.pos, height));
+    var go = Vw.appleStore.get(key);
+    var height = pid!==undefined?5:0;
+    go.position.copy(Sim.playground.toViewPos(my.pos, height));
   }
   
   this.addAnt = function(ant) {
@@ -534,50 +526,42 @@ function Apple(pos) {
   }
   
   this.needHelp = function(ant) {
-    if (my.pid === undefined) {
+    if (pid === undefined) {
       return true;
-    } else if (ant.getPlayerid() === my.pid && this.ants.length < Optionen.MaximumAmeisenFürApfel) {
+    } else if (ant.getPlayerid() === pid && this.ants.length < Optionen.MaximumAmeisenFürApfel) {
       return true;
     }
     return false;
   }
   
-  this.reachHome = function(id) {
-    Vw.appleStore.remove(key);
-    Sim.players[id].addPoints(Optionen.PunkteProApfel);
-    Sim.hills[id].addEnergy(Optionen.EnergieProApfel);
-    Sim.players[id].addApple();
+  this.reachedHome = function() {
+    if (pid !== undefined) {
+      var d = dist(my.pos, Sim.hills[pid].getPos());
+      if (d < 10) {
+        Vw.appleStore.remove(key);
+        Sim.players[pid].addPoints(Optionen.PunkteProApfel);
+        Sim.hills[pid].addEnergy(Optionen.EnergieProApfel);
+        Sim.players[pid].addApple();
+        return true;
+      }
+    }
+    return false;
   }
   
   this.letDown = function(){
-    moving = false
-    my.pid = undefined
+    pid = undefined
     this.heading = undefined
     this.dx = 0
     this.dy = 0
     updateGO()
   }
   
-  function moveApple() {
-    if (my.pid !== undefined) {
-      this.heading = getDir(this.getPos(), Sim.hills[my.pid].getPos());
-      // Geschwindigkeit zwischen 0.2 und 1
-      var speed = Optionen.ApfelMinGeschwindigkeit +
-        (Optionen.ApfelMaxGeschwindigkeit - Optionen.ApfelMinGeschwindigkeit) *
-        (this.ants.length / Optionen.MaximumAmeisenFürApfel);
-      this.dx =  speed*Math.cos(this.heading/180*Math.PI);
-      this.dy = speed*Math.sin(this.heading/180*Math.PI);
-      my.pos.x += this.dx;
-      my.pos.y += this.dy;
-      updateGO();
-      return;
-    }
-  }
-  
   function removeInactiveAnts() {
     removeIf(this.ants, function(ant){
       if (Sim.ants.indexOf(ant) < 0)
         return true;
+      if (dist(my.pos, ant.getPos()) > Optionen.GrabToleranz * 3)
+        return true
       var jobs = ant.getJobs();
       if (jobs !== undefined) {
         var curJob = jobs[jobs.length - 1];
@@ -613,10 +597,25 @@ function Apple(pos) {
       this.ants = this.ants.filter(function(a){
         return a.getPlayerid() == winnerID
       })
-      moving = true
-      my.pid = winnerID
+      pid = winnerID
     } else {
       this.letDown()
+    }
+  }
+  
+  function moveApple() {
+    if (pid !== undefined) {
+      this.heading = getDir(this.getPos(), Sim.hills[pid].getPos());
+      // Geschwindigkeit zwischen 0.2 und 1
+      var speed = Optionen.ApfelMinGeschwindigkeit +
+        (Optionen.ApfelMaxGeschwindigkeit - Optionen.ApfelMinGeschwindigkeit) *
+        (this.ants.length / Optionen.MaximumAmeisenFürApfel);
+      this.dx =  speed*Math.cos(this.heading/180*Math.PI);
+      this.dy = speed*Math.sin(this.heading/180*Math.PI);
+      my.pos.x += this.dx;
+      my.pos.y += this.dy;
+      updateGO();
+      return;
     }
   }
   
@@ -920,33 +919,27 @@ function Ant(pos, playerid) {
     })
   }
   
-  this.addAppleJob = function() {
-    var apple = undefined;
-    var setup = false;
-    var cb = function() {
-      if (!apple) {
-        apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz * 2);
-        if (!apple || !apple.needHelp(API.curAnt))
-          return true;
+  this.addAppleSetupJob = function() {
+    this.addSimpleJob(function(){
+      var apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz * 2)
+      if (apple && apple.needHelp(API.curAnt)) {
+        apple.addAnt(API.curAnt)
+        this.addAppleJob(apple)
       }
-      var index = Sim.apples.indexOf(apple);
-      if (index < 0) {
-        return true;
-      }
-      if (!setup) {
-        setup = true;
-        apple.addAnt(this);
-        return false;
-      }
-      if (apple.ants.indexOf(this) < 0) {
-        return true;
-      }
+    })
+  }
+  
+  this.addAppleJob = function(apple) {
+    this.addJob("APPLE", apple, function(){
+      if (Sim.apples.indexOf(apple) < 0)
+        return true
+      if (apple.ants.indexOf(this) < 0)
+        return true
       if (apple.heading !== undefined)
-        my.heading = apple.heading;
+        my.heading = apple.heading
       this.setPos({x:my.pos.x + apple.dx, y:my.pos.y + apple.dy});
       return false;
-    };
-    this.addJob("APPLE", undefined, cb);
+    })
   }
   
   // jobs - communication
@@ -1447,7 +1440,7 @@ API.addFunc("LadeZuckerAb", function() {
 });
 
 API.addFunc("BringeApfelZuBau", function () {
-  API.curAnt.addAppleJob();
+  API.curAnt.addAppleSetupJob();
 });
 
 API.addFunc("FühreAus", function (funktion) {
@@ -1518,14 +1511,7 @@ API.antProp('GetragenerApfel', function(){
   if (jobs.length > 0) {
     var curJob = jobs[jobs.length - 1];
     if (curJob.type == "APPLE") {
-      var apple = undefined
-      Sim.apples.forEach(function(a){
-        if (a.ants.indexOf(API.curAnt) >= 0) {
-          apple = a
-        }
-      })
-      if (apple)
-        return API.pushObj(apple);
+      return API.pushObj(curJob.value);
     }
   }
   return undefined;

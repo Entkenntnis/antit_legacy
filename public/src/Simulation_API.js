@@ -125,7 +125,7 @@ API.addFunc("LadeZuckerAb", function() {
 });
 
 API.addFunc("BringeApfelZuBau", function () {
-  API.curAnt.addAppleJob();
+  API.curAnt.addAppleSetupJob();
 });
 
 API.addFunc("FühreAus", function (funktion) {
@@ -196,14 +196,7 @@ API.antProp('GetragenerApfel', function(){
   if (jobs.length > 0) {
     var curJob = jobs[jobs.length - 1];
     if (curJob.type == "APPLE") {
-      var apple = undefined
-      Sim.apples.forEach(function(a){
-        if (a.ants.indexOf(API.curAnt) >= 0) {
-          apple = a
-        }
-      })
-      if (apple)
-        return API.pushObj(apple);
+      return API.pushObj(curJob.value);
     }
   }
   return undefined;
