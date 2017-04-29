@@ -212,10 +212,10 @@ function Ant(pos, playerid) {
   }
   
   this.addAppleJob = function() {
-    var apple = {};
+    var apple = undefined;
     var setup = false;
     var cb = function() {
-      if (apple.constructor.name != "Apple") {
+      if (!apple) {
         apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz * 2);
         if (!apple || !apple.needHelp(API.curAnt))
           return true;
@@ -237,7 +237,7 @@ function Ant(pos, playerid) {
       this.setPos({x:my.pos.x + apple.dx, y:my.pos.y + apple.dy});
       return false;
     };
-    this.addJob("APPLE", apple, cb);
+    this.addJob("APPLE", undefined, cb);
   }
   
   // jobs - communication

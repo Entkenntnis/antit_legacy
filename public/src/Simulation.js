@@ -904,10 +904,10 @@ function Ant(pos, playerid) {
   }
   
   this.addAppleJob = function() {
-    var apple = {};
+    var apple = undefined;
     var setup = false;
     var cb = function() {
-      if (apple.constructor.name != "Apple") {
+      if (!apple) {
         apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz * 2);
         if (!apple || !apple.needHelp(API.curAnt))
           return true;
@@ -929,7 +929,7 @@ function Ant(pos, playerid) {
       this.setPos({x:my.pos.x + apple.dx, y:my.pos.y + apple.dy});
       return false;
     };
-    this.addJob("APPLE", apple, cb);
+    this.addJob("APPLE", undefined, cb);
   }
   
   // jobs - communication
@@ -1490,9 +1490,14 @@ API.antProp('GetragenerApfel', function(){
   if (jobs.length > 0) {
     var curJob = jobs[jobs.length - 1];
     if (curJob.type == "APPLE") {
-      if (curJob.value.constructor.name != "Apple")
-        return undefined
-      return API.pushObj(curJob.value);
+      var apple = undefined
+      Sim.apples.forEach(function(a){
+        if (a.ants.indexOf(API.curAnt) >= 0) {
+          apple = a
+        }
+      })
+      if (apple)
+        return API.pushObj(apple);
     }
   }
   return undefined;

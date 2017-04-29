@@ -194,9 +194,14 @@ API.antProp('GetragenerApfel', function(){
   if (jobs.length > 0) {
     var curJob = jobs[jobs.length - 1];
     if (curJob.type == "APPLE") {
-      if (curJob.value.constructor.name != "Apple")
-        return undefined
-      return API.pushObj(curJob.value);
+      var apple = undefined
+      Sim.apples.forEach(function(a){
+        if (a.ants.indexOf(API.curAnt) >= 0) {
+          apple = a
+        }
+      })
+      if (apple)
+        return API.pushObj(apple);
     }
   }
   return undefined;
