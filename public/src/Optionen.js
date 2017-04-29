@@ -2,7 +2,7 @@
 
 // TONS OF options to tune
 
-var AntMe = {};
+var AntJS = {};
 
 (function(){
   "use strict";
@@ -74,5 +74,5 @@ var AntMe = {};
   }
  
   //export
-  AntMe._optionen = Optionen;
+  AntJS._optionen = Optionen;
 })();

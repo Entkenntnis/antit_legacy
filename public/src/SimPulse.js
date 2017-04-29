@@ -5,10 +5,10 @@
 (function () {
   "use strict";
   
-  var am = AntMe;
-  var vw = AntMe._vw;
-  var Sim = AntMe._sim;
-  var Optionen = AntMe._optionen;
+  var am = AntJS;
+  var vw = AntJS._vw;
+  var Sim = AntJS._sim;
+  var Optionen = AntJS._optionen;
   
   var SimPulse = {
       running : false

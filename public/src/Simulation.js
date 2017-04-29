@@ -4,10 +4,10 @@
 
 "use strict";
   
-var Vw = AntMe._vw;
-var Optionen = AntMe._optionen;
+var Vw = AntJS._vw;
+var Optionen = AntJS._optionen;
 var Global = window;
-var Am = AntMe;
+var Am = AntJS;
 
 // Helper functions
 
@@ -1267,7 +1267,7 @@ var APIWrapper = function() {
       details = "\nVolk: " + Sim.players[API.staticPlayerId].getKI().Name + "\nAufruf: " + API.ctxt;
     }
     alert("MELDUNG\n" + text + details);
-    AntMe._abortSimulation();
+    AntJS._abortSimulation();
   }
 }
 
@@ -1538,7 +1538,7 @@ API.antProp('Umgebung', function(){
   return env
 })
   
-AntMe.NeueAmeise = function (name) {
+AntJS.NeueAmeise = function (name) {
   var newAnt = {Name:name};
   if (API.ants.length < Optionen.MaximaleSpieler) {
     API.ants.push(newAnt);
@@ -1546,7 +1546,10 @@ AntMe.NeueAmeise = function (name) {
   return newAnt;
 }
 
-AntMe._abortSimulation = function () {
+// backward compat
+Global.AntMe = AntJS
+
+AntJS._abortSimulation = function () {
   var error =  document.createElement("DIV");
   error.innerHTML = "Simulationsfehler";
   error.style.color = "red";
@@ -1558,14 +1561,14 @@ AntMe._abortSimulation = function () {
 }
 
 if (Optionen.EntwicklerModus) {
-  AntMe.Sim = Sim;
-  AntMe.Vw = Vw;
-  AntMe.Optionen = Optionen;
+  AntJS.Sim = Sim;
+  AntJS.Vw = Vw;
+  AntJS.Optionen = Optionen;
 }
 // end of Simulation.js
 
 // access for SimPulse
-AntMe._sim = Sim;
+AntJS._sim = Sim;
 
 // end of encapsulation
 })();

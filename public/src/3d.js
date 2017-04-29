@@ -1,9 +1,9 @@
-// File 2: exports _vw into AntMe, which is the interface to all graphic objects
+// File 2: exports _vw into AntJS, which is the interface to all graphic objects
 //         and the init function to start everything
 
 (function() {  
   "use strict";
-  var Optionen = AntMe._optionen
+  var Optionen = AntJS._optionen
   
   // project-wide variables
   var scene, camera, renderer, stats, controls, manager;
@@ -303,6 +303,6 @@
   var vw = new ViewController();
   
   // export
-  AntMe._vw = vw;
-  AntMe.StarteSimulation = init;
+  AntJS._vw = vw;
+  AntJS.StarteSimulation = init;
 })();
