@@ -112,8 +112,6 @@
     }
   }
 
-
-
   // START OF 3d view related stuff
 
   var ViewController = function(){
@@ -124,6 +122,7 @@
     this.apple0 = undefined
     this.sugarBox0 = undefined
     this.marker0 = undefined
+    this.poison0 = undefined
     this.gamefloor = undefined
     this.skybox = undefined
     this.antStore = undefined
@@ -133,6 +132,7 @@
     this.bugStore = undefined
     this.sugarBoxStore = undefined
     this.markerStore = undefined
+    this.poisonStore =undefined
     this.needRedraw = true
     this.onExtLoad = function(){}
     this.onExtTick = function(){};
@@ -159,10 +159,10 @@
       groundTexture.repeat.set(15, 15);
       var grass = new THREE.Mesh(new THREE.PlaneGeometry(50000, 50000, 1, 1), new THREE.MeshBasicMaterial({side:THREE.DoubleSide, map:groundTexture}));
       grass.rotation.x = Math.PI / 2;
-      grass.position.y = -50;
+      grass.position.y = -15;
       scene.add(grass);
       
-      var skyGeo = new THREE.SphereGeometry(24000, 25, 25);
+      var skyGeo = new THREE.SphereBufferGeometry(24000, 25, 25);
       var skyTexture = textureLoader.load( "assets/sky.jpg" );
       var skyMaterial = new THREE.MeshBasicMaterial({ 
         map: skyTexture
@@ -183,13 +183,6 @@
         obj.children[0].children.forEach(function(o){
           o.material = new THREE.MeshLambertMaterial({color:0x000000});
         });
-        /*var face = textureLoader.load("assets/face.jpg");
-        obj.children[0].children[10].material = new THREE.MeshLambertMaterial({
-          color:0xffffff
-          , map:face
-        });
-        obj.children[0].children[10].rotation.set(-Math.PI/2, -Math.PI/2, 0);
-        obj.children[0].children[10].position.set(2.4, -0.63, 1.68);*/
         var s = Optionen.AmeisenGröße
         obj.scale.set(s, s, s);
         this.ant0 = obj;
@@ -227,16 +220,32 @@
       }.bind(this));
       
       // sugar box
-      var sugarBoxGeo = new THREE.BoxGeometry( 1, 1, 1);
+      var sugarBoxGeo = new THREE.BoxBufferGeometry( 1, 1, 1);
       this.sugarBox0 = new THREE.Mesh( sugarBoxGeo, new THREE.MeshPhongMaterial({color:0xffffff}) );
       var s = Optionen.ZuckerBoxGröße
       this.sugarBox0.scale.set(s, s, s);
       
       // marker-sphere
-      var geometry1 = new THREE.SphereGeometry(40,32,24);
+      var geometry1 = new THREE.SphereBufferGeometry(40,32,24);
       var material1 = new THREE.MeshLambertMaterial();
       var sphere1 = new THREE.Mesh(geometry1, material1);
       this.marker0 = sphere1;
+      
+      // poison ring
+      var ring = new THREE.RingBufferGeometry( 20, 50, 8 );
+      var ringMat = new THREE.MeshPhongMaterial( { color: 0xffff00, side: THREE.DoubleSide, transparent:true, opacity:0.4 } );
+      var poisonRing = new THREE.Mesh( ring, ringMat );
+      poisonRing.rotation.x = Math.PI / 2;
+      poisonRing.position.y = 2
+      this.poison0 = poisonRing
+      
+      /*// magic activation
+      var pyramid = new THREE.TetrahedronGeometry(2)
+      var pyramidMat = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+      var magic = new THREE.Mesh(pyramid, pyramidMat)
+      magic.position.x = 500
+      magic.position.y = 3
+      scene.add(magic)*/
 
       /*// debugging circle
       var radius   = 100,
@@ -262,6 +271,7 @@
       this.sugarStore = new UnitStore(this.sugar0);
       this.sugarBoxStore = new UnitStore(this.sugarBox0);
       this.markerStore = new UnitStore(this.marker0);
+      this.poisonStore = new UnitStore(this.poison0);
     }
     
     this.setAntBodyColor = function(ant, c){
