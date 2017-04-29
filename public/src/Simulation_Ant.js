@@ -90,6 +90,9 @@ function Ant(pos, playerid) {
   
   // jobs - general
   this.addJob = function(name, val, cb) {
+    if (my.jobs.length > Optionen.JobLimit) {
+      API.message("Warteschlange der Ameise ist vollgelaufen!")
+    }
     my.jobs.splice(my.insertionPoint, 0, new Job(name, val, cb));
   }
   
@@ -158,6 +161,20 @@ function Ant(pos, playerid) {
     var rotation = getRotation(my.heading, angle)
     if (rotation != 0)
       this.addTurnJob(rotation)
+  }
+  
+  this.addTurnToObj = function(obj) {
+    this.addSimpleJob(function(){
+      var angle = getDir(API.curAnt.getPos(), obj.getPos());
+      API.curAnt.addTurnToJob(angle);
+    })
+  }
+  
+  this.addTurnAway = function(obj) {
+    this.addSimpleJob(function(){
+      var angle = (getDir(API.curAnt.getPos(), obj.getPos()) + 180) % 360;
+      API.curAnt.addTurnToJob(angle);
+    })
   }
   
   this.addWaitJob = function(rounds) {

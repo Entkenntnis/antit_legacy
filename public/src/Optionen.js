@@ -71,6 +71,7 @@ var AntJS = {};
     , EntwicklerModus : false
     , Toleranz : 3
     , GrabToleranz : 10
+    , JobLimit : 100
   }
  
   //export

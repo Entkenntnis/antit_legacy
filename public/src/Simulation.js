@@ -782,6 +782,9 @@ function Ant(pos, playerid) {
   
   // jobs - general
   this.addJob = function(name, val, cb) {
+    if (my.jobs.length > Optionen.JobLimit) {
+      API.message("Warteschlange der Ameise ist vollgelaufen!")
+    }
     my.jobs.splice(my.insertionPoint, 0, new Job(name, val, cb));
   }
   
@@ -850,6 +853,20 @@ function Ant(pos, playerid) {
     var rotation = getRotation(my.heading, angle)
     if (rotation != 0)
       this.addTurnJob(rotation)
+  }
+  
+  this.addTurnToObj = function(obj) {
+    this.addSimpleJob(function(){
+      var angle = getDir(API.curAnt.getPos(), obj.getPos());
+      API.curAnt.addTurnToJob(angle);
+    })
+  }
+  
+  this.addTurnAway = function(obj) {
+    this.addSimpleJob(function(){
+      var angle = (getDir(API.curAnt.getPos(), obj.getPos()) + 180) % 360;
+      API.curAnt.addTurnToJob(angle);
+    })
   }
   
   this.addWaitJob = function(rounds) {
@@ -1371,8 +1388,7 @@ API.addFunc("DreheZuObjekt", function (objekt) {
     API.message("Die Funktion 'DreheZuObjekt(objekt)' konnte für das übergebene Objekt keine Position bestimmen.");
     return;
   }
-  var angle = getDir(API.curAnt.getPos(), objekt.getPos());
-  API.curAnt.addTurnToJob(angle);
+  API.curAnt.addTurnToObj(objekt)
 })
 
 API.addFunc("DreheWegVonObjekt", function (objekt) {
@@ -1380,8 +1396,7 @@ API.addFunc("DreheWegVonObjekt", function (objekt) {
     API.message("Die Funktion 'DreheWegVonObjekt(objekt)' konnte für das übergebene Objekt keine Position bestimmen.");
     return;
   }
-  var angle = (getDir(API.curAnt.getPos(), objekt.getPos()) + 180) % 360;
-  API.curAnt.addTurnToJob(angle);
+  API.curAnt.addTurnAway(objekt)
 })
 
 API.addFunc("GeheZuZiel", function (ziel, sense)  {
@@ -1463,6 +1478,10 @@ API.antProp('AktuellesZiel', function(){
 
 API.antProp('Untätig', function(){
   return API.curAnt.getJobs().length == 0;
+});
+
+API.antProp('IstOffen', function(){
+  return API.curAnt.isSensing()
 });
 
 API.antProp('AktuelleEnergie', function(){

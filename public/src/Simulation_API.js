@@ -75,8 +75,7 @@ API.addFunc("DreheZuObjekt", function (objekt) {
     API.message("Die Funktion 'DreheZuObjekt(objekt)' konnte für das übergebene Objekt keine Position bestimmen.");
     return;
   }
-  var angle = getDir(API.curAnt.getPos(), objekt.getPos());
-  API.curAnt.addTurnToJob(angle);
+  API.curAnt.addTurnToObj(objekt)
 })
 
 API.addFunc("DreheWegVonObjekt", function (objekt) {
@@ -84,8 +83,7 @@ API.addFunc("DreheWegVonObjekt", function (objekt) {
     API.message("Die Funktion 'DreheWegVonObjekt(objekt)' konnte für das übergebene Objekt keine Position bestimmen.");
     return;
   }
-  var angle = (getDir(API.curAnt.getPos(), objekt.getPos()) + 180) % 360;
-  API.curAnt.addTurnToJob(angle);
+  API.curAnt.addTurnAway(objekt)
 })
 
 API.addFunc("GeheZuZiel", function (ziel, sense)  {
@@ -167,6 +165,10 @@ API.antProp('AktuellesZiel', function(){
 
 API.antProp('Untätig', function(){
   return API.curAnt.getJobs().length == 0;
+});
+
+API.antProp('IstOffen', function(){
+  return API.curAnt.isSensing()
 });
 
 API.antProp('AktuelleEnergie', function(){
