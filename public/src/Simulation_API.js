@@ -194,6 +194,8 @@ API.antProp('GetragenerApfel', function(){
   if (jobs.length > 0) {
     var curJob = jobs[jobs.length - 1];
     if (curJob.type == "APPLE") {
+      if (curJob.value.constructor.name != "Apple")
+        return undefined
       return API.pushObj(curJob.value);
     }
   }

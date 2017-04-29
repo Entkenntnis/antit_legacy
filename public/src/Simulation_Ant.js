@@ -212,7 +212,7 @@ function Ant(pos, playerid) {
   }
   
   this.addAppleJob = function() {
-    var apple = undefined;
+    var apple = {};
     var setup = false;
     var cb = function() {
       apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz);
