@@ -215,9 +215,11 @@ function Ant(pos, playerid) {
     var apple = {};
     var setup = false;
     var cb = function() {
-      apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz);
-      if (!apple || !apple.needHelp(API.curAnt))
-        return true;
+      if (apple.constructor.name != "Apple") {
+        apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz * 2);
+        if (!apple || !apple.needHelp(API.curAnt))
+          return true;
+      }
       var index = Sim.apples.indexOf(apple);
       if (index < 0) {
         return true;
