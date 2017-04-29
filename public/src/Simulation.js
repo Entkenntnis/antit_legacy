@@ -805,8 +805,8 @@ function Ant(pos, playerid) {
   }
   
   // jobs - basic movement
-  this.addGoJob = function(steps) {
-    this.addJob("GO", undefined, function(){
+  this.addGoJob = function(steps, auto) {
+    this.addJob("GO", auto, function(){
       var toMove = 0;
       var finished = false;
       var curSpeed = Optionen.AmeiseGeschwindigkeit;
@@ -832,8 +832,8 @@ function Ant(pos, playerid) {
     })
   }
   
-  this.addTurnJob = function(degree) {
-    this.addJob("TURN", undefined, function(){
+  this.addTurnJob = function(degree, auto) {
+    this.addJob("TURN", auto, function(){
       var toTurn = 0;
       var finished = false;
       if (Math.abs(degree) < Optionen.AmeiseDrehgeschwindigkeit) {
@@ -1005,14 +1005,23 @@ function Ant(pos, playerid) {
         var v = Optionen.ZufallRichtungsVerschiebung;
         rotation += Math.floor(Math.random()*v*2-v);
         if (rotation != 0)
-          this.addTurnJob(rotation);
-        this.addGoJob(Math.min(50, d));
+          this.addTurnJob(rotation, true);
+        this.addGoJob(Math.min(50, d), true);
         return false;
       }
     })
   }
   
   this.gotoHome = function(sense){
+    for (var i = my.jobs.length - 1; i >= 0; i--) {
+      var cur = my.jobs[i]
+      if (cur.type != "GO" && cur.type != "TURN" && cur.type != "DEST")
+        break
+      if (cur.value === true)
+        continue
+      if (cur.type == "DEST" && cur.value[0].constructor.name == "Hill")
+        return
+    }
     this.addGotoJob(myHill(), Sim.hills, "Bau", sense)
   }
   
