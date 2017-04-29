@@ -21,13 +21,13 @@
 
 <% if (!user) { %>
   <div class="jumbotron"><h1>AntJS</h1>
-	<p>Lerne spielerisch das Programmieren kennen mit der coolsten und spannendsten Simulation der Welt!</p></div>
+	<p>Lerne spielerisch das Programmieren mit der coolsten und spannendsten Simulation der Welt! Erlebe, wie deine Ameisenvölker zum Leben erwachen und ihre Welt erobern.</p></div>
   <%if(fail == "1"){%>
   <div class="alert alert-danger" role="alert"><strong>Anmeldung gescheitert!</strong> Überprüfe bitte Benutzername und Passwort.</div><%}%>
 	<ul class="nav nav-pills" role="tablist">
         <li role="presentation" class="active"><a href="/">AntJS Home</a></li>
         <li role="presentation"><a href="/guide">Anleitung</a></li>
-        <li role="presentation"><a href="/doku">Dokumentation</a></li>
+        <li role="presentation"><a href="/doku">Handbuch</a></li>
       </ul>
   <br>
   <p><form action="/login" method="post">
@@ -79,8 +79,8 @@
 	<ul class="nav nav-pills" role="tablist">
         <li role="presentation" class="active"><a href="#">AntJS Home</a></li>
         <li role="presentation"><a href="/guide">Anleitung</a></li>
-        <li role="presentation"><a href="/doku">Dokumentation</a></li>
-        <li role="presentation"><a href="/logout">Logout</a></li>
+        <li role="presentation"><a href="/doku">Handbuch</a></li>
+        <li role="presentation"><a href="/logout">abmelden...</a></li>
       </ul>
   
   <%if (user.superuser) {%>
@@ -124,6 +124,7 @@
 	<div class="page-header">
 	<h3>Simulation</h3>
 	</div>
+	<p><a href="javascript:clear()" style="margin-bottom:10px">Felder zurücksetzen</a></p>
 	<script>
 	  function clear() {
 	    for (i = 1; i <= 8; i++) {
@@ -159,7 +160,7 @@
   </select></div>
   <% } %></div>
   <div style="clear:both;"><br><input type="submit" value="Simulation starten" class="btn btn-success">
-	<a href="javascript:clear()" style="margin-left:30px">Felder zurücksetzen</a></div>
+	</div>
   </form>
   
   
