@@ -1,15 +1,11 @@
-var Ameise = AntJS.NeueAmeise("_neue Ameise_");
+var Ameise = AntJS.NeueAmeise("* neue Ameise");
 
-// Bewegung
+// Aufgaben
 Ameise.Wartet = function(){
 	
 }
 
-Ameise.RandErreicht = function(){
-	
-}
-
-// Sichtungen
+// Sichtung
 Ameise.SiehtZucker = function(zucker){
 	
 }
@@ -22,7 +18,7 @@ Ameise.SiehtWanze = function(wanze){
 	
 }
 
-// Zielvisierung
+// Zielverfolgung
 Ameise.ZuckerErreicht = function(){
 	
 }
@@ -39,17 +35,22 @@ Ameise.BauErreicht = function(){
 	
 }
 
+// Bewegung
+Ameise.RandErreicht = function(){
+	
+}
+
 // Kommunikation
 Ameise.EmpfängtNachricht = function(info, typ){
 	
 }
 
-// Eigene Ereignisse
+// Ereignis
 Ameise.Tick = function(){
 	
 }
 
-// Leben einer Ameise
+// Leben
 Ameise.IstGeboren = function(){
 	
 }

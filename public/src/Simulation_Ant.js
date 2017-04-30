@@ -192,6 +192,7 @@ function Ant(pos, playerid) {
   
   this.addCustomJob = function(f) {
     this.addJob("CUSTOM", undefined, function(){
+      this.refreshInsertionPoint()
       var ret = f.apply(API.pushObj(API.curAnt));
       if (ret !== undefined)
         return ret;
