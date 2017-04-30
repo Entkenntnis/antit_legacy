@@ -27,6 +27,7 @@ var APIWrapper = function() {
     if (API.staticPlayerId === undefined)
       return;
     API.ctxt = "Ameise." + name + " = " + func;
+    API.curAnt.refreshInsertionPoint()
     func.apply(API.pushObj(API.curAnt), arg.map(function (obj) {
       if (!pure && typeof obj == "object")
         return API.pushObj(obj);

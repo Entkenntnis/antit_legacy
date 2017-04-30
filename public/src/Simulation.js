@@ -560,7 +560,7 @@ function Apple(pos) {
     removeIf(this.ants, function(ant){
       if (Sim.ants.indexOf(ant) < 0)
         return true;
-      if (dist(my.pos, ant.getPos()) > Optionen.GrabToleranz * 3)
+      if (dist(my.pos, ant.getPos()) > Optionen.ApfelRadius)
         return true
       var jobs = ant.getJobs();
       if (jobs !== undefined) {
@@ -799,7 +799,7 @@ function Ant(pos, playerid) {
     my.insertionPoint = 0;
   }
   
-  function refreshInsertionPoint() {
+  this.refreshInsertionPoint = function() {
     my.insertionPoint = my.jobs.length;
   }
   
@@ -893,7 +893,7 @@ function Ant(pos, playerid) {
   // jobs - food
   this.addTakeJob = function() {
     this.addSimpleJob(function(){
-      var sugar = closest(my.pos, Sim.sugars, Optionen.GrabToleranz)
+      var sugar = closest(my.pos, Sim.sugars, Optionen.ZuckerRadius)
       if (!sugar)
         return true
       while(my.load < Optionen.AmeiseTragkraft) {
@@ -911,7 +911,7 @@ function Ant(pos, playerid) {
   this.addDropJob = function() {
     this.addSimpleJob(function(){
       var d = dist(my.pos, myHill().getPos())
-      if (d <= Optionen.GrabToleranz) {
+      if (d <= Optionen.HügelRadius) {
         addSugar(my.load)
       }
       my.load = 0;
@@ -921,7 +921,7 @@ function Ant(pos, playerid) {
   
   this.addAppleSetupJob = function() {
     this.addSimpleJob(function(){
-      var apple = closest(my.pos, Sim.apples, Optionen.GrabToleranz * 2)
+      var apple = closest(my.pos, Sim.apples, Optionen.ApfelRadius)
       if (apple && apple.needHelp(API.curAnt)) {
         apple.addAnt(API.curAnt)
         this.addAppleJob(apple)
@@ -981,7 +981,7 @@ function Ant(pos, playerid) {
       }
       var snap = Optionen.Toleranz
       if (type == "Apfel") {
-        snap = Optionen.ApfelRadius
+        snap = Optionen.ApfelRadius / 3
         if (!destination.needHelp(API.curAnt))
           return true
       }
@@ -1062,6 +1062,7 @@ function Ant(pos, playerid) {
   
   // event loop
   function execJob() {
+    this.refreshInsertionPoint()
     if (my.jobs.length > 0) {
       var curJob = my.jobs[my.jobs.length - 1];
       var finished = curJob.callback.bind(this)();
@@ -1131,7 +1132,6 @@ function Ant(pos, playerid) {
   
   // update
   this.update = function() {
-    refreshInsertionPoint()
     API.setAnt(this);
     execJob.bind(this)()
     senseSugar.bind(this)()
@@ -1236,6 +1236,7 @@ var APIWrapper = function() {
     if (API.staticPlayerId === undefined)
       return;
     API.ctxt = "Ameise." + name + " = " + func;
+    API.curAnt.refreshInsertionPoint()
     func.apply(API.pushObj(API.curAnt), arg.map(function (obj) {
       if (!pure && typeof obj == "object")
         return API.pushObj(obj);

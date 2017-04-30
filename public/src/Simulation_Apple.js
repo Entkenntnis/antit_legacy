@@ -61,7 +61,7 @@ function Apple(pos) {
     removeIf(this.ants, function(ant){
       if (Sim.ants.indexOf(ant) < 0)
         return true;
-      if (dist(my.pos, ant.getPos()) > Optionen.GrabToleranz * 3)
+      if (dist(my.pos, ant.getPos()) > Optionen.ApfelRadius)
         return true
       var jobs = ant.getJobs();
       if (jobs !== undefined) {
