@@ -1,6 +1,6 @@
 // Constants
 
-var SUGAR = "Sugar";
-var HILL = "Hill";
-var APPLE = "Apple";
+var SUGAR = "Zucker";
+var HILL = "Bau";
+var APPLE = "Apfel";
 var POSITION = "Position";

@@ -124,7 +124,7 @@ API.addFunc("LadeZuckerAb", function() {
   API.curAnt.addDropJob();
 });
 
-API.addFunc("BringeApfelZuBau", function () {
+API.addFunc("TrageApfel", function () {
   API.curAnt.addAppleSetupJob();
 });
 
@@ -153,10 +153,6 @@ API.addFunc("Zufallsname", function() {
   return capitalize(name);
 });
 
-Global.ZUCKER = SUGAR;
-Global.BAU = HILL;
-Global.APFEL = APPLE;
-Global.POSITION = POSITION;
 Global.OFFEN = true
 
 API.antProp('AktuellesZiel', function(){
@@ -169,10 +165,6 @@ API.antProp('Untätig', function(){
 
 API.antProp('IstOffen', function(){
   return API.curAnt.isSensing()
-});
-
-API.antProp('AktuelleEnergie', function(){
-  return API.curAnt.getEnergy();
 });
 
 API.antProp('AktuelleLast', function(){

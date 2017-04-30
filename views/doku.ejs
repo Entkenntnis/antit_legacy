@@ -150,7 +150,7 @@ GeheZuBau(OFFEN)</pre>
   
   <ul class="list-group">
     <li class="list-group-item">
-      <p><strong>BringeApfelZuBau()</strong></p>
+      <p><strong>TrageApfel()</strong></p>
       <p>Die Ameise stellt sich zu einem Apfel, wartet bis genügend Träger zusammengekommen sind und trägt den Apfel bis zum Bau. Diese Aufgabe ist ortsabhängig und kann nur im Umfeld eines Apfels ausgeführt werden. Sollte kein Apfel vorhanden sein, dann tut die Ameise nichts.</p>
       <p>Stehen Ameisen aus mehreren Teams am Apfel, bekommt das Team den Apfel, welches zuerst die nötige Anzahl an Träger beim Apfel hat. Die anderen Ameisen verlieren und beenden die Aufgabe.</p>
       <p>Es empfielt sich, nach diesem Befehl die Ameise nochmal explizit zum Bau gehen zu lassen, damit sie ihre Reichweite auffüllen kann.</p>
@@ -348,7 +348,37 @@ GeheZuBau(OFFEN)</pre>
     <h2>Eigenschaften</h2>
   </div>
   
-  <p>Liste der Eigenschaften, Gedächtnis, Umgebung</p>
+  <p>Eigenschaften ermöglichen Zugiff auf vielfältige Informationen über den Status der Ameise. Diese Informationen können im Gedächtnis gespeichert werden. Zudem kann man die Umgebung explizit erkundigen.</p>
+  
+	<h3><span class="label label-info">Status</span></h3>
+	
+	<ul class="list-group">
+    <li class="list-group-item">
+      <p><strong>AktuelleReichweite</strong></p>
+      <p>Gibt die Anzahl der Schritte zurück, die die Ameise noch gehen kann.</p>
+    </li>
+  </ul>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p><strong>AktuellePosition</strong></p>
+      <p>Gibt ein Positionobjekt zurück, das den aktuellen Ort der Ameise beschreibt.</p>
+    </li>
+  </ul>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p><strong>AktuellesZiel</strong></p>
+      <p>Wenn die Ameise ein Ziel verfolgt, gibt diese Eigenschaft den Typ des Ziels als Zeichenkette zurück. Mögliche Werte sind "Zucker", "Apfel", "Bau" oder "Position". Wenn kein Ziel verfolgt wird, gibt diese Eigenschaft den Wert undefined zurück.</p>
+    </li>
+  </ul>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p><strong>AktuelleLast</strong></p>
+      <p>Gibt die Anzahl der geladenen Zuckerstücke zurück.</p>
+    </li>
+  </ul>
   
   <div class="page-header">
     <h2>Fortgeschrittene Techniken ...</h2>
@@ -373,14 +403,9 @@ GeheZuBau(OFFEN)</pre>
     <h2>... oder man hackt!</h2>
   </div>
   
-	<p>AntJS hat Maßnahmen getroffen, damit die Simulation fair abläuft und kein Ameisenvolk sich Vorteile verschaffen kann, indem sie die Simulation verändern. Trotzdem können Benutzer während der Simulation durch diverse Tools Werte und Einstellungen verändern. Das Handbuch wird über diese Wege schweigen :)</p>
-	
-	
-	
-	
+	<p>AntJS hat Maßnahmen getroffen, damit die Simulation fair abläuft und kein Ameisenvolk sich Vorteile verschaffen kann, indem sie die Simulation verändern. Trotzdem können Benutzer während der Simulation durch diverse Tools Werte und Einstellungen verändern. Das Handbuch wird über diese Wege schweigen :)</p>  
   
-  
-  <div style="height:300px"></div>
+  <div style="height:100px"></div>
 
 </div>
   </body>
