@@ -18,15 +18,47 @@
         <li role="presentation"><a href="/logout">abmelden...</a></li>
 	      <% } %>
       </ul>
-	
-  <div style="height:20px"></div>
   
-  <div class="well">
-    Update: Die API hat sich mit der Zeit weiterentwickelt. Für den aktuellen Stand gibt es hier eine <a href="/API.pdf">API-Übersicht</a>.
+  <div class="page-header">
+    <h2 id="einleitung">Handbuch</h2>
+	</div>
+	
+	<p>
+	
+	Ameisen führt Code nur innerhalb von Ereignissen aus.<br>
+	Ereignisse werden nicht unterbrochen. Innerhalb eines Ereignisses steht die Zeit still.<br>
+	
+	
+	</p>
+	
+	
+	
+	
+	
+	
+  <div style="height:400px"></div>
+	    
+  <p><a href="#01">Ameisen arbeiten mit ToDo-Listen</a></p>
+  <p><a href="#02">Verhalten wird über Ereignisse gesteuert</a></p>
+  <p><a href="#03">Zugriff auf Eigenschaften und Gedächtnis</a></p>
+  <p><a href="#04">Verwendung weiterer Kontrollstrukturen</a></p>
+  
+  <div class="page-header">
+    <h2 id="01">Ameisen arbeiten mit ToDo-Listen</h2>
   </div>
   
+  <p>Alles, was eine Ameise tut, läuft über ihre ToDo-Liste. Auf dieser notiert sich die Ameise ihre Aufgaben und arbeitet sie der Reihe nach von oben nach unten ab. Sie kann diese Liste ergänzen, verändern oder wegwerfen. Die Ameise braucht diese Liste, um Aufgaben ausführen zu können, die sich über mehrere Runden erstrecken. In jeder Runde bearbeitet die Ameise nur den obersten Eintrag ihrer ToDo-Liste.
+  </p>
   
-  <div style="height:400px"></div>
+  <p>Über den Aufruf der entsprechenden Befehle können Aufgaben in die ToDo-Liste der Ameise aufgenommen werden. Diese werden der Reihe nach untereinander der Liste hinzugefügt. Neue Aufgaben haben gegenüber den alten Aufgaben Vorrang. 
+  </p>
+  
+  
+  
+  <div class="well">
+    Update: Die API hat sich mit der Zeit weiterentwickelt. Für den aktuellen Stand gibt es hier eine <a href="/doc/API.pdf">API-Übersicht</a>.
+  </div>
+  
   
   <p>Dieser Teil ist hier schon ziemlich alt, fast schon museumsreif ... *seufz* wird demnächst überarbeitet.</p>
   
