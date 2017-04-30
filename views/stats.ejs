@@ -34,15 +34,13 @@ function timeStamp(str) {
         <div class="jumbotron"><h1>Statistik</h1></div>
         <ul class="list-group">
         <% for (var i = data.length - 1; i >= 0; i--) { 
-           var c = data[i] %>
+           var c = data[i] 
+           if (!c.result) { continue } %>
           <li class="list-group-item">
             <p><strong><%=c.userid!=undefined?data[i].username:"Gast"%> [<%=timeStamp(c.start)%>]</strong></p>
-            <% if (!c.result) { %>
-              <p>abgebrochen</p>
-            <% } else {
-              for (var j = 0; j < c.antsName.length; j++) { %>
+             <% for (var j = 0; j < c.antsName.length; j++) { %>
               <p><%=c.antsName[j]%>: <%=c.result[j]%> Punkte</p>
-            <% }} %>            
+            <% } %>            
           </li>
         <% } %>
         </ul>
