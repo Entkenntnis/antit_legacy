@@ -58,12 +58,24 @@
   <%} 
 
 %>
-
-AntMe.StarteSimulation();
+var hash = "<%-hash%>";
+AntJS.StarteSimulation();
 window.onerror=fehler;
 function fehler(msg){
  alert("MELDUNG\n" + msg);
  AntMe._abortSimulation();
+}
+AntJS.OnSubmit = function(points) {
+  var request = new XMLHttpRequest();
+  request.open("GET","/submit?hash=" + hash + "&points=" + points);
+  request.addEventListener('load', function(event) {
+     if (request.status >= 200 && request.status < 300) {
+        if (request.responseText == "ok") {
+          AntJS.SubmitFinished()
+        }
+     }
+  });
+  request.send();
 }
 </script>
     </body>

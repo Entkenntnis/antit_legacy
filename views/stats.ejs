@@ -1,0 +1,54 @@
+<%
+function timeStamp(str) {
+  // Create a date object with the current time
+    var now = new Date(str);
+
+  // Create an array with the current month, day and time
+    var date = [ now.getDate(), now.getMonth() + 1, now.getFullYear() ];
+
+  // Create an array with the current hour, minute and second
+    var time = [ now.getHours(), now.getMinutes(), now.getSeconds() ];
+
+  // If hour is 0, set it to 12
+    time[0] = time[0] || 12;
+
+  // If seconds and minutes are less than 10, add a zero
+    for ( var i = 1; i < 3; i++ ) {
+      if ( time[i] < 10 ) {
+        time[i] = "0" + time[i];
+      }
+    }
+
+  // Return the formatted string
+    return date.join("/") + " " + time.join(":");
+}
+%>
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+      <% include commonHead %>
+    </head>
+    <body>
+      <div class="container">
+        <div class="jumbotron"><h1>Statistik</h1></div>
+        <ul class="list-group">
+        <% for (var i = data.length - 1; i >= 0; i--) { 
+           var c = data[i] %>
+          <li class="list-group-item">
+            <p><strong><%=c.userid!=undefined?data[i].username:"Gast"%> [<%=timeStamp(c.start)%>]</strong></p>
+            <% if (!c.result) { %>
+              <p>abgebrochen</p>
+            <% } else {
+              for (var j = 0; j < c.antsName.length; j++) { %>
+              <p><%=c.antsName[j]%>: <%=c.result[j]%> Punkte</p>
+            <% }} %>            
+          </li>
+        <% } %>
+        </ul>
+        <a href="/">zurück</a>
+        <div style="height:300px"></div>
+      </div>
+    </body>
+</html>
+

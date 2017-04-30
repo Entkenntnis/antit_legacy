@@ -31,7 +31,8 @@
     
     , tick:function(){
       if (Sim.cycles >= Optionen.Runden) {
-        SimPulse.end();
+        if (SimPulse.running)
+          SimPulse.end();
         return;
       }
       var elapsedTime = Date.now() - SimPulse.startTime;
@@ -53,6 +54,9 @@
     , end:function(){
       SimPulse.running = false;
       SimPulse.simStatus.innerHTML = "beendet";
+      if (AntJS.OnSubmit) {
+        AntJS.OnSubmit(Sim.players.map(function(p){return p.getPoints()}).join(","))
+      }
     }
   }
   
@@ -68,6 +72,10 @@
       SimPulse.simulationFps = newFps;
       SimPulse.startTime = Date.now() - (Sim.cycles / SimPulse.simulationFps * 1000);
     }
+  }
+  
+  AntJS.SubmitFinished = function() {
+    SimPulse.simStatus.innerHTML = "Simulation abgeschlossen";
   }
   
   vw.onExtLoad = SimPulse.init;

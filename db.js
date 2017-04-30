@@ -69,6 +69,8 @@ function getName(data) {
   return name;
 }
 
+exports.getName = getName
+
 exports.saveCode = function(userid, id, data, cb) {
   ants.findOne({_id:new ObjectID(id), userid:new ObjectID(userid)}, function(err, ant) {
     if (!ant) return cb("ant is not accessible");

@@ -4,6 +4,8 @@ var Strategy = require('passport-local').Strategy;
 var db = require('./db.js');
 var fs = require('fs');
 
+var simulations = []
+
 var queryStore = {};
 
 // authentication
@@ -103,9 +105,39 @@ app.get('/simulation',
         antIds.push(val);
     }
     db.loadCodeArray(req.user, antIds, function(err, ants) {
-      res.render('simulation', {code:ants});
+      var date = Date.now()
+      var userid = req.user ? req.user._id : undefined
+      var hash = date + "-" + userid + "-" + Math.floor(Math.random()*100000)
+      var s = {
+        antsID:ants.map(function(a){return a._id}),
+        antsName:ants.map(function(a){return db.getName(a.code)}),
+        userid:userid,
+        username:req.user?req.user.displayName : undefined,
+        start:date,
+        hash:hash
+      }
+      simulations.push(s)
+      res.render('simulation', {code:ants, hash:hash});
     });    
   });
+
+app.get('/submit',
+  function(req, res) {
+    var hash = req.query.hash
+    var points = req.query.points
+    for (var i = 0; i < simulations.length; i++) {
+      var s = simulations[i]
+      var timePassed = (Date.now() - s.start) / 1000
+      if (s.hash == hash && !s.result && timePassed < 600) {
+        var results = points.split(",")
+        if (results.length == s.antsName.length) {
+          s.result = results
+          return res.send("ok")
+        }
+      }
+    }
+    res.send("fail")
+  })
 
 app.get('/publish',
   require('connect-ensure-login').ensureLoggedIn("/"),
@@ -141,6 +173,14 @@ app.get('/delete',
   });
 
 // administration
+app.get('/stats',
+  require('connect-ensure-login').ensureLoggedIn("/"),
+  function(req, res) {
+    if (req.user.superuser) {
+      res.render('stats', {data:simulations})
+    }
+  })
+
 app.get('/repair',
   require('connect-ensure-login').ensureLoggedIn("/"),
   function(req, res){
