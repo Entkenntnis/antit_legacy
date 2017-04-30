@@ -350,14 +350,7 @@ GeheZuBau(OFFEN)</pre>
   
   <p>Eigenschaften ermöglichen Zugiff auf vielfältige Informationen über den Status der Ameise. Diese Informationen können im Gedächtnis gespeichert werden. Zudem kann man die Umgebung explizit erkundigen.</p>
   
-	<h3><span class="label label-info">Status</span></h3>
-	
-	<ul class="list-group">
-    <li class="list-group-item">
-      <p><strong>AktuelleReichweite</strong></p>
-      <p>Gibt die Anzahl der Schritte zurück, die die Ameise noch gehen kann.</p>
-    </li>
-  </ul>
+	<h3><span class="label label-info">Lage</span></h3>
   
   <ul class="list-group">
     <li class="list-group-item">
@@ -368,10 +361,33 @@ GeheZuBau(OFFEN)</pre>
   
   <ul class="list-group">
     <li class="list-group-item">
+      <p><strong>Blickrichtung</strong></p>
+      <p>Gibt die Richtung zurück, in welche die Ameise gerade schaut.</p>
+    </li>
+  </ul>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p><strong>HeimatBau</strong></p>
+      <p>Gibt als Sichtungsobjekt den Heimatbau der Ameise zurück.</p>
+    </li>
+  </ul>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
       <p><strong>AktuellesZiel</strong></p>
       <p>Wenn die Ameise ein Ziel verfolgt, gibt diese Eigenschaft den Typ des Ziels als Zeichenkette zurück. Mögliche Werte sind "Zucker", "Apfel", "Bau" oder "Position". Wenn kein Ziel verfolgt wird, gibt diese Eigenschaft den Wert undefined zurück.</p>
     </li>
   </ul>
+	
+	<ul class="list-group">
+    <li class="list-group-item">
+      <p><strong>AktuelleReichweite</strong></p>
+      <p>Gibt die Anzahl der Schritte zurück, die die Ameise noch gehen kann.</p>
+    </li>
+  </ul>
+  
+	<h3><span class="label label-info">Status</span></h3>
   
   <ul class="list-group">
     <li class="list-group-item">
@@ -379,6 +395,56 @@ GeheZuBau(OFFEN)</pre>
       <p>Gibt die Anzahl der geladenen Zuckerstücke zurück.</p>
     </li>
   </ul>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p><strong>GetragenerApfel</strong></p>
+      <p>Wenn die Ameise einen Apfel trägt, dann gibt diese Eigenschaft den getragenen Apfel als Sichtungsobjekt zurück, ansonsten undefined.</p>
+    </li>
+  </ul>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p><strong>Untätig</strong></p>
+      <p>Gibt an, ob die Ameisen noch Aufgaben zu erledigen hat oder nicht.</p>
+    </li>
+  </ul>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p><strong>IstOffen</strong></p>
+      <p>Gibt an, ob die Fühler der Ameise offen oder geschlossen sind.</p>
+    </li>
+  </ul>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p><strong>AktuelleRunde</strong></p>
+      <p>Gibt die Nummer der aktuellen Simulationsrunde zurück.</p>
+    </li>
+  </ul>
+  
+	<h3><span class="label label-info">Gedächtnis</span></h3>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p>Über die Punktschreibweise kann auf das <strong>Gedächtnis</strong> der Ameise zugegriffen werden. Der Inhalt des Gedächtnis besteht Einträgen, die jeweils einen Namen und einen Wert haben. Der Name des Eintrags wird mit einem Punkt abgetrennt zu "Gedächtnis" hinzugeschrieben. Werte können direkt zugewiesen werden. Um Einträge zu löschen kann die Methode <code>delete</code> verwendet werden. Im folgenden Beispiel wird ein Eintrag mit dem Namen "Name" angelegt, in der Konsole ausgegeben und danach wieder gelöscht:</p>
+      <pre>Gedächtnis.Name = Zufallsname()
+console.log(Gedächtnis.Name)
+delete Gedächtnis.Name</pre>
+      <p>Jede Ameise hat ihr eigenes Gedächtnis, worauf nur sie Zugriff hat. Das Gedächtnis ist über die gesamte Dauer der Simulation verfügbar. Besonders praktisch ist das Gedächtnis in Verbindung mit Positionsobjekten.</p>
+    </li>
+  </ul>
+  
+	<h3><span class="label label-info">Umgebung</span></h3>
+  
+  <ul class="list-group">
+    <li class="list-group-item">
+      <p>Die Eigenschaft Umgebung stellt Informationen über den Sichtbereich der Ameise zur Verfügung. Über <strong>Umgebung.ZuckerPosition</strong>, <strong>Umgebung.ApfelPosition</strong> und <strong>Umgebung.WanzePosition</strong> kann die Ameise jederzeit die Positionen dieser Sichtungsobjekte abrufen. Falls kein Objekt in Sicht ist, geben die Eigenschaften jeweils den Wert undefined zurück.</p>
+    </li>
+  </ul>
+  
+  <p>Damit sind alle Teile der Programmierumgebung behandelt.</p>
   
   <div class="page-header">
     <h2>Fortgeschrittene Techniken ...</h2>
