@@ -32,6 +32,9 @@ function timeStamp(str) {
     <body>
       <div class="container">
         <div class="jumbotron"><h1>Statistik</h1></div>
+        <% if (data.filter(function(e){return e.result !== undefined}).length > 0) { %><p class="text-right"><button class="btn btn-danger" onClick="var r = confirm('Alle Einträge aus der Statistik löschen?');if (r == true) {window.location.href='/clearstats'}">Einträge löschen</button></p><% } else { %>
+        <p>Keine Einträge vorhanden</p>
+        <% } %>
         <ul class="list-group">
         <% for (var i = data.length - 1; i >= 0; i--) { 
            var c = data[i] 
@@ -50,7 +53,7 @@ function timeStamp(str) {
           </li>
         <% } %>
         </ul>
-        <a href="/">zurück</a>
+        <a class="btn btn-primary" href="/">zurück</a>
         <div style="height:300px"></div>
       </div>
     </body>

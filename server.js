@@ -178,7 +178,18 @@ app.get('/stats',
   function(req, res) {
     if (req.user.superuser) {
       res.render('stats', {data:simulations})
+    } else {
+      res.redirect("/")
     }
+  })
+  
+app.get('/clearstats',
+  require('connect-ensure-login').ensureLoggedIn("/"),
+  function(req, res) {
+    if (req.user.superuser) {
+      simulations = []
+    }
+    res.redirect("/stats")
   })
 
 app.get('/repair',

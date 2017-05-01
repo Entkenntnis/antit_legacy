@@ -183,15 +183,15 @@ API.antProp('HeimatBau', function(){
   return API.pushObj(Sim.hills[API.curAnt.getPlayerid()]);
 });
 
-API.antProp('GetragenerApfel', function(){
+API.antProp('TrägtApfel', function(){
   var jobs = API.curAnt.getJobs();
   if (jobs.length > 0) {
     var curJob = jobs[jobs.length - 1];
-    if (curJob.type == "APPLE") {
-      return API.pushObj(curJob.value);
+    if (curJob.type == "APPLE" && Sim.apples.indexOf(curJob.value) >= 0) {
+      return true
     }
   }
-  return undefined;
+  return false;
 });
 
 API.antProp('AktuellePosition', function(){
