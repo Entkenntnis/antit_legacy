@@ -11,7 +11,7 @@
   <div class="jumbotron"><h1>Handbuch</h1>
   <p>Entlocke der Simulation ihre letzten Geheimnisse: Hier lernst du alle Aspekte der Simulation kennen, die für dich als Entwickler von Bedeutung sind.</p></div>
 	<ul class="nav nav-pills" role="tablist">
-        <li role="presentation"><a href="/">AntJS Home</a></li>
+        <li role="presentation"><a href="/">AntIT! Home</a></li>
         <li role="presentation"><a href="/guide">Anleitung</a></li>
         <li role="presentation" class="active"><a href="/doku">Handbuch</a></li>
 	      <% if(user) {%>
@@ -20,8 +20,22 @@
       </ul>
   
 	
+	    
+  <div class="page-header">
+    <h2 id="01">Inhaltsverzeichnis</h2>
+  </div>
+  
+  <p><a href="#01">Modell für das Verhalten der Ameisen</a></p>
+  <p><a href="#02">Befehle</a></p>
+  <p><a href="#03">Ereignisse</a></p>
+  <p><a href="#04">Nützliche Funktionen</a></p>
+  <p><a href="#05">Eigenschaften</a></p>
+  <p><a href="#06">Abfragen</a></p>
+  <p><a href="#07">Technische Daten</a></p>
+  <p><a href="#08">Fortgeschrittene Techniken</a></p>
+  
 	<div class="page-header">
-    <h2>Modell für das Verhalten der Ameisen</h2>
+    <h2 id="01">Modell für das Verhalten der Ameisen</h2>
   </div>
 	
 	<p>Um großartige Ameisen programmieren zu können braucht es eine genau Vorstellung davon, wie das Verhalten der Ameisen funktioniert. Ein solches Modell möchte dieses Handbuch aufbauen. Dabei verwendet es das Bild von <strong>ToDo-Listen</strong>:
@@ -39,7 +53,7 @@
 	</p>
 	
 	<div class="page-header">
-    <h2>Befehle</h2>
+    <h2 id="02">Befehle</h2>
   </div>
   
   <p>Jeder Befehl hat einen Namen und einen oder keinen Parameter. Im Code wird jeder Befehl auf eine eigene Zeile geschrieben. Zuerst kommt der Name des Befehls, dann in runden Klammern der Wert des Parameters. Gibt es keinen Parameter, endet der Befehl mit einem leeren Klammerpaar. Um einen Befehl aufzurufen, muss der Parameter mit einem konkreten Wert wie eine Zahl, einer Zeichenkette oder einem Objekten ersetzt werden. Beispiele sind der Befehle Gehe mit dem Parameter <em>Schritte</em> und der Befehl NimmZucker ohne Parameter:
@@ -189,7 +203,7 @@ GeheZuBau(OFFEN)</pre>
   </ul>
 	
 	<div class="page-header">
-    <h2>Ereignisse</h2>
+    <h2 id="03">Ereignisse</h2>
   </div>
 	
 	<p>Beim Erstellen eines neuen Ameisenvolks wird eine Vorlage erzeugt, die bereits das Grundgerüst für alle Ereignisse enthält. Jedes Ereignis ist von geschweiften Klammern <code>{ }</code> umgeben. Der Code für ein Ereignis muss innerhalb der zugehörigen Klammern geschrieben werden. Es empfiehlt sich, den Code einmal einzurücken:</p>
@@ -306,7 +320,7 @@ GeheZuBau(OFFEN)</pre>
   </ul>
 	
 	<div class="page-header">
-    <h2>Nützliche Funktionen</h2>
+    <h2 id="04">Nützliche Funktionen</h2>
   </div>
   
   <p>Im Gegensatz zu Befehlen fügen Funktionen keine neue Aufgaben zur ToDo-Liste hinzu, sondern geben einen Wert zurück, den man im Programm weiter verwenden kann. Aufgebaut sind Funktionen genauso wie Befehle. Sie bestehen aus einem Namen und einem Paar runder Klammern, worin sich die Parameter befinden. Funktionen können auch mehrere Parameter annehmen. Diese werden mit Komma getrennt. Funktionen stehen eigentlich nie einzeln da, sondern werden immer zusammen mit anderen Befehlen oder Eigenschaften verwendet.
@@ -345,7 +359,7 @@ GeheZuBau(OFFEN)</pre>
   </ul>
 	
 	<div class="page-header">
-    <h2>Eigenschaften</h2>
+    <h2 id="05">Eigenschaften</h2>
   </div>
   
   <p>Eigenschaften ermöglichen Zugiff auf vielfältige Informationen über den Status der Ameise. Diese Informationen können im Gedächtnis gespeichert werden. Zudem kann man die Umgebung explizit erkundigen.</p>
@@ -444,13 +458,89 @@ delete Gedächtnis.Name</pre>
     </li>
   </ul>
   
-  <p>Damit sind alle Teile der Programmierumgebung behandelt.</p>
+  
   
   <div class="page-header">
-    <h2>Fortgeschrittene Techniken ...</h2>
+    <h2 id="06">Abfragen</h2>
   </div>
   
-  <p>Das Handbuch beschreibt nur die Teile der Programmiersprache, die für AntJS spezifisch sind. Daneben gibt es eine große Reihe weiterer Techniken, die allgemein zur Programmiersprache <strong>JavaScript</strong> hinzugehören und natürlich auch hier in der Simulation verwendet werden können. Das Handbuch gibt nur Hinweise darauf, welche Möglichkeiten sich damit ergeben. Wie diese Techniken genau funktionieren kann man am Besten aus anderen Quellen außerhalb von AntJS erlernen.
+  <p>Programmteile können so programmiert werden, dass sie nur unter einer bestimmten Bedinungen aufgerufen werden. Der häufigste Fall ist es, wenn man unter einer gewissen Reichweite zum Bau zurückkehren möchte. Eine Bedingung kommt in folgender Form vor:</p><pre>if ( BEDINGUNG ) {
+  ANWEISUNGEN
+}</pre>
+  <p>Das Schlüsselwort 'if', die runden Klammern und die geschweiften Klammern sind die wesentlichen Bestandteile der Abfrage. Die großgeschriebenen Teile 'BEDINGUNG' und 'ANWEISUNGEN' sind Platzhalter für Code. Sie müssen bei der Verwendung durch entsprechende Befehle ersetzt werden.</p>
+  
+  <p>Bedingungen können aus Vergleichen bestehen. Dazu gibt es den Operator <strong>==</strong> für die Prüfung auf Gleichheit oder die Vergleichsoperatoren &lt;, &gt;, &lt;= und =&gt;. Operatoren können mit && (und) und || (oder) verknüpft werden, != prüft auf Ungleichheit. Wenn ein Wert ohne Operator auftritt, dann entspricht das der Bedingung, dass dieser Wert existiert bzw. wahr ist.
+  </p>
+  
+  <p>Ein konkretes Beispiel:</p>
+  
+  <pre>if (istUntätig) {
+  GeheZuBau()
+  Gehe(500)
+}</pre>
+  
+  <div class="page-header">
+    <h2 id="07">Technische Daten</h2>
+  </div>
+  
+  <table class="table table-striped table-hover ">
+    <tbody>
+      <tr>
+        <td>Ameise Gehgeschwindigkeit</td>
+        <td>5 Schritte pro Runde</td>
+      </tr>
+      <tr>
+        <td>Ameise Drehgeschwindigkeit</td>
+        <td>8 Grad pro Runde</td>
+      </tr>
+      <tr>
+        <td>Ameise Reichweite</td>
+        <td>3000 Schritte</td>
+      </tr>
+      <tr>
+        <td>Ameise Sichtweite</td>
+        <td>70 Schritte</td>
+      </tr>
+      <tr>
+        <td>Spielfeldgröße (2 Spieler)</td>
+        <td>~ 1200 x 1600 Schritte</td>
+      </tr>
+      <tr>
+        <td>Ameise Tragkraft</td>
+        <td>5 Zuckerstückchen</td>
+      </tr>
+      <tr>
+        <td>Zuckerhaufen Kapazität</td>
+        <td>250 Zuckerstückchen</td>
+      </tr>
+      <tr>
+        <td>Anzahl Apfelträger</td>
+        <td>4 - 20 Ameisen</td>
+      </tr>
+      <tr>
+        <td>Anfangsvolk</td>
+        <td>20 Ameisen</td>
+      </tr>
+      <tr>
+        <td>Wachstum pro Zuckerhaufen</td>
+        <td>12,5 Ameisen</td>
+      </tr>
+      <tr>
+        <td>Wachstum pro Apfel</td>
+        <td>10 Ameisen</td>
+      </tr>
+      <tr>
+        <td>Simulationsdauer</td>
+        <td>7500 Runden</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="page-header">
+    <h2 id="08">Fortgeschrittene Techniken</h2>
+  </div>
+  
+  <p>Das Handbuch beschreibt nur die Teile der Programmiersprache, die für AntIT! spezifisch sind. Daneben gibt es eine große Reihe weiterer Techniken, die allgemein zur Programmiersprache <strong>JavaScript</strong> hinzugehören und natürlich auch hier in der Simulation verwendet werden können. Das Handbuch gibt nur Hinweise darauf, welche Möglichkeiten sich damit ergeben. Wie diese Techniken genau funktionieren kann man am Besten aus anderen Quellen außerhalb von AntIT! erlernen.
   </p>
   
   <p>Es ist möglich, für ein Ameisenvolk <strong>globale Variablen</strong> zu definieren. Diese werden mit dem Keyword <code>var</code> angegeben und sind dann für alle Ameisen zugreifbar. Damit können die Grenzen der Kommunikation vollständig verwunden werden. Jede Ameise kann zu jeder Zeit mit jeder anderen Ameise kommunizieren. Allerdings müssen diese Kommunikationswege per Hand implementiert werden.
@@ -465,14 +555,15 @@ delete Gedächtnis.Name</pre>
   <p>Über die <strong>API</strong> können weitere mächtige Werkzeuge geladen werden. Dazu gehören Methoden zur Sortierung, Winkelberechnung oder Textverarbeitung.
   </p>
   
-  <div class="page-header">
-    <h2>... oder man hackt!</h2>
-  </div>
-  
-	<p>AntJS hat Maßnahmen getroffen, damit die Simulation fair abläuft und kein Ameisenvolk sich Vorteile verschaffen kann, indem sie die Simulation verändern. Trotzdem können Benutzer während der Simulation durch diverse Tools Werte und Einstellungen verändern. Das Handbuch wird über diese Wege schweigen :)</p>  
+	<p>Natürlich kann man auch versuchen zu hacken. AntIT! hat aber Maßnahmen getroffen, damit die Simulation fair abläuft und kein Ameisenvolk sich Vorteile verschaffen kann, indem sie die Simulation verändern. Trotzdem können Benutzer während der Simulation durch diverse Tools Werte und Einstellungen verändern. Das Handbuch wird über diese Wege schweigen :)</p>  
   
   <div style="height:100px"></div>
 
 </div>
+  <script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/arrow36.js"></script>
   </body>
 </html>
