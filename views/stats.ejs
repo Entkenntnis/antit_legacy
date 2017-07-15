@@ -22,6 +22,18 @@ function timeStamp(str) {
   // Return the formatted string
     return date.join("/") + " " + time.join(":");
 }
+
+function calcSum(data) {
+  if (!data) return 0
+  var result = 0
+  data.forEach(function(e){
+    if (e.result)
+      e.result.forEach(function(s){
+        result += parseInt(s)
+      })
+  })
+  return result
+}
 %>
 
 <!DOCTYPE HTML>
@@ -31,10 +43,11 @@ function timeStamp(str) {
     </head>
     <body>
       <div class="container">
-        <div class="jumbotron"><h1>Statistik</h1></div>
-        <% if (data.filter(function(e){return e.result !== undefined}).length > 0) { %><p class="text-right"><button class="btn btn-danger" onClick="var r = confirm('Alle Einträge aus der Statistik löschen?');if (r == true) {window.location.href='/clearstats'}">Einträge löschen</button></p><% } else { %>
+        <div class="jumbotron"><h1>Statistik</h1><p>Gesamtpunkte: <%=calcSum(data)%></p></div>
+        <% if (data.filter(function(e){return e.result !== undefined}).length > 0) { %>
+        <p class="text-right"><button class="btn btn-danger" onClick="var r = confirm('Alle Einträge aus der Statistik löschen?');if (r == true) {window.location.href='/clearstats'}">Einträge löschen</button></p><% } else { %>
         <p>Keine Einträge vorhanden</p>
-        <% } %>
+        <% }%>
         <ul class="list-group">
         <% for (var i = data.length - 1; i >= 0; i--) { 
            var c = data[i] 
