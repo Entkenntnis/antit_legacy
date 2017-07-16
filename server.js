@@ -70,7 +70,8 @@ app.get('/',
           user: req.user,
           fail : req.query.fail, 
           ants : userAnts,
-          globals : globalAnts
+          globals : globalAnts,
+          highlightElement:0
         });
       });
     });
@@ -254,14 +255,18 @@ app.get('/deleteUser',
   
 app.get('/doku',
   function(req, res){
-    res.render('doku', { user: req.user });
+    res.render('doku', { user: req.user, highlightElement:2 });
   });
 
 app.get('/guide',
   function(req, res){
-    res.render('guide', { user: req.user });
+    res.render('guide', { user: req.user, highlightElement:1 });
   });
-  
+
+app.get('/chals',
+  function(req, res){
+    res.render('chals', { user: req.user, highlightElement:3 });
+  });
 
 app.get('/login',
   function(req, res){

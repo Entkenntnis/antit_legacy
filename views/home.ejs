@@ -24,11 +24,7 @@
 	<p>Lerne spielerisch das Programmieren mit der coolsten und spannendsten Simulation der Welt! Erlebe, wie deine Ameisenvölker zum Leben erwachen und ihre Umgebung erobern.</p></div>
   <%if(fail == "1"){%>
   <div class="alert alert-danger" role="alert"><strong>Anmeldung gescheitert!</strong> Überprüfe bitte Benutzername und Passwort.</div><%}%>
-	<ul class="nav nav-pills" role="tablist">
-        <li role="presentation" class="active"><a href="/">AntIT! Home</a></li>
-        <li role="presentation"><a href="/guide">Anleitung</a></li>
-        <li role="presentation"><a href="/doku">Handbuch</a></li>
-      </ul>
+	<% include menu %>
   <br>
   <p><form action="/login" method="post">
 	<div class="form-group">
@@ -76,12 +72,8 @@
   %>
   <div class="jumbotron"><h1>AntIT!</h1>
 	<p>Hallo, <strong><%= user.displayName %>.</strong> Hier beginnt dein Abenteuer. Fange an, neue Ameisenvölker zu erstellen und kontrolliere ihr Verhalten, indem du den Programmcode änderst. Starte eine Simulation, um deine Völker in Aktion zu erleben.</p></div>
-	<ul class="nav nav-pills" role="tablist">
-        <li role="presentation" class="active"><a href="#">AntIT! Home</a></li>
-        <li role="presentation"><a href="/guide">Anleitung</a></li>
-        <li role="presentation"><a href="/doku">Handbuch</a></li>
-        <li role="presentation"><a href="/logout">abmelden...</a></li>
-      </ul>
+	
+	<% include menu %>
   
   <%if (user.superuser) {%>
   <br>

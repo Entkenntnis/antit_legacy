@@ -5,16 +5,10 @@
   </head>
   <body>
     <div class="container">
-      <div class="jumbotron"><h1>Anleitung</h1>
+      <div class="jumbotron"><h1>Einführung</h1>
 	    <p>Die Welt ist eine rechteckige Scheibe und dein Ziel ist es, das Volk zu ernähren und wachsen zu lassen. Lerne die Welt von AntIT! Schritt für Schritt kennen und werde zum Meister der Ameisen!</p></div>
-	    <ul class="nav nav-pills" role="tablist">
-        <li role="presentation"><a href="/">AntIT! Home</a></li>
-        <li role="presentation" class="active"><a href="/guide">Anleitung</a></li>
-        <li role="presentation"><a href="/doku">Handbuch</a></li>
-        <% if(user) {%>
-        <li role="presentation"><a href="/logout">abmelden...</a></li>
-        <% } %>
-      </ul>
+	    
+	    <% include menu %>
 	    
 	    <!-- Here comes the content -->
 	    
