@@ -787,8 +787,8 @@ function Ant(pos, playerid) {
     my.jobs.splice(my.insertionPoint, 0, new Job(name, val, cb));
   }
   
-  this.addSimpleJob = function(f) {
-    this.addJob("SIMPLE", undefined, function(){
+  this.addSimpleJob = function(f, val) {
+    this.addJob("SIMPLE", val, function(){
       f.apply(this)
       return true
     })
@@ -927,7 +927,7 @@ function Ant(pos, playerid) {
         apple.addAnt(API.curAnt)
         this.addAppleJob(apple)
       }
-    })
+    }, "APPLESETUP")
   }
   
   this.addAppleJob = function(apple) {
@@ -1029,7 +1029,7 @@ function Ant(pos, playerid) {
           sensing = false
         break
       }
-      if (curCmd.type == "APPLE") {
+      if (curCmd.type == "APPLE" || curCmd.value == "APPLESETUP") {
         sensing = false
         break
       }
