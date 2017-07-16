@@ -158,9 +158,11 @@ function Ant(pos, playerid) {
   
   // jobs - utils
   this.addTurnToJob = function(angle) {
-    var rotation = getRotation(my.heading, angle)
-    if (rotation != 0)
-      this.addTurnJob(rotation)
+    this.addSimpleJob(function(){
+      var rotation = getRotation(my.heading, angle)
+      if (rotation != 0)
+        this.addTurnJob(rotation)
+    })
   }
   
   this.addTurnToObj = function(obj) {
