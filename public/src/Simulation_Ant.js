@@ -400,7 +400,7 @@ function Ant(pos, playerid) {
             if (obj.constructor.name == "Apple" || obj.constructor.name == "Sugar" ||
                 obj.constructor.name == "Bug" || obj.constructor.name == "Hill") {
               //API.message("Das Gedächtnis kann als Wert kein Sichtungsobjekt speichern.");
-              my.memory[property] = new Position(my.memory[property].getPos())
+              my.memory[property] = API.pushObj(new Position(obj.getPos()), true)
             }
           }
         }
