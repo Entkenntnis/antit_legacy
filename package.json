@@ -1,7 +1,7 @@
 {
-  "name": "antme-server",
+  "name": "antit-server",
   "version": "1.0.0",
-  "description": "AntMe! simulation platform using node.js and WebGL",
+  "description": "AntIT! simulation platform using node.js and WebGL",
   "private": true,
   "main": "server.js",
   "scripts": {

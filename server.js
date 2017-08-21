@@ -13,14 +13,15 @@ var colonyInfo = {}
 monkdb.then(() => {
   console.log('Connected correctly to server')
   monkdb.get('info').find({}).then((val) => {
-    colonyInfo = val
-    // do some validation and updates here
+    val.forEach(function(v){
+      colonyInfo[ v.colonyName] = v
+    })
   })
 })
 
 function getCol(path) {
   if (colonyInfo[path] !== undefined) {
-    return monkdb.get(path)
+    return monkdb.get('colony_' + path)
   } else {
     console.log('Invalid colony')
     return null
@@ -87,8 +88,9 @@ passport.use(new Strategy({passReqToCallback:true},
     if (req.params.colony) {
       var curCol = getCol(req.params.colony)
       if (curCol) {
-        curCol.find({username: username, password: password}).then((val) => {
+        return curCol.find({username: username, password: password}).then((val) => {
           if (val && val.length == 1) {
+            //console.log(val)
             val[0].colony = req.params.colony
             return cb(null, val[0])
           } else {
@@ -101,7 +103,7 @@ passport.use(new Strategy({passReqToCallback:true},
     }
     
     // old code
-    console.log('running old stuff')
+    console.log('running old stuff auth')
     db.findByUsername(username, function(err, user) {
       if (!user) { return cb(null, false); }
       if (user.password != password) { return cb(null, false); }
@@ -116,25 +118,25 @@ passport.serializeUser(function(user, cb) {
 
 passport.deserializeUser(function(id, cb) {
   const splitterIndex = id.indexOf('#')
-  const colony = id.substring(0, splitterIndex)
+  const colony = splitterIndex >= 0 ? id.substring(0, splitterIndex) : ""
   id = id.substr(splitterIndex + 1)
-  if (colony) {
-    getCol(colony).find({_id: id}).then((val) => {
+  if (colony && colony !== "undefined") {
+    return getCol(colony).find({_id: id}).then((val) => {
       val[0].colony = colony
-      cb(null, val[0])
+      return cb(null, val[0])
     })
   }
   
   
   // old code
-  console.log('running old stuff')
+  console.log('running old stuff des')
   db.findById(id, function (err, user) {
     if (!user) { return cb("Can't find user"); }
     cb(null, user);
   });
 });
 
-function loginMiddleware(options) {
+function loginMiddleware() {
   
   return function(req, res, next) {
     
@@ -142,7 +144,7 @@ function loginMiddleware(options) {
       if (req.session) {
         req.session.returnTo = req.originalUrl || req.url;
       }
-      return res.redirect('/' + req.params.colony)
+      return res.redirect('/n/' + req.params.colony)
     }
     next()
   }
@@ -152,9 +154,130 @@ function loginMiddleware(options) {
 
 
 
+// ----------------------------
+// routes
 
+function getHome(req) {
+  return '/n/' + req.params.colony
+}
 
+var fs = require('fs');
 
+app.get('/n/:colony', function(req, res) {
+  const colony = req.params.colony
+  const userid = req.user ? req.user._id.toString() : undefined
+  const curCol = getCol(colony)
+  if (!curCol) {
+    res.send('bad colony')
+  } else {
+    curCol.find({}).then((val) => {
+      var ants = []
+      var globals = []
+      val.forEach(function(v){
+        if (v._id.toString() == userid) {
+          ants = v.ants
+          ants.forEach(function(a){
+            a._id = a.antid
+          })
+        } else {
+          v.ants.forEach(function(w){
+            if (w.published) {
+              w.publicName = "@" + v.displayName + "/" + w.name
+              w._id = w.antid
+              globals.push(w)
+            }
+          })
+        }
+      })
+      res.render('home', {
+        user: req.user,
+        fail: req.query.fail,
+        ants: ants,
+        globals: globals,
+        highlightElement: 0,
+        prefix: getHome(req)
+      })
+    })
+  }
+})
+
+app.post('/n/:colony/login',
+  function(req, res, next) {
+    passport.authenticate('local',
+      { failureRedirect: getHome(req) + '/?fail=1' })(req, res, next)
+  },
+  function(req, res) {
+    res.redirect(getHome(req))
+})
+
+app.get('/n/:colony/login',
+  function(req, res) {
+    res.redirect(getHome(req))
+})
+
+app.get('/n/:colony/logout',
+  function(req, res){
+    req.logout();
+    res.redirect(getHome(req));
+  });
+
+app.get('/n/:colony/doku',
+  function(req, res){
+    res.render('doku', { user: req.user, highlightElement:2, prefix: getHome(req) });
+  });
+
+app.get('/n/:colony/guide',
+  function(req, res){
+    res.render('guide', { user: req.user, highlightElement:1, prefix: getHome(req) });
+  });
+
+app.get('/n/:colony/chals',
+  function(req, res){
+    res.render('chals', { user: req.user, highlightElement:3, prefix: getHome(req) });
+  });
+
+function getName(data) {
+  var eofl = data.indexOf("\n");
+  if (eofl >= 0) {
+    data = data.substring(0, eofl);
+  }
+  var namestart = data.indexOf("\"");
+  var nameend = data.lastIndexOf("\"");
+  var name = data.substring(namestart + 1, nameend);
+  if (namestart < 0 || nameend < 0) {
+    name = "[ohne Namen]";
+  }
+  return name;
+}
+
+app.get('/n/:colony/new', loginMiddleware(),
+  function(req, res){
+    var codeString = fs.readFileSync("./newAnt.js", "utf8");
+    const antName = getName(codeString)
+    const antId = Math.floor(Date.now()*1000 + Math.random()*999).toString(16);
+    getCol(req.params.colony).update({_id:req.user._id},
+      {$push:{ants: {antid:antId, name:antName, published:false,code:codeString}}})
+    res.redirect(getHome(req))
+  });
+
+app.get('/n/:colony/edit', loginMiddleware(),
+  function(req, res){
+    var done = false
+    getCol(req.params.colony).find({_id: req.user._id}).then((val) => {
+      for(var i = 0; i < val[0].ants.length; i++) {
+        if (val[0].ants[i].antid == req.query.id) {
+          done = true
+          return res.render('edit', {data:val[0].ants[i].code, id:req.query.id, prefix:'/n/' + req.params.colony})
+        }
+      }
+    }).then(()=>{
+      if (!done)
+        res.redirect(getHome(req))
+    })
+  });
+
+// ----------------------------
+// old stuff
 
 
 
@@ -187,7 +310,8 @@ app.get('/',
           fail : req.query.fail, 
           ants : userAnts,
           globals : globalAnts,
-          highlightElement:0
+          highlightElement:0,
+          prefix:""
         });
       });
     });
@@ -198,7 +322,7 @@ app.get('/edit',
   function(req, res){
     db.loadCode(req.user._id, req.query.id, function(err, code){
       if (!code) return res.redirect("/");
-      return res.render('edit', { data:code, id:req.query.id });
+      return res.render('edit', { data:code, id:req.query.id, prefix:"" });
     });
   });
 
@@ -358,7 +482,7 @@ app.get('/deleteUser',
   });
 
 // migration
-// var fs = require('fs');
+// 
 
 /*app.get('/migrate',
   require('connect-ensure-login').ensureLoggedIn("/"),
@@ -373,17 +497,17 @@ app.get('/deleteUser',
   
 app.get('/doku',
   function(req, res){
-    res.render('doku', { user: req.user, highlightElement:2 });
+    res.render('doku', { user: req.user, highlightElement:2,prefix:"" });
   });
 
 app.get('/guide',
   function(req, res){
-    res.render('guide', { user: req.user, highlightElement:1 });
+    res.render('guide', { user: req.user, highlightElement:1,prefix:"" });
   });
 
 app.get('/chals',
   function(req, res){
-    res.render('chals', { user: req.user, highlightElement:3 });
+    res.render('chals', { user: req.user, highlightElement:3,prefix:"" });
   });
 
 app.get('/login',

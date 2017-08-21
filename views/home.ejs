@@ -26,7 +26,7 @@
   <div class="alert alert-danger" role="alert"><strong>Anmeldung gescheitert!</strong> Überprüfe bitte Benutzername und Passwort.</div><%}%>
 	<% include menu %>
   <br>
-  <p><form action="/login" method="post">
+  <p><form action="<%=prefix%>/login" method="post">
 	<div class="form-group">
 	<label>Benutzername:</label>
 	<input id="startup" type="text" name="username"/>
@@ -43,7 +43,7 @@
 	<h3>Simulation</h3>
 	</div>
 	Starte eine Simulation, um einen Einblick in die Welt von AntIT! zu gewinnen:<br><br>
-	<form method="GET" action="/simulation"><div>
+	<form method="GET" action="<%=prefix%>/simulation"><div>
 	<% 
 	for(var t = 1; t <= 8; t++) { %>
 	    <div style="float:left;padding-left:10px;"> Team <%=t%>:
@@ -89,7 +89,7 @@
 	<h3>Deine Ameisenvölker</h3>
 	</div>
 	<% if (ants == undefined || ants.length <= 20) { %>
-	  <p><a href="/new">neues Ameisevolk</a></p>
+	  <p><a href="<%=prefix%>/new">neues Ameisevolk</a></p>
 	<% } else { %>
 	  <p>Maximum erreicht</p>
 	<% } %>
@@ -102,13 +102,13 @@
 	  <strong><%=ants[i].name%></strong>
 	  <%if(ants[i].published){%> (freigegeben)<%}%>
 	  <div style="float:right;">
-	    <a href="/edit?id=<%=ants[i]._id%>" class="btn btn-xs btn-primary">Bearbeiten</a>
+	    <a href="<%=prefix%>/edit?id=<%=ants[i]._id%>" class="btn btn-xs btn-primary">Bearbeiten</a>
 	    <%if(ants[i].published){%>
-	    <a href="/unpublish?id=<%=ants[i]._id%>" class="btn btn-xs btn-warning">Freigabe löschen</a>
+	    <a href="<%=prefix%>/unpublish?id=<%=ants[i]._id%>" class="btn btn-xs btn-warning">Freigabe löschen</a>
 	    <%} else {%>
-	    <a href="/publish?id=<%=ants[i]._id%>" class="btn btn-xs btn-info">Freigeben</a>
+	    <a href="<%=prefix%>/publish?id=<%=ants[i]._id%>" class="btn btn-xs btn-info">Freigeben</a>
 	    <%}%>
-	    <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='/delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-xs btn-danger">Löschen</button>
+	    <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='<%=prefix%>/delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-xs btn-danger">Löschen</button>
 	   </div>
 	  </li>
   	<% } %>
