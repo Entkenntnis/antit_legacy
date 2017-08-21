@@ -1,38 +1,44 @@
-var express = require('express');
-var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
-var db = require('./db.js');
-var fs = require('fs');
+// ok, ab jetzt beginnt der Versuch, den Server auf komplett neue Beine zu stellen
+// Schritt für Schritt ...
 
-var simulations = []
 
-var queryStore = {};
+// ----------------------------
+// db
 
-// authentication
-passport.use(new Strategy(
-  function(username, password, cb) {
-    db.findByUsername(username, function(err, user) {
-      if (!user) { return cb(null, false); }
-      if (user.password != password) { return cb(null, false); }
-      return cb(null, user);
-    });
-  }));
-  
-passport.serializeUser(function(user, cb) {
-  cb(null, user._id);
-});
+var dbUrl = process.env.ANTME_DB_URL || 'mongodb://dal_mongoadmin:Theesh7aiB@localhost/dal';
 
-passport.deserializeUser(function(id, cb) {
-  db.findById(id, function (err, user) {
-    if (!user) { return cb("Can't find user"); }
-    cb(null, user);
-  });
-});
+const monkdb = require('monk')(dbUrl, {authSource:"admin"})
+var colonyInfo = {}
 
-// Create a new Express application.
-var app = express();
+monkdb.then(() => {
+  console.log('Connected correctly to server')
+  monkdb.get('info').find({}).then((val) => {
+    colonyInfo = val
+    // do some validation and updates here
+  })
+})
 
-// Configure view engine to render EJS templates.
+function getCol(path) {
+  if (colonyInfo[path] !== undefined) {
+    return monkdb.get(path)
+  } else {
+    console.log('Invalid colony')
+    return null
+  }
+}
+
+
+
+
+// ----------------------------
+// setup
+
+const express = require('express')
+const passport = require('passport');
+const Strategy = require('passport-local').Strategy;
+
+const app = express();
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -41,21 +47,131 @@ app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
-// Initialize Passport and restore authentication state, if any, from the
-// session.
 app.use(passport.initialize());
 app.use(passport.session());
 
-// connecting to db
+
+
+
+
+
+
+// ----------------------------
+// old client
+
+var db = require('./db.js'); 
 var MongoClient = require('mongodb').MongoClient;
-var dbUrl = process.env.ANTME_DB_URL || 'mongodb://admin:b8-RG5CJJ7rT@localhost/dal';
 MongoClient.connect(dbUrl, {authSource:"admin"}, function(err, database) {
   if (err) {
     throw err
   }
   db.setDB(database);
+  console.log('old client ok')
   app.listen(process.env.NODE_PORT || 3000, process.env.NODE_IP || "localhost");
 });
+
+
+
+
+
+
+
+
+
+// ----------------------------
+// auth
+
+passport.use(new Strategy({passReqToCallback:true}, 
+  function(req, username, password, cb) {
+    
+    if (req.params.colony) {
+      var curCol = getCol(req.params.colony)
+      if (curCol) {
+        curCol.find({username: username, password: password}).then((val) => {
+          if (val && val.length == 1) {
+            val[0].colony = req.params.colony
+            return cb(null, val[0])
+          } else {
+            return cb(null, false)
+          }
+        })
+      } else {
+        return cb(null, false)
+      }
+    }
+    
+    // old code
+    console.log('running old stuff')
+    db.findByUsername(username, function(err, user) {
+      if (!user) { return cb(null, false); }
+      if (user.password != password) { return cb(null, false); }
+      return cb(null, user);
+    })
+    
+  }));
+  
+passport.serializeUser(function(user, cb) {
+  cb(null, user.colony + '#' + user._id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  const splitterIndex = id.indexOf('#')
+  const colony = id.substring(0, splitterIndex)
+  id = id.substr(splitterIndex + 1)
+  if (colony) {
+    getCol(colony).find({_id: id}).then((val) => {
+      val[0].colony = colony
+      cb(null, val[0])
+    })
+  }
+  
+  
+  // old code
+  console.log('running old stuff')
+  db.findById(id, function (err, user) {
+    if (!user) { return cb("Can't find user"); }
+    cb(null, user);
+  });
+});
+
+function loginMiddleware(options) {
+  
+  return function(req, res, next) {
+    
+    if (!req.isAuthenticated || !req.isAuthenticated()) {
+      if (req.session) {
+        req.session.returnTo = req.originalUrl || req.url;
+      }
+      return res.redirect('/' + req.params.colony)
+    }
+    next()
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+var simulations = []
+
+var queryStore = {};
+
+// authentication
+
+
+
+
+// connecting to db
+
+
 
 // Define routes.
 app.get('/',
@@ -242,6 +358,8 @@ app.get('/deleteUser',
   });
 
 // migration
+// var fs = require('fs');
+
 /*app.get('/migrate',
   require('connect-ensure-login').ensureLoggedIn("/"),
   function(req, res){
