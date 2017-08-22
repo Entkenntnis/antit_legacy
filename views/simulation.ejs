@@ -8,21 +8,21 @@
         </style>
     </head>
     <body>
-        <script src="js/THREE.js"></script>
-        <script src="js/orbit.js"></script>
-        <script src="js/tween.js"></script>
-        <script src="js/stats.min.js"></script>
-        <script src="src/Optionen.js"></script>
-        <!-- <script src="src/DeveloperMode.js"></script>-->
-        <script src="src/3d.js"></script>
-        <script src="src/Simulation.js"></script>
-        <script src="src/SimPulse.js"></script>
+        <script src="/js/THREE.js"></script>
+        <script src="/js/orbit.js"></script>
+        <script src="/js/tween.js"></script>
+        <script src="/js/stats.min.js"></script>
+        <script src="/src/Optionen.js"></script>
+        <!-- <script src="/src/DeveloperMode.js"></script>-->
+        <script src="/src/3d.js"></script>
+        <script src="/src/Simulation.js"></script>
+        <script src="/src/SimPulse.js"></script>
         <div style="position: absolute; z-index: 1; left: 50px; bottom: 40px; width:400px; height:40px;font-size:1em;color:white;">
 	<p>Maus: Links - drehen / Rechts - ziehen<br />Touch: Wischen - ziehen / lang tippen - drehen</p>
 </div>
 
 <div style="position: absolute; z-index: 3; right: 50px; top: 50px;font-size:1em;color:white;background-color:rgba(255,255,255,0.5);">
-	<a href="/" class="btn btn-primary">zurück</a>
+	<a href="<%=prefix%>/" class="btn btn-primary">zurück</a>
 </div>
 <script>
   function hide(){
@@ -68,7 +68,7 @@ function fehler(msg){
 }
 AntJS.OnSubmit = function(points) {
   var request = new XMLHttpRequest();
-  request.open("GET","/submit?hash=" + hash + "&points=" + points);
+  request.open("GET","<%=prefix%>/submit?hash=" + hash + "&points=" + points);
   request.addEventListener('load', function(event) {
      if (request.status >= 200 && request.status < 300) {
         if (request.responseText == "ok") {

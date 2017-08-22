@@ -80,9 +80,8 @@
   <br>
   <p>Admin-Tools:</p>
   <ul class="nav nav-pills" role="tablist">
-        <li role="presentation"><a href="/repair">Datenbank reparieren</a></li>
-        <li role="presentation"><a href="/users">Benutzerverwaltung</a></li>
-        <li role="presentation"><a href="/stats">Statistik</a></li>
+        <li role="presentation"><a href="<%=prefix%>/users">Benutzerverwaltung</a></li>
+        <li role="presentation"><a href="<%=prefix%>/stats">Statistik</a></li>
       </ul>
 	<%}%>
 	<div class="page-header">
@@ -125,7 +124,7 @@
 	    }
 	  }
 	</script>
-	<form method="GET" action="/simulation"><div>
+	<form method="GET" action="<%=prefix%>/simulation"><div>
 	<% for(var t = 1; t <= 8; t++) { %>
 	    <div style="float:left;padding-left:10px;"> Team <%=t%>:
 	    <select name="team<%=t%>" id="team<%=t%>">

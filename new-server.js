@@ -9,6 +9,7 @@ const app = express()
 app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+app.disable('x-powered-by')
 
 app.use(require('cookie-parser')())
 app.use(require('body-parser').urlencoded({extended: true }))
@@ -49,7 +50,7 @@ function initColonys() {
 }
 
 function getColonyCollection(path) {
-  if (path && colonyInfo[path].colonyName == path)
+  if (path && colonyInfo[path] && colonyInfo[path].colonyName == path)
     return db.get('colony_' + path)
   else
     return null
@@ -61,8 +62,8 @@ function getColonyCollection(path) {
 
 passport.use(new (require('passport-local').Strategy)(
   {passReqToCallback:true}, 
-  function(req, username, password, cb) {
-    req.curCol.find({username: username, password: password}).then((users) => {
+  function(req, uname, pw, cb) {
+    req.curCol.find({username: uname, password: pw}, {ants:false}).then((users) => {
       if (users && users.length == 1) {
         users[0].colony = req.params.colony
         return cb(null, users[0])
@@ -82,7 +83,7 @@ passport.deserializeUser(function(id, cb) {
   var userid = id.substr(splitterIndex + 1)
   var col = getColonyCollection(colony)
   if (col) {
-    col.find({_id: userid}).then((users) => {
+    col.find({_id: userid}, {ants:false}).then((users) => {
       users[0].colony = colony
       return cb(null, users[0])
     })
@@ -95,6 +96,7 @@ passport.deserializeUser(function(id, cb) {
 // ----------------------------
 // ant helper
 
+var simulations = []
 
 function prepareAnts(users, myid) {
   var result = {ants:[], globals:[]}
@@ -143,13 +145,84 @@ function saveCode(userid, antid, data, col) {
     {$set : {"ants.$.code" : data, "ants.$.name": getName(data)}})
 }
 
+function setPublished(userid, antid, val, col) {
+  col.update({_id:userid, "ants.antid" : antid},
+    {$set : {"ants.$.published": val}})
+}
+
+function deleteAnt(userid, antid, col) {
+  col.update({_id:userid},
+    {$pull : {ants: {antid:antid}}})
+}
+
 function updateName(code) {
   var index = code.indexOf("\"") + 1;
   return code.slice(0, index) + "[Kopie] " + code.slice(index)
 }
 
+function setSimulation(req, ants) {
+  var date = Date.now()
+  var userid = req.user ? req.user._id : undefined
+  var hash = date + "-" + userid + "-" + Math.floor(Math.random()*100000)
+  var s = {
+    antsID:ants.map(function(a){return a.antid}),
+    antsName:ants.map(function(a){return a.name}),
+    userid:userid,
+    username:req.user?req.user.displayName : undefined,
+    start:date,
+    hash:hash,
+    colony:req.params.colony
+  }
+  simulations.push(s)
+  return hash
+}
+
+function submitSimulation(hash, points, colony) {
+  for (var i = 0; i < simulations.length; i++) {
+    var s = simulations[i]
+    var timePassed = (Date.now() - s.start) / 1000
+    if (s.hash == hash && !s.result && timePassed < 600 && colony == s.colony) {
+      var results = points.split(",")
+      if (results.length == s.antsName.length) {
+        s.result = results
+        return true
+      }
+    }
+  }
+  return false
+}
+
+function flattenQuery(query) {
+  var antIds = []
+  for (var i = 1; i <= 8; i++) {
+    var val = query['team' + i]
+    if (val && val != "none")
+      antIds.push(val)
+  }
+  return antIds
+}
+
+function findAnts(users, userid, ids) {
+  var ants = []
+  if (users) {
+    users.forEach(function(user){
+      user.ants.forEach(function(a){
+        while(ids.indexOf(a.antid) >= 0) {
+          ids.splice(ids.indexOf(a.antid), 1)
+          if (a.published || user._id.toString() == userid) {
+            ants.push(a)
+          }
+        }
+      })
+    })
+  }
+  return ants
+}
+
 // ----------------------------
 // route helper
+
+const queryCache = {}
 
 function loginMiddleware(superuser) {
   return function(req, res, next) {
@@ -197,8 +270,10 @@ function route(options, cb) {
 
 route({name:"/"}, function(req, res) {
   const userid = req.user ? req.user._id.toString() : undefined
-  req.curCol.find({}).then((val) => {
+  req.curCol.find({}, {"ants.code":false}).then((val) => {
     var result = prepareAnts(val, userid)
+    if (req.user && queryCache[req.sessionID])
+      req.user.previous = queryCache[req.sessionID]
     res.render('home', {
       user: req.user,
       fail: req.query.fail,
@@ -272,6 +347,96 @@ route({name:"/save", login:true, post:true}, function(req, res, next) {
   saveCode(req.user._id, req.query.id, req.body.data, req.curCol)
   next()
 })
+
+route({name:"/delete", login:true}, function(req, res, next) {
+  deleteAnt(req.user._id, req.query.id, req.curCol)
+  next()
+})
+
+route({name:"/simulation"}, function(req, res) {
+  if (req.user)
+    queryCache[req.sessionID] = req.query
+  var antIds = flattenQuery(req.query)
+  req.curCol.find({"ants.antid" : {$in:antIds}}).then((users) => {
+    var ants = findAnts(users, req.user?req.user._id.toString():"", antIds)
+    var hash = setSimulation(req, ants)
+    res.render('simulation', {code:ants, hash:hash, prefix:req.curHome})
+  })
+})
+
+route({name:"/submit"}, function(req, res) {
+  if (submitSimulation(req.query.hash, req.query.points, req.params.colony)) {
+    res.send("ok")
+  } else {
+    res.send("fail")
+  }
+})
+
+route({name:"/publish", login:true}, function(req, res, next) {
+  setPublished(req.user._id, req.query.id, true, req.curCol)
+  next()
+})
+
+route({name:"/unpublish", login:true}, function(req, res, next) {
+  setPublished(req.user._id, req.query.id, false, req.curCol)
+  next()
+})
+
+route({name:"/stats", login:true, superuser:true}, function(req, res) {
+  res.render('stats', {data:simulations, prefix: req.curHome})
+})
+
+route({name:"/clearstats", login:true, superuser:true}, function(req, res, next) {
+  simulations = []
+  next()
+})
+
+route({name:"/users", login:true, superuser:true}, function(req, res) {
+  req.curCol.find({}, {"ants.code":0}).then((users) => {
+    res.render('users', {users:users, msg: req.query.msg, prefix: req.curHome})
+  })
+})
+
+route({name:"/addUser", login:true, superuser:true, post:true}, function(req, res) {
+  var existing = undefined
+  req.curCol.find({username:req.body.username}, {_id:1}).then((user) => {
+    if (user && user.length == 1)
+      existing = user[0]._id
+  }).then(() => {
+    if (existing) {
+      req.curCol.update({_id:existing},
+        { $set: {
+          displayName: req.body.displayName,
+          password: req.body.password,
+          superuser: ("superuser" in req.body)}}).then(() => {
+            res.redirect(req.curHome + "/users?msg=3")
+          })
+    } else {
+      req.curCol.insert({
+        username: req.body.username,
+        displayName: req.body.displayName,
+        password: req.body.password,
+        superuser: ("superuser" in req.body),
+        ants:[]}).then(() => {
+          res.redirect(req.curHome + "/users?msg=2")
+        })
+    }
+  })
+})
+
+route({name:"/deleteUser", login:true, superuser:true}, function(req, res) {
+  req.curCol.find({_id: req.query.id}, {superuser:1}).then((user) => {
+    if (user[0].superuser == false) {
+      req.curCol.remove({_id: req.query.id}).then(() => {
+        res.redirect(req.curHome + "/users?msg=4")
+      })
+    } else {
+      res.redirect(req.curHome + "/users?msg=1")
+    }
+  })
+})
+
+
 
 
 

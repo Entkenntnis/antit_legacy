@@ -7,14 +7,24 @@
       <div class="container">
         <div class="jumbotron"><h1>Benutzer</h1></div>
         
+        <% if (msg == 1) { %>
+          <div class="alert alert-danger" role="alert"><strong>Superuser können nicht gelöscht werden</strong></div>
+        <% } else if (msg == 2) { %>
+          <div class="alert alert-success" role="alert"><strong>Neuer Benutzer wurde angelegt</strong></div>
+        <% } else if (msg == 3) { %>
+          <div class="alert alert-success" role="alert"><strong>Benutzer wurde aktualisiert</strong></div>
+        <% } else if (msg == 4) { %>
+          <div class="alert alert-success" role="alert"><strong>Benutzer wurde gelöscht</strong></div>
+        <% } %>
+        
         <strong>Benutzer anlegen / ändern</strong>
         <br>
-        <form method="POST" action="/addUser">
-        Benutzername: <input name="username"><br>
+        <form method="POST" action="<%=prefix%>/addUser">
+        Benutzername (als ID): <input name="username"><br>
         Anzeigename: <input name="displayName"><br>
         Passwort: <input name="password"><br>
         Superuser: <input type="checkbox" name="superuser"><br><br>
-        <input type="submit" class="btn btn-success" value="Hinzufügen"> <a class="btn btn-primary" href="/">zurück</a>
+        <input type="submit" class="btn btn-success" value="Hinzufügen"> <a class="btn btn-primary" href="<%=prefix%>/">zurück</a>
         <hr>
         </form>
         <%users.forEach(function(user){%>
@@ -24,7 +34,7 @@
           Superuser: "<%=user.superuser%>"
           Passwort: "<span style="color:white"><%=user.password%></span>" 
           _id: "<%=user._id%>"
-          <button onClick="var r = confirm('Willst du den Benutzer \'<%=user.displayName%>\' sicher löschen?\nBenutzerdaten und Ameisenvölker gehen unwiderruflich verloren!');if (r == true) {window.location.href='/deleteUser?id=<%=user._id%>';}" href="#" >Löschen</button>
+          <button onClick="var r = confirm('Willst du den Benutzer \'<%=user.displayName%>\' sicher löschen?\nBenutzerdaten und Ameisenvölker gehen unwiderruflich verloren!');if (r == true) {window.location.href='<%=prefix%>/deleteUser?id=<%=user._id%>';}" href="#" >Löschen</button>
           </p>
         <%});%>
         <div style="height:300px"></div>

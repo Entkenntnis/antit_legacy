@@ -45,7 +45,7 @@ function calcSum(data) {
       <div class="container">
         <div class="jumbotron"><h1>Statistik</h1><p>Gesamtpunkte: <%=calcSum(data)%></p></div>
         <% if (data.filter(function(e){return e.result !== undefined}).length > 0) { %>
-        <p class="text-right"><button class="btn btn-danger" onClick="var r = confirm('Alle Einträge aus der Statistik löschen?');if (r == true) {window.location.href='/clearstats'}">Einträge löschen</button></p><% } else { %>
+        <p class="text-right"><button class="btn btn-danger" onClick="var r = confirm('Alle Einträge aus der Statistik löschen?');if (r == true) {window.location.href='<%=prefix%>/clearstats'}">Einträge löschen</button></p><% } else { %>
         <p>Keine Einträge vorhanden</p>
         <% }%>
         <ul class="list-group">
@@ -66,7 +66,7 @@ function calcSum(data) {
           </li>
         <% } %>
         </ul>
-        <a class="btn btn-primary" href="/">zurück</a>
+        <a class="btn btn-primary" href="<%=prefix%>/">zurück</a>
         <div style="height:300px"></div>
       </div>
     </body>
