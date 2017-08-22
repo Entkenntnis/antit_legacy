@@ -240,10 +240,10 @@ function checkColony() {
     var collection = getColonyCollection(path)
     if (collection) {
       req.curCol = collection
-      req.curHome = '/n/' + path
+      req.curHome = '/' + path
       next()
     } else {
-      res.send('bad colony')
+      res.redirect("/")
     }
   }
 }
@@ -257,16 +257,20 @@ function route(options, cb) {
   }
   function returnHome(req, res) { res.redirect(req.curHome) }
   if (!options.post) {
-    app.get('/n/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
+    app.get('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
   } else {
-    app.post('/n/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
-    app.get('/n/:colony' + options.name, checkColony(), getLogin(), returnHome)
+    app.post('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
+    app.get('/:colony' + options.name, checkColony(), getLogin(), returnHome)
   }
 }
 
 
 // ----------------------------
 // routes
+
+app.get("/", function(req, res) {
+  res.redirect("/main")
+})
 
 route({name:"/"}, function(req, res) {
   const userid = req.user ? req.user._id.toString() : undefined
@@ -360,7 +364,11 @@ route({name:"/simulation"}, function(req, res) {
   req.curCol.find({"ants.antid" : {$in:antIds}}).then((users) => {
     var ants = findAnts(users, req.user?req.user._id.toString():"", antIds)
     var hash = setSimulation(req, ants)
-    res.render('simulation', {code:ants, hash:hash, prefix:req.curHome})
+    res.render('simulation', {
+      code:ants,
+      hash:hash,
+      prefix:req.curHome,
+      devMode:colonyInfo[req.params.colony].debugging})
   })
 })
 
@@ -436,7 +444,44 @@ route({name:"/deleteUser", login:true, superuser:true}, function(req, res) {
   })
 })
 
+const rootCode = "xyBk4sp5Q"
 
+app.get("/root/reload", function(req, res) {
+  if (req.query.key == rootCode) {
+    initColonys()
+    res.send("ok")
+  } else {
+    res.send("invalid key")
+  }
+})
+
+app.get("/root/newcolony", function(req, res) {
+  if (req.query.key == rootCode) {
+    if (req.query.name &&
+        !colonyInfo[req.query.name] &&
+        req.query.name != "root" &&
+        req.query.name.length >= 2) {
+      db.create('colony_' + req.query.name)
+      db.get('colony_' + req.query.name).insert({
+        username:"admin",
+        displayName:"Administrator",
+        password:"bumblebee",
+        ants:[],
+        superuser:true})
+      .then(db.get('info').insert({
+        colonyName:req.query.name,
+        debugging:false
+      })).then(() => {
+        initColonys()
+      })
+      res.send("ok")
+    } else {
+      res.send("invalid name")
+    }
+  } else {
+    res.send("invalid key")
+  }
+})
 
 
 
