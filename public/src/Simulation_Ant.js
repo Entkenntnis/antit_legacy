@@ -318,15 +318,6 @@ function Ant(pos, playerid) {
   }
   
   this.gotoHome = function(sense){
-    for (var i = my.jobs.length - 1; i >= 0; i--) {
-      var cur = my.jobs[i]
-      if (cur.type != "GO" && cur.type != "TURN" && cur.type != "DEST")
-        break
-      if (cur.value === true)
-        continue
-      if (cur.type == "DEST" && cur.value[0].constructor.name == "Hill")
-        return
-    }
     this.addGotoJob(myHill(), Sim.hills, "Bau", sense)
   }
   
