@@ -919,7 +919,7 @@ function Ant(pos, playerid) {
       }
       my.load = 0;
       updateGO();
-    })
+    }, "DROPSUGAR")
   }
   
   this.addAppleSetupJob = function() {
@@ -1027,6 +1027,8 @@ function Ant(pos, playerid) {
         break
       }
     }
+    if (my.jobs.length > 0 && my.jobs[my.jobs.length-1].value == "DROPSUGAR")
+      sensing = false
     return sensing
   }
   
