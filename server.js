@@ -450,7 +450,7 @@ app.get('/users',
   function(req, res){
     if (req.user.superuser) {
       db.userlist(function(err, val){
-        res.render('users', {users:val});
+        res.render('users', {users:val, msg:undefined, prefix:""});
       });      
     } else {
       res.redirect("/");
