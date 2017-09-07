@@ -40,6 +40,8 @@
       var skippedFrames = 0;
       while(Sim.cycles < targetCycle && skippedFrames < Optionen.MaximalÜbersprungeneFrames){
         Sim.update();
+        if (window.myTick)
+          window.myTick()
         var runState = Math.round(Sim.cycles / Optionen.Runden * 100);
         SimPulse.simStatus.innerHTML = "Fortschritt: " + runState + "%";
         Sim.cycles++;

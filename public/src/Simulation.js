@@ -1574,6 +1574,8 @@ AntIT._abortSimulation = function () {
 
 if (Optionen.EntwicklerModus) {
   AntIT.Sim = Sim;
+  AntIT.Sim.Distance = dist
+  
   AntIT.Vw = Vw;
   AntIT.Optionen = Optionen;
   AntIT.API = API
