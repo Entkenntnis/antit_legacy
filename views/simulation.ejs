@@ -46,11 +46,27 @@
 </div>
 <script>
 <%
+  function btoa(str) {
+    var buffer
+      ;
+
+    if (str instanceof Buffer) {
+      buffer = str;
+    } else {
+      buffer = new Buffer(str.toString(), 'binary');
+    }
+
+    return buffer.toString('base64');
+  }
+
+
   var atLeastOnFile = false;
   if (code) {
     code.forEach(function(c){
       atLeastOnFile = true;
-      %>(function(){<%-c.code%>})();<%
+      var exportCode = btoa('(function(){' + c.code + '})();')
+      %>eval(atob("<%-exportCode%>"));
+      <%      
     });
   }
 
