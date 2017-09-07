@@ -5,10 +5,10 @@
 (function () {
   "use strict";
   
-  var am = AntJS;
-  var vw = AntJS._vw;
-  var Sim = AntJS._sim;
-  var Optionen = AntJS._optionen;
+  var am = AntIT;
+  var vw = AntIT._vw;
+  var Sim = AntIT._sim;
+  var Optionen = AntIT._optionen;
   
   var SimPulse = {
       running : false
@@ -54,8 +54,8 @@
     , end:function(){
       SimPulse.running = false;
       SimPulse.simStatus.innerHTML = "beendet";
-      if (AntJS.OnSubmit) {
-        AntJS.OnSubmit(Sim.players.map(function(p){return p.getPoints()}).join(","))
+      if (AntIT._onSubmit) {
+        AntIT._onSubmit(Sim.players.map(function(p){return p.getPoints()}).join(","))
       }
     }
   }
@@ -74,7 +74,7 @@
     }
   }
   
-  AntJS.SubmitFinished = function() {
+  AntIT._submitFinished = function() {
     SimPulse.simStatus.innerHTML = "Simulation abgeschlossen";
   }
   

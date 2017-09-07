@@ -1,4 +1,4 @@
-var Ameise = AntJS.NeueAmeise("* neue Ameise");
+var Ameise = AntIT.NeueAmeise("* neue Ameise");
 
 // Aufgaben
 Ameise.Wartet = function(){

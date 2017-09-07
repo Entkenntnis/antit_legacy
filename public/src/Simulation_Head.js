@@ -4,8 +4,7 @@
 
 "use strict";
   
-var Vw = AntJS._vw;
-var Optionen = AntJS._optionen;
+var Vw = AntIT._vw;
+var Optionen = AntIT._optionen;
 var Global = window;
-var Am = AntJS;
 

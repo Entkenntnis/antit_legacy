@@ -62,19 +62,19 @@
 
 %>
 var hash = "<%-hash%>";
-AntJS.StarteSimulation();
+AntIT.StarteSimulation();
 window.onerror=fehler;
 function fehler(msg){
  alert("MELDUNG\n" + msg);
- AntMe._abortSimulation();
+ AntIT._abortSimulation();
 }
-AntJS.OnSubmit = function(points) {
+AntIT._onSubmit = function(points) {
   var request = new XMLHttpRequest();
   request.open("GET","<%=prefix%>/submit?hash=" + hash + "&points=" + points);
   request.addEventListener('load', function(event) {
      if (request.status >= 200 && request.status < 300) {
         if (request.responseText == "ok") {
-          AntJS.SubmitFinished()
+          AntIT._submitFinished()
         }
      }
   });

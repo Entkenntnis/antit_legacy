@@ -3,7 +3,7 @@
 
 (function() {  
   "use strict";
-  var Optionen = AntJS._optionen
+  var Optionen = AntIT._optionen
   
   // project-wide variables
   var scene, camera, renderer, stats, controls, manager;
@@ -303,6 +303,6 @@
   var vw = new ViewController();
   
   // export
-  AntJS._vw = vw;
-  AntJS.StarteSimulation = init;
+  AntIT._vw = vw;
+  AntIT.StarteSimulation = init;
 })();

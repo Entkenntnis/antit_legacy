@@ -238,7 +238,7 @@ API.antProp('Umgebung', function(){
   return env
 })
   
-AntJS.NeueAmeise = function (name) {
+AntIT.NeueAmeise = function (name) {
   var newAnt = {Name:name};
   if (API.ants.length < Optionen.MaximaleSpieler) {
     API.ants.push(newAnt);
@@ -247,9 +247,10 @@ AntJS.NeueAmeise = function (name) {
 }
 
 // backward compat
-Global.AntMe = AntJS
+Global.AntMe = AntIT
+Global.AntJS = AntIT
 
-AntJS._abortSimulation = function () {
+AntIT._abortSimulation = function () {
   var error =  document.createElement("DIV");
   error.innerHTML = "Simulationsfehler";
   error.style.color = "red";
@@ -261,7 +262,7 @@ AntJS._abortSimulation = function () {
 }
 
 if (Optionen.EntwicklerModus) {
-  AntJS.Sim = Sim;
-  AntJS.Vw = Vw;
-  AntJS.Optionen = Optionen;
+  AntIT.Sim = Sim;
+  AntIT.Vw = Vw;
+  AntIT.Optionen = Optionen;
 }

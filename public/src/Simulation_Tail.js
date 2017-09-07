@@ -1,7 +1,7 @@
 // end of Simulation.js
 
 // access for SimPulse
-AntJS._sim = Sim;
+AntIT._sim = Sim;
 
 // end of encapsulation
 })();
