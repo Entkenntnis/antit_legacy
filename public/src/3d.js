@@ -6,11 +6,9 @@
   var Optionen = AntIT._optionen
   
   // project-wide variables
-  var scene, camera, renderer, stats, controls, manager;
+  var scene = new THREE.Scene(), camera, renderer, stats, controls, manager;
 
   function init(){
-    // our stage
-    scene = new THREE.Scene();
     
     // the floor lies in the xz-plane, don't worry about aspect here, will be done on resize 
     camera = new THREE.PerspectiveCamera(60, 1 /*aspect*/, 0.1, 200000);
@@ -297,6 +295,10 @@
     this.setControlsBounds = function(x, y){
       controls.maxX = x,
       controls.maxZ = y;
+    }
+    
+    this.getScene = function(){
+      return scene
     }
   };
   

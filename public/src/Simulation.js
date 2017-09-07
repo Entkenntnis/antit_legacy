@@ -1576,6 +1576,7 @@ if (Optionen.EntwicklerModus) {
   AntIT.Sim = Sim;
   AntIT.Vw = Vw;
   AntIT.Optionen = Optionen;
+  AntIT.API = API
 }
 // end of Simulation.js
 
