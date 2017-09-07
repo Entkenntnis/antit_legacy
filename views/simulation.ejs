@@ -64,9 +64,22 @@
   if (code) {
     code.forEach(function(c){
       atLeastOnFile = true;
-      var exportCode = btoa('(function(){' + c.code + '})();')
-      %>eval(atob("<%-exportCode%>"));
-      <%      
+      console.log(devMode)
+      if (devMode) {
+        %>(function(){
+        
+
+
+<%-c.code%>
+
+
+        
+        })();<%
+      } else {
+        var exportCode = btoa('(function(){' + c.code + '})();')
+        %>eval(atob("<%-exportCode%>"));
+        <%
+      }
     });
   }
 
