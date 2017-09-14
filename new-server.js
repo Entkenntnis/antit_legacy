@@ -368,7 +368,8 @@ route({name:"/simulation"}, function(req, res) {
       code:ants,
       hash:hash,
       prefix:req.curHome,
-      devMode:colonyInfo[req.params.colony].debugging})
+      devMode:colonyInfo[req.params.colony].debugging,
+      srcnew:process.env.antit_srcnew})
   })
 })
 

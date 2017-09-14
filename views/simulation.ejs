@@ -8,17 +8,32 @@
         </style>
     </head>
     <body>
-        <script src="/js/THREE.js"></script>
-        <script src="/js/orbit.js"></script>
-        <script src="/js/tween.js"></script>
-        <script src="/js/stats.min.js"></script>
-        <script src="/src/Optionen.js"></script>
-        <% if (devMode) { %>
-          <script src="/src/DeveloperMode.js"></script>
+        <% if (srcnew == 1) { %>
+          <script src="/js/three.min.js"></script>
+          <script src="/js/orbit.js"></script>
+          <script src="/js/stats.min.js"></script>
+          <script src="/js/minibus.min.js"></script>
+          <script src="/srcnew/antitengine.js"></script>
+          <script src="/srcnew/plugin1.js"></script>
+          <script src="/srcnew/pluginStats.js"></script>
+          <script src="/srcnew/pluginOrbit.js"></script>
+          <script src="/srcnew/pluginLight.js"></script>
+          <script src="/srcnew/pluginWorld.js"></script>
+          <script src="/srcnew/pluginPlayer.js"></script>
+        
+        <% } else { %>
+          <script src="/js/THREE.js"></script>
+          <script src="/js/orbit.js"></script>
+          <script src="/js/tween.js"></script>
+          <script src="/js/stats.min.js"></script>
+          <script src="/src/Optionen.js"></script>
+          <% if (devMode) { %>
+            <script src="/src/DeveloperMode.js"></script>
+          <% } %>
+          <script src="/src/3d.js"></script>
+          <script src="/src/Simulation.js"></script>
+          <script src="/src/SimPulse.js"></script>
         <% } %>
-        <script src="/src/3d.js"></script>
-        <script src="/src/Simulation.js"></script>
-        <script src="/src/SimPulse.js"></script>
         <div style="position: absolute; z-index: 1; left: 50px; bottom: 40px; width:400px; height:40px;font-size:1em;color:white;">
 	<p>Maus: Links - drehen / Rechts - ziehen<br />Touch: Wischen - ziehen / lang tippen - drehen</p>
 </div>
@@ -46,6 +61,7 @@
 </div>
 <script>
 <%
+
   function btoa(str) {
     var buffer
       ;
