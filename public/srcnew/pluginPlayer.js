@@ -1,4 +1,6 @@
 
+// TODO Incorporate player as class
+
 (function(){
 
   var Optionen = AntIT.Optionen
@@ -20,8 +22,6 @@
       })
     }
     
-    console.log(AntIT.Players)
-    
     AntIT.Players.forEach(function(player){
       initHTML(player.id, player.KI.Name)
     })
@@ -30,7 +30,7 @@
   var rawPlayers = []
     
   AntIT.NeueAmeise = function (name) {
-    var newAnt = {Name:name}
+    var newAnt = {Name:name,Type:"Ant"}
     if (rawPlayers.length < Optionen.MaximaleSpieler) {
       rawPlayers.push(newAnt)
     }

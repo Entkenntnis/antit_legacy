@@ -3,23 +3,37 @@
     <head>
       <% include commonHead %>
         <style>
-            body { margin: 0}
+            body { margin: 0, overflow: hidden; overflow-y:hidden}
             canvas { width:100%; height:100% }
         </style>
     </head>
     <body>
         <% if (srcnew == 1) { %>
+          <script src="/js/minibus.min.js"></script>
+          <script src="/srcnew/engine/head.js"></script>
           <script src="/js/three.min.js"></script>
+          <script src="/srcnew/engine/view3d.js"></script>
+          <script src="/srcnew/engine/pulse.js"></script>
+          <script src="/srcnew/engine/ui.js"></script>
+          <script src="/srcnew/engine/cache3d.js"></script>
+          <script src="/js/orbit.js"></script>
+          <script src="/srcnew/engine/orbit.js"></script>
+          <script src="/js/stats.min.js"></script>
+          <script src="/srcnew/engine/stats.js"></script>
+          
+          <script src="/srcnew/modules/10-skyngrass.js"></script>
+          <script src="/srcnew/modules/15-softlight.js"></script>
+          
+          <!--<script src="/js/three.min.js"></script>
           <script src="/js/orbit.js"></script>
           <script src="/js/stats.min.js"></script>
-          <script src="/js/minibus.min.js"></script>
           <script src="/srcnew/antitengine.js"></script>
           <script src="/srcnew/plugin1.js"></script>
           <script src="/srcnew/pluginStats.js"></script>
           <script src="/srcnew/pluginOrbit.js"></script>
           <script src="/srcnew/pluginLight.js"></script>
           <script src="/srcnew/pluginWorld.js"></script>
-          <script src="/srcnew/pluginPlayer.js"></script>
+          <script src="/srcnew/pluginPlayer.js"></script>-->
         
         <% } else { %>
           <script src="/js/THREE.js"></script>

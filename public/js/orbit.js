@@ -51,6 +51,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 	// 
 	this.maxX = Infinity;
 	this.maxZ = Infinity;
+	this.maxY = Infinity;
 
 	// This option actually enables dollying in and out; left as "zoom" for backwards compatibility.
 	// Set to false to disable zooming
@@ -163,7 +164,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 			spherical.radius = Math.max( scope.minDistance, Math.min( scope.maxDistance, spherical.radius ) );
 
       // stay in y = 0
-      panOffset.setY(0);
+      //panOffset.setY(0);
     
 			// move target to panned location
 			scope.target.add( panOffset );
@@ -175,6 +176,10 @@ THREE.OrbitControls = function ( object, domElement ) {
       
       if (Math.abs(scope.target.z) > scope.maxZ) {
         scope.target.setZ(scope.maxZ*Math.sign(scope.target.z));
+      }
+      
+      if (Math.abs(scope.target.y) > scope.maxY) {
+        scope.target.setY(scope.maxY*Math.sign(scope.target.y));
       }
 
 			offset.setFromSpherical( spherical );
