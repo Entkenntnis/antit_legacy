@@ -23,3 +23,11 @@ AntIT.AddProp = function(name, value) {
     set: function() { },
   })
 }
+
+AntIT.Export = function(obj, functions) {
+  var x = {}
+  functions.forEach(function(n){
+    x[n] = obj[n]
+  })
+  return x
+}

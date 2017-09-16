@@ -3,8 +3,10 @@
   
   var unitTypes = []
   var unitAttributes = {}
+  var unitFunctions = {}
   var unitStore = {}
   var id = 1
+  var bus = Minibus.create()
   
   function addUnitType(name) {
     if (name in unitAttributes) {
@@ -12,6 +14,7 @@
     } else {
       unitTypes.push(name)
       unitAttributes[name] = {}
+      unitFunctions[name] = {}
       unitStore[name] = []
     }
   }
@@ -20,9 +23,14 @@
     unitAttributes[type][name] = initVal
   }
   
+  function addFunction(type, name, f) {
+    unitFunctions[type][name] = f
+  }
+  
   function createNewUnit(type, pos) {
     if (unitTypes.indexOf(type) >= 0) {
       var newUnit = new Unit(id++, type, pos)
+      bus.emit("new-" + type, newUnit)
       unitStore[type].push(newUnit)
       return newUnit
     }
@@ -49,7 +57,9 @@
   AntIT.AddProp("Unit", {
     addType: addUnitType,
     addAttribute: addAttribute,
+    addFunction: addFunction,
     create: createNewUnit,
+    Bus: bus
   })
   
   function Unit(id, type, pos) {
@@ -75,8 +85,12 @@
     
     var attributes = {}
     
-    for (key in unitAttributes) {
-      attributes[key] = unitAttributes[key]
+    for (key in unitAttributes[type]) {
+      attributes[key] = unitAttributes[type][key]
+    }
+    
+    for (key in unitFunctions[type]) {
+      this[key] = unitFunctions[type][key].bind(this)
     }
     
     this.getAttr = function(name) {
@@ -90,6 +104,7 @@
     
     this.die = function() {
       dieDirty[type] = true
+      bus.emit("remove-" + type, this)
       dead = true
     }
     
