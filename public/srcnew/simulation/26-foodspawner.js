@@ -64,10 +64,10 @@
           foodTypes.forEach(function(t){
             sum += foodMinCount[t]
           })
-          var maxd = 0
+          var maxd = -Infinity
           foodTypes.forEach(function(t){
             var should = foodMinCount[t]/sum
-            var deriv = Math.abs(counts[t] - should) / should
+            var deriv = -(counts[t] - should) / should
             if (deriv > maxd) {
               maxd = deriv
               type = t

@@ -48,6 +48,23 @@
     console.log("Entferne Zuckerhaufen Nr. " + id)
   })
   
+  AntIT.Bus.on('add-apple', function(id, pos, packed) {
+    console.log("Neuer Apfel Nr. " + id + " bei " + printPos(pos) + " " +
+      (packed?"":"nicht") + " geladen")
+  })
+  
+  AntIT.Bus.on('move-apple', function(id, newpos) {
+    console.log("Bewege Apfel Nr. " + id + " nach " + printPos(newpos))
+  })
+  
+  AntIT.Bus.on('set-apple-packed', function(id, packed) {
+    console.log("Setze Apfel Nr. " + id + " " + (packed?"":"nicht") + " geladen")
+  })
+  
+  AntIT.Bus.on('remove-apple', function(id, packed) {
+    console.log("Entferne Apfel Nr. " + id)
+  })
+  
   AntIT.Bus.on('tick', function(cycle) {
     if (AntIT.Units.Ant.length > 0 && (cycle % 40) == 0) {
       AntIT.Units.Ant[0].move(AntIT.Board.randomPos())
