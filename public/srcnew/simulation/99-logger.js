@@ -31,6 +31,23 @@
     console.log("Drehe Ameise Nr. " + antid + " nach " + heading)
   })
   
+  AntIT.Bus.on('remove-ant', function(antid) {
+    console.log("Entferne Ameise Nr. " + antid)
+  })
+  
+  AntIT.Bus.on('add-sugar', function(id, pos, amount) {
+    console.log("Neuer Zuckerhaufen Nr. " + id +
+      " mit " + amount + " Zucker bei " + printPos(pos))
+  })
+  
+  AntIT.Bus.on('unload-sugar', function(id, amount) {
+    console.log("Entlade Zuckerhaufen Nr. " + id + " zu " + amount)
+  })
+  
+  AntIT.Bus.on('remove-sugar', function(id) {
+    console.log("Entferne Zuckerhaufen Nr. " + id)
+  })
+  
   AntIT.Bus.on('tick', function(cycle) {
     if (AntIT.Units.Ant.length > 0 && (cycle % 40) == 0) {
       AntIT.Units.Ant[0].move(AntIT.Board.randomPos())

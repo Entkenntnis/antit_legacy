@@ -47,6 +47,10 @@
     updateGO(id)
   })
   
+  AntIT.Bus.on('remove-ant', function(id) {
+    antCache.remove(id)
+  })
+  
   function updateGO(id) {
     var ant3d = antCache.get(id)
     ant3d.position.copy(AntIT.ToViewPos(ants[id].pos))

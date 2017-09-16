@@ -104,7 +104,7 @@
     
     this.die = function() {
       dieDirty[type] = true
-      bus.emit("remove-" + type, this)
+      //bus.emit("remove-" + type, this)
       dead = true
     }
     

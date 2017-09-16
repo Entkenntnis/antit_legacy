@@ -2,7 +2,7 @@
 (function() {
 
   var Opts = AntIT.AddOptions({
-    Runden : 750,
+    Runden : 3000,
     TicksProSekunde : 40,
   })
   
