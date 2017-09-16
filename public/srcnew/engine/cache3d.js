@@ -38,6 +38,6 @@
     }
   }
   
-  AntIT.AddProp("Cache3d", Cache)
+  AntIT.AddProp("Cache3d", Cache3d)
 
 })()

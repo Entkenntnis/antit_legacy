@@ -2,23 +2,18 @@
 (function(){
 
   var simStatus
-  var previousProgress
 
   AntIT.Bus.on('init', function(){
     simStatus = document.createElement("DIV")
     document.getElementById("hud").appendChild(simStatus)
-    document.getElementById("loading").style.display = "none";
-    previousProgress = ""
+    document.getElementById("loading").style.display = "none"
   })
   
   AntIT.Bus.on('progress', function(p){
-    if (p !== previousProgress) {
-      previousProgress = p
-      if (p == -1)
-        simStatus.innerHTML = "beendet"
-      else
-        simStatus.innerHTML = "Fortschritt: " + p + "%"
-    }
+    if (p == -1)
+      simStatus.innerHTML = "beendet"
+    else
+      simStatus.innerHTML = "Fortschritt: " + p + "%"
   })
   
   document.onkeypress = function(e){
@@ -29,8 +24,8 @@
       newFps = 40
     if (e.charCode == 51) // 3
       newFps = 140
-    if (newFps) {
-      AntIT.Bus.emit('set-fps', newFps)
+    if (newFps && AntIT.SetFps) {
+      AntIT.SetFps(newFps)
     }
   }
 

@@ -10,7 +10,7 @@
   
   var controls
   
-  AntIT.Bus.on('load', function(){
+  AntIT.Bus.on('init', function(){
   
     controls = new THREE.OrbitControls(AntIT.Camera)
     if (!Opts.FreieBewegung) {
@@ -25,7 +25,7 @@
 
   })
   
-  AntIT.Bus.on('set-control-bounds', function(maxX, maxZ){
+  AntIT.AddProp("SetControlBounds", function(maxX, maxZ){
     if (!Opts.FreieBewegung) {
       controls.maxX = maxX
       controls.maxZ = maxZ

@@ -11,6 +11,7 @@
   var simulationFps = Opts.TicksProSekunde
   var cycles = 0
   var maxSkippedFrames = 10
+  var lastProgress = -1
   
   function getTargetCycle() {
     var elapsedTime = Date.now() - startTime
@@ -24,7 +25,11 @@
   function tick() {
     cycles++
     AntIT.Bus.emit('tick', cycles)
-    AntIT.Bus.emit('progress', Math.round(cycles / Opts.Runden * 100))
+    var progress = Math.round(cycles / Opts.Runden * 100)
+    if (progress != lastProgress) {
+      lastProgress = progress
+      AntIT.Bus.emit('progress', progress)
+    }
     AntIT.Bus.emit('need-redraw')
   }
   
@@ -57,7 +62,7 @@
     AntIT.Bus.emit('progress', -1)
   }
   
-  AntIT.Bus.on('set-fps', function(fps) {
+  AntIT.AddProp("SetFps", function(fps) {
     simulationFps = fps
     adjustStartTime()
   })  

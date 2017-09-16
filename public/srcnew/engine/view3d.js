@@ -41,6 +41,7 @@
   }
     
   function ready() {
+    THREE.DefaultLoadingManager.onLoad = undefined
     AntIT.Bus.emit('init')
     animate()
   }
@@ -56,18 +57,18 @@
     requestAnimationFrame(animate)
   }
   
-  AntIT.StarteSimulation = load
+  AntIT.AddProp("StarteSimulation", load)
   
   AntIT.Bus.on('need-redraw', function(){
     needRedraw = true
   })
   
-  AntIT.LoadObj = function (path, cb) {
+  AntIT.AddProp("LoadObj", function (path, cb) {
     objloader.load(path, cb)
-  }
+  })
   
-  AntIT.LoadTexture = function (path) {
+  AntIT.AddProp("LoadTexture", function (path) {
     return textureloader.load(path)
-  }
+  })
 
 })()
