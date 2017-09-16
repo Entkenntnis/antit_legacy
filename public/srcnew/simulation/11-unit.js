@@ -30,7 +30,9 @@
   function createNewUnit(type, pos) {
     if (unitTypes.indexOf(type) >= 0) {
       var newUnit = new Unit(id++, type, pos)
-      bus.emit("new-" + type, newUnit)
+      AntIT.Bus.emit("add-" + type.toLowerCase(), newUnit.getId())
+      newUnit.setPos(pos)
+      bus.emit("create-" + type.toLowerCase(), newUnit)
       unitStore[type].push(newUnit)
       return newUnit
     }
@@ -62,9 +64,9 @@
     Bus: bus
   })
   
-  function Unit(id, type, pos) {
+  function Unit(id, type) {
     
-    var pos = pos
+    var pos = undefined
     var dead = false
     
     this.getId = function() {
@@ -81,6 +83,7 @@
     
     this.setPos = function(val) {
       pos = val
+      AntIT.Bus.emit("move-" + type.toLowerCase(), id, pos)
     }
     
     var attributes = {}
@@ -89,8 +92,15 @@
       attributes[key] = unitAttributes[type][key]
     }
     
+    function generateF(type, key, obj) {
+      return function(){
+        if (!dead)
+          unitFunctions[type][key].apply(obj, arguments)
+      }
+    }
+    
     for (key in unitFunctions[type]) {
-      this[key] = unitFunctions[type][key].bind(this)
+      this[key] = generateF(type, key, this)
     }
     
     this.getAttr = function(name) {
@@ -104,7 +114,7 @@
     
     this.die = function() {
       dieDirty[type] = true
-      //bus.emit("remove-" + type, this)
+      AntIT.Bus.emit("remove-" + type.toLowerCase(), id)
       dead = true
     }
     

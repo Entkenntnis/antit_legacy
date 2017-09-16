@@ -13,7 +13,7 @@
       var newpos = AntIT.HillSpawner.getHillPos(AntIT.Units.Hill)
       var unit = AntIT.Unit.create("Hill", newpos)
       unit.setAttr("playerid", p.getId())
-      AntIT.Bus.emit('add-hill', p.getId(), newpos)
+      AntIT.Bus.emit('set-hill-player', unit.getId(), p.getId())
     })
   })
 

@@ -19,7 +19,7 @@
     })
   })
   
-  AntIT.Unit.Bus.on('remove-Ant', function(ant){
+  AntIT.Unit.Bus.on('remove-ant', function(ant){
     spawners[ant.getAttr('playerid')].removeAnt()
   })
   
@@ -41,7 +41,7 @@
         antPos.y += Math.sin(angle)*radius
         var ant = AntIT.Unit.create('Ant', antPos)
         ant.setAttr('playerid', id)
-        AntIT.Bus.emit('add-ant', ant.getId(), id, antPos, ant.getAttr('heading'))
+        AntIT.Bus.emit('set-ant-player', ant.getId(), id)
       }
     }
     
