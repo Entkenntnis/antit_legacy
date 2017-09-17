@@ -5,6 +5,8 @@
   var Opts = AntIT.AddOptions({
     ZuckerGröße : 250,
     EnergieProZucker : 10,
+    ZuckerRadius : 10,
+    AmeiseTragkraft : 5,
   })
 
   AntIT.Unit.addType('Sugar')

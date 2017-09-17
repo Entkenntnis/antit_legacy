@@ -16,7 +16,7 @@
       var jobs = ant.getAttr('jobs')
       if (jobs.length > 0) {
         var curJob = jobs[jobs.length - 1];
-        var finished = curJob.callback.bind(this)();
+        var finished = curJob.callback.bind(ant)();
         if (finished) {
           var index = jobs.indexOf(curJob);
           if (index >= 0) {

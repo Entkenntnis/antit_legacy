@@ -3,8 +3,6 @@
 
   var Opts = AntIT.AddOptions({
     AmeiseReichweite : 3000,
-    AmeiseGeschwindigkeit : 5,
-    AmeiseDrehgeschwindigkeit : 8,
     AmeiseSichtweite : 70,
   })
 
@@ -18,6 +16,7 @@
   
   AntIT.Unit.Bus.on('create-ant', function(ant){
     ant.setAttr('heading', Math.floor(Math.random()*360))
+    ant.turn(0)
     grid.add(ant.getId(), ant.getPos(), ant)
   })
 

@@ -2,7 +2,6 @@
 (function() {
 
   var Opts = AntIT.AddOptions({
-    Runden : 3000,
     TicksProSekunde : 40,
   })
   
@@ -23,7 +22,6 @@
   }
   
   function tick() {
-    cycle = AntIT.Tick()
     var progress = Math.round(cycle / Opts.Runden * 100)
     if (progress != lastProgress) {
       lastProgress = progress
@@ -39,14 +37,14 @@
   })
   
   AntIT.Bus.on('animation-frame', function(){
-    if (cycle >= Opts.Runden) {
-      if (running)
-        end()
+    if (!running)
       return
-    }
     var targetCycle = getTargetCycle()
     var skippedFrames = 0
     while(cycle < targetCycle && skippedFrames < maxSkippedFrames){
+      cycle = AntIT.Tick()
+      if (cycle === false)
+        end()
       tick()
       skippedFrames++
     }

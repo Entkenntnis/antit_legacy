@@ -15,7 +15,8 @@
   
   AntIT.Bus.on('init', function(){
     AntIT.Players.forEach(function(p){
-      spawners.push(new AntSpawner(p.getId()))
+      if (p.getKi().Type == "Ant")
+        spawners.push(new AntSpawner(p.getId()))
     })
   })
   
@@ -41,6 +42,7 @@
         antPos.y += Math.sin(angle)*radius
         var ant = AntIT.Unit.create('Ant', antPos)
         ant.setAttr('playerid', id)
+        AntIT.Unit.Bus.emit('ant-born', ant)
         AntIT.Bus.emit('set-ant-player', ant.getId(), id)
       }
     }

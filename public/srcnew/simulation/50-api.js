@@ -6,7 +6,7 @@
 
   function SimObject(obj, timeless) {
     
-    var roundId = API.callId;
+    var roundId = callId;
     
     this.get = function(key) {
       if (key === Sim && (callId == roundId || timeless === true)) {
@@ -18,22 +18,22 @@
   }
 
   var staticPlayerId = undefined
-  var curAnt = undefined
+  var curUnit = undefined
   var callId = 0
   var ctxt = ""
   
-  function getAnt() {
-    return curAnt
+  function getUnit() {
+    return curUnit
   }
   
-  function setAnt(ant) {
-    curAnt = ant
-    staticPlayerId = ant.getAttr('playerid')
+  function setUnit(unit, playerid) {
+    curUnit = unit
+    staticPlayerId = playerid
     callId++
   }
   
   function close() {
-    curAnt = undefined
+    curUnit = undefined
     staticPlayerId = undefined
     ctxt = ""
   }
@@ -46,9 +46,9 @@
       return
     if (staticPlayerId === undefined)
       return
-    ctxt = "Ameise." + name + " = " func
-    curAnt.refreshInsertionPoint()
-    func.apply(pushObj(curAnt), arg.map(function (obj) {
+    ctxt = AntIT.Players[staticPlayerId].getKi().Type + "." + name + " = " + func
+    curUnit.refreshInsertionPoint()
+    func.apply(pushObj(curUnit), arg.map(function (obj) {
       if (!pure && typeof obj == "object")
         return pushObj(obj)
       return obj
@@ -63,11 +63,11 @@
     return simObj.jet(Sim)
   }
 
-  function antProp(name, f) {
+  function addProp(name, f) {
     Object.defineProperty(window, name, {
       get: function() {
         if (staticPlayerId === undefined) {
-          console.warn("Die Eigenschaft '" + name + "' kann nur innerhalb einer Ameise aufgerufen werden.")
+          console.warn("Die Eigenschaft '" + name + "' kann nur innerhalb einer Einheit aufgerufen werden.")
           return
         }
         return f()
@@ -79,7 +79,7 @@
   function addFunc(name, f) {
     window[name] = function() {
       if (staticPlayerId === undefined) {
-        console.warn("Die Funktion '" + name + "()' kann nur innerhalb einer Ameise aufgerufen werden.")
+        console.warn("Die Funktion '" + name + "()' kann nur innerhalb einer Einheit aufgerufen werden.")
         return
       }
       var args = []
@@ -94,14 +94,19 @@
     }
   }
   
+  function fail(msg) {
+    AntIT.Bus.emit('error', msg)
+  }
+  
   AntIT.AddProp("API", {
-    setAnt : setAnt,
-    getAnt : getAnt,
+    setUnit : setUnit,
+    getUnit : getUnit,
     close : close,
     callUserFunc : callUserFunc,
     pushObj : pushObj,
-    antProp : antProp,
-    addFunc : addFunc
+    addProp : addProp,
+    addFunc : addFunc,
+    fail : fail,
   })
 
 })()
