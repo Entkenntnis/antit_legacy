@@ -24,41 +24,24 @@
     });
   }
   
-  var ants = {}
+  AntIT.Bus.on('add-ant', function(antid) {
+    antCache.get(antid)
+  })
   
-  AntIT.Bus.on('add-ant', function(antid, playerid, pos, heading) {
-    var antObj = {}
-    antObj.id = antid
-    antObj.pos = {x: pos.x, y: pos.y}
-    antObj.heading = heading
-    ants[antid] = antObj
-    updateGO(antid)
-    setAntBodyColor(antCache.get(antid), AntIT.ColorOf(playerid))
+  AntIT.Bus.on('set-ant-player', function(id, playerid) {
+    setAntBodyColor(antCache.get(id), AntIT.ColorOf(playerid))
   })
   
   AntIT.Bus.on('move-ant', function(id, pos) {
-    ants[id].pos.x = pos.x
-    ants[id].pos.y = pos.y
-    updateGO(id)
+    antCache.get(id).position.copy(AntIT.ToViewPos(pos))
   })
   
   AntIT.Bus.on('turn-ant', function(id, heading) {
-    ants[id].heading = heading
-    updateGO(id)
+    antCache.get(id).rotation.y = -heading / 180 * Math.PI + Math.PI
   })
   
   AntIT.Bus.on('remove-ant', function(id) {
     antCache.remove(id)
   })
-  
-  function updateGO(id) {
-    var ant3d = antCache.get(id)
-    ant3d.position.copy(AntIT.ToViewPos(ants[id].pos))
-    ant3d.rotation.y = -ants[id].heading / 180 * Math.PI + Math.PI
-  }
-
-
-
-
 
 })()

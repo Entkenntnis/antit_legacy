@@ -13,28 +13,23 @@
       sugarCache = new AntIT.Cache3d(obj, AntIT.Scene)
     })
   })
-  
-  var sugars = {}
 
-  AntIT.Bus.on('add-sugar', function(id, pos, amount) {
-    sugars[id] = {amount: amount}
-    sugarCache.get(id).position.copy(AntIT.ToViewPos(pos))
-    updateGO(id)
+  AntIT.Bus.on('add-sugar', function(id) {
+    sugarCache.get(id)
   })
   
-  AntIT.Bus.on('unload-sugar', function(id, amount) {
-    sugars[id].amount = amount
-    updateGO(id)
+  AntIT.Bus.on('move-sugar', function(id, pos) {
+    sugarCache.get(id).position.copy(AntIT.ToViewPos(pos))
+  })
+  
+  AntIT.Bus.on('set-sugar-amount', function(id, amount) {
+    var linScale = amount / Opts.ZuckerGröße * Opts.ZuckerVergrößerung
+    var scale = Math.max(Math.pow(linScale, 1/2), 0.000001)
+    sugarCache.get(id).scale.set(scale, scale, scale)
   })
   
   AntIT.Bus.on('remove-sugar', function(id) {
     sugarCache.remove(id)
   })
-  
-  function updateGO(id) {
-    var linScale = sugars[id].amount / Opts.ZuckerGröße * Opts.ZuckerVergrößerung;
-    var scale = Math.max(Math.pow(linScale, 1/2), 0.000001);
-    sugarCache.get(id).scale.set(scale, scale, scale);
-  }
 
 })()

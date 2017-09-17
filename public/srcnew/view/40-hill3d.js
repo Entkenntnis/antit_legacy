@@ -25,10 +25,16 @@
     hill.children[0].children[2].material = new THREE.MeshPhongMaterial({color:c});
   }
   
-  AntIT.Bus.on('add-hill', function(id, pos) {
-    var hill = hillCache.get(id)
-    hill.position.copy(AntIT.ToViewPos(pos))
-    setHillFlagColor(hill, AntIT.ColorOf(id))
+  AntIT.Bus.on('add-hill', function(id) {
+    hillCache.get(id)
+  })
+  
+  AntIT.Bus.on('move-hill', function(id, pos) {
+    hillCache.get(id).position.copy(AntIT.ToViewPos(pos))
+  })
+  
+  AntIT.Bus.on('set-hill-player', function(id, playerid) {
+    setHillFlagColor(hillCache.get(id), AntIT.ColorOf(playerid))
   })
   
 

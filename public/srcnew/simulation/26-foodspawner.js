@@ -44,6 +44,13 @@
           if (counts[t] < foodMinCount[t])
             need = true
         })
+        var overfull = false
+        foodTypes.forEach(function(t){
+          if (counts[t] > foodMinCount[t] + 1)
+            overfull = true
+        })
+        if (!overfull)
+          need = true
         if (need)
           hillsToFeed.push(h)
       })

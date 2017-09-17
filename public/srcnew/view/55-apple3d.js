@@ -16,33 +16,23 @@
       appleCache = new AntIT.Cache3d(obj, AntIT.Scene)
     })
   })
-  
-  var apples = {}
 
-  AntIT.Bus.on('add-apple', function(id, pos, packed) {
-    apples[id] = {packed: packed, pos: {x: pos.x, y: pos.y}}
-    appleCache.get(id).position.copy(AntIT.ToViewPos(pos))
-    updateGO(id)
+  AntIT.Bus.on('add-apple', function(id) {
+    appleCache.get(id)
   })
   
   AntIT.Bus.on('move-apple', function(id, pos) {
-    apples[id].pos.x = pos.x
-    apples[id].pos.y = pos.y
-    updateGO(id)
+    var new3dpos = AntIT.ToViewPos(pos)
+    appleCache.get(id).position.setX(new3dpos.x)
+    appleCache.get(id).position.setZ(new3dpos.z)
   })
   
   AntIT.Bus.on('set-apple-packed', function(id, val) {
-    apples[id].packed = val
-    updateGO(id)
+    appleCache.get(id).position.setY(val ? 5 : 0)
   })
   
   AntIT.Bus.on('remove-apple', function(id) {
     appleCache.remove(id)
   })
-  
-  function updateGO(id) {
-    var newpos = AntIT.ToViewPos(apples[id].pos, apples[id].packed ? 5 : 0)
-    appleCache.get(id).position.copy(newpos)
-  }
 
 })()
