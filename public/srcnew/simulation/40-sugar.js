@@ -34,5 +34,15 @@
       return false;
     }
   })
+  
+  AntIT.Unit.addFunction('Ant', 'load1Sugar', function() {
+    this.setAttr('load', this.getAttr('load') + 1)
+    AntIT.Bus.emit('attach-sugarbox', this.getId(), this.getPos())
+  })
+  
+  AntIT.Unit.addFunction('Ant', 'unloadSugar', function() {
+    this.setAttr('load', 0)
+    AntIT.Bus.emit('detach-sugarbox', this.getId())
+  })
 
 })()

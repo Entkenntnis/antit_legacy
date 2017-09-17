@@ -2,7 +2,7 @@
 (function(){
 
   var Opts = AntIT.AddOptions({
-    Runden : 3000,
+    Runden : 7500,
   })
 
   AntIT.AddProp("StarteSimulation", function(){

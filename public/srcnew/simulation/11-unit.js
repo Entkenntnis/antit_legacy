@@ -114,6 +114,7 @@
     
     this.die = function() {
       dieDirty[type] = true
+      AntIT.Unit.Bus.emit('discard-' + type.toLowerCase(), this)
       AntIT.Bus.emit("remove-" + type.toLowerCase(), id)
       dead = true
     }

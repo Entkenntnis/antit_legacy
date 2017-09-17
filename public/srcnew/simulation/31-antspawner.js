@@ -5,7 +5,7 @@
     AmeisenMaximum : 100,
     AmeiseWartezeit : 30,
     AmeiseKosten : 200,
-    AnfangsEnergie : 4000,
+    AnfangsEnergie : 20000000,
   })
   
   AntIT.Unit.addAttribute('Hill', 'energy', Opts.AnfangsEnergie)
@@ -20,7 +20,7 @@
     })
   })
   
-  AntIT.Unit.Bus.on('remove-ant', function(ant){
+  AntIT.Unit.Bus.on('discard-ant', function(ant){
     spawners[ant.getAttr('playerid')].removeAnt()
   })
   
@@ -40,6 +40,7 @@
         var radius = Opts.HügelRadius + (Math.random()*10 - 5);
         antPos.x += Math.cos(angle)*radius
         antPos.y += Math.sin(angle)*radius
+        antcount++
         var ant = AntIT.Unit.create('Ant', antPos)
         ant.setAttr('playerid', id)
         AntIT.Unit.Bus.emit('ant-born', ant)

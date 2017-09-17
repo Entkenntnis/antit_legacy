@@ -3,17 +3,24 @@
 (function(){
 
   var Sim = {value:"lalalala"}
+  
+  var simobjcache = {}
 
-  function SimObject(obj, timeless) {
+  function SimObject(obj) {
     
-    var roundId = callId;
+    var key = callId + ":" + obj.getId() + ":" + Math.random()
     
-    this.get = function(key) {
-      if (key === Sim && (callId == roundId || timeless === true)) {
-        return obj;
-      }
-      AntIT.Bus.emit('error', "Objekt ist abgelaufen und kann nicht mehr verwendet werden.")
-      return;
+    this.getPos = obj.getPos
+    
+    this.get = function(){
+      if (key in simobjcache)
+        return simobjcache[key]
+      else
+        AntIT.Bus.emit('error', "Objekt ist abgelaufen und ist nicht mehr verfügbar.")
+    }
+    
+    this.isValid = function(){
+      return key in simobjcache
     }
   }
 
@@ -36,6 +43,7 @@
     curUnit = undefined
     staticPlayerId = undefined
     ctxt = ""
+    simobjcache = {}
   }
   
   function callUserFunc(name, arg, pure) {
@@ -55,12 +63,8 @@
     }))
   }
   
-  function pushObj(obj, timeless) {
-    return new SimObject(obj, timeless)
-  }
-  
-  function getObj(simObj) {
-    return simObj.jet(Sim)
+  function pushObj(obj) {
+    return new SimObject(obj)
   }
 
   function addProp(name, f) {
@@ -85,8 +89,8 @@
       var args = []
       for(var i = 0; i < arguments.length; i++) {
         var e = arguments[i];
-        if (typeof e == "object" && e.constructor.name == "SimObject") {
-          args.push(e.get(Sim))
+        if (typeof e == "object" && e.constructor.name == "SimObject" && e.isValid()) {
+          args.push(e.get())
         } else
           args.push(e)
       }

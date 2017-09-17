@@ -48,10 +48,8 @@
   
   function animate(){
     if (needRedraw){
-      AntIT.Bus.emit('pre-render')
       renderer.render(scene, camera)
       needRedraw = false
-      AntIT.Bus.emit('post-render')
     }
     AntIT.Bus.emit('animation-frame')
     requestAnimationFrame(animate)

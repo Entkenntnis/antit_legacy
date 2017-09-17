@@ -2,7 +2,7 @@
 (function(){
 
   var Opts = AntIT.AddOptions({
-    AmeiseReichweite : 3000,
+    AmeiseReichweite : 300000,
     AmeiseSichtweite : 70,
   })
 

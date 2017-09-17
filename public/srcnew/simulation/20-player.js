@@ -4,7 +4,7 @@
   var rawPlayers = []
   
   AntIT.AddProp("NeueAmeise", function(name){
-    var ant = {Name: name, Type:"ant"}
+    var ant = {Name: name, Type:"Ant"}
     rawPlayers.push(ant)
     return ant
   })

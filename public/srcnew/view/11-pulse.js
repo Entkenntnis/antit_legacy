@@ -42,7 +42,9 @@
     var targetCycle = getTargetCycle()
     var skippedFrames = 0
     while(cycle < targetCycle && skippedFrames < maxSkippedFrames){
+      AntIT.Bus.emit('pre-render')
       cycle = AntIT.Tick()
+      AntIT.Bus.emit('post-render')
       if (cycle === false)
         end()
       tick()
