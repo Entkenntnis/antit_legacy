@@ -39,7 +39,9 @@
       var targetCycle = elapsedTime / 1000 * SimPulse.simulationFps;
       var skippedFrames = 0;
       while(Sim.cycles < targetCycle && skippedFrames < Optionen.MaximalÜbersprungeneFrames){
+        AntIT._stats.begin()
         Sim.update();
+        AntIT._stats.end()
         if (window.myTick)
           window.myTick()
         var runState = Math.round(Sim.cycles / Optionen.Runden * 100);

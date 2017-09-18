@@ -22,6 +22,7 @@
     stats = new Stats();
     stats.showPanel( 1 ); // 0: fps, 1: ms, 2: mb, 3+: custom
     document.body.appendChild( stats.dom );
+    AntIT._stats = stats
     
     // make it movable
     controls = new THREE.OrbitControls(camera);
@@ -62,10 +63,10 @@
   function animate(e){
     vw.onExtTick();
     if (vw.needRedraw){
-      stats.begin();
+      //stats.begin();
       renderer.render(scene, camera);
       vw.needRedraw = false;
-      stats.end();
+      //stats.end();
     }
     requestAnimationFrame(animate);
   }
