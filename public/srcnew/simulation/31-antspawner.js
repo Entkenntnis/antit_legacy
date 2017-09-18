@@ -5,7 +5,7 @@
     AmeisenMaximum : 100,
     AmeiseWartezeit : 30,
     AmeiseKosten : 200,
-    AnfangsEnergie : 20000000,
+    AnfangsEnergie : 4000,
   })
   
   AntIT.Unit.addAttribute('Hill', 'energy', Opts.AnfangsEnergie)
