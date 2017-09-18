@@ -7,6 +7,7 @@
     EnergieProZucker : 10,
     ZuckerRadius : 10,
     AmeiseTragkraft : 5,
+    ZuckerVerlangsamung : 0.75
   })
 
   AntIT.Unit.addType('Sugar')
@@ -15,6 +16,12 @@
   
   AntIT.Bus.on('init', function(){
     AntIT.AddFoodType('Sugar', 2, Opts.EnergieProZucker * Opts.ZuckerGröße)
+  })
+  
+  AntIT.SetAntSpeedOp(function(curSpeed){
+    if (this.getAttr('load') > 0)
+      return curSpeed * Opts.ZuckerVerlangsamung
+    return curSpeed
   })
   
   AntIT.Unit.Bus.on('create-sugar', function(sugar){

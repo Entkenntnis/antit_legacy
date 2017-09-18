@@ -27,6 +27,7 @@
     grid.move(this.getId(), this.getPos())
     if (newlap > Opts.AmeiseReichweite) {
       this.die()
+      AntIT.Bus.emit('ant-died', this, "Müdigkeit")
     }
   })
   

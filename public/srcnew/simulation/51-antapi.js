@@ -10,6 +10,12 @@
     API.close()
   })
   
+  AntIT.Bus.on('tick', function(){
+    AntIT.Units.Ant.forEach(function(ant){
+      ant.emit("Tick")
+    })
+  })
+  
   AntIT.Unit.Bus.on('ant-waiting', function(ant) {
     ant.emit("Wartet")
   })
@@ -18,12 +24,24 @@
     ant.emit("IstGeboren")
   })
   
+  AntIT.Unit.Bus.on('ant-died', function(ant, reason) {
+    ant.emit("IstGestorben", [reason])
+  })
+  
   AntIT.Unit.Bus.on('ant-reached-boarder', function(ant) {
     ant.emit("RandErreicht")
   })
   
   AntIT.Unit.Bus.on('ant-sensed-sugar', function(ant, sugar) {
-    ant.emit("SiehtZucker", sugar)
+    ant.emit("SiehtZucker", [sugar])
+  })
+  
+  AntIT.Unit.Bus.on('ant-sensed-apple', function(ant, apple) {
+    ant.emit("SiehtApfel", [apple])
+  })
+  
+  AntIT.Unit.Bus.on('ant-send-message', function(ant, info, type) {
+    ant.emit('EmpfängtNachricht', [info, type])
   })
   
   AntIT.Unit.Bus.on('ant-custom-function', function(f, ant, cb) {

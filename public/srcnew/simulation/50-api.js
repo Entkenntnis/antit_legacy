@@ -48,19 +48,21 @@
   
   function callUserFunc(name, arg, pure) {
     var func = AntIT.Players[staticPlayerId].getKi()[name]
-    if (arg == undefined)
-      arg = []
     if (func == undefined)
       return
     if (staticPlayerId === undefined)
       return
-    ctxt = AntIT.Players[staticPlayerId].getKi().Type + "." + name + " = " + func
+    ctxt = AntIT.Players[staticPlayerId].getKi().Type + "." + name
     curUnit.refreshInsertionPoint()
-    func.apply(pushObj(curUnit), arg.map(function (obj) {
-      if (!pure && typeof obj == "object")
-        return pushObj(obj)
-      return obj
-    }))
+    if (arg == undefined) {
+      func.apply()
+    } else {
+      func.apply(pushObj(curUnit), arg.map(function (obj) {
+        if (!pure && typeof obj == "object")
+          return pushObj(obj)
+        return obj
+      }))
+    }
   }
   
   function pushObj(obj) {

@@ -49,7 +49,7 @@
           var g = x + "-" + y
           if (g in grids) {
             for (id in grids[g]) {
-              if (AntIT.Util2d.dist(pos, grids[g][id]) <= range) {
+              if (AntIT.Util2d.dist(pos, grids[g][id].getPos()) <= range) {
                 objs.push(grids[g][id])
               }
             }

@@ -39,7 +39,7 @@
     AntIT.Units.Sugar.forEach(function(s){
       var ants = AntIT.AntGrid.inRange(s.getPos(), Opts.AmeiseSichtweite)
       ants.forEach(function(a){
-        if (a.isSensing())
+        //if (a.isSensing())
           AntIT.Unit.Bus.emit('ant-sensed-sugar', a, s)
       })
     })

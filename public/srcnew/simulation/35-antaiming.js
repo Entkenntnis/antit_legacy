@@ -17,23 +17,21 @@
     customGoOn[type] = f
   })
 
-  AntIT.Unit.addFunction('Ant', 'addGotoJob', function(destination, col, type, senses) {
+  AntIT.Unit.addFunction('Ant', 'addGotoJob', function(destination, type, senses) {
     removeOldJobs()
     this.addJob("DEST", [destination, senses], function(){
-      if (col !== undefined) {
-        if (col.indexOf(destination) < 0)
-          return true
-      }
+      if (destination.constructor.name == "Unit" && destination.isDead())
+        return true
       var snap = Opts.Toleranz
       if (type in customSnaps)
         snap = customSnaps[type]
       if (type in customGoOn)
-        if (!customGoOn[type](destination))
+        if (!customGoOn[type](destination, this))
           return true
       var des = destination.getPos()
       var d = AntIT.Util2d.dist(my.pos, des)
       if (d <= snap){
-        AntIT.Unit.Bus.emit('ant-reached-' + type)
+        AntIT.Unit.Bus.emit('ant-reached-' + type, ant, destination)
         return true
       } else {
         var angle = AntIT.Util2d.getDir(my.pos, des)
@@ -50,7 +48,7 @@
   
   AntIT.Unit.addFunction('Ant', 'gotoHome', function(sense){
     var myhill = AntIT.Units.Hill[this.getAttr('playerid')]
-    this.addGotoJob(myhill, AntIT.Units.Hill, "hill", sense)
+    this.addGotoJob(myhill, "Hill", sense)
   })
 
   AntIT.Unit.addFunction('Ant', 'isSensing', function() {
