@@ -95,7 +95,7 @@
     function generateF(type, key, obj) {
       return function(){
         if (!dead)
-          unitFunctions[type][key].apply(obj, arguments)
+          return unitFunctions[type][key].apply(obj, arguments)
       }
     }
     

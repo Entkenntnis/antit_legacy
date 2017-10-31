@@ -5,6 +5,7 @@
   var Opts = AntIT.AddOptions({
     EnergieProApfel : 2000,
     ApfelRadius : 20,
+    AmeisenFürApfel : 4,
     MaximumAmeisenFürApfel : 20,
     ApfelMinGeschwindigkeit : 0.2,
     ApfelMaxGeschwindigkeit : 2.0,
@@ -18,7 +19,7 @@
     AntIT.AddFoodType('Apple', 1, Opts.EnergieProApfel)
   })
   
-  AntIT.AntAimingCustomSnap("Apple", Opts.ApfelRadius)
+  AntIT.AntAimingCustomSnap("Apple", Opts.ApfelRadius / 3)
   
   AntIT.AntAimingCustomGoOn("Apple", function(destination, ant){
     return destination.needHelp(ant)
@@ -84,10 +85,11 @@
   
   function removeInactiveAnts() {
     var state = this.getAttr('state')
+    var me = this
     state.ants = state.ants.filter(function(ant){
       if (ant.isDead())
         return false
-      if (AntIT.Util2d.dist(this.getPos(), ant.getPos()) > Opts.ApfelRadisu)
+      if (AntIT.Util2d.dist(me.getPos(), ant.getPos()) > Opts.ApfelRadisu)
         return false
       var jobs = ant.getAttr('jobs')
       if (jobs !== undefined) {
@@ -122,7 +124,7 @@
     var winnerID = teams[0]
     var winnerCount = antsPerTeam[winnerID]
     if (winnerCount >= Opts.AmeisenFürApfel) {
-      this.ants = this.ants.filter(function(a){
+      state.ants = state.ants.filter(function(a){
         return a.getAttr('playerid') == winnerID
       })
       state.pid = winnerID
@@ -135,15 +137,24 @@
   function moveApple() {
     var state = this.getAttr('state')
     if (state.pid !== undefined) {
-      var myHill = AntIT.Units.Hill[state.pid]
-      state.heading = AntIT.Util2d.getDir(this.getPos(), myHill.getPos())
+      var hill = AntIT.Units.Hill[state.pid]
+      if (AntIT.Util2d.dist(this.getPos(), hill.getPos()) < Opts.Toleranz) {
+        this.die()
+        hill.setAttr('energy',
+          hill.getAttr('energy') + this.getAttr('load')*Opts.EnergieProApfel)
+        AntIT.Bus.emit('apple-collected', hill.getAttr('playerid'))
+        return
+      }
+      
+      state.heading = AntIT.Util2d.getDir(this.getPos(), hill.getPos())
       // Geschwindigkeit zwischen 0.2 und 1
       var speed = Opts.ApfelMinGeschwindigkeit +
         (Opts.ApfelMaxGeschwindigkeit - Opts.ApfelMinGeschwindigkeit) *
-        (state.ants.length / Optionen.MaximumAmeisenFürApfel)
+        (state.ants.length / Opts.MaximumAmeisenFürApfel)
       state.dx =  speed*Math.cos(state.heading/180*Math.PI)
       state.dy = speed*Math.sin(state.heading/180*Math.PI)
-      setPos({x: p.x + state.dx, y: p.y + state.dy})
+      var p = this.getPos()
+      this.setPos({x: p.x + state.dx, y: p.y + state.dy})
       return;
     }
   }
@@ -152,7 +163,7 @@
     this.addSimpleJob(function(){
       var apple = AntIT.Util2d.closest(this.getPos(), AntIT.Units.Apple, Opts.ApfelRadius)
       if (apple && apple.needHelp(this)) {
-        apple.addAnt(API.curAnt)
+        apple.addAnt(this)
         this.addAppleJob(apple)
       }
     }, "APPLESETUP")
@@ -179,7 +190,7 @@
     AntIT.Units.Apple.forEach(function(apple){
       var ants = AntIT.AntGrid.inRange(apple.getPos(), Opts.AmeiseSichtweite)
       ants.forEach(function(a){
-        //if (a.isSensing())
+        if (a.isSensing())
           AntIT.Unit.Bus.emit('ant-sensed-apple', a, apple)
       })
     })

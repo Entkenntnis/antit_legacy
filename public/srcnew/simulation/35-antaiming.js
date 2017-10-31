@@ -18,7 +18,7 @@
   })
 
   AntIT.Unit.addFunction('Ant', 'addGotoJob', function(destination, type, senses) {
-    removeOldJobs()
+    this.removeOldJobs()
     this.addJob("DEST", [destination, senses], function(){
       if (destination.constructor.name == "Unit" && destination.isDead())
         return true
@@ -29,13 +29,13 @@
         if (!customGoOn[type](destination, this))
           return true
       var des = destination.getPos()
-      var d = AntIT.Util2d.dist(my.pos, des)
+      var d = AntIT.Util2d.dist(this.getPos(), des)
       if (d <= snap){
-        AntIT.Unit.Bus.emit('ant-reached-' + type, ant, destination)
+        AntIT.Unit.Bus.emit('ant-reached-' + type.toLowerCase(), this, destination)
         return true
       } else {
-        var angle = AntIT.Util2d.getDir(my.pos, des)
-        var rotation = AntIT.Util2d.getRotation(my.heading, angle)
+        var angle = AntIT.Util2d.getDir(this.getPos(), des)
+        var rotation = AntIT.Util2d.getRotation(this.getAttr('heading'), angle)
         var v = Opts.ZufallRichtungsVerschiebung
         rotation += Math.floor(Math.random()*v*2-v)
         if (rotation != 0)
@@ -49,6 +49,10 @@
   AntIT.Unit.addFunction('Ant', 'gotoHome', function(sense){
     var myhill = AntIT.Units.Hill[this.getAttr('playerid')]
     this.addGotoJob(myhill, "Hill", sense)
+  })
+  
+  AntIT.Unit.Bus.on('ant-reached-hill', function(ant, dest) {
+    ant.setAttr('lap', 0)
   })
 
   AntIT.Unit.addFunction('Ant', 'isSensing', function() {

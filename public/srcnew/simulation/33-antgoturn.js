@@ -18,8 +18,9 @@
       var toMove = 0
       var finished = false
       var curSpeed = Opts.AmeiseGeschwindigkeit
+      var me = this
       speedOps.forEach(function(f){
-        curSpeed = f.bind(this)(curSpeed)
+        curSpeed = f.bind(me)(curSpeed)
       })
       if (steps < curSpeed) {
         finished = true

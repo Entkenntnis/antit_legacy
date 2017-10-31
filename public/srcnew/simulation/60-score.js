@@ -4,6 +4,7 @@
 
   var Opts = AntIT.AddOptions({
     ZuckerPunkte : 5,
+    ApfelPunkte : 1000,
   })
 
   var scores = {}
@@ -38,6 +39,13 @@
   AntIT.Bus.on('sugar-collected', function(playerid, load) {
     scores[playerid].sugars += load
     scores[playerid].points += load * Opts.ZuckerPunkte
+    updateStats(playerid)
+    updatePoints(playerid)
+  })
+  
+  AntIT.Bus.on('apple-collected', function(playerid) {
+    scores[playerid].apples++
+    scores[playerid].points += Opts.ApfelPunkte
     updateStats(playerid)
     updatePoints(playerid)
   })

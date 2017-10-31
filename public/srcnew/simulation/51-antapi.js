@@ -44,6 +44,14 @@
     ant.emit('EmpfängtNachricht', [info, type])
   })
   
+  AntIT.Unit.Bus.on('ant-reached-sugar', function(ant, dest) {
+    ant.emit("ZuckerErreicht", [dest])
+  })
+  
+  AntIT.Unit.Bus.on('ant-reached-apple', function(ant, dest) {
+    ant.emit("ApfelErreicht", [dest])
+  })
+  
   AntIT.Unit.Bus.on('ant-custom-function', function(f, ant, cb) {
     cb(f.apply(API.pushObj(this)))
   })
@@ -109,6 +117,25 @@
     API.getUnit().addTurnAway(objekt)
   })
   
+  API.addFunc("GeheZuZiel", function (ziel, sense)  {
+    if (arguments.length < 1)
+      return API.fail("Die Funktion 'GeheZuZiel(ziel)' wurde ohne Argument aufgerufen")
+    if (ziel.getType() == "Sugar")
+      return API.getUnit().addGotoJob(ziel, "Sugar", sense);
+    if (ziel.getType() == "Hill")
+      return API.getUnit().gotoHome(sense);
+    if (ziel.getType() == "Apple")
+      return API.getUnit().addGotoJob(ziel, "Apple", sense);
+    if (ziel.getType() == "Position")
+      return API.getUnit().addGotoJob(ziel, "Position", sense);
+    API.fail("Die Funktion 'GeheZuZiel(ziel)' konnte das unbekannte Ziel nicht anvisieren.")
+  })
+  
+  window.OFFEN = true
+  
+  API.addFunc("TrageApfel", function () {
+    API.getUnit().addAppleSetupJob();
+  })  
   
   API.addFunc("GeheZuBau", function (sense) {
     API.getUnit().gotoHome(sense);
@@ -121,13 +148,164 @@
   API.addFunc("LadeZuckerAb", function() {
     API.getUnit().addDropJob();
   })
+  
+  API.addFunc("SendeNachricht", function(betreff, wert) {
+    return API.getUnit().addSendMemoryJob(betreff)
+  })
 
   API.addFunc("FühreAus", function (funktion) {
     if (typeof funktion != "function") {
-      API.message("Die Funktion 'FühreAus(funktion)' erwartet als Argument eine Funktion.")
+      API.fail("Die Funktion 'FühreAus(funktion)' erwartet als Argument eine Funktion.")
       return
     }
     API.getUnit().addCustomJob(funktion)
+  })
+  
+  /*API.antProp('AktuellesZiel', function(){
+    return API.curAnt.getDestination()
+  })*/
+
+  API.addProp('Untätig', function(){
+    return API.getUnit().getAttr('jobs').length == 0;
+  })
+
+  API.addProp('IstOffen', function(){
+    return API.getUnit().isSensing()
+  })
+
+  API.addProp('AktuelleLast', function(){
+    return API.getUnit().getAttr('load')
+  })
+
+  API.addProp('AktuelleReichweite', function(){
+    return Opts.AmeisenReichweite - API.getUnit().getAttr('lap')
+  })
+
+  API.addProp('Blickrichtung', function(){
+    return API.getUnit().getAttr('heading')
+  })
+
+  API.addProp('HeimatBau', function(){
+    return API.pushObj(AntIT.Units.Hill[API.getUnit().getAttr('playerid')])
+  })
+
+  API.addProp('TrägtApfel', function(){
+    var jobs = API.getUnit().getAttr('jobs')
+    if (jobs.length > 0) {
+      var curJob = jobs[jobs.length - 1]
+      if (curJob.type == "APPLE" && AntIT.Units.Apple.indexOf(curJob.value) >= 0) {
+        return true
+      }
+    }
+    return false
+  })
+  
+  function Position(pos) {
+    var posx = pos.x
+    var posy = pos.y
+    
+    this.getPos = function() {
+      return {x:posx, y: posy}
+    }
+  }
+  
+  API.addProp('AktuellePosition', function(){
+    return API.pushObj(new Position(API.curAnt.getPos()), true);
+  })
+
+  API.addProp('AktuelleRunde', function(){
+    //return AntIT.
+  })
+
+  API.addProp('Gedächtnis', function(){
+    return API.getUnit().getAttr('memory')
+  })
+  
+  var env = {}
+
+  Object.defineProperty(env, "ZuckerPosition", {
+    get: function() {
+      var sugar = AntIT.Util2d.closest(API.getUnit().getPos(), 
+        AntIT.Units.Sugar, Opts.AmeiseSichtweite)
+      return sugar ? API.pushObj(new Position(sugar.getPos()), true) : undefined
+    },
+    set: function() {}
+  })
+
+  Object.defineProperty(env, "ApfelPosition", {
+    get: function() {
+      var apple = AntIT.Util2d.closest(API.getUnit().getPos(),
+        AntIT.Units.Apple, Opts.AmeiseSichtweite)
+      if (apple && !apple.needHelp(API.curAnt))
+        return undefined
+      return apple ? API.pushObj(new Position(apple.getPos()), true) : undefined
+    },
+    set: function() {}
+  })
+
+  /*Object.defineProperty(env, "WanzePosition", {
+    get: function() {
+      var bug = closest(API.curAnt.getPos(), Sim.bugs, Optionen.AmeiseSichtweite)
+      return bug ? API.pushObj(new Position(bug.getPos()), true) : undefined
+    },
+    set: function() {}
+  })*/
+
+  API.addProp('Umgebung', function(){
+    return env
+  })
+  
+  API.addFunc("BestimmeEntfernung", function (a, b) {
+    if (!(typeof a == "object") || !("getPos" in a) || !(typeof b == "object") || !("getPos" in b)) {
+      API.fail("Die Funktion 'BestimmeEntfernung(a, b)' konnte für die übergebenen Objekte keine Position bestimmen.")
+      return
+    }
+    return Math.round(AntIT.Util2d.dist(a.getPos(), b.getPos()))
+  });
+
+  API.addFunc("BestimmeRichtung", function (a, b) {
+    if (!(typeof a == "object") || !("getPos" in a) || !(typeof b == "object") || !("getPos" in b)) {
+      API.fail("Die Funktion 'BestimmeRichtung(a, b)' konnte für die übergebenen Objekte keine Position bestimmen.")
+      return
+    }
+    return Math.round(AntIT.Util2d.getDir(a.getPos(), b.getPos()))
+  })
+  
+  API.addFunc("Zufallszahl", function (a, b) {
+    if (b === undefined) {
+      if (typeof a !== "number" || a < 0) {
+        API.fail("Die Funktion 'Zufallszahl(max)' erwartet als Argument eine positive Zahl.")
+        return
+      }
+      return Math.floor(Math.random() * a)
+    } else {
+      if (typeof a !== "number" || typeof b!== "number") {
+        API.fail("Die Funktion 'Zufallszahl(min, max)' erwartet als Argument Zahlen.")
+        return
+      }
+      if (a >= b) {
+        API.fail("Die Funktion 'Zufallszahl(min, max)' erwartet, dass min < max ist.")
+        return
+      }
+      return Math.floor(Math.random() * (b - a) + a)
+    }
+  })
+  
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+  
+  API.addFunc("Zufallsname", function() {
+    var parts = "bcdfghjklmnpqrstvwxyz"
+    var consonants = parts.split("")
+    var vocals = ['a', 'e', 'i', 'o', 'u', 'ei', 'au']
+    var name = ''
+    var length = Math.random()*3 + 1
+    for (var i = 0; i < length; i++) {
+      name += consonants[Math.floor(Math.random()*consonants.length)]
+      name += vocals[Math.floor(Math.random()*vocals.length)]
+    }
+    return capitalize(name)
   })
 
 })()

@@ -34,11 +34,11 @@
     if (amount > 0) {
       amount--
       this.setAttr('amount', amount)
-      AntIT.Bus.emit('set-sugar-amout', this.getId(), this.getAttr('amount'))
-      return true;
+      AntIT.Bus.emit('set-sugar-amount', this.getId(), this.getAttr('amount'))
+      return true
     } else {
       this.die()
-      return false;
+      return false
     }
   })
   

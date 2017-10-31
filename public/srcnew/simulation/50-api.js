@@ -6,13 +6,16 @@
   
   var simobjcache = {}
 
-  function SimObject(obj) {
+  function SimObject(obj, timeless) {
     
     var key = callId + ":" + obj.getId() + ":" + Math.random()
+    simobjcache[key] = obj
     
     this.getPos = obj.getPos
     
     this.get = function(){
+      if (timeless)
+        return obj
       if (key in simobjcache)
         return simobjcache[key]
       else
@@ -20,7 +23,7 @@
     }
     
     this.isValid = function(){
-      return key in simobjcache
+      return timeless || key in simobjcache
     }
   }
 
