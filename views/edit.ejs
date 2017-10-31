@@ -11,20 +11,15 @@
 <div class="jumbotron"><h1>Ameisen-Editor</h1>
 	<p>Bearbeite den Code deines Volks und bestimme das Verhalten deiner Ameisen.</p></div>
 <form method="POST" action="<%=prefix%>/save?id=<%=id%>" id="editform"><input type="submit" value="Speichern" class="btn btn-success">
-<a class="btn btn-danger" href="<%=prefix%>/">Abbrechen</a><br><br>
+<a class="btn btn-danger" href="<%=prefix%>/">Abbrechen</a>
+<input style="margin-left:30px" type="checkbox" name="duplicate" value="1"> eine Kopie anlegen<br><br>
 <textarea rows="50" id="editor" name="data"><%-data;%></textarea><br>
-
-<button onclick="javascript:duplicate()">Speichern & Eine Kopie anlegen</button></form>
+</form>
 <link rel="stylesheet" href="/css/codemirror.css">
 <link rel="stylesheet" href="/css/show-hint.css">
 <script src="/js/codemirror.js"></script>
 <script>
 
-      function duplicate() {
-        var form = document.getElementById('editform')
-        form.action = "<%=prefix%>/save?id=<%=id%>&duplicate=1"
-        form.submit()
-      }
 
       function startsWith(str, searchString, position){
           position = position || 0;

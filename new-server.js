@@ -345,7 +345,7 @@ route({name:"/edit", login:true}, function(req, res, next) {
 })
 
 route({name:"/save", login:true, post:true}, function(req, res, next) {
-  if (req.query.duplicate) {
+  if (req.body.duplicate) {
     insertAnt(updateName(req.body.data), req.user._id, req.curCol)
   }
   saveCode(req.user._id, req.query.id, req.body.data, req.curCol)
