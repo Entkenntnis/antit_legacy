@@ -391,6 +391,16 @@ route({name:"/unpublish", login:true}, function(req, res, next) {
   next()
 })
 
+route({name:"/debug", login:true, superuser:true}, function(req, res) {
+  colonyInfo[req.params.colony] = true
+  res.send("debugging mode on")
+})
+
+route({name:"/nodebug", login:true, superuser:true}, function(req, res) {
+  colonyInfo[req.params.colony] = false
+  res.send("debugging mode off")
+})
+
 route({name:"/stats", login:true, superuser:true}, function(req, res) {
   res.render('stats', {data:simulations, prefix: req.curHome})
 })
