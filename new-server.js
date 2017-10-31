@@ -392,12 +392,12 @@ route({name:"/unpublish", login:true}, function(req, res, next) {
 })
 
 route({name:"/debug", login:true, superuser:true}, function(req, res) {
-  colonyInfo[req.params.colony] = true
+  colonyInfo[req.params.colony].debugging = true
   res.send("debugging mode on")
 })
 
 route({name:"/nodebug", login:true, superuser:true}, function(req, res) {
-  colonyInfo[req.params.colony] = false
+  colonyInfo[req.params.colony].debugging = false
   res.send("debugging mode off")
 })
 
