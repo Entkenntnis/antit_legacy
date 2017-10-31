@@ -26,7 +26,7 @@ app.use(passport.session())
 // setup
 
 const dbUrl = process.env.ANTME_DB_URL ||
-  'mongodb://dal_mongoadmin:Theesh7aiB@localhost/dal'
+  'mongodb://dal_mongoadmin:Theesh7aiB@localhost/antme'
 
 const db = require('monk')(dbUrl, {authSource:"admin"})
 
