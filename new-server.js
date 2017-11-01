@@ -203,20 +203,23 @@ function flattenQuery(query) {
 }
 
 function findAnts(users, userid, ids) {
-  var ants = []
+  var ants = {}
   if (users) {
     users.forEach(function(user){
       user.ants.forEach(function(a){
-        while(ids.indexOf(a.antid) >= 0) {
-          ids.splice(ids.indexOf(a.antid), 1)
+        if (ids.indexOf(a.antid) >= 0) {
           if (a.published || user._id.toString() == userid) {
-            ants.push(a)
+            ants[a.antid] = a
           }
         }
       })
     })
   }
-  return ants
+  return ids.map(function(id){
+    return ants[id]
+  }).filter(function(ant){
+    return ant !== undefined
+  })
 }
 
 // ----------------------------
