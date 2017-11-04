@@ -28,7 +28,30 @@
           <script src="/src/Simulation.js"></script>
           <script src="/src/SimPulse.js"></script>
           
+          
+      
+      <div class="container">
+        <h1>Headless AntIT! Simulator</h1>
+        <div id="hud"></div>
+      </div>
+          
           <script>
+          
+          
+  AntIT._extStart.val = function(f, t) {
+    f()
+    function tick() {
+      t()
+      setTimeout(tick, 0)
+    }
+    tick()
+  }
+  
+  delete AntIT._sim
+  delete AntIT._optionen
+  delete AntIT._extStart
+          
+          
           
 var Ameise = AntJS.NeueAmeise("Awesome");
 
@@ -336,13 +359,9 @@ function arbeiterApfelSuchen() {
 }
 
 AntIT.StarteSimulation()
+
           
           </script>
-      
-      <div class="container">
-        <h1>Hallo!</h1>
-        <div id="hud"></div>
-      </div>
     </body>
 </html>
 

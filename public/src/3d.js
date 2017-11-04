@@ -8,9 +8,17 @@
   
   // project-wide variables
   var scene = new THREE.Scene(), camera, renderer, stats, controls, manager;
+  
+  var tick = undefined
+  
+  AntIT._extStart.val = init
+  AntIT._extStart.val2 = function() {
+    vw.needRedraw = true
+  }
 
-  function init(){
+  function init(f, t){
     
+    tick = t
     // the floor lies in the xz-plane, don't worry about aspect here, will be done on resize 
     camera = new THREE.PerspectiveCamera(60, 1 /*aspect*/, 0.1, 200000);
     camera.position.set(0, 600, 1700);
@@ -48,7 +56,7 @@
     manager.onLoad = function(){
       document.getElementById("loading").style.display = "none";
       vw.onLoad();
-      vw.onExtLoad();
+      f();
       animate();
     };
   }
@@ -63,7 +71,7 @@
   }
 
   function animate(e){
-    vw.onExtTick();
+    tick();
     if (vw.needRedraw){
       //stats.begin();
       renderer.render(scene, camera);
@@ -411,6 +419,8 @@
   if (Optionen.EntwicklerModus) {
     AntIT.Vw = vw
   }
-  AntIT._vw = vw;
-  AntIT.StarteSimulation = init;
+  
+  delete AntIT._sim;
+  delete AntIT._optionen;
+  delete AntIT._extStart
 })();

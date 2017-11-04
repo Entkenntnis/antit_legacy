@@ -6,7 +6,6 @@
   "use strict";
   
   var am = AntIT;
-  var vw = AntIT._vw;
   var Sim = AntIT._sim;
   var Optionen = AntIT._optionen;
   
@@ -25,7 +24,6 @@
       SimPulse.running = true;
       Sim.Init();
       SimPulse.startTime = Date.now();
-      vw.onExtTick = SimPulse.tick;
     }
     
     , tick:function(){
@@ -38,15 +36,15 @@
       var targetCycle = elapsedTime / 1000 * SimPulse.simulationFps;
       var skippedFrames = 0;
       while(Sim.getCycles() < targetCycle && skippedFrames < Optionen.MaximalÜbersprungeneFrames){
-        AntIT._stats.begin()
+        if (AntIT._stats) AntIT._stats.begin()
         Sim.Update();
-        AntIT._stats.end()
+        if (AntIT._stats) AntIT._stats.end()
         if (window.myTick)
           window.myTick()
         var runState = Math.round((Sim.getCycles()-1) / Optionen.Runden * 100);
         SimPulse.simStatus.innerHTML = "Fortschritt: " + runState + "%";
         skippedFrames++;
-        vw.needRedraw = true;
+        x.val2()
       }
       if (skippedFrames >= Optionen.MaximalÜbersprungeneFrames) {
         SimPulse.startTime = Date.now() - (Sim.getCycles() / SimPulse.simulationFps * 1000);
@@ -74,6 +72,13 @@
       SimPulse.simulationFps = newFps;
       SimPulse.startTime = Date.now() - (Sim.getCycles() / SimPulse.simulationFps * 1000);
     }
+  }
+  
+  var x = {val:function(){},val2:function(){},val3:function(){return SimPulse.running}}
+  AntIT._extStart = x
+  
+  AntIT.StarteSimulation = function(){
+    x.val(SimPulse.init, SimPulse.tick)
   }
   
   AntIT._submitFinished = function() {
@@ -125,11 +130,5 @@
   Sim.getBus().on('update-player-stats', function(id, str) {
     playerElements[id].details.innerHTML = str
   })
-  
-  vw.onExtLoad = SimPulse.init;
-  
-  delete am._vw;
-  delete am._sim;
-  delete am._optionen;
 
 })();
