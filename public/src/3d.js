@@ -4,7 +4,7 @@
 (function() {  
   "use strict";
   var Optionen = AntIT._optionen
-  var Sim = AntIT._sim
+  var Bus = AntIT._sim.getBus()
   
   // project-wide variables
   var scene = new THREE.Scene(), camera, renderer, stats, controls, manager;
@@ -17,6 +17,7 @@
     
     // the worker in the shadow
     renderer = new THREE.WebGLRenderer();
+    renderer.context.getShaderInfoLog = function () { return '' }; // suppress warning
     document.body.appendChild(renderer.domElement);
     
     // showing nice fps
@@ -274,72 +275,72 @@
       poisonStore = new UnitStore(poison0);
     }
     
-    var setAntBodyColor = function(ant, c){
+    function setAntBodyColor(ant, c){
       [/*10,*/ 7, 6].forEach(function(id){
         ant.children[0].children[id].material = new THREE.MeshPhongMaterial({color:c});
       });
     }
     
-    var setHillFlagColor = function(hill, c){
+    function setHillFlagColor(hill, c){
       hill.children[0].children[2].material = new THREE.MeshPhongMaterial({color:c});
     }
     
-    var setBugEyeColor = function(bug, color) {
+    function setBugEyeColor(bug, color) {
       [6, 7].forEach(function(id){
         bug.children[0].children[id].material.color.setHex(color);
       });
     }
     
-    var setMarkerColor = function(marker, color) {
+    function setMarkerColor(marker, color) {
       marker.material = new THREE.MeshLambertMaterial({color: color, transparent: true});
     }
     
-    var setControlsBounds = function(x, y){
+    function setControlsBounds(x, y){
       controls.maxX = x,
       controls.maxZ = y;
     }
     
     
     // new event listeners
-    Sim.bus.on('change-ant-color', function(key, color) {
+    Bus.on('change-ant-color', function(key, color) {
       setAntBodyColor(antStore.get(key), color)
     })
     
-    Sim.bus.on('move-ant', function(key, pos, roty) {
+    Bus.on('move-ant', function(key, pos, roty) {
       var antBody = antStore.get(key)
       antBody.position.copy(pos)
       antBody.rotation.y = roty
     })
     
-    Sim.bus.on('move-sugarbox', function(key, pos) {
+    Bus.on('move-sugarbox', function(key, pos) {
       var sugarBox = sugarBoxStore.get(key)
       sugarBox.position.copy(pos)
     })
     
-    Sim.bus.on('remove-sugarbox', function(key) {
+    Bus.on('remove-sugarbox', function(key) {
       if (sugarBoxStore.has(key)) {
         sugarBoxStore.remove(key)
       }
     })
     
-    Sim.bus.on('remove-ant', function(key) {
+    Bus.on('remove-ant', function(key) {
       antStore.remove(key);
     })
     
-    Sim.bus.on('move-apple', function(key, pos) {
+    Bus.on('move-apple', function(key, pos) {
       appleStore.get(key).position.copy(pos)
     })
     
-    Sim.bus.on('remove-apple', function(key) {
+    Bus.on('remove-apple', function(key) {
       appleStore.remove(key)
     })
     
-    Sim.bus.on('move-bug', function(key, pos, roty) {
+    Bus.on('move-bug', function(key, pos, roty) {
       bugStore.get(key).position.copy(pos)
       bugStore.get(key).rotation.y = roty
     })
     
-    Sim.bus.on('add-marker', function(key, pos, color) {
+    Bus.on('add-marker', function(key, pos, color) {
       var marker = markerStore.get(key)
       setMarkerColor(marker, color)
       marker.position.copy(pos)
@@ -349,11 +350,11 @@
       marker.material.needsUpdate = true
     })
     
-    Sim.bus.on('remove-marker', function(key) {
+    Bus.on('remove-marker', function(key) {
       markerStore.remove(key)
     })
     
-    Sim.bus.on('update-marker', function(key) {
+    Bus.on('update-marker', function(key) {
       var marker = markerStore.get(key)
       var s = marker.scale.x * Optionen.MarkerVergrößerung
       marker.scale.set(s, s, s)
@@ -361,27 +362,27 @@
       marker.material.needsUpdate = true
     })
     
-    Sim.bus.on('move-hill', function(key, pos) {
+    Bus.on('move-hill', function(key, pos) {
       hillStore.get(key).position.copy(pos)
     })
     
-    Sim.bus.on('change-hill-color', function(key, color) {
+    Bus.on('change-hill-color', function(key, color) {
       setHillFlagColor(hillStore.get(key), color)
     })
     
-    Sim.bus.on('set-xy', function(w, h) {
+    Bus.on('set-xy', function(w, h) {
       gamefloor.geometry = new THREE.PlaneGeometry(w, h, 1, 1)
       gamefloor.geometry.verticesNeedUpdate = true
       setControlsBounds(w/2, h/2)
     })
     
-    Sim.bus.on('move-sugar', function(key, pos, scale) {
+    Bus.on('move-sugar', function(key, pos, scale) {
       var GO = sugarStore.get(key);
       GO.position.copy(pos);
       GO.scale.set(scale, scale, scale);
     })
     
-    Sim.bus.on('remove-sugar', function(key) {
+    Bus.on('remove-sugar', function(key) {
       if (sugarStore.has(key))
         sugarStore.remove(key);
     })

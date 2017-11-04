@@ -106,35 +106,14 @@ function Player(id, KI) {
   var ants = 0;
   var collectedApples = 0;
   var deadants = 0;
-  var pointsE = document.createElement("DIV");
-  var details = document.createElement("DIV");
   
   function initHTML() {
-    var para = document.createElement("DIV");
-    var nameE =document.createElement("DIV");
-    nameE.innerHTML = my.KI.Name;
-    nameE.style.minWidth = "180px";
-    para.appendChild(nameE);
-    para.style.display = "flex";
-    para.style.fontWeight = "bold";
-    var hex = Optionen.SpielerFarben[my.id];
-    var hexS = hex.toString(16);
-    while (hexS.length < 6)
-      hexS = "0" + hexS;
-    para.style.color = "#" + hexS;
-    pointsE.id = "player" + my.id;
-    pointsE.style.marginLeft = "10px";
-    para.appendChild(pointsE);
-    details.style.fontWeight = "normal";
-    details.style.color = "black";
-    details.style.marginLeft = "20px";
-    para.appendChild(details);
-    document.getElementById("hud").appendChild(para);
+    Sim.bus.emit('add-player-status', id, my.KI.Name, Optionen.SpielerFarben[my.id])
   }
   
   function updateDetails(){
-    details.innerHTML = "(Ameisen: " + ants + " / Tote: " + deadants + 
-      " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")";
+    Sim.bus.emit('update-player-stats', id, "(Ameisen: " + ants + " / Tote: " + deadants + 
+      " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")")
   }
   
   this.addSugar = function(amount) {
@@ -159,8 +138,8 @@ function Player(id, KI) {
   }
   
   this.addPoints = function(amount) {
-    my.points = Math.max(0, my.points + amount);
-    pointsE.innerHTML = my.points + " Punkte";
+    my.points = Math.max(0, my.points + amount)
+    Sim.bus.emit('update-player-points', id, my.points)
   }
   
   // constructor
@@ -1149,13 +1128,14 @@ var Simulation = function() {
   this.memories = {}
   this.bus = Minibus.create()
   this.rng = undefined
+  this.cycles = 0
   
   this.playerCount = function() {
     return Sim.players.length;
   }
   
   this.init = function() {
-    this.rng = new Math.seedrandom("hello.")
+    Sim.rng = new Math.seedrandom("hello.")
     var area = (1 + (API.ants.length * Optionen.SpielfeldVerhältnis)) * Optionen.SpielfeldGrundGröße;
     var width = Math.round(Math.sqrt(area * Optionen.SpielfeldVerhältnis));
     var height = Math.round(Math.sqrt(area / Optionen.SpielfeldVerhältnis));
@@ -1167,7 +1147,7 @@ var Simulation = function() {
     }
   }
   
-  this.update = function() {    
+  this.update = function() {
     Sim.apples.forEach(function(apple){
       apple.update();
     })
@@ -1185,6 +1165,7 @@ var Simulation = function() {
     });
     
     Sim.playground.update();
+    Sim.cycles++
   }
 }
 
@@ -1548,17 +1529,6 @@ AntIT.NeueAmeise = function (name) {
 Global.AntMe = AntIT
 Global.AntJS = AntIT
 
-AntIT._abortSimulation = function () {
-  var error =  document.createElement("DIV");
-  error.innerHTML = "Simulationsfehler";
-  error.style.color = "red";
-  error.style.marginTop = "20px";
-  error.style.marginLeft = "50px";
-  error.style.fontWeight = "bold";
-  document.getElementById("hud").appendChild(error);
-  throw "Simulationsfehler";
-}
-
 if (Optionen.EntwicklerModus) {
   AntIT.Sim = Sim;
   AntIT.Sim.Distance = dist
@@ -1568,7 +1538,15 @@ if (Optionen.EntwicklerModus) {
 // end of Simulation.js
 
 // access for SimPulse
-AntIT._sim = Sim;
+AntIT._sim = {
+  Init : Sim.init,
+  Update : Sim.update,
+  getBus : function() { return Sim.bus },
+  getCycles : function() { return Sim.cycles },
+  getPoints : function() { 
+    return Sim.players.map(function(p){return p.getPoints()}).join(",")
+  },
+}
 
 // end of encapsulation
 })();

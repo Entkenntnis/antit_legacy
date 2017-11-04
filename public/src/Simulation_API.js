@@ -250,17 +250,6 @@ AntIT.NeueAmeise = function (name) {
 Global.AntMe = AntIT
 Global.AntJS = AntIT
 
-AntIT._abortSimulation = function () {
-  var error =  document.createElement("DIV");
-  error.innerHTML = "Simulationsfehler";
-  error.style.color = "red";
-  error.style.marginTop = "20px";
-  error.style.marginLeft = "50px";
-  error.style.fontWeight = "bold";
-  document.getElementById("hud").appendChild(error);
-  throw "Simulationsfehler";
-}
-
 if (Optionen.EntwicklerModus) {
   AntIT.Sim = Sim;
   AntIT.Sim.Distance = dist

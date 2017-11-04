@@ -13,13 +13,14 @@ var Simulation = function() {
   this.memories = {}
   this.bus = Minibus.create()
   this.rng = undefined
+  this.cycles = 0
   
   this.playerCount = function() {
     return Sim.players.length;
   }
   
   this.init = function() {
-    this.rng = new Math.seedrandom("hello.")
+    Sim.rng = new Math.seedrandom("hello.")
     var area = (1 + (API.ants.length * Optionen.SpielfeldVerhältnis)) * Optionen.SpielfeldGrundGröße;
     var width = Math.round(Math.sqrt(area * Optionen.SpielfeldVerhältnis));
     var height = Math.round(Math.sqrt(area / Optionen.SpielfeldVerhältnis));
@@ -31,7 +32,7 @@ var Simulation = function() {
     }
   }
   
-  this.update = function() {    
+  this.update = function() {
     Sim.apples.forEach(function(apple){
       apple.update();
     })
@@ -49,6 +50,7 @@ var Simulation = function() {
     });
     
     Sim.playground.update();
+    Sim.cycles++
   }
 }
 
