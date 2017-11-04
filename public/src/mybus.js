@@ -19,11 +19,11 @@ Minibus.create = function(){
       })
     }
     
-    this.emit = function(route, arg1, arg2, arg3, arg4, arg5) { // eh hem ....
+    this.emit = function(route, arg1, arg2, arg3) { // Achtung hier!
       if (!(route in router))
         return
       router[route].forEach(function(f){
-        f(arg1, arg2, arg3, arg4, arg5)
+        f(arg1, arg2, arg3)
       })
     }
   }

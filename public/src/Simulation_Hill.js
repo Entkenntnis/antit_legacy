@@ -17,22 +17,18 @@ function Hill(pos, playerid) {
   var markers = []
   
   function updateGO() {
-    Vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(my.pos));
+    Sim.bus.emit('move-hill', key, Sim.playground.toViewPos(my.pos))
   }
   
   function setFlagColor() {
-    Vw.setHillFlagColor(Vw.hillStore.get(key), Optionen.SpielerFarben[my.playerid]);
+    Sim.bus.emit('change-hill-color', key, Optionen.SpielerFarben[my.playerid])
   }
   
   this.addMarker = function() {
     var key = Hill.markerCounter++
-    var marker = Vw.markerStore.get(key)
-    Vw.setMarkerColor(marker, Optionen.SpielerFarben[my.playerid])
-    marker.position.copy(Sim.playground.toViewPos(my.pos))
-    var s = Optionen.MarkerGröße
-    marker.scale.set(s, s, s)
-    marker.material.opacity = Optionen.MarkerDurchsichtigkeit
-    marker.material.needsUpdate = true
+    Sim.bus.emit('add-marker', key,
+      Sim.playground.toViewPos(my.pos),
+      Optionen.SpielerFarben[my.playerid])
     markers.push({
       key: key,
       cycle: 0
@@ -58,8 +54,8 @@ function Hill(pos, playerid) {
       my.timeToNextAnt = Optionen.AmeiseWartezeit;
       my.energy -= Optionen.EnergieFürAmeise;
       var antPos = {x:pos.x,y:pos.y};
-      var angle = Vw.rng()*Math.PI*2;
-      var radius = Optionen.HügelRadius + (Vw.rng()*10 - 5);
+      var angle = Sim.rng()*Math.PI*2;
+      var radius = Optionen.HügelRadius + (Sim.rng()*10 - 5);
       antPos.x += Math.cos(angle)*radius;
       antPos.y += Math.sin(angle)*radius;
       var newAnt = new Ant(antPos, my.playerid)
@@ -70,16 +66,12 @@ function Hill(pos, playerid) {
       API.close();
     }
     removeIf(markers, function(m){
-      var marker = Vw.markerStore.get(m.key)
       m.cycle++
       if (m.cycle >= Optionen.MarkerDauer) {
-        Vw.markerStore.remove(m.key)
+        Sim.bus.emit('remove-marker', m.key)
         return true
       }
-      var s = marker.scale.x * Optionen.MarkerVergrößerung
-      marker.scale.set(s, s, s)
-      marker.material.opacity *= Optionen.MarkerFading
-      marker.material.needsUpdate = true
+      Sim.bus.emit('update-marker', m.key)
       return false
     })
   }

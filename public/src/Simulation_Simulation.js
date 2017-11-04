@@ -12,13 +12,14 @@ var Simulation = function() {
   this.bugs = []
   this.memories = {}
   this.bus = Minibus.create()
+  this.rng = undefined
   
   this.playerCount = function() {
     return Sim.players.length;
   }
   
   this.init = function() {
-    
+    this.rng = new Math.seedrandom("hello.")
     var area = (1 + (API.ants.length * Optionen.SpielfeldVerhältnis)) * Optionen.SpielfeldGrundGröße;
     var width = Math.round(Math.sqrt(area * Optionen.SpielfeldVerhältnis));
     var height = Math.round(Math.sqrt(area / Optionen.SpielfeldVerhältnis));

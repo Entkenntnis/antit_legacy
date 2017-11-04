@@ -15,9 +15,8 @@ function Apple(pos) {
   this.heading = undefined;
   
   function updateGO() {
-    var go = Vw.appleStore.get(key);
     var height = pid!==undefined?5:0;
-    go.position.copy(Sim.playground.toViewPos(my.pos, height));
+    Sim.bus.emit('move-apple', key, Sim.playground.toViewPos(my.pos, height))
   }
   
   this.addAnt = function(ant) {
@@ -39,7 +38,7 @@ function Apple(pos) {
     if (pid !== undefined) {
       var d = dist(my.pos, Sim.hills[pid].getPos());
       if (d < 10) {
-        Vw.appleStore.remove(key);
+        Sim.bus.emit('remove-apple', key)
         Sim.players[pid].addPoints(Optionen.PunkteProApfel);
         Sim.hills[pid].addEnergy(Optionen.EnergieProApfel);
         Sim.players[pid].addApple();

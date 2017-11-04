@@ -7,14 +7,15 @@ function Bug(pos) {
   var my = makeAttributes(this, {pos: pos})
   
   var key = Bug.counter++;
-  var heading = Math.floor(Vw.rng()*360);
+  var heading = Math.floor(Sim.rng()*360);
   var togo = 0;
   var torotate = 0;
   var towait = 0;
   
   function updateGO() {
-    Vw.bugStore.get(key).position.copy(Sim.playground.toViewPos(my.pos));
-    Vw.bugStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
+    Sim.bus.emit('move-bug', key,
+      Sim.playground.toViewPos(my.pos),
+      -heading / 180 * Math.PI + Math.PI)
   }
   
   this.update = function() {
@@ -38,7 +39,7 @@ function Bug(pos) {
       towait--;
     } else {
       towait = 30;
-      torotate = Math.floor(Vw.rng()*40-20);
+      torotate = Math.floor(Sim.rng()*40-20);
       togo = 60;
       var destHill = closest(my.pos, Sim.hills, Optionen.WanzenHügelAbstand);
       if (destHill !== undefined) {

@@ -9,7 +9,7 @@ function Ant(pos, playerid) {
     pos: pos,
     playerid: playerid,
     key: playerid + ":" + Ant.counter++,
-    heading: Math.floor(Vw.rng()*360),
+    heading: Math.floor(Sim.rng()*360),
     load: 0,
     jobs: [],
     insertionPoint: 0,
@@ -67,25 +67,24 @@ function Ant(pos, playerid) {
   
   // visuals
   function setColor() {
-    Vw.setAntBodyColor(Vw.antStore.get(my.key), Optionen.SpielerFarben[my.playerid]);
+    Sim.bus.emit('change-ant-color', my.key, Optionen.SpielerFarben[my.playerid])
   }
   
   function updateGO() {
-    var antBody = Vw.antStore.get(my.key)
-    antBody.position.copy(Sim.playground.toViewPos(my.pos));
-    antBody.rotation.y = -my.heading / 180 * Math.PI + Math.PI;
+    Sim.bus.emit('move-ant', my.key,
+      Sim.playground.toViewPos(my.pos),
+      -my.heading / 180 * Math.PI + Math.PI)
     if (my.load > 0) {
-      var sugarBox = Vw.sugarBoxStore.get(my.key);
-      sugarBox.position.copy(Sim.playground.toViewPos(my.pos, Optionen.ZuckerStückchenHöhe));
-    } else if (Vw.sugarBoxStore.has(my.key)) {
-      Vw.sugarBoxStore.remove(my.key);
+      Sim.bus.emit('move-sugarbox', my.key,
+        Sim.playground.toViewPos(my.pos, Optionen.ZuckerStückchenHöhe))
+    } else {
+      Sim.bus.emit('remove-sugarbox', my.key)
     }
   }
   
   function removeGO() {
-    Vw.antStore.remove(my.key);
-    if (Vw.sugarBoxStore.has(my.key))
-      Vw.sugarBoxStore.remove(my.key);
+    Sim.bus.emit('remove-ant', my.key)
+    Sim.bus.emit('remove-sugarbox', my.key)
   }
   
   // jobs - general
@@ -308,7 +307,7 @@ function Ant(pos, playerid) {
         var angle = getDir(my.pos, des);
         var rotation = getRotation(my.heading, angle);
         var v = Optionen.ZufallRichtungsVerschiebung;
-        rotation += Math.floor(Vw.rng()*v*2-v);
+        rotation += Math.floor(Sim.rng()*v*2-v);
         if (rotation != 0)
           this.addTurnJob(rotation, true);
         this.addGoJob(Math.min(50, d), true);

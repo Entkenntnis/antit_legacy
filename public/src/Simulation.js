@@ -3,8 +3,7 @@
 (function () {
 
 "use strict";
-  
-var Vw = AntIT._vw;
+
 var Optionen = AntIT._optionen;
 var Global = window;
 
@@ -196,8 +195,8 @@ function Playground(width, height) {
   
   this.randomPos = function() {
     return {
-      x:Vw.rng()*my.width,
-      y:Vw.rng()*my.height};
+      x:Sim.rng()*my.width,
+      y:Sim.rng()*my.height};
   }
   
   this.isInBound = function(pos, margin) {
@@ -226,8 +225,8 @@ function Playground(width, height) {
     var pos = {};
     var limit = 100;
     while(limit-- > 0) {
-      pos.x = Vw.rng()*(topW+leftH);
-      pos.y = Vw.rng()*Optionen.HügelStreifenBreite * 2;
+      pos.x = Sim.rng()*(topW+leftH);
+      pos.y = Sim.rng()*Optionen.HügelStreifenBreite * 2;
       if (pos.x < topW) {
         if (pos.y >= Optionen.HügelStreifenBreite) {
           pos.y += (my.height - Optionen.HügelStreifenBreite*2 - Optionen.HügelRandAbstand*2);
@@ -268,7 +267,7 @@ function Playground(width, height) {
       for (var i = 0; i < feedHills.length; i++) {
         feedHills.sort(function(a,b){
           if (a.getFeedIndex() == b.getFeedIndex())
-            return Vw.rng() >= 0.5 ? 1 : -1;
+            return Sim.rng() >= 0.5 ? 1 : -1;
           return a.getFeedIndex() > b.getFeedIndex() ? 1 : -1;
         })
         var curHill = feedHills[0];
@@ -276,7 +275,7 @@ function Playground(width, height) {
         var counts = getFoodInRange(curHill, Optionen.NahrungMaximalEntfernung);
         var type = "sugar";
         if (counts.sugars == counts.apples) {
-          if (Vw.rng() > 0.7)
+          if (Sim.rng() > 0.7)
             type = "apple";
         } else {
           if (counts.sugars > counts.apples * 2)
@@ -285,9 +284,9 @@ function Playground(width, height) {
         
         var counter = 100;
         while(counter-- > 0) {
-          var randAngle = Vw.rng()*360;
+          var randAngle = Sim.rng()*360;
           var minD = Optionen.NahrungMindestEntfernung;
-          var randDist = Vw.rng()*(Optionen.NahrungMaximalEntfernung - minD) + minD;
+          var randDist = Sim.rng()*(Optionen.NahrungMaximalEntfernung - minD) + minD;
           var pos = moveDir(curHill.getPos(), randAngle, randDist);
           if (!Sim.playground.isInBound(pos, 30))
             continue;
@@ -365,9 +364,7 @@ function Playground(width, height) {
   }
   
   // constructor
-  Vw.gamefloor.geometry = new THREE.PlaneGeometry(my.width, my.height, 1, 1);
-  Vw.gamefloor.geometry.verticesNeedUpdate = true;
-  Vw.setControlsBounds(my.width/2, my.height/2);
+  Sim.bus.emit('set-xy', my.width, my.height)
 }
 // HILL
 
@@ -388,22 +385,18 @@ function Hill(pos, playerid) {
   var markers = []
   
   function updateGO() {
-    Vw.hillStore.get(key).position.copy(Sim.playground.toViewPos(my.pos));
+    Sim.bus.emit('move-hill', key, Sim.playground.toViewPos(my.pos))
   }
   
   function setFlagColor() {
-    Vw.setHillFlagColor(Vw.hillStore.get(key), Optionen.SpielerFarben[my.playerid]);
+    Sim.bus.emit('change-hill-color', key, Optionen.SpielerFarben[my.playerid])
   }
   
   this.addMarker = function() {
     var key = Hill.markerCounter++
-    var marker = Vw.markerStore.get(key)
-    Vw.setMarkerColor(marker, Optionen.SpielerFarben[my.playerid])
-    marker.position.copy(Sim.playground.toViewPos(my.pos))
-    var s = Optionen.MarkerGröße
-    marker.scale.set(s, s, s)
-    marker.material.opacity = Optionen.MarkerDurchsichtigkeit
-    marker.material.needsUpdate = true
+    Sim.bus.emit('add-marker', key,
+      Sim.playground.toViewPos(my.pos),
+      Optionen.SpielerFarben[my.playerid])
     markers.push({
       key: key,
       cycle: 0
@@ -429,8 +422,8 @@ function Hill(pos, playerid) {
       my.timeToNextAnt = Optionen.AmeiseWartezeit;
       my.energy -= Optionen.EnergieFürAmeise;
       var antPos = {x:pos.x,y:pos.y};
-      var angle = Vw.rng()*Math.PI*2;
-      var radius = Optionen.HügelRadius + (Vw.rng()*10 - 5);
+      var angle = Sim.rng()*Math.PI*2;
+      var radius = Optionen.HügelRadius + (Sim.rng()*10 - 5);
       antPos.x += Math.cos(angle)*radius;
       antPos.y += Math.sin(angle)*radius;
       var newAnt = new Ant(antPos, my.playerid)
@@ -441,16 +434,12 @@ function Hill(pos, playerid) {
       API.close();
     }
     removeIf(markers, function(m){
-      var marker = Vw.markerStore.get(m.key)
       m.cycle++
       if (m.cycle >= Optionen.MarkerDauer) {
-        Vw.markerStore.remove(m.key)
+        Sim.bus.emit('remove-marker', m.key)
         return true
       }
-      var s = marker.scale.x * Optionen.MarkerVergrößerung
-      marker.scale.set(s, s, s)
-      marker.material.opacity *= Optionen.MarkerFading
-      marker.material.needsUpdate = true
+      Sim.bus.emit('update-marker', m.key)
       return false
     })
   }
@@ -474,11 +463,9 @@ function Sugar(pos) {
   var key = Sugar.counter++
   
   function updateGO() {
-    var GO = Vw.sugarStore.get(key);
-    GO.position.copy(Sim.playground.toViewPos(my.pos));
-    var linScale = my.amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung;
-    var scale = Math.max(Math.pow(linScale, 1/2), 0.000001);
-    GO.scale.set(scale, scale, scale);
+    var linScale = my.amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung
+    var scale = Math.max(Math.pow(linScale, 1/2), 0.000001)
+    Sim.bus.emit('move-sugar', key, Sim.playground.toViewPos(my.pos), scale)
   }
   
   this.unload1Sugar = function() {
@@ -487,8 +474,7 @@ function Sugar(pos) {
       updateGO();
       return true;
     } else {
-      if (Vw.sugarStore.has(key))
-        Vw.sugarStore.remove(key);
+      Sim.bus.emit('remove-sugar', key)
       return false;
     }
   }
@@ -513,9 +499,8 @@ function Apple(pos) {
   this.heading = undefined;
   
   function updateGO() {
-    var go = Vw.appleStore.get(key);
     var height = pid!==undefined?5:0;
-    go.position.copy(Sim.playground.toViewPos(my.pos, height));
+    Sim.bus.emit('move-apple', key, Sim.playground.toViewPos(my.pos, height))
   }
   
   this.addAnt = function(ant) {
@@ -537,7 +522,7 @@ function Apple(pos) {
     if (pid !== undefined) {
       var d = dist(my.pos, Sim.hills[pid].getPos());
       if (d < 10) {
-        Vw.appleStore.remove(key);
+        Sim.bus.emit('remove-apple', key)
         Sim.players[pid].addPoints(Optionen.PunkteProApfel);
         Sim.hills[pid].addEnergy(Optionen.EnergieProApfel);
         Sim.players[pid].addApple();
@@ -636,14 +621,15 @@ function Bug(pos) {
   var my = makeAttributes(this, {pos: pos})
   
   var key = Bug.counter++;
-  var heading = Math.floor(Vw.rng()*360);
+  var heading = Math.floor(Sim.rng()*360);
   var togo = 0;
   var torotate = 0;
   var towait = 0;
   
   function updateGO() {
-    Vw.bugStore.get(key).position.copy(Sim.playground.toViewPos(my.pos));
-    Vw.bugStore.get(key).rotation.y = -heading / 180 * Math.PI + Math.PI;
+    Sim.bus.emit('move-bug', key,
+      Sim.playground.toViewPos(my.pos),
+      -heading / 180 * Math.PI + Math.PI)
   }
   
   this.update = function() {
@@ -667,7 +653,7 @@ function Bug(pos) {
       towait--;
     } else {
       towait = 30;
-      torotate = Math.floor(Vw.rng()*40-20);
+      torotate = Math.floor(Sim.rng()*40-20);
       togo = 60;
       var destHill = closest(my.pos, Sim.hills, Optionen.WanzenHügelAbstand);
       if (destHill !== undefined) {
@@ -699,7 +685,7 @@ function Ant(pos, playerid) {
     pos: pos,
     playerid: playerid,
     key: playerid + ":" + Ant.counter++,
-    heading: Math.floor(Vw.rng()*360),
+    heading: Math.floor(Sim.rng()*360),
     load: 0,
     jobs: [],
     insertionPoint: 0,
@@ -757,25 +743,24 @@ function Ant(pos, playerid) {
   
   // visuals
   function setColor() {
-    Vw.setAntBodyColor(Vw.antStore.get(my.key), Optionen.SpielerFarben[my.playerid]);
+    Sim.bus.emit('change-ant-color', my.key, Optionen.SpielerFarben[my.playerid])
   }
   
   function updateGO() {
-    var antBody = Vw.antStore.get(my.key)
-    antBody.position.copy(Sim.playground.toViewPos(my.pos));
-    antBody.rotation.y = -my.heading / 180 * Math.PI + Math.PI;
+    Sim.bus.emit('move-ant', my.key,
+      Sim.playground.toViewPos(my.pos),
+      -my.heading / 180 * Math.PI + Math.PI)
     if (my.load > 0) {
-      var sugarBox = Vw.sugarBoxStore.get(my.key);
-      sugarBox.position.copy(Sim.playground.toViewPos(my.pos, Optionen.ZuckerStückchenHöhe));
-    } else if (Vw.sugarBoxStore.has(my.key)) {
-      Vw.sugarBoxStore.remove(my.key);
+      Sim.bus.emit('move-sugarbox', my.key,
+        Sim.playground.toViewPos(my.pos, Optionen.ZuckerStückchenHöhe))
+    } else {
+      Sim.bus.emit('remove-sugarbox', my.key)
     }
   }
   
   function removeGO() {
-    Vw.antStore.remove(my.key);
-    if (Vw.sugarBoxStore.has(my.key))
-      Vw.sugarBoxStore.remove(my.key);
+    Sim.bus.emit('remove-ant', my.key)
+    Sim.bus.emit('remove-sugarbox', my.key)
   }
   
   // jobs - general
@@ -998,7 +983,7 @@ function Ant(pos, playerid) {
         var angle = getDir(my.pos, des);
         var rotation = getRotation(my.heading, angle);
         var v = Optionen.ZufallRichtungsVerschiebung;
-        rotation += Math.floor(Vw.rng()*v*2-v);
+        rotation += Math.floor(Sim.rng()*v*2-v);
         if (rotation != 0)
           this.addTurnJob(rotation, true);
         this.addGoJob(Math.min(50, d), true);
@@ -1163,13 +1148,14 @@ var Simulation = function() {
   this.bugs = []
   this.memories = {}
   this.bus = Minibus.create()
+  this.rng = undefined
   
   this.playerCount = function() {
     return Sim.players.length;
   }
   
   this.init = function() {
-    
+    this.rng = new Math.seedrandom("hello.")
     var area = (1 + (API.ants.length * Optionen.SpielfeldVerhältnis)) * Optionen.SpielfeldGrundGröße;
     var width = Math.round(Math.sqrt(area * Optionen.SpielfeldVerhältnis));
     var height = Math.round(Math.sqrt(area / Optionen.SpielfeldVerhältnis));
@@ -1358,7 +1344,7 @@ API.addFunc("Zufallszahl", function (a, b) {
       API.message("Die Funktion 'Zufallszahl(max)' erwartet als Argument eine positive Zahl.");
       return;
     }
-    return Math.floor(Vw.rng() * a);
+    return Math.floor(Sim.rng() * a);
   } else {
     if (typeof a !== "number" || typeof b!== "number") {
       API.message("Die Funktion 'Zufallszahl(min, max)' erwartet als Argument Zahlen.");
@@ -1368,7 +1354,7 @@ API.addFunc("Zufallszahl", function (a, b) {
       API.message("Die Funktion 'Zufallszahl(min, max)' erwartet, dass min < max ist.");
       return;
     }
-    return Math.floor(Vw.rng() * (b - a) + a);
+    return Math.floor(Sim.rng() * (b - a) + a);
   }
 })
 
@@ -1457,10 +1443,10 @@ API.addFunc("Zufallsname", function() {
   var consonants = parts.split("")
   var vocals = ['a', 'e', 'i', 'o', 'u', 'ei', 'au']
   var name = '';
-  var length = Vw.rng()*3 + 1;
+  var length = Sim.rng()*3 + 1;
   for (var i = 0; i < length; i++) {
-    name += consonants[Math.floor(Vw.rng()*consonants.length)]
-    name += vocals[Math.floor(Vw.rng()*vocals.length)]
+    name += consonants[Math.floor(Sim.rng()*consonants.length)]
+    name += vocals[Math.floor(Sim.rng()*vocals.length)]
   }
   return capitalize(name);
 });
@@ -1576,8 +1562,6 @@ AntIT._abortSimulation = function () {
 if (Optionen.EntwicklerModus) {
   AntIT.Sim = Sim;
   AntIT.Sim.Distance = dist
-  
-  AntIT.Vw = Vw;
   AntIT.Optionen = Optionen;
   AntIT.API = API
 }

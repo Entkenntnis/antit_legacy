@@ -12,11 +12,9 @@ function Sugar(pos) {
   var key = Sugar.counter++
   
   function updateGO() {
-    var GO = Vw.sugarStore.get(key);
-    GO.position.copy(Sim.playground.toViewPos(my.pos));
-    var linScale = my.amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung;
-    var scale = Math.max(Math.pow(linScale, 1/2), 0.000001);
-    GO.scale.set(scale, scale, scale);
+    var linScale = my.amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung
+    var scale = Math.max(Math.pow(linScale, 1/2), 0.000001)
+    Sim.bus.emit('move-sugar', key, Sim.playground.toViewPos(my.pos), scale)
   }
   
   this.unload1Sugar = function() {
@@ -25,8 +23,7 @@ function Sugar(pos) {
       updateGO();
       return true;
     } else {
-      if (Vw.sugarStore.has(key))
-        Vw.sugarStore.remove(key);
+      Sim.bus.emit('remove-sugar', key)
       return false;
     }
   }
