@@ -196,8 +196,8 @@ function Playground(width, height) {
   
   this.randomPos = function() {
     return {
-      x:Math.random()*my.width,
-      y:Math.random()*my.height};
+      x:Vw.rng()*my.width,
+      y:Vw.rng()*my.height};
   }
   
   this.isInBound = function(pos, margin) {
@@ -226,8 +226,8 @@ function Playground(width, height) {
     var pos = {};
     var limit = 100;
     while(limit-- > 0) {
-      pos.x = Math.random()*(topW+leftH);
-      pos.y = Math.random()*Optionen.HügelStreifenBreite * 2;
+      pos.x = Vw.rng()*(topW+leftH);
+      pos.y = Vw.rng()*Optionen.HügelStreifenBreite * 2;
       if (pos.x < topW) {
         if (pos.y >= Optionen.HügelStreifenBreite) {
           pos.y += (my.height - Optionen.HügelStreifenBreite*2 - Optionen.HügelRandAbstand*2);
@@ -268,7 +268,7 @@ function Playground(width, height) {
       for (var i = 0; i < feedHills.length; i++) {
         feedHills.sort(function(a,b){
           if (a.getFeedIndex() == b.getFeedIndex())
-            return Math.random() >= 0.5 ? 1 : -1;
+            return Vw.rng() >= 0.5 ? 1 : -1;
           return a.getFeedIndex() > b.getFeedIndex() ? 1 : -1;
         })
         var curHill = feedHills[0];
@@ -276,7 +276,7 @@ function Playground(width, height) {
         var counts = getFoodInRange(curHill, Optionen.NahrungMaximalEntfernung);
         var type = "sugar";
         if (counts.sugars == counts.apples) {
-          if (Math.random() > 0.7)
+          if (Vw.rng() > 0.7)
             type = "apple";
         } else {
           if (counts.sugars > counts.apples * 2)
@@ -285,9 +285,9 @@ function Playground(width, height) {
         
         var counter = 100;
         while(counter-- > 0) {
-          var randAngle = Math.random()*360;
+          var randAngle = Vw.rng()*360;
           var minD = Optionen.NahrungMindestEntfernung;
-          var randDist = Math.random()*(Optionen.NahrungMaximalEntfernung - minD) + minD;
+          var randDist = Vw.rng()*(Optionen.NahrungMaximalEntfernung - minD) + minD;
           var pos = moveDir(curHill.getPos(), randAngle, randDist);
           if (!Sim.playground.isInBound(pos, 30))
             continue;
@@ -429,8 +429,8 @@ function Hill(pos, playerid) {
       my.timeToNextAnt = Optionen.AmeiseWartezeit;
       my.energy -= Optionen.EnergieFürAmeise;
       var antPos = {x:pos.x,y:pos.y};
-      var angle = Math.random()*Math.PI*2;
-      var radius = Optionen.HügelRadius + (Math.random()*10 - 5);
+      var angle = Vw.rng()*Math.PI*2;
+      var radius = Optionen.HügelRadius + (Vw.rng()*10 - 5);
       antPos.x += Math.cos(angle)*radius;
       antPos.y += Math.sin(angle)*radius;
       var newAnt = new Ant(antPos, my.playerid)
@@ -636,7 +636,7 @@ function Bug(pos) {
   var my = makeAttributes(this, {pos: pos})
   
   var key = Bug.counter++;
-  var heading = Math.floor(Math.random()*360);
+  var heading = Math.floor(Vw.rng()*360);
   var togo = 0;
   var torotate = 0;
   var towait = 0;
@@ -667,7 +667,7 @@ function Bug(pos) {
       towait--;
     } else {
       towait = 30;
-      torotate = Math.floor(Math.random()*40-20);
+      torotate = Math.floor(Vw.rng()*40-20);
       togo = 60;
       var destHill = closest(my.pos, Sim.hills, Optionen.WanzenHügelAbstand);
       if (destHill !== undefined) {
@@ -699,7 +699,7 @@ function Ant(pos, playerid) {
     pos: pos,
     playerid: playerid,
     key: playerid + ":" + Ant.counter++,
-    heading: Math.floor(Math.random()*360),
+    heading: Math.floor(Vw.rng()*360),
     load: 0,
     jobs: [],
     insertionPoint: 0,
@@ -998,7 +998,7 @@ function Ant(pos, playerid) {
         var angle = getDir(my.pos, des);
         var rotation = getRotation(my.heading, angle);
         var v = Optionen.ZufallRichtungsVerschiebung;
-        rotation += Math.floor(Math.random()*v*2-v);
+        rotation += Math.floor(Vw.rng()*v*2-v);
         if (rotation != 0)
           this.addTurnJob(rotation, true);
         this.addGoJob(Math.min(50, d), true);
@@ -1162,6 +1162,7 @@ var Simulation = function() {
   this.apples = []
   this.bugs = []
   this.memories = {}
+  this.bus = Minibus.create()
   
   this.playerCount = function() {
     return Sim.players.length;
@@ -1180,7 +1181,7 @@ var Simulation = function() {
     }
   }
   
-  this.update = function() {
+  this.update = function() {    
     Sim.apples.forEach(function(apple){
       apple.update();
     })
@@ -1357,7 +1358,7 @@ API.addFunc("Zufallszahl", function (a, b) {
       API.message("Die Funktion 'Zufallszahl(max)' erwartet als Argument eine positive Zahl.");
       return;
     }
-    return Math.floor(Math.random() * a);
+    return Math.floor(Vw.rng() * a);
   } else {
     if (typeof a !== "number" || typeof b!== "number") {
       API.message("Die Funktion 'Zufallszahl(min, max)' erwartet als Argument Zahlen.");
@@ -1367,7 +1368,7 @@ API.addFunc("Zufallszahl", function (a, b) {
       API.message("Die Funktion 'Zufallszahl(min, max)' erwartet, dass min < max ist.");
       return;
     }
-    return Math.floor(Math.random() * (b - a) + a);
+    return Math.floor(Vw.rng() * (b - a) + a);
   }
 })
 
@@ -1456,10 +1457,10 @@ API.addFunc("Zufallsname", function() {
   var consonants = parts.split("")
   var vocals = ['a', 'e', 'i', 'o', 'u', 'ei', 'au']
   var name = '';
-  var length = Math.random()*3 + 1;
+  var length = Vw.rng()*3 + 1;
   for (var i = 0; i < length; i++) {
-    name += consonants[Math.floor(Math.random()*consonants.length)]
-    name += vocals[Math.floor(Math.random()*vocals.length)]
+    name += consonants[Math.floor(Vw.rng()*consonants.length)]
+    name += vocals[Math.floor(Vw.rng()*vocals.length)]
   }
   return capitalize(name);
 });

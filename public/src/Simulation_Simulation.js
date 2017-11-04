@@ -11,6 +11,7 @@ var Simulation = function() {
   this.apples = []
   this.bugs = []
   this.memories = {}
+  this.bus = Minibus.create()
   
   this.playerCount = function() {
     return Sim.players.length;
@@ -29,7 +30,7 @@ var Simulation = function() {
     }
   }
   
-  this.update = function() {
+  this.update = function() {    
     Sim.apples.forEach(function(apple){
       apple.update();
     })

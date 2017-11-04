@@ -58,8 +58,8 @@ function Hill(pos, playerid) {
       my.timeToNextAnt = Optionen.AmeiseWartezeit;
       my.energy -= Optionen.EnergieFürAmeise;
       var antPos = {x:pos.x,y:pos.y};
-      var angle = Math.random()*Math.PI*2;
-      var radius = Optionen.HügelRadius + (Math.random()*10 - 5);
+      var angle = Vw.rng()*Math.PI*2;
+      var radius = Optionen.HügelRadius + (Vw.rng()*10 - 5);
       antPos.x += Math.cos(angle)*radius;
       antPos.y += Math.sin(angle)*radius;
       var newAnt = new Ant(antPos, my.playerid)

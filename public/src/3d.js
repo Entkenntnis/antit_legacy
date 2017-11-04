@@ -7,8 +7,11 @@
   
   // project-wide variables
   var scene = new THREE.Scene(), camera, renderer, stats, controls, manager;
+  var rng;
 
   function init(){
+    
+    rng = new Math.seedrandom("hello.")
     
     // the floor lies in the xz-plane, don't worry about aspect here, will be done on resize 
     camera = new THREE.PerspectiveCamera(60, 1 /*aspect*/, 0.1, 200000);
@@ -20,7 +23,7 @@
     
     // showing nice fps
     stats = new Stats();
-    stats.showPanel( 1 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
     document.body.appendChild( stats.dom );
     AntIT._stats = stats
     
@@ -137,6 +140,8 @@
     this.onExtTick = function(){};
     
     this.load = function(){
+    
+      this.rng = rng
       
       var objectLoader = new THREE.ObjectLoader(manager);
       var textureLoader = new THREE.TextureLoader(manager);

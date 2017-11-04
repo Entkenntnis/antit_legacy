@@ -7,7 +7,7 @@ function Bug(pos) {
   var my = makeAttributes(this, {pos: pos})
   
   var key = Bug.counter++;
-  var heading = Math.floor(Math.random()*360);
+  var heading = Math.floor(Vw.rng()*360);
   var togo = 0;
   var torotate = 0;
   var towait = 0;
@@ -38,7 +38,7 @@ function Bug(pos) {
       towait--;
     } else {
       towait = 30;
-      torotate = Math.floor(Math.random()*40-20);
+      torotate = Math.floor(Vw.rng()*40-20);
       togo = 60;
       var destHill = closest(my.pos, Sim.hills, Optionen.WanzenHügelAbstand);
       if (destHill !== undefined) {

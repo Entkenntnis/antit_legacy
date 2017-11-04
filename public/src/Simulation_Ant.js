@@ -9,7 +9,7 @@ function Ant(pos, playerid) {
     pos: pos,
     playerid: playerid,
     key: playerid + ":" + Ant.counter++,
-    heading: Math.floor(Math.random()*360),
+    heading: Math.floor(Vw.rng()*360),
     load: 0,
     jobs: [],
     insertionPoint: 0,
@@ -308,7 +308,7 @@ function Ant(pos, playerid) {
         var angle = getDir(my.pos, des);
         var rotation = getRotation(my.heading, angle);
         var v = Optionen.ZufallRichtungsVerschiebung;
-        rotation += Math.floor(Math.random()*v*2-v);
+        rotation += Math.floor(Vw.rng()*v*2-v);
         if (rotation != 0)
           this.addTurnJob(rotation, true);
         this.addGoJob(Math.min(50, d), true);

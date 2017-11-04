@@ -46,7 +46,7 @@ API.addFunc("Zufallszahl", function (a, b) {
       API.message("Die Funktion 'Zufallszahl(max)' erwartet als Argument eine positive Zahl.");
       return;
     }
-    return Math.floor(Math.random() * a);
+    return Math.floor(Vw.rng() * a);
   } else {
     if (typeof a !== "number" || typeof b!== "number") {
       API.message("Die Funktion 'Zufallszahl(min, max)' erwartet als Argument Zahlen.");
@@ -56,7 +56,7 @@ API.addFunc("Zufallszahl", function (a, b) {
       API.message("Die Funktion 'Zufallszahl(min, max)' erwartet, dass min < max ist.");
       return;
     }
-    return Math.floor(Math.random() * (b - a) + a);
+    return Math.floor(Vw.rng() * (b - a) + a);
   }
 })
 
@@ -145,10 +145,10 @@ API.addFunc("Zufallsname", function() {
   var consonants = parts.split("")
   var vocals = ['a', 'e', 'i', 'o', 'u', 'ei', 'au']
   var name = '';
-  var length = Math.random()*3 + 1;
+  var length = Vw.rng()*3 + 1;
   for (var i = 0; i < length; i++) {
-    name += consonants[Math.floor(Math.random()*consonants.length)]
-    name += vocals[Math.floor(Math.random()*vocals.length)]
+    name += consonants[Math.floor(Vw.rng()*consonants.length)]
+    name += vocals[Math.floor(Vw.rng()*vocals.length)]
   }
   return capitalize(name);
 });

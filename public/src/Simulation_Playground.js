@@ -25,8 +25,8 @@ function Playground(width, height) {
   
   this.randomPos = function() {
     return {
-      x:Math.random()*my.width,
-      y:Math.random()*my.height};
+      x:Vw.rng()*my.width,
+      y:Vw.rng()*my.height};
   }
   
   this.isInBound = function(pos, margin) {
@@ -55,8 +55,8 @@ function Playground(width, height) {
     var pos = {};
     var limit = 100;
     while(limit-- > 0) {
-      pos.x = Math.random()*(topW+leftH);
-      pos.y = Math.random()*Optionen.HügelStreifenBreite * 2;
+      pos.x = Vw.rng()*(topW+leftH);
+      pos.y = Vw.rng()*Optionen.HügelStreifenBreite * 2;
       if (pos.x < topW) {
         if (pos.y >= Optionen.HügelStreifenBreite) {
           pos.y += (my.height - Optionen.HügelStreifenBreite*2 - Optionen.HügelRandAbstand*2);
@@ -97,7 +97,7 @@ function Playground(width, height) {
       for (var i = 0; i < feedHills.length; i++) {
         feedHills.sort(function(a,b){
           if (a.getFeedIndex() == b.getFeedIndex())
-            return Math.random() >= 0.5 ? 1 : -1;
+            return Vw.rng() >= 0.5 ? 1 : -1;
           return a.getFeedIndex() > b.getFeedIndex() ? 1 : -1;
         })
         var curHill = feedHills[0];
@@ -105,7 +105,7 @@ function Playground(width, height) {
         var counts = getFoodInRange(curHill, Optionen.NahrungMaximalEntfernung);
         var type = "sugar";
         if (counts.sugars == counts.apples) {
-          if (Math.random() > 0.7)
+          if (Vw.rng() > 0.7)
             type = "apple";
         } else {
           if (counts.sugars > counts.apples * 2)
@@ -114,9 +114,9 @@ function Playground(width, height) {
         
         var counter = 100;
         while(counter-- > 0) {
-          var randAngle = Math.random()*360;
+          var randAngle = Vw.rng()*360;
           var minD = Optionen.NahrungMindestEntfernung;
-          var randDist = Math.random()*(Optionen.NahrungMaximalEntfernung - minD) + minD;
+          var randDist = Vw.rng()*(Optionen.NahrungMaximalEntfernung - minD) + minD;
           var pos = moveDir(curHill.getPos(), randAngle, randDist);
           if (!Sim.playground.isInBound(pos, 30))
             continue;
