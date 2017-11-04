@@ -39,16 +39,6 @@ function Playground(width, height) {
     return true;
   }
   
-  this.toViewPos = function(pos, h){
-    if (h === undefined) {
-      h = 0;
-    }
-    return new THREE.Vector3(
-      pos.x - my.width / 2.0,
-      h,
-      pos.y - my.height / 2.0);
-  }
-  
   this.getHillPos = function() {
     var topW = my.width - Optionen.EckenAbstand*2;
     var leftH = my.height - Optionen.EckenAbstand * 2;     

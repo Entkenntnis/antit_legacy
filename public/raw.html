@@ -1,0 +1,349 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+      <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>AntIT!</title>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="/css/bootstrap_metro.min.css">
+
+        <style>
+            body { margin: 0, overflow: hidden; overflow-y:hidden}
+            canvas { width:100%; height:100% }
+        </style>
+    </head>
+    <body>
+          <script src="/js/three.min.js"></script>
+          <script src="/js/orbit.js"></script>
+          <script src="/js/tween.js"></script>
+          <script src="/js/stats.min.js"></script>
+          <script src="/js/seedrandom.min.js"></script>
+          <script src="/src/Optionen.js"></script>
+          
+          <script src="/src/mybus.js"></script>
+          <script src="/src/Simulation.js"></script>
+          <script src="/src/SimPulse.js"></script>
+          
+          <script>
+          
+var Ameise = AntJS.NeueAmeise("Awesome");
+
+/*
+
+Gedächtniswerte:
+Name: Wir zu Beginn festgelegt, nicht verändert bis zum Tod
+Lock: manchmal müssen Arbeiter eine bestimme Zeit warten
+
+*/
+
+// Schnittstelle mit AntJS
+Ameise.IstGeboren = function(){
+	nameVergeben()
+    häuptlingsWahl()
+}
+
+Ameise.Tick = function(){
+	if (Gedächtnis.Name == häuptling) {
+    	häuptlingTick()
+    } else {
+    	arbeiterTick()
+    }
+}
+
+Ameise.IstGestorben = function(ursache){
+    console.log(Gedächtnis.Name + " ist durch " + ursache + " gestorben")
+	apfelAbmelden(Gedächtnis.Name)
+	nameAbmelden()
+}
+
+
+var nameRegister = []
+var häuptling = undefined
+var apfelRegister = []
+var apfelZähler = 1
+var richtungsRegister = []
+
+// implementationen
+function nameVergeben() {
+	var newName = Zufallsname()
+    while(nameRegister.indexOf(newName) >= 0)
+    	newName = Zufallsname()
+    Gedächtnis.Name = newName
+    nameRegister.push(newName)
+    console.log(Gedächtnis.Name + " ist geboren")
+}
+
+function nameAbmelden() {
+	if (Gedächtnis.Name == häuptling) {
+    	häuptling = undefined
+    }
+	var index = nameRegister.indexOf(Gedächtnis.Name)
+    nameRegister.splice(index, 1)
+}
+
+function häuptlingsWahl() {
+	if (!häuptling) {
+    	häuptling = Gedächtnis.Name
+        console.log(Gedächtnis.Name + " wurde zum Häuptling ernannt")
+        GeheZuBau()
+    }
+}
+
+function registerFüllen() {
+	for (var i = 0; i < 360; i += 10) {
+        richtungsRegister.push(i)
+    }
+    richtungsRegister = richtungsRegister.sort(function(){
+        return Zufallszahl(2)<1
+    })
+    console.log("Richtungen aufgefüllt")
+}
+
+function richtungAbrufen() {
+	if (richtungsRegister.length == 0) {
+    	registerFüllen()
+    }
+    return richtungsRegister.pop()
+}
+
+function apfelAbrufen(obj) { // den nächsten Apfel aus dem Register
+	if (!obj)
+    	return
+    var d = 2000000000
+    var index = undefined
+	for (var i = 0; i < apfelRegister.length; i++) {
+    	var cur = apfelRegister[i]
+        var cd = BestimmeEntfernung(cur.Position, obj)
+        if (cd < d) {
+        	d = cd
+            index = i
+        }
+    }
+    if (index !== undefined && d < 50) {
+    	return apfelRegister[index]
+    }
+}
+
+function apfelAbmelden(name) {
+	apfelRegister.forEach(function(a){
+    	var i = a.Träger.indexOf(name)
+    	if (i >= 0) {
+        	a.Träger.splice(i, 1)
+        }
+        var i2 = a.Team.indexOf(name)
+    	if (i2 >= 0) {
+        	a.Team.splice(i2, 1)
+        }
+    })
+}
+
+function häuptlingTick() {
+	häuptlingTeamZusammenstellen()
+    häuptlingLoseÄpfelLöschen()
+    if (AktuelleRunde % 200 == 0) {
+        console.log(richtungsRegister.length)
+    }
+}
+
+function häuptlingTeamZusammenstellen() {
+	apfelRegister.forEach(function(a){
+        if (--a.timeout == 0) {
+        	// wir haben jetzt die Liste alle Ameisen, die in Frage kommen
+            // jetzt stellen wir unsere Einheit zusammen
+            console.log("Häuptling erwählt Team")
+            var team = []
+            a.Meldung = a.Meldung.sort(function(x, y){
+            	return BestimmeEntfernung(a.Position, x.Position)-
+                	BestimmeEntfernung(a.Position, y.Position)
+            })
+            a.Meldung.forEach(function(m){
+            	if (team.length < 8) {
+                	team.push(m.Name)
+                }
+            })
+            a.Team = team
+        }
+    })
+}
+
+function häuptlingLoseÄpfelLöschen() {
+	apfelRegister = apfelRegister.filter(function(a){
+    	if (a.timeout < -40) {
+        	if (a.Team.length == 0 && a.Träger.length == 0) {
+            	return false
+            }
+            if (a.timeout < -200 && a.Träger.length < 4)
+            	return false
+        }
+        return true
+    })
+}
+
+function arbeiterTick() {
+    if (Gedächtnis.Lock > 0) {
+    	Gedächtnis.Lock--
+    } else if (Untätig) {
+    	arbeiterBewegen()
+    } else if (TrägtApfel) {
+    	arbeiterApfelTragen()
+    } else if (AktuelleLast > 0) {
+    	// nichts tun
+    } else { // Ameise ist in Bewegung
+    	arbeiterRoutine()
+    }
+}
+
+function arbeiterBewegen() {
+	GeheZuBau()
+    DreheZuRichtung(richtungAbrufen())
+    Gehe(1350)
+    Drehe(90)
+    Gehe(100)
+    GeheZuBau()
+}
+
+function arbeiterApfelTragen() {
+	var apfel = apfelAbrufen(Umgebung.ApfelPosition)
+    if (apfel == undefined) return
+    var d = BestimmeEntfernung(AktuellePosition, apfel.Position)
+    if (d > 10) { // Position ständig anpassen
+    	apfel.Position = AktuellePosition
+    }
+    if (apfel.Träger.indexOf(Gedächtnis.Name) < 0) {
+    	apfel.Träger.push(Gedächtnis.Name)
+        var ap = Umgebung.ApfelPosition
+        if (ap && apfel.Träger.length < 10) {
+        	richtungsRegister.push(BestimmeRichtung(HeimatBau, ap))
+        	richtungsRegister.push(BestimmeRichtung(HeimatBau, ap))
+        }
+    }
+}
+
+function arbeiterRoutine() {
+	if (arbeiterMeldung()) return
+    arbeiterImTeam()
+	if (arbeiterApfelChance()) return
+    
+    arbeiterZuckerSuchen()
+    arbeiterApfelSuchen()
+}
+
+function arbeiterMeldung() {
+	var registriert = false
+	apfelRegister.forEach(function(obj){
+    	if (obj.timeout > 0 && !registriert) {
+        	// neuer aktiver Apfel
+            obj.Meldung.push({
+            	Position: AktuellePosition,
+                Name: Gedächtnis.Name
+            })
+            Gedächtnis.Lock = 5
+            registriert = true
+        }
+    })
+    return registriert
+}
+
+function arbeiterImTeam() {
+	apfelRegister.forEach(function(obj){
+    	var index = obj.Team.indexOf(Gedächtnis.Name)
+    	if (index >= 0) {
+            //if (SetzeWürfel)
+            //    SetzeWürfel(AktuellePosition)
+        	GeheZuZiel(obj.Position)
+            DreheZuObjekt(HeimatBau)
+            Gehe(BestimmeEntfernung(AktuellePosition, HeimatBau))
+            GeheZuBau()
+            obj.Team.splice(index, 1)
+        }
+    })
+}
+
+function arbeiterApfelChance() {
+	var apfel = Umgebung.ApfelPosition
+    if (apfel) {
+    	if (BestimmeEntfernung(AktuellePosition, apfel) < 10) {
+            TrageApfel()
+            GeheZuBau()
+            Gedächtnis.Lock = 5
+            return true
+        }
+    }
+}
+
+function arbeiterZuckerSuchen() {
+	var zucker = Umgebung.ZuckerPosition
+    if (zucker) {
+        /*if (richtungsRegister.length < 30) {
+            var count = 0
+            richtungsRegister.forEach(function(r){
+            	if (r == x)
+                	count++
+            })
+            if (count < 7) {
+                //richtungsRegister.push(x)
+            }
+        }*/
+        var x = BestimmeRichtung(HeimatBau, zucker)
+        if (richtungsRegister.length < 25) {
+            richtungsRegister.push(x)
+            richtungsRegister.push(x)
+        }
+        if (richtungsRegister.length < 10) {
+            richtungsRegister.push(x)
+            richtungsRegister.push(x)
+            richtungsRegister.push(x)
+        }
+        
+        Gedächtnis.Lock = 30
+    	GeheZuZiel(zucker)
+        NimmZucker()
+        FühreAus(function(){
+        	if (!Umgebung.ZuckerPosition) {
+            	console.log("Zuckerhaufen leer")
+                richtungsRegister = richtungsRegister.filter(function(d){
+                	var dif = Math.abs(d-x)
+                    return dif > 1
+                })
+            }
+        })
+        GeheZuBau()
+        LadeZuckerAb()
+    }
+}
+
+function arbeiterApfelSuchen() {
+	var apfel = Umgebung.ApfelPosition
+    if (apfel) {
+    	var ausRegister = apfelAbrufen(apfel)
+        if (!ausRegister) {
+        	console.log(Gedächtnis.Name + " hat Apfel gefunden")
+            apfelRegister.push({
+            	Position: apfel,
+                Nummer: apfelZähler++,
+                timeout: 3,
+                Meldung: [],
+                Träger: [],
+                Team: []
+            })
+            console.log(apfelRegister)
+        }
+    }
+}
+
+AntIT.StarteSimulation()
+          
+          </script>
+      
+      <div class="container">
+        <h1>Hallo!</h1>
+        <div id="hud"></div>
+      </div>
+    </body>
+</html>
+
+

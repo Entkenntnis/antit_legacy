@@ -14,7 +14,7 @@ function Bug(pos) {
   
   function updateGO() {
     Sim.bus.emit('move-bug', key,
-      Sim.playground.toViewPos(my.pos),
+      my.pos,
       -heading / 180 * Math.PI + Math.PI)
   }
   

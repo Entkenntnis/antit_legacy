@@ -188,16 +188,6 @@ function Playground(width, height) {
     return true;
   }
   
-  this.toViewPos = function(pos, h){
-    if (h === undefined) {
-      h = 0;
-    }
-    return new THREE.Vector3(
-      pos.x - my.width / 2.0,
-      h,
-      pos.y - my.height / 2.0);
-  }
-  
   this.getHillPos = function() {
     var topW = my.width - Optionen.EckenAbstand*2;
     var leftH = my.height - Optionen.EckenAbstand * 2;     
@@ -364,7 +354,7 @@ function Hill(pos, playerid) {
   var markers = []
   
   function updateGO() {
-    Sim.bus.emit('move-hill', key, Sim.playground.toViewPos(my.pos))
+    Sim.bus.emit('move-hill', key, my.pos)
   }
   
   function setFlagColor() {
@@ -374,7 +364,7 @@ function Hill(pos, playerid) {
   this.addMarker = function() {
     var key = Hill.markerCounter++
     Sim.bus.emit('add-marker', key,
-      Sim.playground.toViewPos(my.pos),
+      my.pos,
       Optionen.SpielerFarben[my.playerid])
     markers.push({
       key: key,
@@ -444,7 +434,7 @@ function Sugar(pos) {
   function updateGO() {
     var linScale = my.amount / Optionen.ZuckerGröße * Optionen.ZuckerVergrößerung
     var scale = Math.max(Math.pow(linScale, 1/2), 0.000001)
-    Sim.bus.emit('move-sugar', key, Sim.playground.toViewPos(my.pos), scale)
+    Sim.bus.emit('move-sugar', key, my.pos, scale)
   }
   
   this.unload1Sugar = function() {
@@ -479,7 +469,7 @@ function Apple(pos) {
   
   function updateGO() {
     var height = pid!==undefined?5:0;
-    Sim.bus.emit('move-apple', key, Sim.playground.toViewPos(my.pos, height))
+    Sim.bus.emit('move-apple', key, my.pos, height)
   }
   
   this.addAnt = function(ant) {
@@ -607,7 +597,7 @@ function Bug(pos) {
   
   function updateGO() {
     Sim.bus.emit('move-bug', key,
-      Sim.playground.toViewPos(my.pos),
+      my.pos,
       -heading / 180 * Math.PI + Math.PI)
   }
   
@@ -727,11 +717,10 @@ function Ant(pos, playerid) {
   
   function updateGO() {
     Sim.bus.emit('move-ant', my.key,
-      Sim.playground.toViewPos(my.pos),
+      my.pos,
       -my.heading / 180 * Math.PI + Math.PI)
     if (my.load > 0) {
-      Sim.bus.emit('move-sugarbox', my.key,
-        Sim.playground.toViewPos(my.pos, Optionen.ZuckerStückchenHöhe))
+      Sim.bus.emit('move-sugarbox', my.key, my.pos)
     } else {
       Sim.bus.emit('remove-sugarbox', my.key)
     }

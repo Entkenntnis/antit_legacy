@@ -72,11 +72,10 @@ function Ant(pos, playerid) {
   
   function updateGO() {
     Sim.bus.emit('move-ant', my.key,
-      Sim.playground.toViewPos(my.pos),
+      my.pos,
       -my.heading / 180 * Math.PI + Math.PI)
     if (my.load > 0) {
-      Sim.bus.emit('move-sugarbox', my.key,
-        Sim.playground.toViewPos(my.pos, Optionen.ZuckerStückchenHöhe))
+      Sim.bus.emit('move-sugarbox', my.key, my.pos)
     } else {
       Sim.bus.emit('remove-sugarbox', my.key)
     }

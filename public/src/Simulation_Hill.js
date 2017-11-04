@@ -17,7 +17,7 @@ function Hill(pos, playerid) {
   var markers = []
   
   function updateGO() {
-    Sim.bus.emit('move-hill', key, Sim.playground.toViewPos(my.pos))
+    Sim.bus.emit('move-hill', key, my.pos)
   }
   
   function setFlagColor() {
@@ -27,7 +27,7 @@ function Hill(pos, playerid) {
   this.addMarker = function() {
     var key = Hill.markerCounter++
     Sim.bus.emit('add-marker', key,
-      Sim.playground.toViewPos(my.pos),
+      my.pos,
       Optionen.SpielerFarben[my.playerid])
     markers.push({
       key: key,

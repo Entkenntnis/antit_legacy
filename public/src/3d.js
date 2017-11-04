@@ -125,6 +125,8 @@
     var marker0 = undefined
     var poison0 = undefined
     var gamefloor = undefined
+    var width = 0
+    var height = 0
     var skybox = undefined
     var antStore = undefined
     var hillStore = undefined
@@ -301,6 +303,18 @@
     }
     
     
+  
+    function toViewPos(pos, h){
+      if (h === undefined) {
+        h = 0;
+      }
+      return new THREE.Vector3(
+        pos.x - width / 2.0,
+        h,
+        pos.y - height / 2.0);
+    }
+    
+    
     // new event listeners
     Bus.on('change-ant-color', function(key, color) {
       setAntBodyColor(antStore.get(key), color)
@@ -308,13 +322,13 @@
     
     Bus.on('move-ant', function(key, pos, roty) {
       var antBody = antStore.get(key)
-      antBody.position.copy(pos)
+      antBody.position.copy(toViewPos(pos))
       antBody.rotation.y = roty
     })
     
     Bus.on('move-sugarbox', function(key, pos) {
       var sugarBox = sugarBoxStore.get(key)
-      sugarBox.position.copy(pos)
+      sugarBox.position.copy(toViewPos(pos, Optionen.ZuckerStückchenHöhe))
     })
     
     Bus.on('remove-sugarbox', function(key) {
@@ -327,8 +341,8 @@
       antStore.remove(key);
     })
     
-    Bus.on('move-apple', function(key, pos) {
-      appleStore.get(key).position.copy(pos)
+    Bus.on('move-apple', function(key, pos, height) {
+      appleStore.get(key).position.copy(toViewPos(pos, height))
     })
     
     Bus.on('remove-apple', function(key) {
@@ -336,14 +350,14 @@
     })
     
     Bus.on('move-bug', function(key, pos, roty) {
-      bugStore.get(key).position.copy(pos)
+      bugStore.get(key).position.copy(toViewPos(pos))
       bugStore.get(key).rotation.y = roty
     })
     
     Bus.on('add-marker', function(key, pos, color) {
       var marker = markerStore.get(key)
       setMarkerColor(marker, color)
-      marker.position.copy(pos)
+      marker.position.copy(toViewPos(pos))
       var s = Optionen.MarkerGröße
       marker.scale.set(s, s, s)
       marker.material.opacity = Optionen.MarkerDurchsichtigkeit
@@ -363,7 +377,7 @@
     })
     
     Bus.on('move-hill', function(key, pos) {
-      hillStore.get(key).position.copy(pos)
+      hillStore.get(key).position.copy(toViewPos(pos))
     })
     
     Bus.on('change-hill-color', function(key, color) {
@@ -371,6 +385,8 @@
     })
     
     Bus.on('set-xy', function(w, h) {
+      width = w
+      height = h
       gamefloor.geometry = new THREE.PlaneGeometry(w, h, 1, 1)
       gamefloor.geometry.verticesNeedUpdate = true
       setControlsBounds(w/2, h/2)
@@ -378,7 +394,7 @@
     
     Bus.on('move-sugar', function(key, pos, scale) {
       var GO = sugarStore.get(key);
-      GO.position.copy(pos);
+      GO.position.copy(toViewPos(pos));
       GO.scale.set(scale, scale, scale);
     })
     

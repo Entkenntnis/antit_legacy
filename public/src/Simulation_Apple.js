@@ -16,7 +16,7 @@ function Apple(pos) {
   
   function updateGO() {
     var height = pid!==undefined?5:0;
-    Sim.bus.emit('move-apple', key, Sim.playground.toViewPos(my.pos, height))
+    Sim.bus.emit('move-apple', key, my.pos, height)
   }
   
   this.addAnt = function(ant) {
