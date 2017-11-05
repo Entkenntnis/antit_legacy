@@ -88,15 +88,15 @@
   
   AntIT.NeueAmeise = function (name) {
     var newAnt = {Name:name};
-    if (Sim.API.ants.length < Optionen.MaximaleSpieler) {
+    if (Sim.API.ants.length < Sim.Opts.MaximaleSpieler) {
       Sim.API.ants.push(newAnt);
     }
     return newAnt;
   }
 
-  if (Optionen.EntwicklerModus) {
+  if (Sim.Opts.EntwicklerModus) {
     AntIT.Sim = Sim;
-    AntIT.Optionen = Optionen;
+    AntIT.Optionen = Sim.Opts;
   }
 
   var API = new APIWrapper()

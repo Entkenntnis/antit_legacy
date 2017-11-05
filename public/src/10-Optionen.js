@@ -75,5 +75,5 @@ var AntIT = {};
   }
  
   //export
-  AntIT._optionen = Optionen;
+  AntIT._optionen = Optionen
 })();
