@@ -23,14 +23,15 @@
     
     this.init = function() {
       Sim.rng = new Math.seedrandom("hello.")
-      var area = (1 + (API.ants.length * Optionen.SpielfeldVerhältnis)) * Optionen.SpielfeldGrundGröße;
+      var area = (1 + (Sim.API.ants.length * Optionen.SpielfeldVerhältnis))
+        * Optionen.SpielfeldGrundGröße;
       var width = Math.round(Math.sqrt(area * Optionen.SpielfeldVerhältnis));
       var height = Math.round(Math.sqrt(area / Optionen.SpielfeldVerhältnis));
-      Sim.playground = new Playground(width, height);
+      Sim.playground = new Sim.Playground(width, height);
     
-      for(var i = 0; i < API.ants.length; i++) {
-        Sim.players.push(new Player(i, API.ants[i]));
-        Sim.hills.push(new Hill(Sim.playground.getHillPos(), i));
+      for(var i = 0; i < Sim.API.ants.length; i++) {
+        Sim.players.push(new Sim.Player(i, Sim.API.ants[i]));
+        Sim.hills.push(new Sim.Hill(Sim.playground.getHillPos(), i));
       }
     }
     
@@ -68,6 +69,14 @@
     getPoints : function() { 
       return Sim.players.map(function(p){return p.getPoints()}).join(",")
     },
+  }
+  
+  AntIT.NeueAmeise = function (name) {
+    var newAnt = {Name:name};
+    if (Sim.API.ants.length < Optionen.MaximaleSpieler) {
+      Sim.API.ants.push(newAnt);
+    }
+    return newAnt;
   }
 
   if (Optionen.EntwicklerModus) {

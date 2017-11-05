@@ -1,2 +1,0 @@
-rm ../Simulation.js
-cat Simulation_{Head,Helper,Const,Player,Playground,Hill,Sugar,Apple,Bug,Ant,Job,Simulation,APIWrapper,Position,SimObject,API,Tail}.js >> ../Simulation.js
