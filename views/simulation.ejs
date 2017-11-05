@@ -32,8 +32,9 @@
           <script src="/src/Simulation/26-Bug.js"></script>
           <script src="/src/Simulation/30-API.js"></script>
           <script src="/src/Simulation/99-Seal.js"></script>
-          <script src="/src/SimPulse.js"></script>
-          <script src="/src/3d.js"></script>
+          <script src="/src/View/SimPulse.js"></script>
+          <script src="/src/View/3d.js"></script>
+          <script src="/src/Seal.js"></script>
           
         <div style="position: absolute; z-index: 1; left: 50px; bottom: 40px; width:400px; height:40px;font-size:1em;color:white;">
 	<p>Maus: Links - drehen / Rechts - ziehen<br />Touch: Wischen - ziehen / lang tippen - drehen</p>
@@ -102,29 +103,13 @@
 %>document.getElementById("intro-text").innerHTML = "Dateien werden geladen ...";<%
 
   if (!atLeastOnFile) {%>
-    fehler("Keine Ameisen geladen!");
+    document.getElementById('intro-text').innerHTML = "Keine Ameise geladen!"
+    throw "Keine Ameise geladen!"
   <%} 
 
 %>
-var hash = "<%-hash%>";
-AntIT.StarteSimulation();
-window.onerror=fehler;
-function fehler(msg){
- alert("MELDUNG\n" + msg);
- AntIT._abortSimulation();
-}
-AntIT._onSubmit = function(points) {
-  var request = new XMLHttpRequest();
-  request.open("GET","<%=prefix%>/submit?hash=" + hash + "&points=" + points);
-  request.addEventListener('load', function(event) {
-     if (request.status >= 200 && request.status < 300) {
-        if (request.responseText == "ok") {
-          AntIT._submitFinished()
-        }
-     }
-  });
-  request.send();
-}
+AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>");
+
 </script>
     </body>
 </html>

@@ -70,18 +70,5 @@
       return Sim.players.map(function(p){return p.getPoints()}).join(",")
     },
   }
-  
-  AntIT.NeueAmeise = function (name) {
-    var newAnt = {Name:name};
-    if (Sim.API.ants.length < Optionen.MaximaleSpieler) {
-      Sim.API.ants.push(newAnt);
-    }
-    return newAnt;
-  }
-
-  if (Optionen.EntwicklerModus) {
-    AntIT.Sim = Sim;
-    AntIT.Optionen = Optionen;
-  }
 
 })(AntIT._optionen)

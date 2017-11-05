@@ -82,8 +82,21 @@
         details = "\nVolk: " + Sim.players[API.staticPlayerId].getKI().Name + "\nAufruf: " + API.ctxt;
       }
       alert("MELDUNG\n" + text + details);
-      AntIT._abortSimulation();
+      Sim.bus.emit('abort-simulation')
     }
+  }
+  
+  AntIT.NeueAmeise = function (name) {
+    var newAnt = {Name:name};
+    if (Sim.API.ants.length < Optionen.MaximaleSpieler) {
+      Sim.API.ants.push(newAnt);
+    }
+    return newAnt;
+  }
+
+  if (Optionen.EntwicklerModus) {
+    AntIT.Sim = Sim;
+    AntIT.Optionen = Optionen;
   }
 
   var API = new APIWrapper()

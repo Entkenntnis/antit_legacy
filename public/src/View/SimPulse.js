@@ -5,9 +5,10 @@
 (function () {
   "use strict";
   
-  var am = AntIT;
   var Sim = AntIT._sim;
   var Optionen = AntIT._optionen;
+  var hash = ''
+  var prefix = ''
   
   var SimPulse = {
       running : false
@@ -54,8 +55,8 @@
     , end:function(){
       SimPulse.running = false;
       SimPulse.simStatus.innerHTML = "beendet";
-      if (AntIT._onSubmit) {
-        AntIT._onSubmit(Sim.getPoints())
+      if (onSubmit) {
+        onSubmit(Sim.getPoints())
       }
     }
   }
@@ -77,15 +78,26 @@
   var x = {val:function(){},val2:function(){},val3:function(){return SimPulse.running}}
   AntIT._extStart = x
   
-  AntIT.StarteSimulation = function(){
+  AntIT.StarteSimulation = function(h, p){
+    hash = h
+    prefix = p
     x.val(SimPulse.init, SimPulse.tick)
   }
   
-  AntIT._submitFinished = function() {
-    SimPulse.simStatus.innerHTML = "Simulation abgeschlossen";
+  function onSubmit(points) {
+    var request = new XMLHttpRequest();
+    request.open("GET", prefix + "/submit?hash=" + hash + "&points=" + points);
+    request.addEventListener('load', function(event) {
+       if (request.status >= 200 && request.status < 300) {
+          if (request.responseText == "ok") {
+            SimPulse.simStatus.innerHTML = "Simulation abgeschlossen";
+          }
+       }
+    });
+    request.send();
   }
   
-  AntIT._abortSimulation = function () {
+  Sim.getBus().on('abort-simulation', function () {
     var error =  document.createElement("DIV");
     error.innerHTML = "Simulationsfehler";
     error.style.color = "red";
@@ -94,6 +106,13 @@
     error.style.fontWeight = "bold";
     document.getElementById("hud").appendChild(error);
     throw "Simulationsfehler";
+  })
+  
+  
+  window.onerror=fehler;
+  function fehler(msg){
+   alert("MELDUNG\n" + msg);
+   Sim.getBus().emit('abort-simulation')
   }
   
   var playerElements = {}
