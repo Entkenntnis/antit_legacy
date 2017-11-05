@@ -22,7 +22,7 @@
     }
     
     this.init = function() {
-      Sim.rng = new Math.seedrandom("hello.")
+      Sim.rng = new Math.seedrandom(/*"hello."*/)
       var area = (1 + (Sim.API.ants.length * Optionen.SpielfeldVerhältnis))
         * Optionen.SpielfeldGrundGröße;
       var width = Math.round(Math.sqrt(area * Optionen.SpielfeldVerhältnis));

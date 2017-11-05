@@ -19,12 +19,11 @@
     <body>
           <script src="/js/three.min.js"></script>
           <script src="/js/orbit.js"></script>
-          <script src="/js/tween.js"></script>
           <script src="/js/stats.min.js"></script>
           <script src="/js/seedrandom.min.js"></script>
-          <script src="/src/Optionen.js"></script>
+          <script src="/js/mybus.js"></script>
           
-          <script src="/src/mybus.js"></script>
+          <script src="/src/10-Optionen.js"></script>
           <script src="/src/Simulation/00-Sim.js"></script>
           <script src="/src/Simulation/02-Util.js"></script>
           <script src="/src/Simulation/04-APIWrapper.js"></script>
@@ -39,7 +38,34 @@
           <script src="/src/Simulation/26-Bug.js"></script>
           <script src="/src/Simulation/30-API.js"></script>
           <script src="/src/Simulation/99-Seal.js"></script>
-          <script src="/src/SimPulse.js"></script>
+          <script src="/src/View/00-View.js"></script>
+          <script src="/src/View/10-Pulse.js"></script>
+          <script src="/src/View/12-UI.js"></script>
+          
+          <script>
+          
+          var View = AntIT._view
+          
+          View.Pulse.getBus().on('start', function(){
+            View.Pulse.Init()
+            View.Pulse.setFps(undefined)
+            
+            function tick(){
+              for (var i = 0; i < 300; i++) {
+                if (!View.Pulse.Tick())
+                  return
+              }
+              setTimeout(tick, 0)
+            }
+            
+            tick()
+          
+          })
+          
+          </script>
+          
+          <script src="/src/View/99-Seal.js"></script>
+          <script src="/src/99-Seal.js"></script>
           
       
       <div class="container">
@@ -48,20 +74,6 @@
       </div>
           
           <script>
-          
-          
-  AntIT._extStart.val = function(f, t) {
-    f()
-    function tick() {
-      t()
-      setTimeout(tick, 0)
-    }
-    tick()
-  }
-  
-  delete AntIT._sim
-  delete AntIT._optionen
-  delete AntIT._extStart
           
           
           

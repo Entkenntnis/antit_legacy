@@ -1,7 +1,7 @@
 // File 2: exports _vw into AntJS, which is the interface to all graphic objects
 //         and the init function to start everything
 
-(function() {  
+(function(View) {  
   "use strict";
   var Optionen = AntIT._optionen
   var Bus = AntIT._sim.getBus()
@@ -9,16 +9,22 @@
   // project-wide variables
   var scene = new THREE.Scene(), camera, renderer, stats, controls, manager;
   
-  var tick = undefined
-  
-  AntIT._extStart.val = init
-  AntIT._extStart.val2 = function() {
+  View.Pulse.getBus().on('redraw', function(){
     vw.needRedraw = true
-  }
+  })
+  
+  View.Pulse.getBus().on('pre-tick', function(){
+    stats.begin()
+  })
+  
+  View.Pulse.getBus().on('post-tick', function(){
+    stats.end()
+  })
+  
+  View.Pulse.getBus().on('start', init)
 
-  function init(f, t){
+  function init(){
     
-    tick = t
     // the floor lies in the xz-plane, don't worry about aspect here, will be done on resize 
     camera = new THREE.PerspectiveCamera(60, 1 /*aspect*/, 0.1, 200000);
     camera.position.set(0, 600, 1700);
@@ -32,7 +38,6 @@
     stats = new Stats();
     stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
     document.body.appendChild( stats.dom );
-    AntIT._stats = stats
     
     // make it movable
     controls = new THREE.OrbitControls(camera);
@@ -56,7 +61,7 @@
     manager.onLoad = function(){
       document.getElementById("loading").style.display = "none";
       vw.onLoad();
-      f();
+      View.Pulse.Init()
       animate();
     };
   }
@@ -71,7 +76,7 @@
   }
 
   function animate(e){
-    tick();
+    View.Pulse.Tick()
     if (vw.needRedraw){
       //stats.begin();
       renderer.render(scene, camera);
@@ -419,8 +424,4 @@
   if (Optionen.EntwicklerModus) {
     AntIT.Vw = vw
   }
-  
-  delete AntIT._sim;
-  delete AntIT._optionen;
-  delete AntIT._extStart
-})();
+})(AntIT._view);
