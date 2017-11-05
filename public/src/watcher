@@ -1,1 +1,0 @@
-while inotifywait -e modify .; do sleep 2; bash combine; cloc 3d.js Simulation.js SimPulse.js Optionen.js; done
