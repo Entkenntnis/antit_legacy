@@ -21,8 +21,12 @@
       return Sim.players.length;
     }
     
-    this.init = function() {
-      Sim.rng = new Math.seedrandom(/*"hello."*/)
+    this.init = function(seed) {
+      if (seed) {
+        Sim.rng = new Math.seedrandom(seed)
+        console.log("Seed: " + seed)
+       } else
+        Sim.rng = new Math.seedrandom()
       var area = (1 + (Sim.API.ants.length * Optionen.SpielfeldVerhältnis))
         * Optionen.SpielfeldGrundGröße;
       var width = Math.round(Math.sqrt(area * Optionen.SpielfeldVerhältnis));
@@ -60,6 +64,10 @@
   var Sim = new Simulation()
   
   AntIT._rawsim = Sim
+  
+  // compat, hoffentlich bald zu löschen
+  window.AntJS = AntIT
+  
 
   AntIT._sim = {
     Init : Sim.init,

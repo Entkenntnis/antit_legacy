@@ -23,7 +23,7 @@
     bus.emit('init')
     bus.emit('redraw')
     running = true
-    Sim.Init()
+    Sim.Init(seed)
     startTime = Date.now()
   }
   
@@ -73,6 +73,7 @@
   }
   var hash = ''
   var prefix = ''
+  var seed = undefined
   
   Pulse.getInfo = function() {
     return {hash:hash, prefix:prefix}
@@ -81,9 +82,10 @@
   View.Pulse = Pulse
   
   
-  AntIT.StarteSimulation = function(h, p){
+  AntIT.StarteSimulation = function(h, p, s){
     hash = h
     prefix = p
+    seed = s
     bus.emit('start')
   }
 
