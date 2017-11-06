@@ -1,2 +1,2 @@
-console.log("Fight mode activated")
+console.log("Kampfmodus aktiviert")
 AntIT._optionen.Kampfmodus = true

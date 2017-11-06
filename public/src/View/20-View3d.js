@@ -3,8 +3,8 @@
 
 (function(View) {  
   "use strict";
-  var Optionen = AntIT._optionen
-  var Bus = AntIT._sim.getBus()
+  var Optionen = View.Opts
+  var Bus = View.Sim.getBus()
   
   // project-wide variables
   var scene = new THREE.Scene(), camera, renderer, stats, controls, manager;
