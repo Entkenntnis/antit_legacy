@@ -24,10 +24,13 @@
          + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")"
       if (Sim.Opts.Kampfmodus) {
         var energy = Sim.hills[id].getEnergy()
-        Sim.bus.emit('update-player-stats', id, line1 +
-          "<br>(Krieger: " + energy + " / Energie: ... / Lebenspunkte: ...)")
+        var lp = Sim.hills[id].getLp()
+        Sim.bus.emit('update-player-stats', id, "(Arbeiter: " + ants + " / Tote: "
+         + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")"+
+          "<br>(Krieger: 0 / Energie: " + energy + " / Lebenspunkte: " + lp + ")")
       } else {
-        Sim.bus.emit('update-player-stats', id, line1)
+        Sim.bus.emit('update-player-stats', id, "(Ameisen: " + ants + " / Tote: "
+         + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")")
       }
       
     }
