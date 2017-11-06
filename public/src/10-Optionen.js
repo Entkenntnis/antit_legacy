@@ -72,6 +72,7 @@ var AntIT = {};
     , Toleranz : 3
     , ZuckerRadius : 10
     , JobLimit : 100
+    , KampfModus : false
   }
  
   //export

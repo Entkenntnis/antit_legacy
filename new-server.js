@@ -241,11 +241,13 @@ function checkColony() {
   return function handleColony(req, res, next) {
     var path = req.params.colony
     var collection = getColonyCollection(path)
-    if (collection) {
+    if (collection && (!req.user || req.user.colony == path)) {
       req.curCol = collection
       req.curHome = '/' + path
       next()
     } else {
+      if (req.user)
+        req.logout()
       res.redirect("/")
     }
   }
@@ -372,7 +374,7 @@ route({name:"/simulation"}, function(req, res) {
       hash:hash,
       prefix:req.curHome,
       devMode:colonyInfo[req.params.colony].debugging,
-      srcnew:process.env.antit_srcnew})
+      fightMode:colonyInfo[req.params.colony].fight})
   })
 })
 
