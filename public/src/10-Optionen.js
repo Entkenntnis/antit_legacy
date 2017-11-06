@@ -73,6 +73,7 @@ var AntIT = {};
     , ZuckerRadius : 10
     , JobLimit : 100
     , KampfModus : false
+    , BauTrefferpunkte : 5000
   }
  
   //export

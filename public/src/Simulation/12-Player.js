@@ -20,8 +20,16 @@
     }
     
     function updateDetails(){
-      Sim.bus.emit('update-player-stats', id, "(Ameisen: " + ants + " / Tote: " + deadants + 
-        " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")")
+      var line1 = "(Ameisen: " + ants + " / Tote: "
+         + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")"
+      if (Sim.Opts.Kampfmodus) {
+        var energy = Sim.hills[id].getEnergy()
+        Sim.bus.emit('update-player-stats', id, line1 +
+          "<br>(Krieger: " + energy + " / Energie: ... / Lebenspunkte: ...)")
+      } else {
+        Sim.bus.emit('update-player-stats', id, line1)
+      }
+      
     }
     
     this.addSugar = function(amount) {

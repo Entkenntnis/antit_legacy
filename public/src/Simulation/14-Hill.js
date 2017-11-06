@@ -12,7 +12,8 @@
       playerid: playerid,
       energy: Sim.Opts.AnfangsEnergie,
       feedIndex: 0,
-      timeToNextAnt: Sim.Opts.AmeiseWartezeit
+      timeToNextAnt: Sim.Opts.AmeiseWartezeit,
+      lp : Sim.Opts.BauTrefferpunkte,
     })
     
     var key = Hill.counter++

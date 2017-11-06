@@ -34,8 +34,8 @@
       Sim.playground = new Sim.Playground(width, height);
     
       for(var i = 0; i < Sim.API.ants.length; i++) {
-        Sim.players.push(new Sim.Player(i, Sim.API.ants[i]));
         Sim.hills.push(new Sim.Hill(Sim.playground.getHillPos(), i));
+        Sim.players.push(new Sim.Player(i, Sim.API.ants[i]));
       }
     }
     
