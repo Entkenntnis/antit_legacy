@@ -150,8 +150,21 @@
     var markerStore = undefined
     var poisonStore =undefined
     this.needRedraw = true
-    this.onExtLoad = function(){}
-    this.onExtTick = function(){};
+    
+    var kampfmeise0 = undefined
+    var riesenmeise0 = undefined
+    var giftmeise0 = undefined
+    var albinomeise0 = undefined
+    var räubermeise0 = undefined
+    
+    var kampfStore = undefined
+    var riesenStore = undefined
+    var giftStore = undefined
+    var albinoStore = undefined
+    var räuberStore = undefined
+    
+    var ball0 = undefined
+    var ballStore = undefined
     
     this.load = function(){
       
@@ -201,7 +214,30 @@
         });
         var s = Optionen.AmeisenGröße
         obj.scale.set(s, s, s);
-        ant0 = obj;
+        ant0 = obj
+        
+        kampfmeise0 = ant0.clone()
+        kampfmeise0.children[0].children[10].material =
+          new THREE.MeshPhongMaterial({color:0xff8400})
+        
+        riesenmeise0 = ant0.clone()
+        riesenmeise0.scale.set(s*2, s*2, s*2)
+        riesenmeise0.children[0].children[10].material =
+          new THREE.MeshPhongMaterial({color:0xff5900})
+        
+        giftmeise0 = ant0.clone()
+        giftmeise0.children[0].children[10].material =
+          new THREE.MeshPhongMaterial({color:0xc300ff})
+        
+        albinomeise0 = ant0.clone()
+        albinomeise0.children[0].children[10].material =
+          new THREE.MeshPhongMaterial({color:0xffffff})
+        
+        räubermeise0 = ant0.clone()
+        räubermeise0.children[0].children[10].material =
+          new THREE.MeshPhongMaterial({color:0xe5ff00})
+        riesenmeise0.scale.set(s*1.3, s*1.3, s*1.3)
+        
       }.bind(this));
       objectLoader.load("/models/anthill.json", function ( obj ) {
         var earthTexture = textureLoader.load( "/assets/earth.jpg" );
@@ -247,13 +283,19 @@
       var sphere1 = new THREE.Mesh(geometry1, material1);
       marker0 = sphere1;
       
+      // ball
+      var ballgeo = new THREE.IcosahedronGeometry( 2, 1 )
+			var ballmat = new THREE.MeshPhongMaterial({color:0x000000})
+			ball0 = new THREE.Mesh(ballgeo, ballmat)
+      
       // poison ring
-      var ring = new THREE.RingBufferGeometry( 20, 50, 8 );
+      /*var ring = new THREE.RingBufferGeometry( 20, 50, 8 );
       var ringMat = new THREE.MeshPhongMaterial( { color: 0xffff00, side: THREE.DoubleSide, transparent:true, opacity:0.4 } );
       var poisonRing = new THREE.Mesh( ring, ringMat );
       poisonRing.rotation.x = Math.PI / 2;
       poisonRing.position.y = 2
       poison0 = poisonRing
+      scene.add(poison0)*/
       
       /*// magic activation
       var pyramid = new THREE.TetrahedronGeometry(2)
@@ -288,6 +330,15 @@
       sugarBoxStore = new UnitStore(sugarBox0);
       markerStore = new UnitStore(marker0);
       poisonStore = new UnitStore(poison0);
+      
+      
+      kampfStore = new UnitStore(kampfmeise0)
+      riesenStore = new UnitStore(riesenmeise0)
+      giftStore = new UnitStore(giftmeise0)
+      albinoStore = new UnitStore(albinomeise0)
+      räuberStore = new UnitStore(räubermeise0)
+      
+      ballStore = new UnitStore(ball0)
     }
     
     function setAntBodyColor(ant, c){
