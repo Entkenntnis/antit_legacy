@@ -21,6 +21,8 @@
           <script src="/js/mybus.js"></script>
           
           <script src="/src/10-Optionen.js"></script>
+          <script src="/src/12-DeveloperMode.js"></script>
+          <script src="/src/14-FightMode.js"></script>
           <script src="/src/Simulation/00-Sim.js"></script>
           <script src="/src/Simulation/02-Util.js"></script>
           <script src="/src/Simulation/04-APIWrapper.js"></script>
@@ -67,6 +69,8 @@
       <div class="container">
         <h1>Headless AntIT! Simulator</h1>
         <div id="hud"></div>
+        <br>
+        <p>Sollte 17725 Punkte ergeben mit 100 Ameisen, 15 Toten, 1745 Zucker und 9 Äpfel</p>
       </div>
           
           <script>
@@ -378,7 +382,7 @@ function arbeiterApfelSuchen() {
     }
 }
 
-AntIT.StarteSimulation()
+AntIT.StarteSimulation(null, null, "hello.")
 
           
           </script>

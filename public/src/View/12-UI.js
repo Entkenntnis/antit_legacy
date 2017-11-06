@@ -30,6 +30,8 @@
   
   function onSubmit(points) {
     var info = View.Pulse.getInfo()
+    if (info.prefix == null)
+      return
     var request = new XMLHttpRequest();
     request.open("GET", info.prefix + "/submit?hash=" + info.hash + "&points=" + points);
     request.addEventListener('load', function(event) {
