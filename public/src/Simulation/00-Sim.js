@@ -14,7 +14,6 @@
     this.memories = {}
     this.bus = Minibus.create()
     this.rng = undefined
-    this.cycles = 0
     this.Opts = Optionen
     
     this.playerCount = function() {
@@ -22,6 +21,16 @@
     }
     
     this.init = function(seed) {
+      Sim.cycles = 0
+      Sim.playground = undefined
+      Sim.players = []
+      Sim.hills = []
+      Sim.sugars = []
+      Sim.ants = []
+      Sim.apples = []
+      Sim.bugs = []
+      Sim.memories = {}
+      
       if (seed) {
         Sim.rng = new Math.seedrandom(seed)
         console.log("Seed: " + seed)

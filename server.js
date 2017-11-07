@@ -289,6 +289,7 @@ route({name:"/"}, function(req, res) {
       ants: result.ants,
       globals: result.globals,
       highlightElement: 0,
+      devMode:colonyInfo[req.params.colony].debugging,
       prefix: req.curHome
     })
   })
@@ -369,9 +370,14 @@ route({name:"/simulation"}, function(req, res) {
   req.curCol.find({"ants.antid" : {$in:antIds}}).then((users) => {
     var ants = findAnts(users, req.user?req.user._id.toString():"", antIds)
     var hash = setSimulation(req, ants)
-    res.render('simulation', {
+    var seed = req.query.seedon == 1 ? JSON.stringify(req.query.seed).slice(1, -1) : undefined
+    var repeat = req.query.batchon == 1 ? parseInt(req.query.repeat) : undefined
+    if (repeat == NaN) repeat = undefined
+    res.render(repeat ? 'batch' : 'simulation', {
       code:ants,
       hash:hash,
+      seed:seed,
+      repeat:repeat,
       prefix:req.curHome,
       devMode:colonyInfo[req.params.colony].debugging,
       fightMode:colonyInfo[req.params.colony].fight})

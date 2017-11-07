@@ -65,6 +65,7 @@
     initHTML();
     updateDetails();
     this.addPoints(0);
+    if (KI.Init) KI.Init()
   }
   
   Sim.Player = Player

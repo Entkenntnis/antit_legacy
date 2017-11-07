@@ -151,7 +151,20 @@
         <%} %>
   </select></div>
   <% } %></div>
-  <div style="clear:both;"><br><input type="submit" value="Simulation starten" class="btn btn-success">
+  <div style="clear:both;"><br>
+  <% if (devMode) { %>
+    <% if (user.previous) { %>
+  <input type="checkbox" name="seedon" value="1"<%=user.previous.seedon==1?'checked':''%>> Seed: <input type="text" name="seed" value="<%=user.previous.seed%>"><br>
+  <input type="checkbox" name="batchon" value="1"<%=user.previous.batchon==1?'checked':''%>> Wiederhole: <input type="text" name="repeat" value="<%=user.previous.repeat%>">
+    <% } else { %>
+  <input type="checkbox" name="seedon" value="1"> Seed: <input type="text" name="seed" value="hello."><br>
+  <input type="checkbox" name="batchon" value="1"> Wiederhole: <input type="text" name="repeat" value="10">
+    <% } %>
+  <br>
+  <br>
+  
+  <% } %>
+  <input type="submit" value="Simulation starten" class="btn btn-success">
 	</div>
   </form>
   

@@ -1,10 +1,15 @@
 
 (function(View){
 
-  var simStatus = document.createElement("DIV")
+  var simStatus = undefined
   
-  View.Pulse.getBus().on('init', function(){
-    document.getElementById("hud").appendChild(simStatus)
+  var hudid = ""
+  
+  View.Pulse.getBus().on('init', function(hud){
+    simStatus = document.createElement("DIV")
+    hudid = hud
+    document.getElementById(hudid).appendChild(simStatus)
+    document.getElementById("loading").style.display = "none"
   })
   
   View.Pulse.getBus().on('update-status', function(txt){
@@ -53,8 +58,8 @@
     error.style.marginTop = "20px";
     error.style.marginLeft = "50px";
     error.style.fontWeight = "bold";
-    if (document.getElementById("hud")) {
-      document.getElementById("hud").appendChild(error)
+    if (document.getElementById(hudid)) {
+      document.getElementById(hudid).appendChild(error)
     }
     throw "Simulationsfehler";
   })
@@ -89,7 +94,7 @@
     details.style.color = "black"
     details.style.marginLeft = "20px"
     para.appendChild(details)
-    document.getElementById("hud").appendChild(para)
+    document.getElementById(hudid).appendChild(para)
     playerElements[id] = {points : pointsE, details : details}
   })
   

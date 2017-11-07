@@ -59,7 +59,6 @@
     vw.load();
     
     manager.onLoad = function(){
-      document.getElementById("loading").style.display = "none";
       vw.onLoad();
       View.Pulse.Init()
       animate();
