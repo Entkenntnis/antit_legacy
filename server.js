@@ -412,6 +412,16 @@ route({name:"/nodebug", login:true, superuser:true}, function(req, res) {
   res.send("debugging mode off")
 })
 
+route({name:"/fight", login:true, superuser:true}, function(req, res) {
+  colonyInfo[req.params.colony].fight = true
+  res.send("fight mode on")
+})
+
+route({name:"/nofight", login:true, superuser:true}, function(req, res) {
+  colonyInfo[req.params.colony].fight = false
+  res.send("fight mode off")
+})
+
 route({name:"/stats", login:true, superuser:true}, function(req, res) {
   res.render('stats', {data:simulations, prefix: req.curHome})
 })

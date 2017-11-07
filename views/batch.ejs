@@ -61,7 +61,9 @@
         <div id="hud<%=i%>"></div>
         <% } %>
         <br>
-        <div id="batchstat"></div>
+        <div id="batchstat"></div><br>
+        <div id="stats"></div>
+        <br><br><br>
       </div>
           
    <script>     
@@ -122,7 +124,21 @@ function start(){
   }
 }
 var counter = 1
-View.Pulse.getBus().on('submit', start)
+var stats = []
+View.Pulse.getBus().on('submit', function(){
+    var points = View.Sim.getPoints().split(',')
+    if (stats.length == 0)
+      stats = points
+    else {
+      for (var i = 0; i < points.length; i++) {
+        stats[i] = parseInt(stats[i]) + parseInt(points[i])
+      }
+    }
+    document.getElementById("stats").innerHTML = stats.map(function(p){
+      return "durchschnittlich " + Math.round(p/(counter-1)) + " Punkte"
+    }).join('<br>')
+    setTimeout(start,0)
+})
 start()
 
 </script>

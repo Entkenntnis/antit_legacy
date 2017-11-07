@@ -27,7 +27,7 @@
         var lp = Sim.hills[id].getLp()
         Sim.bus.emit('update-player-stats', id, "(Arbeiter: " + ants + " / Tote: "
          + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")"+
-          "<br>(Krieger: 0 / Energie: " + energy + " / Lebenspunkte: " + lp + ")")
+          " (Krieger: 0 / Energie: " + energy + " / Lebenspunkte: " + lp + ")")
       } else {
         Sim.bus.emit('update-player-stats', id, "(Ameisen: " + ants + " / Tote: "
          + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")")

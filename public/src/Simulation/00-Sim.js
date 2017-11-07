@@ -42,9 +42,19 @@
       var height = Math.round(Math.sqrt(area / Optionen.SpielfeldVerhältnis));
       Sim.playground = new Sim.Playground(width, height);
     
-      for(var i = 0; i < Sim.API.ants.length; i++) {
-        Sim.hills.push(new Sim.Hill(Sim.playground.getHillPos(), i));
-        Sim.players.push(new Sim.Player(i, Sim.API.ants[i]));
+      if (Sim.Opts.Kampfmodus) {
+        if (Sim.API.ants.length != 2)
+          throw "Kampfmodus funktioniert nur 1 gegen 1"
+        console.log(width + " | " + height)
+        Sim.hills.push(new Sim.Hill({x:300,y:height/2}, 0))
+        Sim.hills.push(new Sim.Hill({x:width-300,y:height/2}, 1))
+        Sim.players.push(new Sim.Player(0, Sim.API.ants[0]))
+        Sim.players.push(new Sim.Player(1, Sim.API.ants[1]))
+      } else {
+        for(var i = 0; i < Sim.API.ants.length; i++) {
+          Sim.hills.push(new Sim.Hill(Sim.playground.getHillPos(), i));
+          Sim.players.push(new Sim.Player(i, Sim.API.ants[i]));
+        }
       }
     }
     

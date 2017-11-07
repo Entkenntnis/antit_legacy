@@ -15,8 +15,10 @@
   View.Pulse.getBus().on('update-status', function(txt){
     simStatus.innerHTML = txt
   })
-
-  document.onkeypress = function(e){
+  
+  document.addEventListener("keypress", keypresshandler);
+  
+  function keypresshandler(e){
     var newFps = undefined;
     if (e.charCode == 49)
       newFps = 4

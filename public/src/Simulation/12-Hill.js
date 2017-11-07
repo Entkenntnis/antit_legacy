@@ -46,15 +46,10 @@
       my.feedIndex += val;
     }
     
-    this.update = function() {
-      var ownAnts = 0;
-      Sim.ants.forEach(function(ant) {
-        if (ant.getPlayerid() == my.playerid)
-          ownAnts++;
-      });
-      if (my.timeToNextAnt-- <= 0 && ownAnts < Sim.Opts.AmeisenMaximum
-            && my.energy >= Sim.Opts.EnergieFürAmeise) {
-        my.timeToNextAnt = Sim.Opts.AmeiseWartezeit;
+    function spawnAnt() {
+      console.log("hi")
+      if (my.energy >= Sim.Opts.EnergieFürAmeise &&
+        ownAnts < Sim.Opts.AmeisenMaximum) {
         my.energy -= Sim.Opts.EnergieFürAmeise;
         var antPos = {x:pos.x,y:pos.y};
         var angle = Sim.rng()*Math.PI*2;
@@ -67,6 +62,22 @@
         Sim.API.setAnt(newAnt);
         Sim.API.callUserFunc("IstGeboren");
         Sim.API.close();
+      }
+    }
+    
+    this.spawnAnt = spawnAnt
+    var ownAnts = 0
+    
+    this.update = function() {
+      ownAnts = 0;
+      Sim.ants.forEach(function(ant) {
+        if (ant.getPlayerid() == my.playerid)
+          ownAnts++;
+      });
+      if (my.timeToNextAnt-- <= 0 && ownAnts < Sim.Opts.AmeisenMaximum
+            && my.energy >= Sim.Opts.EnergieFürAmeise) {
+        my.timeToNextAnt = Sim.Opts.AmeiseWartezeit;
+        if (!Sim.Opts.Kampfmodus) spawnAnt()
       }
       Sim.Util.removeIf(markers, function(m){
         m.cycle++

@@ -27,7 +27,10 @@
     
     // the floor lies in the xz-plane, don't worry about aspect here, will be done on resize 
     camera = new THREE.PerspectiveCamera(60, 1 /*aspect*/, 0.1, 200000);
-    camera.position.set(0, 600, 1700);
+    camera.position.set(0, 600, 1700)
+    if (View.Opts.Kampfmodus) {
+      camera.position.set(0, 1000, 500)
+    }
     
     // the worker in the shadow
     renderer = new THREE.WebGLRenderer();
