@@ -51,6 +51,9 @@
         Sim.players.push(new Sim.Player(0, Sim.API.ants[0]))
         Sim.players.push(new Sim.Player(1, Sim.API.ants[1]))
         Sim.Opts.WanzenProSpieler = 0
+        Sim.Opts.NahrungMindestEntfernung = 100
+        Sim.Opts.NahrungMaximalEntfernung = 300
+        Sim.Opts.NahrungAbstand = 75
         Sim.units = [[], []]
       } else {
         for(var i = 0; i < Sim.API.ants.length; i++) {
@@ -77,9 +80,12 @@
         Sim.units[0].forEach(function(unit) {
           unit.update()
         })
+        Sim.removeDeadUnits(Sim.units[0])
         Sim.units[1].forEach(function(unit) {
           unit.update()
         })
+        Sim.removeDeadUnits(Sim.units[1])
+        Sim.updateMissiles()
       }
       
       Sim.hills.forEach(function(hill) {

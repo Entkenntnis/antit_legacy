@@ -169,6 +169,9 @@
     var ball0 = undefined
     var ballStore = undefined
     
+    var hb0 = undefined
+    var hbStore = undefined
+    
     this.load = function(){
       
       var objectLoader = new THREE.ObjectLoader(manager);
@@ -220,8 +223,9 @@
         ant0 = obj
         
         kampfmeise0 = ant0.clone()
+        kampfmeise0.scale.set(3.3, 3.3, 3.3)
         kampfmeise0.children[0].children[10].material =
-          new THREE.MeshPhongMaterial({color:0xff8400})
+          new THREE.MeshLambertMaterial({color:0x999999})
         
         riesenmeise0 = ant0.clone()
         riesenmeise0.scale.set(s*2, s*2, s*2)
@@ -290,6 +294,11 @@
       var ballgeo = new THREE.IcosahedronGeometry( 2, 1 )
 			var ballmat = new THREE.MeshPhongMaterial({color:0x000000})
 			ball0 = new THREE.Mesh(ballgeo, ballmat)
+			
+			// health bar ?
+			var hbgeo = new THREE.BoxBufferGeometry( 3, 14, 3 );
+      var hbmat = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
+      hb0 = new THREE.Mesh( hbgeo, hbmat )  
       
       // poison ring
       /*var ring = new THREE.RingBufferGeometry( 20, 50, 8 );
@@ -342,6 +351,7 @@
       räuberStore = new UnitStore(räubermeise0)
       
       ballStore = new UnitStore(ball0)
+      hbStore = new UnitStore(hb0)
     }
     
     function setAntBodyColor(ant, c){
@@ -403,6 +413,17 @@
       antBody.rotation.y = roty
     })
     
+    Bus.on('move-hb', function(key, pos, rat) {
+      hbStore.get(key).position.copy(toViewPos(pos, 15))
+      hbStore.get(key).scale.y = rat
+      hbStore.get(key).material = new THREE.MeshBasicMaterial({color:new THREE.Color(1.3-rat, rat, 0)});
+    })
+    
+    Bus.on('remove-unit', function(key) {
+      if (kampfStore.has(key)) kampfStore.remove(key)
+      if (hbStore.has(key)) hbStore.remove(key)
+    })
+    
     Bus.on('move-sugarbox', function(key, pos) {
       var sugarBox = sugarBoxStore.get(key)
       sugarBox.position.copy(toViewPos(pos, Optionen.ZuckerStückchenHöhe))
@@ -443,6 +464,15 @@
     
     Bus.on('remove-marker', function(key) {
       markerStore.remove(key)
+    })
+    
+    Bus.on('move-missile', function(key, pos) {
+      ballStore.get(key).position.copy(toViewPos(pos, 3))
+    })
+    
+    Bus.on('remove-missile', function(key) {
+      if (ballStore.has(key))
+        ballStore.remove(key)
     })
     
     Bus.on('update-marker', function(key) {

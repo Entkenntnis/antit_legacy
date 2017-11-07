@@ -18,7 +18,7 @@ var AntIT = {};
     , EckenAbstand : 300
     , HügelRadius : 40
     , BauErreichtRadius : 10
-    , SpielerFarben : [0xff0000, 0x00ff00, 0x0000ff, 0x00ffff,
+    , SpielerFarben : [0xff0000, 0x0000ff, 0x00ff00, 0x00ffff,
                        0xffff00, 0xff00ff, 0xffffff, 0x000000]
     , ZuckerGröße : 250
     , ZuckerVergrößerung : 0.1
@@ -73,7 +73,9 @@ var AntIT = {};
     , ZuckerRadius : 10
     , JobLimit : 100
     , KampfModus : false
+    
     , BauTrefferpunkte : 5000
+    , GrundEnergie : 20
   }
  
   //export

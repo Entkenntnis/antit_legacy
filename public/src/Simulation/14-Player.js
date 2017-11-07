@@ -66,6 +66,8 @@
       return units
     }
     
+    this.updateDetails = updateDetails
+    
     this.subAnt = function(){
       ants--;
       deadants++;

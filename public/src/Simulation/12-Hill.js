@@ -70,7 +70,7 @@
     
     function spawnUnit() {
       if (Sim.Opts.Kampfmodus && my.energy >= 200
-        && Sim.players[my.playerid].getUnits() < 10) {
+        && Sim.players[my.playerid].getUnits() < 50) {
         my.energy -= 200
         var unit = new Sim.Unit(getSpawnPoint(pos), my.playerid)
         Sim.units[my.playerid].push(unit)
@@ -81,13 +81,38 @@
     this.spawnAnt = spawnAnt
     this.spawnUnit = spawnUnit
     
+    this.hit = function(impact){
+      my.lp -= impact
+      if (my.lp <= 0) {
+        my.lp = 0
+        Sim.players[my.playerid].addPoints(-Infinity)
+        alert("Spieler " + (my.playerid + 1) + " hat verloren!")
+        Sim.cycles = 10000000
+      }
+      Sim.players[my.playerid].updateDetails()
+    }
+    
     var override = false
     
     this.overrideUserControl = function(){
       override = true
     }
     
+    var cooldown = 0
+    
     this.update = function() {
+      if (Sim.Opts.Kampfmodus) {
+        if (cooldown > 0) cooldown--
+        var nextEnemy = Sim.Util.closest(my.pos, Sim.units[(my.playerid+1)%2], 250)
+        if (nextEnemy && cooldown == 0) {
+          Sim.fireMissile(my.pos, nextEnemy, 170, 10)
+          cooldown = 20
+        }
+        if (Sim.cycles % 40 == 39) {
+          my.energy += Sim.Opts.GrundEnergie
+          Sim.players[my.playerid].updateDetails()
+        }
+      }
       if (my.timeToNextAnt-- <= 0
         && Sim.players[my.playerid].getAnts() < Sim.Opts.AmeisenMaximum
         && my.energy >= Sim.Opts.EnergieFürAmeise) {
