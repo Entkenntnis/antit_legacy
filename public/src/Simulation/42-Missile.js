@@ -4,9 +4,9 @@
   var missiles = []
   var counter = 1
   
-  Sim.fireMissile = function(pos, dest, impact, speed) {
+  Sim.fireMissile = function(pos, dest, impact, speed, type) {
     var id = counter++
-    missiles.push({id:id, pos:pos, dest:dest, impact:impact, speed:speed})
+    missiles.push({id:id, pos:pos, dest:dest, impact:impact, speed:speed, type:type})
     Sim.bus.emit('move-missile', id, pos)
   }
   

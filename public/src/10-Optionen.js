@@ -72,10 +72,57 @@ var AntIT = {};
     , Toleranz : 3
     , ZuckerRadius : 10
     , JobLimit : 100
-    , KampfModus : false
     
+    , KampfModus : false
     , BauTrefferpunkte : 5000
-    , GrundEnergie : 20
+    , GrundEnergie : 80
+    , EinheitenLimit : 50
+    , Kampf : {
+      Bau : {
+        Trefferpunkte : 5000,
+        Trefferrate : 40,
+        Schaden : 170,
+        GGeschw : 10,
+        Sichtweite : 250,
+        Nahzone : 90,
+      },
+      Arbeitermeise : {
+        Trefferpunkte : 156,
+      },
+      Kampfmeise : {
+        Trefferpunkte : 140,
+        Trefferrate : 40,
+        Schaden : 61,
+        Anzahl : 3,
+        Geschwindigkeit : 0.8,
+        GGeschw : 3,
+        Kampfzone : 40,
+        Sichtweite : 100,
+        Kosten: 500,
+      },
+      Riesenmeise : {
+        Trefferpunkte : 1600,
+        Trefferrate : 56,
+        Schaden : 315,
+        Anzahl : 1,
+        Geschwindigkeit : 0.4,
+        GGeschw : 3,
+        Kampfzone : 40,
+        Sichtweite : 100,
+        Kosten: 800,
+      },
+      Giftmeise : {
+        Trefferpunkte : 920,
+        Trefferrate : 44,
+        Schaden : 210,
+        Anzahl : 1,
+        Geschwindigkeit : 0.7,
+        GGeschw : 3,
+        Kampfzone : 60,
+        Sichtweite : 100,
+        Kosten: 700,
+      },
+    }
   }
  
   //export

@@ -175,6 +175,8 @@
           reason = "Müdigkeit"
         } else if (ant.getEnergy() <= 0) {
           reason = "Wanze"
+        } else if (ant.getLp() <= 0) {
+          reason = "Kampf"
         }
         if (reason) {
           Sim.API.setAnt(ant)

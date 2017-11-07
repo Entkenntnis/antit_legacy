@@ -154,8 +154,8 @@
     var poisonStore =undefined
     this.needRedraw = true
     
-    var kampfmeise0 = undefined
     var riesenmeise0 = undefined
+    var kampfmeise0 = undefined
     var giftmeise0 = undefined
     var albinomeise0 = undefined
     var räubermeise0 = undefined
@@ -165,6 +165,7 @@
     var giftStore = undefined
     var albinoStore = undefined
     var räuberStore = undefined
+    var storeMap = undefined
     
     var ball0 = undefined
     var ballStore = undefined
@@ -225,14 +226,15 @@
         kampfmeise0 = ant0.clone()
         kampfmeise0.scale.set(3.3, 3.3, 3.3)
         kampfmeise0.children[0].children[10].material =
-          new THREE.MeshLambertMaterial({color:0x999999})
+          new THREE.MeshPhongMaterial({color:0x999999})
         
         riesenmeise0 = ant0.clone()
-        riesenmeise0.scale.set(s*2, s*2, s*2)
+        riesenmeise0.scale.set(5, 5, 5)
         riesenmeise0.children[0].children[10].material =
-          new THREE.MeshPhongMaterial({color:0xff5900})
+          new THREE.MeshLambertMaterial({color:0xff5900})
         
         giftmeise0 = ant0.clone()
+        giftmeise0.scale.set(4, 4, 4)
         giftmeise0.children[0].children[10].material =
           new THREE.MeshPhongMaterial({color:0xc300ff})
         
@@ -243,7 +245,7 @@
         räubermeise0 = ant0.clone()
         räubermeise0.children[0].children[10].material =
           new THREE.MeshPhongMaterial({color:0xe5ff00})
-        riesenmeise0.scale.set(s*1.3, s*1.3, s*1.3)
+        kampfmeise0.scale.set(s*1.3, s*1.3, s*1.3)
         
       }.bind(this));
       objectLoader.load("/models/anthill.json", function ( obj ) {
@@ -349,6 +351,13 @@
       giftStore = new UnitStore(giftmeise0)
       albinoStore = new UnitStore(albinomeise0)
       räuberStore = new UnitStore(räubermeise0)
+      storeMap = {
+        "Kampfmeise" : kampfStore,
+        "Riesenmeise" : riesenStore,
+        "Giftmeise" : giftStore,
+        "Albinomeise" : albinoStore,
+        "Räubermeise" : räuberStore
+      }
       
       ballStore = new UnitStore(ball0)
       hbStore = new UnitStore(hb0)
@@ -403,12 +412,12 @@
       antBody.rotation.y = roty
     })
     
-    Bus.on('change-unit-color', function(key, color) {
-      setAntBodyColor(kampfStore.get(key), color)
+    Bus.on('change-unit-color', function(key, type, color) {
+      setAntBodyColor(storeMap[type].get(key), color)
     })
     
-    Bus.on('move-unit', function(key, pos, roty) {
-      var antBody = kampfStore.get(key)
+    Bus.on('move-unit', function(key, type, pos, roty) {
+      var antBody = storeMap[type].get(key)
       antBody.position.copy(toViewPos(pos))
       antBody.rotation.y = roty
     })
@@ -419,8 +428,8 @@
       hbStore.get(key).material = new THREE.MeshBasicMaterial({color:new THREE.Color(1.3-rat, rat, 0)});
     })
     
-    Bus.on('remove-unit', function(key) {
-      if (kampfStore.has(key)) kampfStore.remove(key)
+    Bus.on('remove-unit', function(key, type) {
+      if (storeMap[type].has(key)) storeMap[type].remove(key)
       if (hbStore.has(key)) hbStore.remove(key)
     })
     

@@ -13,7 +13,7 @@
       energy: Sim.Opts.AnfangsEnergie,
       feedIndex: 0,
       timeToNextAnt: Sim.Opts.AmeiseWartezeit,
-      lp : Sim.Opts.BauTrefferpunkte,
+      lp : Sim.Opts.Kampf.Bau.Trefferpunkte,
     })
     
     var key = Hill.counter++
@@ -68,13 +68,15 @@
       }
     }
     
-    function spawnUnit() {
-      if (Sim.Opts.Kampfmodus && my.energy >= 200
-        && Sim.players[my.playerid].getUnits() < 50) {
-        my.energy -= 200
-        var unit = new Sim.Unit(getSpawnPoint(pos), my.playerid)
-        Sim.units[my.playerid].push(unit)
-        Sim.players[my.playerid].addUnit()
+    function spawnUnit(type) {
+      if (Sim.Opts.Kampfmodus && my.energy >= Sim.Opts.Kampf[type].Kosten
+        && Sim.players[my.playerid].getUnits() < Sim.Opts.EinheitenLimit) {
+        my.energy -= Sim.Opts.Kampf[type].Kosten
+        for (var i = 0; i < Sim.Opts.Kampf[type].Anzahl; i++) {
+          var unit = new Sim.Unit(getSpawnPoint(pos), my.playerid, type)
+          Sim.units[my.playerid].push(unit)
+          Sim.players[my.playerid].addUnit()
+        }
       }
     }
     
@@ -103,10 +105,12 @@
     this.update = function() {
       if (Sim.Opts.Kampfmodus) {
         if (cooldown > 0) cooldown--
-        var nextEnemy = Sim.Util.closest(my.pos, Sim.units[(my.playerid+1)%2], 250)
+        var nextEnemy = Sim.Util.closest(my.pos, Sim.units[(my.playerid+1)%2],
+          Sim.Opts.Kampf.Bau.Sichtweite)
         if (nextEnemy && cooldown == 0) {
-          Sim.fireMissile(my.pos, nextEnemy, 170, 10)
-          cooldown = 20
+          Sim.fireMissile(my.pos, nextEnemy, Sim.Opts.Kampf.Bau.Schaden,
+            Sim.Opts.Kampf.Bau.GGeschw)
+          cooldown = Sim.Opts.Kampf.Bau.Trefferrate
         }
         if (Sim.cycles % 40 == 39) {
           my.energy += Sim.Opts.GrundEnergie
