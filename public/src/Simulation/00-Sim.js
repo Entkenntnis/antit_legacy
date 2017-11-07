@@ -50,6 +50,8 @@
         Sim.hills.push(new Sim.Hill({x:width-300,y:height/2}, 1))
         Sim.players.push(new Sim.Player(0, Sim.API.ants[0]))
         Sim.players.push(new Sim.Player(1, Sim.API.ants[1]))
+        Sim.Opts.WanzenProSpieler = 0
+        Sim.units = [[], []]
       } else {
         for(var i = 0; i < Sim.API.ants.length; i++) {
           Sim.hills.push(new Sim.Hill(Sim.playground.getHillPos(), i));
@@ -70,6 +72,15 @@
       Sim.ants.forEach(function(ant) {
         ant.update();
       });
+      
+      if (Sim.units) {
+        Sim.units[0].forEach(function(unit) {
+          unit.update()
+        })
+        Sim.units[1].forEach(function(unit) {
+          unit.update()
+        })
+      }
       
       Sim.hills.forEach(function(hill) {
         hill.update();
@@ -95,6 +106,11 @@
     getCycles : function() { return Sim.cycles },
     getPoints : function() { 
       return Sim.players.map(function(p){return p.getPoints()}).join(",")
+    },
+    setHillOverride : function() {
+      Sim.hills.forEach(function(h){
+        h.overrideUserControl()
+      })
     },
   }
 

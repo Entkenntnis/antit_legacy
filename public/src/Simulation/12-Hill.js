@@ -46,17 +46,20 @@
       my.feedIndex += val;
     }
     
+    function getSpawnPoint(pos) {
+      var antPos = {x:pos.x,y:pos.y};
+      var angle = Sim.rng()*Math.PI*2;
+      var radius = Sim.Opts.HügelRadius + (Sim.rng()*10 - 5);
+      antPos.x += Math.cos(angle)*radius;
+      antPos.y += Math.sin(angle)*radius;
+      return antPos
+    }
+    
     function spawnAnt() {
-      console.log("hi")
       if (my.energy >= Sim.Opts.EnergieFürAmeise &&
-        ownAnts < Sim.Opts.AmeisenMaximum) {
+        Sim.players[my.playerid].getAnts() < Sim.Opts.AmeisenMaximum) {
         my.energy -= Sim.Opts.EnergieFürAmeise;
-        var antPos = {x:pos.x,y:pos.y};
-        var angle = Sim.rng()*Math.PI*2;
-        var radius = Sim.Opts.HügelRadius + (Sim.rng()*10 - 5);
-        antPos.x += Math.cos(angle)*radius;
-        antPos.y += Math.sin(angle)*radius;
-        var newAnt = new Sim.Ant(antPos, my.playerid)
+        var newAnt = new Sim.Ant(getSpawnPoint(pos), my.playerid)
         Sim.ants.push(newAnt);
         Sim.players[my.playerid].addAnt();
         Sim.API.setAnt(newAnt);
@@ -65,19 +68,31 @@
       }
     }
     
+    function spawnUnit() {
+      if (Sim.Opts.Kampfmodus && my.energy >= 200
+        && Sim.players[my.playerid].getUnits() < 10) {
+        my.energy -= 200
+        var unit = new Sim.Unit(getSpawnPoint(pos), my.playerid)
+        Sim.units[my.playerid].push(unit)
+        Sim.players[my.playerid].addUnit()
+      }
+    }
+    
     this.spawnAnt = spawnAnt
-    var ownAnts = 0
+    this.spawnUnit = spawnUnit
+    
+    var override = false
+    
+    this.overrideUserControl = function(){
+      override = true
+    }
     
     this.update = function() {
-      ownAnts = 0;
-      Sim.ants.forEach(function(ant) {
-        if (ant.getPlayerid() == my.playerid)
-          ownAnts++;
-      });
-      if (my.timeToNextAnt-- <= 0 && ownAnts < Sim.Opts.AmeisenMaximum
-            && my.energy >= Sim.Opts.EnergieFürAmeise) {
+      if (my.timeToNextAnt-- <= 0
+        && Sim.players[my.playerid].getAnts() < Sim.Opts.AmeisenMaximum
+        && my.energy >= Sim.Opts.EnergieFürAmeise) {
         my.timeToNextAnt = Sim.Opts.AmeiseWartezeit;
-        if (!Sim.Opts.Kampfmodus) spawnAnt()
+        if(!Sim.Opts.Kampfmodus || override) spawnAnt()
       }
       Sim.Util.removeIf(markers, function(m){
         m.cycle++

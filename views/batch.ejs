@@ -27,8 +27,13 @@
           
           var View = AntIT._view
           
+          
           View.Pulse.getBus().on('start', function(){
             View.Pulse.Init()
+            
+            if (View.Opts.Kampfmodus) {
+              View.Sim.setHillOverride()
+            }
             View.Pulse.setFps(undefined)
             
             function tick(){

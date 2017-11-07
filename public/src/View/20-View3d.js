@@ -44,9 +44,10 @@
     
     // make it movable
     controls = new THREE.OrbitControls(camera);
-    controls.maxPolarAngle = Math.PI/2 - 0.1;
+    controls.maxPolarAngle = Math.PI/2 - 0.06;
     controls.maxDistance = 3000;
     controls.minDistance = 100;
+    controls.maxY = 0
     
     controls.addEventListener('change', function(){
       vw.needRedraw = true;
@@ -388,6 +389,16 @@
     
     Bus.on('move-ant', function(key, pos, roty) {
       var antBody = antStore.get(key)
+      antBody.position.copy(toViewPos(pos))
+      antBody.rotation.y = roty
+    })
+    
+    Bus.on('change-unit-color', function(key, color) {
+      setAntBodyColor(kampfStore.get(key), color)
+    })
+    
+    Bus.on('move-unit', function(key, pos, roty) {
+      var antBody = kampfStore.get(key)
       antBody.position.copy(toViewPos(pos))
       antBody.rotation.y = roty
     })

@@ -14,6 +14,7 @@
     var ants = 0;
     var collectedApples = 0;
     var deadants = 0;
+    var units = 0
     
     function initHTML() {
       Sim.bus.emit('add-player-status', id, my.KI.Name, Sim.Opts.SpielerFarben[my.id])
@@ -27,7 +28,7 @@
         var lp = Sim.hills[id].getLp()
         Sim.bus.emit('update-player-stats', id, "(Arbeiter: " + ants + " / Tote: "
          + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")"+
-          " (Krieger: 0 / Energie: " + energy + " / Lebenspunkte: " + lp + ")")
+          " (Krieger: " + units + " / Energie: " + energy + " / Lebenspunkte: " + lp + ")")
       } else {
         Sim.bus.emit('update-player-stats', id, "(Ameisen: " + ants + " / Tote: "
          + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")")
@@ -50,10 +51,29 @@
       updateDetails();
     }
     
+    this.addUnit = function(){
+      units++
+      updateDetails()
+    }
+    
+    this.subUnit = function(){
+      units--
+      deadants++
+      updateDetails()
+    }
+    
+    this.getUnits = function(){
+      return units
+    }
+    
     this.subAnt = function(){
       ants--;
       deadants++;
       updateDetails();
+    }
+    
+    this.getAnts = function(){
+      return ants
     }
     
     this.addPoints = function(amount) {
