@@ -77,6 +77,10 @@ var AntIT = {};
     , GrundEnergie : 80
     , EinheitenLimit : 500
     , Kampf : {
+      Zucker : {
+        Körper : 15,
+        Energie : 25,
+      },
       Bau : {
         Trefferpunkte : 5000,
         Trefferrate : 40,
@@ -84,10 +88,16 @@ var AntIT = {};
         GGeschw : 10,
         Sichtweite : 250,
         Nahzone : 90,
-        Körper : 50
+        Körper : 50,
       },
       Arbeitermeise : {
         Trefferpunkte : 156,
+        Körper : 1,
+        Anzahl : 1,
+        Kosten : 300,
+        Sichtweite : 700,
+        Geschwindigkeit : 1.0,
+        Reichweite : 10,
       },
       Kampfmeise : {
         Trefferpunkte : 140,

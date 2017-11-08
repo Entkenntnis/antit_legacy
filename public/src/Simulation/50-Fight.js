@@ -61,7 +61,7 @@
     for (var i = 0; i < 100; i++) {
       antPos = {x:pos.x,y:pos.y};
       var angle = Sim.rng()*Math.PI*2;
-      var radius = Sim.Opts.Kampf.Bau.Körper + k + i*2 + 1 + (Sim.rng()*10)
+      var radius = Sim.Opts.Kampf.Bau.Körper + k + i*3 + 1 + (Sim.rng()*10)
       antPos.x += Math.cos(angle)*radius;
       antPos.y += Math.sin(angle)*radius;
       var ok = true

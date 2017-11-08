@@ -352,6 +352,7 @@
       albinoStore = new UnitStore(albinomeise0)
       räuberStore = new UnitStore(räubermeise0)
       storeMap = {
+        "Arbeitermeise" : antStore,
         "Kampfmeise" : kampfStore,
         "Riesenmeise" : riesenStore,
         "Giftmeise" : giftStore,

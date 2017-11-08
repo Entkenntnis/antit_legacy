@@ -85,8 +85,11 @@
         var feedHills = [];
         Sim.hills.forEach(function(h){
           var counts = getFoodInRange(h, Sim.Opts.NahrungMaximalEntfernung);
-          if (counts.apples < 1 || counts.sugars < 2 || (counts.apples <= 2 && counts.sugars <= 3))
-            feedHills.push(h);
+          if (counts.apples < 1 || counts.sugars < 2 || (counts.apples <= 2 && counts.sugars <= 3)) {
+            if (!Sim.Opts.Kampfmodus || counts.sugars < 5)
+              feedHills.push(h);
+          }
+            
         });
         for (var i = 0; i < feedHills.length; i++) {
           feedHills.sort(function(a,b){

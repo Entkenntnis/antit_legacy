@@ -7,10 +7,12 @@
     return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
   }
 
-  Util.closest = function(pos, objs, range) {
+  Util.closest = function(pos, objs, range, f) {
     var best = Infinity;
     var bestobj = undefined;
     objs.forEach(function(obj) {
+      if (f && f(obj))
+        return
       var d = Util.dist(obj.getPos(), pos);
       if (d < best) {
         bestobj = obj;

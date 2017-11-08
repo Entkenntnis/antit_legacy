@@ -7,10 +7,10 @@
   function keypresshandler(e){
     
     //console.log(e.charCode)
-    /*if (e.charCode == 113) // q
-      Sim.hills[0].spawnAnt()
+    if (e.charCode == 113) // q
+      Sim.Fight.spawnUnit("Arbeitermeise", 0)
     if (e.charCode == 117) // u
-      Sim.hills[1].spawnAnt()*/
+      Sim.Fight.spawnUnit("Arbeitermeise", 1)
       
     if (e.charCode == 119) // w
       Sim.Fight.spawnUnit("Kampfmeise", 0)
