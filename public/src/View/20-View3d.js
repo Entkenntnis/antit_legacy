@@ -243,6 +243,7 @@
           new THREE.MeshPhongMaterial({color:0xffffff})
         
         räubermeise0 = ant0.clone()
+        räubermeise0.scale.set(3.7, 3.7, 3.7)
         räubermeise0.children[0].children[10].material =
           new THREE.MeshPhongMaterial({color:0xe5ff00})
         kampfmeise0.scale.set(s*1.3, s*1.3, s*1.3)
@@ -475,6 +476,10 @@
     Bus.on('remove-marker', function(key) {
       markerStore.remove(key)
     })
+    
+    Bus.on('set-missile-color', function(key, color) {
+      ballStore.get(key).material = new THREE.MeshPhongMaterial({color:color})
+    })   
     
     Bus.on('move-missile', function(key, pos) {
       ballStore.get(key).position.copy(toViewPos(pos, 3))

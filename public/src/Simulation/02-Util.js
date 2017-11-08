@@ -25,9 +25,11 @@
     return undefined;
   }
   
-  Util.inRange = function(pos, objs, range) {
+  Util.inRange = function(pos, objs, range, f) {
     var res = []
     objs.forEach(function(obj) {
+      if (f && f(obj))
+          return
       if (Util.dist(obj.getPos(), pos) <= range) {
         res.push(obj)
       }

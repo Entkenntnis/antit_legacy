@@ -13,14 +13,15 @@
     Sim.Opts.NahrungMindestEntfernung = 150
     Sim.Opts.NahrungMaximalEntfernung = 400
     Sim.Opts.NahrungAbstand = 75
+    Sim.Opts.SpielerFarben[0] = 0xa60202
     Sim.units = [[], []]
   }
   
   Fight.createPlayers = function(){
     var width = Sim.playground.getWidth()
     var height = Sim.playground.getHeight()
-    Sim.hills.push(new Sim.Hill({x:300,y:height/2}, 0))
-    Sim.hills.push(new Sim.Hill({x:width-300,y:height/2}, 1))
+    Sim.hills.push(new Sim.Hill({x:450,y:height/2}, 0))
+    Sim.hills.push(new Sim.Hill({x:width-450,y:height/2}, 1))
     Sim.players.push(new Sim.Player(0, Sim.API.ants[0]))
     Sim.players.push(new Sim.Player(1, Sim.API.ants[1]))
   }
@@ -39,6 +40,8 @@
   }
     
   Fight.spawnUnit = function(type, playerid) {
+    if (type == "Arbeitermeise" && Sim.players[playerid].getAnts() >= 10)
+      return
     var hill = Sim.hills[playerid]
     var info = Sim.Opts.Kampf[type]
     if (hill.getEnergy() >= info.Kosten
@@ -47,7 +50,10 @@
       for (var i = 0; i < info.Anzahl; i++) {
         var unit = new Sim.Unit(getUnitSpawnPoint(hill.getPos(), type), playerid, type)
         Sim.units[playerid].push(unit)
-        Sim.players[playerid].addUnit()
+        if (unit.getType() == "Arbeitermeise") {
+          Sim.players[unit.getPlayerid()].addAnt()
+        } else
+          Sim.players[playerid].addUnit()
       }
     }
   }

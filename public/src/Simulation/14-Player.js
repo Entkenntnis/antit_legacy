@@ -26,8 +26,8 @@
       if (Sim.Opts.Kampfmodus) {
         var energy = Sim.hills[id].getEnergy()
         var lp = Sim.hills[id].getLp()
-        Sim.Bus.emit('update-player-stats', id, "Bau: " + lp + " / Energie: " + energy +
-          " / Einheiten: " + units + " / Tote: " + deadants)
+        Sim.Bus.emit('update-player-stats', id, "Bau: " + lp + ", Energie: " + energy +
+          ", Einheiten: " + units + ", Arbeiter: " + ants +  "/10, Tote: " + deadants)
       } else {
         Sim.Bus.emit('update-player-stats', id, "(Ameisen: " + ants + " / Tote: "
          + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")")
@@ -63,6 +63,10 @@
     
     this.getUnits = function(){
       return units
+    }
+    
+    this.getAnts = function() {
+      return ants
     }
     
     this.updateDetails = updateDetails

@@ -6,7 +6,6 @@
   
   function keypresshandler(e){
     
-    //console.log(e.charCode)
     if (e.charCode == 113) // q
       Sim.Fight.spawnUnit("Arbeitermeise", 0)
     if (e.charCode == 117) // u
@@ -26,6 +25,16 @@
       Sim.Fight.spawnUnit("Giftmeise", 0)
     if (e.charCode == 106) // j
       Sim.Fight.spawnUnit("Giftmeise", 1)
+      
+    if (e.charCode == 115) // s
+      Sim.Fight.spawnUnit("Albinomeise", 0)
+    if (e.charCode == 107) // k
+      Sim.Fight.spawnUnit("Albinomeise", 1)
+      
+    if (e.charCode == 100) // d
+      Sim.Fight.spawnUnit("Räubermeise", 0)
+    if (e.charCode == 108) // l
+      Sim.Fight.spawnUnit("Räubermeise", 1)
   }
 
 

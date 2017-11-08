@@ -34,7 +34,7 @@
       }
     }
     
-    function goto(pos) {
+    function goto(pos, nocollide) {
       var party0 = Sim.Util.inRange(my.pos, Sim.units[0], 80)
       var party1 = Sim.Util.inRange(my.pos, Sim.units[1], 80)
       var all = party0.concat(party1)
@@ -44,6 +44,7 @@
         var good = true
         all.forEach(function(obj){
           if (obj.getKey() == my.key) return
+          if (obj.getType() == "Arbeitermeise") return
           var otherk = Sim.Opts.Kampf[obj.getType()].Körper
           if (k + otherk > Sim.Util.dist(obj.getPos(), pos)) {
             good = false
@@ -55,10 +56,6 @@
           good = false
         Sim.sugars.forEach(function(sug){
           if (Sim.Util.dist(pos, sug.getPos()) < k + 15)
-            good = false
-        })
-        Sim.apples.forEach(function(app){
-          if (Sim.Util.dist(pos, app.getPos()) < k + 20)
             good = false
         })
         return good
@@ -87,15 +84,17 @@
       for (var i = 0; i < 30; i++) {
         var diff = Math.floor((i+1)/2) * 15* Math.pow(-1, i)
         var newpos = Sim.Util.moveDir(my.pos, angle + diff,
-          5 * Sim.Opts.Kampf[my.type].Geschwindigkeit)
-        if (check(newpos)) {
+          2 * Sim.Opts.Kampf[my.type].Geschwindigkeit)
+        if (nocollide || check(newpos)) {
           submit(newpos)
           return
         }
       }
     }
     
-    this.hit = function(impact){
+    this.hit = function(impact, type){
+      if (type == "Gift" && my.type == "Albinomeise")
+        return
       my.lp = Math.max(0, my.lp - impact)
       if (my.lp > 0)
         updateGO()
@@ -116,8 +115,16 @@
           return
         }
       }
+      if (dest) {
+        if (Sim.Util.dist(my.pos, dest) > 5) {
+          goto(dest)
+          return
+        } else {
+          dest = undefined
+        }
+      }
       if (load > 0) {
-        goto(Sim.hills[my.playerid].getPos())
+        goto(Sim.hills[my.playerid].getPos(), true)
         return
       }
       var sugar = Sim.Util.closest(my.pos, Sim.sugars,
@@ -134,20 +141,9 @@
               break
           }
         } else {
-          goto(sugar.getPos())
+          goto(sugar.getPos(), true)
         }
       } else {
-        
-        if (dest) {
-          if (Sim.Util.dist(my.pos, dest) > 5) {
-            goto(dest)
-            return
-          } else {
-            dest = undefined
-          }
-        } else {
-          //dest = Sim.Util.moveDir(my.pos, my.heading + 10, 100)
-        }
       }
     }
     
@@ -161,26 +157,43 @@
       
       if (cooldown > 0) cooldown--
       var enemyId = (my.playerid + 1) % 2
-      var nextEnemy = Sim.Util.closest(my.pos, Sim.units[enemyId],
+      var nextEnemy = undefined
+      if (my.type == "Räubermeise") {
+        nextEnemy = Sim.Util.closest(my.pos, Sim.units[enemyId],
+        Sim.Opts.Kampf[type].Sichtweite, function(obj){
+          return obj.getType() != "Arbeitermeise"
+        })
+      } else  if (my.type != "Giftmeise") {
+        nextEnemy = Sim.Util.closest(my.pos, Sim.units[enemyId],
         Sim.Opts.Kampf[type].Sichtweite, function(obj){
           return obj.getType() == "Arbeitermeise"
         })
+      } else {
+        nextEnemy = Sim.Util.closest(my.pos, Sim.units[enemyId],
+        Sim.Opts.Kampf[type].Sichtweite, function(obj){
+          return obj.getType() == "Arbeitermeise" || obj.getType() == "Albinomeise"
+        })
+      }
       
       if (nextEnemy) {
         // Fixierung auf Gegner
         var distance = Sim.Util.dist(nextEnemy.getPos(), my.pos)
-        var ksum = Sim.Opts.Kampf[my.type].Körper
-          + Sim.Opts.Kampf[nextEnemy.getType()].Körper
-        if (distance <= ksum + 10) {
+        var kgegner = Sim.Opts.Kampf[nextEnemy.getType()].Körper
+        var rw = Sim.Opts.Kampf[my.type].Reichweite
+        if (distance < kgegner + rw) {
           // Nahkampfzone
           if (cooldown == 0) {
             // schießen
             cooldown = Sim.Opts.Kampf[type].Trefferrate
             if (my.type == "Giftmeise") {
-              var enemies = Sim.Util.inRange(my.pos, Sim.units[enemyId], 60)
+              var enemies = Sim.Util.inRange(my.pos, Sim.units[enemyId], rw + kgegner,
+                function(obj){
+                  return obj.getType() == "Arbeitermeise" || obj.getType() == "Albinomeise"
+                })
               enemies.forEach(function(enemy){
                 Sim.Missile.fire(my.pos, enemy,
-                  Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw, "Gift")
+                  Sim.Opts.Kampf[type].Schaden,
+                  Sim.Opts.Kampf[type].GGeschw, "Gift")
               })
             } else {
               Sim.Missile.fire(my.pos, nextEnemy,
@@ -192,13 +205,16 @@
             goto(nextEnemy.getPos())
           }
       } else {
-      
         var d = Sim.Util.dist(my.pos, Sim.hills[enemyId].getPos())
         if (d <= 90) {
-          if (cooldown == 0) {
+          if (cooldown == 0 && my.type != "Räubermeise") {
             cooldown = Sim.Opts.Kampf[type].Trefferrate
-            Sim.Missile.fire(my.pos, Sim.hills[enemyId],
-              Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw)
+            if (my.type != "Giftmeise")
+              Sim.Missile.fire(my.pos, Sim.hills[enemyId],
+                Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw)
+            else
+              Sim.Missile.fire(my.pos, Sim.hills[enemyId],
+                Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw, "Gift")
           }
         } else {
           goto(Sim.hills[enemyId].getPos())
@@ -219,7 +235,10 @@
     [0, 1].forEach(function(i){
       Sim.Util.removeIf(Sim.units[i], function(unit){
         if (unit.getLp() == 0) {
-          Sim.players[unit.getPlayerid()].subUnit()
+          if (unit.getType() == "Arbeitermeise") {
+            Sim.players[unit.getPlayerid()].subAnt()
+          } else
+            Sim.players[unit.getPlayerid()].subUnit()
           Sim.Bus.emit('remove-unit', unit.getKey(), unit.getType())
           Sim.Bus.emit('remove-sugarbox', unit.getKey())
           return true

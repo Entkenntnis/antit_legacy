@@ -74,7 +74,7 @@ var AntIT = {};
     , JobLimit : 100
     
     , KampfModus : false
-    , GrundEnergie : 80
+    , GrundEnergie : 0
     , EinheitenLimit : 500
     , Kampf : {
       Zucker : {
@@ -106,7 +106,7 @@ var AntIT = {};
         Anzahl : 3,
         Geschwindigkeit : 0.8,
         GGeschw : 3,
-        Kampfzone : 40,
+        Reichweite : 20,
         Sichtweite : 100,
         Kosten: 500,
         Körper : 10,
@@ -118,7 +118,7 @@ var AntIT = {};
         Anzahl : 1,
         Geschwindigkeit : 0.4,
         GGeschw : 3,
-        Kampfzone : 40,
+        Reichweite : 30,
         Sichtweite : 100,
         Kosten: 800,
         Körper : 20,
@@ -130,9 +130,33 @@ var AntIT = {};
         Anzahl : 1,
         Geschwindigkeit : 0.7,
         GGeschw : 3,
-        Kampfzone : 60,
+        Reichweite : 60,
         Sichtweite : 100,
         Kosten: 700,
+        Körper : 15,
+      },
+      Albinomeise : {
+        Trefferpunkte : 240,
+        Trefferrate : 32,
+        Schaden : 130,
+        Anzahl : 4,
+        Geschwindigkeit : 1.1,
+        GGeschw : 4,
+        Reichweite : 20,
+        Sichtweite : 100,
+        Kosten: 600,
+        Körper : 9,
+      },
+      Räubermeise : {
+        Trefferpunkte : 1200,
+        Trefferrate : 32,
+        Schaden : 90,
+        Anzahl : 1,
+        Geschwindigkeit : 0.7,
+        GGeschw : 4,
+        Reichweite : 25,
+        Sichtweite : 150,
+        Kosten: 900,
         Körper : 15,
       },
     }
