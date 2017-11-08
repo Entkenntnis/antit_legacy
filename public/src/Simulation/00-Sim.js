@@ -3,22 +3,8 @@
 
   var Simulation = function() {
 
-    this.cycles = 0;
-    this.playground = undefined
-    this.players = []
-    this.hills = []
-    this.sugars = []
-    this.ants = []
-    this.apples = []
-    this.bugs = []
-    this.memories = {}
     this.bus = Minibus.create()
-    this.rng = undefined
     this.Opts = Optionen
-    
-    this.playerCount = function() {
-      return Sim.players.length;
-    }
     
     this.init = function(seed) {
       Sim.cycles = 0
@@ -31,11 +17,14 @@
       Sim.bugs = []
       Sim.memories = {}
       
+      if (Sim.Opts.Kampfmodus) Sim.Fight.init()
+      
       if (seed) {
         Sim.rng = new Math.seedrandom(seed)
         console.log("Seed: " + seed)
-       } else
+      } else
         Sim.rng = new Math.seedrandom()
+      
       var area = (1 + (Sim.API.ants.length * Optionen.SpielfeldVerhältnis))
         * Optionen.SpielfeldGrundGröße;
       var width = Math.round(Math.sqrt(area * Optionen.SpielfeldVerhältnis));
@@ -43,18 +32,7 @@
       Sim.playground = new Sim.Playground(width, height);
     
       if (Sim.Opts.Kampfmodus) {
-        if (Sim.API.ants.length != 2)
-          throw "Kampfmodus funktioniert nur 1 gegen 1"
-        Sim.Opts.AnfangsEnergie = 40000
-        Sim.hills.push(new Sim.Hill({x:300,y:height/2}, 0))
-        Sim.hills.push(new Sim.Hill({x:width-300,y:height/2}, 1))
-        Sim.players.push(new Sim.Player(0, Sim.API.ants[0]))
-        Sim.players.push(new Sim.Player(1, Sim.API.ants[1]))
-        Sim.Opts.WanzenProSpieler = 0
-        Sim.Opts.NahrungMindestEntfernung = 100
-        Sim.Opts.NahrungMaximalEntfernung = 300
-        Sim.Opts.NahrungAbstand = 75
-        Sim.units = [[], []]
+        Sim.Fight.createPlayers()
       } else {
         for(var i = 0; i < Sim.API.ants.length; i++) {
           Sim.hills.push(new Sim.Hill(Sim.playground.getHillPos(), i));
@@ -95,15 +73,17 @@
       Sim.playground.update();
       Sim.cycles++
     }
+    
+    this.playerCount = function() {
+      return Sim.players.length;
+    }
   }
 
   var Sim = new Simulation()
   
   AntIT._rawsim = Sim
   
-  // compat, hoffentlich bald zu löschen
   window.AntJS = AntIT
-  
 
   AntIT._sim = {
     Init : Sim.init,

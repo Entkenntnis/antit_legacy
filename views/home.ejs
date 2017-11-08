@@ -82,6 +82,7 @@
   <ul class="nav nav-pills" role="tablist">
         <li role="presentation"><a href="<%=prefix%>/users">Benutzerverwaltung</a></li>
         <li role="presentation"><a href="<%=prefix%>/stats">Statistik</a></li>
+        <li role="presentation"><a href="<%=prefix%>/<%=devMode?'nodebug':'debug'%>">Debug umschalten (aktuell: <%=devMode?'an':'aus'%>)</a></li>
       </ul>
 	<%}%>
 	<div class="page-header">
@@ -170,7 +171,11 @@
 	</div>
   </form>
   
+  <% if (devMode) { %>
   
+  <br><br>
+  <p>Neu: <a href="<%=prefix%>/simulation?fight=1">Kampfmodus ausprobieren</a>
+  <% } %>
 	
 <% } %>
 

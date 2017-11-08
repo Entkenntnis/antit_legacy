@@ -364,6 +364,18 @@ route({name:"/delete", login:true}, function(req, res, next) {
 })
 
 route({name:"/simulation"}, function(req, res) {
+  if (req.query.fight == 1) {
+    res.render('simulation', {
+      code:["", ""],
+      hash:"",
+      seed:undefined,
+      repeat:undefined,
+      prefix:req.curHome,
+      devMode:colonyInfo[req.params.colony].debugging,
+      fightMode:true,
+    })
+    return
+  }
   if (req.user)
     queryCache[req.sessionID] = req.query
   var antIds = flattenQuery(req.query)
@@ -404,12 +416,12 @@ route({name:"/unpublish", login:true}, function(req, res, next) {
 
 route({name:"/debug", login:true, superuser:true}, function(req, res) {
   colonyInfo[req.params.colony].debugging = true
-  res.send("debugging mode on")
+  res.redirect(req.curHome)
 })
 
 route({name:"/nodebug", login:true, superuser:true}, function(req, res) {
   colonyInfo[req.params.colony].debugging = false
-  res.send("debugging mode off")
+  res.redirect(req.curHome)
 })
 
 route({name:"/stats", login:true, superuser:true}, function(req, res) {
