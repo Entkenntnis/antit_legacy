@@ -4,13 +4,13 @@
   var missiles = []
   var counter = 1
   
-  Sim.fireMissile = function(pos, dest, impact, speed, type) {
+  function fireMissile(pos, dest, impact, speed, type) {
     var id = counter++
     missiles.push({id:id, pos:pos, dest:dest, impact:impact, speed:speed, type:type})
     Sim.Bus.emit('move-missile', id, pos)
   }
   
-  Sim.updateMissiles = function(){
+  function updateMissiles(){
     missiles.forEach(function(m){
       if (m.dest.getLp() == 0) {
         // try to relocate demage
@@ -32,6 +32,11 @@
     Sim.Util.removeIf(missiles, function(m){
       return m.id == undefined
     })
+  }
+  
+  Sim.Missile = {
+    fire : fireMissile,
+    update : updateMissiles,
   }
 
 })(AntIT._rawsim)

@@ -91,7 +91,7 @@
       var nextEnemy = Sim.Util.closest(my.pos, Sim.units[(my.playerid+1)%2],
         Sim.Opts.Kampf.Bau.Sichtweite)
       if (nextEnemy && cooldown == 0) {
-        Sim.fireMissile(my.pos, nextEnemy, Sim.Opts.Kampf.Bau.Schaden,
+        Sim.Missile.fire(my.pos, nextEnemy, Sim.Opts.Kampf.Bau.Schaden,
           Sim.Opts.Kampf.Bau.GGeschw)
         cooldown = Sim.Opts.Kampf.Bau.Trefferrate
       }

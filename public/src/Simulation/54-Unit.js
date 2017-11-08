@@ -115,11 +115,11 @@
             if (my.type == "Giftmeise") {
               var enemies = Sim.Util.inRange(my.pos, Sim.units[enemyId], 60)
               enemies.forEach(function(enemy){
-                Sim.fireMissile(my.pos, enemy,
+                Sim.Missile.fire(my.pos, enemy,
                   Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw, "Gift")
               })
             } else {
-              Sim.fireMissile(my.pos, nextEnemy,
+              Sim.Missile.fire(my.pos, nextEnemy,
                 Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw)
             }
           }
@@ -133,7 +133,7 @@
         if (d <= 90) {
           if (cooldown == 0) {
             cooldown = Sim.Opts.Kampf[type].Trefferrate
-            Sim.fireMissile(my.pos, Sim.hills[enemyId],
+            Sim.Missile.fire(my.pos, Sim.hills[enemyId],
               Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw)
           }
         } else {
@@ -151,14 +151,16 @@
   
   Sim.Unit = Unit
   
-  Sim.removeDeadUnits = function(units){
-    Sim.Util.removeIf(units, function(unit){
-      if (unit.getLp() == 0) {
-        Sim.players[unit.getPlayerid()].subUnit()
-        Sim.Bus.emit('remove-unit', unit.getKey(), unit.getType())
-        return true
-      }
-      return false
+  Sim.Unit.update = function(){
+    [0, 1].forEach(function(i){
+      Sim.Util.removeIf(Sim.units[i], function(unit){
+        if (unit.getLp() == 0) {
+          Sim.players[unit.getPlayerid()].subUnit()
+          Sim.Bus.emit('remove-unit', unit.getKey(), unit.getType())
+          return true
+        }
+        return false
+      })
     })
   }
 

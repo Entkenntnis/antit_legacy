@@ -30,12 +30,11 @@
       Sim.units[0].forEach(function(unit) {
         unit.update()
       })
-      Sim.removeDeadUnits(Sim.units[0])
       Sim.units[1].forEach(function(unit) {
         unit.update()
       })
-      Sim.removeDeadUnits(Sim.units[1])
-      Sim.updateMissiles()
+      Sim.Unit.update()
+      Sim.Missile.update()
     }
   }
     
@@ -46,7 +45,7 @@
       && Sim.players[playerid].getUnits() + info.Anzahl <= Sim.Opts.EinheitenLimit) {
       hill.subEnergy(info.Kosten)
       for (var i = 0; i < info.Anzahl; i++) {
-        var unit = new Sim.Unit(getUnitSpawnPoint(pos, type), playerid, type)
+        var unit = new Sim.Unit(getUnitSpawnPoint(hill.getPos(), type), playerid, type)
         Sim.units[playerid].push(unit)
         Sim.players[playerid].addUnit()
       }

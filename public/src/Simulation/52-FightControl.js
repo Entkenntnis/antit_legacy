@@ -1,33 +1,31 @@
 
 (function(Sim){
   
-  document.addEventListener("keypress", keypresshandler);
+  if (Sim.Opts.Kampfmodus)
+    document.addEventListener("keypress", keypresshandler)
   
   function keypresshandler(e){
-    if (Sim.players.length < 2 || !Sim.Opts.Kampfmodus)
-      return
     
     //console.log(e.charCode)
-    if (e.charCode == 113) { // q, Arbeiter rot
+    /*if (e.charCode == 113) // q
       Sim.hills[0].spawnAnt()
-    }
-    if (e.charCode == 117) // u, Arbeiter blau
-      Sim.hills[1].spawnAnt()
-    if (e.charCode == 119) { // w, Kampfmeise rot
-      Sim.hills[0].spawnUnit("Kampfmeise")
-    }
-    if (e.charCode == 105) // i, Kampfmeise blau
-      Sim.hills[1].spawnUnit("Kampfmeise")
-    if (e.charCode == 101) { // w, Riesenmeise rot
-      Sim.hills[0].spawnUnit("Riesenmeise")
-    }
-    if (e.charCode == 111) // i, Riesenmeise blau
-      Sim.hills[1].spawnUnit("Riesenmeise")
-    if (e.charCode == 97) { // w, Riesenmeise rot
-      Sim.hills[0].spawnUnit("Giftmeise")
-    }
-    if (e.charCode == 106) // i, Riesenmeise blau
-      Sim.hills[1].spawnUnit("Giftmeise")
+    if (e.charCode == 117) // u
+      Sim.hills[1].spawnAnt()*/
+      
+    if (e.charCode == 119) // w
+      Sim.Fight.spawnUnit("Kampfmeise", 0)
+    if (e.charCode == 105) // i
+      Sim.Fight.spawnUnit("Kampfmeise", 1)
+      
+    if (e.charCode == 101) // e
+      Sim.Fight.spawnUnit("Riesenmeise", 0)
+    if (e.charCode == 111) // o
+      Sim.Fight.spawnUnit("Riesenmeise", 1)
+      
+    if (e.charCode == 97) // a
+      Sim.Fight.spawnUnit("Giftmeise", 0)
+    if (e.charCode == 106) // j
+      Sim.Fight.spawnUnit("Giftmeise", 1)
   }
 
 
