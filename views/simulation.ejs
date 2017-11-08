@@ -94,7 +94,7 @@
 
 %>document.getElementById("intro-text").innerHTML = "Dateien werden geladen ...";<%
 
-  if (!atLeastOnFile) {%>
+  if (!atLeastOnFile && !fightMode) {%>
     document.getElementById('intro-text').innerHTML = "Keine Ameise geladen!"
     throw "Keine Ameise geladen!"
   <%} 

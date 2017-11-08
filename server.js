@@ -380,7 +380,7 @@ route({name:"/simulation"}, function(req, res) {
       repeat:repeat,
       prefix:req.curHome,
       devMode:colonyInfo[req.params.colony].debugging,
-      fightMode:colonyInfo[req.params.colony].fight})
+      fightMode:false})
   })
 })
 
@@ -410,16 +410,6 @@ route({name:"/debug", login:true, superuser:true}, function(req, res) {
 route({name:"/nodebug", login:true, superuser:true}, function(req, res) {
   colonyInfo[req.params.colony].debugging = false
   res.send("debugging mode off")
-})
-
-route({name:"/fight", login:true, superuser:true}, function(req, res) {
-  colonyInfo[req.params.colony].fight = true
-  res.send("fight mode on")
-})
-
-route({name:"/nofight", login:true, superuser:true}, function(req, res) {
-  colonyInfo[req.params.colony].fight = false
-  res.send("fight mode off")
 })
 
 route({name:"/stats", login:true, superuser:true}, function(req, res) {
