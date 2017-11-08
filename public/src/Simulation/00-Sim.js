@@ -54,17 +54,7 @@
         ant.update();
       });
       
-      if (Sim.units) {
-        Sim.units[0].forEach(function(unit) {
-          unit.update()
-        })
-        Sim.removeDeadUnits(Sim.units[0])
-        Sim.units[1].forEach(function(unit) {
-          unit.update()
-        })
-        Sim.removeDeadUnits(Sim.units[1])
-        Sim.updateMissiles()
-      }
+      if (Sim.Opts.Kampfmodus) Sim.Fight.update()
       
       Sim.hills.forEach(function(hill) {
         hill.update();
@@ -92,11 +82,6 @@
     getCycles : function() { return Sim.cycles },
     getPoints : function() { 
       return Sim.players.map(function(p){return p.getPoints()}).join(",")
-    },
-    setHillOverride : function() {
-      Sim.hills.forEach(function(h){
-        h.overrideUserControl()
-      })
     },
   }
 

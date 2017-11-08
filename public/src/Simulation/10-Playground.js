@@ -104,7 +104,9 @@
           } else {
             if (counts.sugars > counts.apples * 2)
               type = "apple";
-          }     
+          }
+          
+          if (Sim.Opts.Kampfmodus) type = "sugar"     
           
           var counter = 100;
           while(counter-- > 0) {
@@ -175,8 +177,6 @@
           reason = "Müdigkeit"
         } else if (ant.getEnergy() <= 0) {
           reason = "Wanze"
-        } else if (ant.getLp() <= 0) {
-          reason = "Kampf"
         }
         if (reason) {
           Sim.API.setAnt(ant)

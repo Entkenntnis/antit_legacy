@@ -10,8 +10,8 @@
     AntIT.NeueAmeise("Spieler 2")
     Sim.Opts.AnfangsEnergie = 40000
     Sim.Opts.WanzenProSpieler = 0
-    Sim.Opts.NahrungMindestEntfernung = 100
-    Sim.Opts.NahrungMaximalEntfernung = 300
+    Sim.Opts.NahrungMindestEntfernung = 150
+    Sim.Opts.NahrungMaximalEntfernung = 400
     Sim.Opts.NahrungAbstand = 75
     Sim.units = [[], []]
   }
@@ -24,6 +24,67 @@
     Sim.players.push(new Sim.Player(0, Sim.API.ants[0]))
     Sim.players.push(new Sim.Player(1, Sim.API.ants[1]))
   }
+  
+  Fight.update = function(){
+    if (Sim.units) {
+      Sim.units[0].forEach(function(unit) {
+        unit.update()
+      })
+      Sim.removeDeadUnits(Sim.units[0])
+      Sim.units[1].forEach(function(unit) {
+        unit.update()
+      })
+      Sim.removeDeadUnits(Sim.units[1])
+      Sim.updateMissiles()
+    }
+  }
+    
+  Fight.spawnUnit = function(type, playerid) {
+    var hill = Sim.hills[playerid]
+    var info = Sim.Opts.Kampf[type]
+    if (hill.getEnergy() >= info.Kosten
+      && Sim.players[playerid].getUnits() + info.Anzahl <= Sim.Opts.EinheitenLimit) {
+      hill.subEnergy(info.Kosten)
+      for (var i = 0; i < info.Anzahl; i++) {
+        var unit = new Sim.Unit(getUnitSpawnPoint(pos, type), playerid, type)
+        Sim.units[playerid].push(unit)
+        Sim.players[playerid].addUnit()
+      }
+    }
+  }
+  
+  function getUnitSpawnPoint(pos, type) {
+    var party0 = Sim.Util.inRange(pos, Sim.units[0], 300)
+    var party1 = Sim.Util.inRange(pos, Sim.units[1], 300)
+    var all = party0.concat(party1)
+    var k = Sim.Opts.Kampf[type].Körper
+    var antPos
+    for (var i = 0; i < 100; i++) {
+      antPos = {x:pos.x,y:pos.y};
+      var angle = Sim.rng()*Math.PI*2;
+      var radius = Sim.Opts.Kampf.Bau.Körper + k + i*2 + 1 + (Sim.rng()*10)
+      antPos.x += Math.cos(angle)*radius;
+      antPos.y += Math.sin(angle)*radius;
+      var ok = true
+      for (var j = 0; j < all.length; j++) {
+        if (Sim.Util.dist(antPos, all[j].getPos()) < 
+          k + 3 + Sim.Opts.Kampf[all[j].getType()].Körper) {
+          ok = false
+          break  
+        }
+      }
+      Sim.sugars.forEach(function(sug){
+        if (Sim.Util.dist(antPos, sug.getPos()) < k + 15)
+          ok = false
+      })
+      if (ok) {
+        break
+      }
+    }
+    return antPos
+  }
+  
+  
   
   Sim.Fight = Fight
 

@@ -27,7 +27,6 @@
       energy: Sim.Opts.AmeisenEnergie,
       previousBug: undefined,
       memory:{},
-      lp : Sim.Opts.Kampf.Arbeitermeise.Trefferpunkte,
     })
     
     // helper
@@ -59,10 +58,6 @@
     // life
     this.subEnergy = function(val, obj) {
       my.energy -= val;
-    }
-    
-    this.hit = function(impact) {
-      my.lp -= impact
     }
     
     this.die = function() {

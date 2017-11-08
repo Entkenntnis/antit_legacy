@@ -17,6 +17,7 @@
           <% if (fightMode) { %>
             <script src="/src/14-FightMode.js"></script>
           <% } %>
+          
           <% include sim %>
           
           <script src="/src/View/00-View.js"></script>
@@ -31,9 +32,6 @@
           View.Pulse.getBus().on('start', function(){
             View.Pulse.Init()
             
-            if (View.Opts.Kampfmodus) {
-              View.Sim.setHillOverride()
-            }
             View.Pulse.setFps(undefined)
             
             function tick(){
