@@ -74,9 +74,8 @@ var AntIT = {};
     , JobLimit : 100
     
     , KampfModus : false
-    , BauTrefferpunkte : 5000
     , GrundEnergie : 80
-    , EinheitenLimit : 50
+    , EinheitenLimit : 500
     , Kampf : {
       Bau : {
         Trefferpunkte : 5000,
@@ -85,6 +84,7 @@ var AntIT = {};
         GGeschw : 10,
         Sichtweite : 250,
         Nahzone : 90,
+        Körper : 50
       },
       Arbeitermeise : {
         Trefferpunkte : 156,
@@ -99,6 +99,7 @@ var AntIT = {};
         Kampfzone : 40,
         Sichtweite : 100,
         Kosten: 500,
+        Körper : 10,
       },
       Riesenmeise : {
         Trefferpunkte : 1600,
@@ -110,6 +111,7 @@ var AntIT = {};
         Kampfzone : 40,
         Sichtweite : 100,
         Kosten: 800,
+        Körper : 20,
       },
       Giftmeise : {
         Trefferpunkte : 920,
@@ -121,6 +123,7 @@ var AntIT = {};
         Kampfzone : 60,
         Sichtweite : 100,
         Kosten: 700,
+        Körper : 15,
       },
     }
   }

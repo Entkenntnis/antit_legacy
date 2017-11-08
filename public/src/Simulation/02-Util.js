@@ -22,6 +22,16 @@
     }
     return undefined;
   }
+  
+  Util.inRange = function(pos, objs, range) {
+    var res = []
+    objs.forEach(function(obj) {
+      if (Util.dist(obj.getPos(), pos) <= range) {
+        res.push(obj)
+      }
+    })
+    return res
+  }
 
   Util.getDir = function(pos, des) {
     var d = Util.dist(pos, des);

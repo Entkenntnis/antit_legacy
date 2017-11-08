@@ -7,7 +7,7 @@
     if (Sim.players.length < 2 || !Sim.Opts.Kampfmodus)
       return
     
-    console.log(e.charCode)
+    //console.log(e.charCode)
     if (e.charCode == 113) { // q, Arbeiter rot
       Sim.hills[0].spawnAnt()
     }

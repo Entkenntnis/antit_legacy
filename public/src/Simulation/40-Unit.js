@@ -27,27 +27,65 @@
       }
     }
     
-    function goto(pos){
-      var angle = Sim.Util.getDir(my.pos, pos)
-      var rotation = Sim.Util.getRotation(my.heading, angle)
-      if (Math.abs(rotation) > 3) {
-        if (Math.abs(rotation) <= 8) {
-          my.heading = angle
+    function goto(pos) {
+      var party0 = Sim.Util.inRange(my.pos, Sim.units[0], 80)
+      var party1 = Sim.Util.inRange(my.pos, Sim.units[1], 80)
+      var all = party0.concat(party1)
+      var k = Sim.Opts.Kampf[my.type].Körper
+      
+      function check(pos) {
+        var good = true
+        all.forEach(function(obj){
+          if (obj.getKey() == my.key) return
+          var otherk = Sim.Opts.Kampf[obj.getType()].Körper
+          if (k + otherk > Sim.Util.dist(obj.getPos(), pos)) {
+            good = false
+          }
+        })
+        if (Sim.Util.dist(pos, Sim.hills[0].getPos()) < k + Sim.Opts.Kampf.Bau.Körper)
+          good = false
+        if (Sim.Util.dist(pos, Sim.hills[1].getPos()) < k + Sim.Opts.Kampf.Bau.Körper)
+          good = false
+        Sim.sugars.forEach(function(sug){
+          if (Sim.Util.dist(pos, sug.getPos()) < k + 15)
+            good = false
+        })
+        Sim.apples.forEach(function(app){
+          if (Sim.Util.dist(pos, app.getPos()) < k + 20)
+            good = false
+        })
+        return good
+      }
+      
+      function submit(pos) {
+        var angle = Sim.Util.getDir(my.pos, pos)
+        var rotation = Sim.Util.getRotation(my.heading, angle)
+        if (Math.abs(rotation) > 4) {
+          // nur drehen
+          if (Math.abs(rotation) <= 8) {
+            my.heading = angle
+          } else {
+            my.heading += 8 * Math.sign(rotation)
+          }
         } else {
-          my.heading += 8 * Math.sign(rotation)
+          my.pos = pos
         }
-      } else {
-        my.heading = angle + Sim.rng()*10-5
-        var oldx = my.pos.x;
-        var oldy = my.pos.y;
-        var newpos = Sim.Util.moveDir(my.pos, my.heading,
-          5 * Sim.Opts.Kampf[type].Geschwindigkeit)
-        if (Sim.playground.isInBound(newpos, Sim.Opts.Toleranz)) {
-          my.pos = newpos
+        updateGO()
+      }
+      
+      // first of all - berechne den besten Weg
+      
+      var angle = Sim.Util.getDir(my.pos, pos)
+      
+      for (var i = 0; i < 30; i++) {
+        var diff = Math.floor((i+1)/2) * 10 * Math.pow(-1, i)
+        var newpos = Sim.Util.moveDir(my.pos, angle + diff,
+          5 * Sim.Opts.Kampf[my.type].Geschwindigkeit)
+        if (check(newpos)) {
+          submit(newpos)
+          return
         }
       }
-      updateGO()
-    
     }
     
     this.hit = function(impact){
@@ -57,53 +95,53 @@
     }
     
     this.update = function(){
-      // ok, lasst uns bewegen und schießen
+      // neuer Bewegungscode
+      
       if (cooldown > 0) cooldown--
       var enemyId = (my.playerid + 1) % 2
       var nextEnemy = Sim.Util.closest(my.pos, Sim.units[enemyId],
         Sim.Opts.Kampf[type].Sichtweite)
+      
       if (nextEnemy) {
-        var d = Sim.Util.dist(nextEnemy.getPos(), my.pos)
-        if (d <= Sim.Opts.Kampf[type].Kampfzone) {
+        // Fixierung auf Gegner
+        var distance = Sim.Util.dist(nextEnemy.getPos(), my.pos)
+        var ksum = Sim.Opts.Kampf[my.type].Körper
+          + Sim.Opts.Kampf[nextEnemy.getType()].Körper
+        if (distance <= ksum + 10) {
+          // Nahkampfzone
           if (cooldown == 0) {
+            // schießen
             cooldown = Sim.Opts.Kampf[type].Trefferrate
-            if (type == "Giftmeise") {
-              var inrange = []
-              Sim.units[enemyId].forEach(function(unit){
-                if (Sim.Util.dist(unit.getPos(), my.pos) <= Sim.Opts.Kampf[type].Kampfzone) {
-                  inrange.push(unit)
-                }
-              })
-              inrange.forEach(function(enemy){
+            if (my.type == "Giftmeise") {
+              var enemies = Sim.Util.inRange(my.pos, Sim.units[enemyId], 60)
+              enemies.forEach(function(enemy){
                 Sim.fireMissile(my.pos, enemy,
                   Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw, "Gift")
               })
-              return
             } else {
               Sim.fireMissile(my.pos, nextEnemy,
                 Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw)
-              return
             }
           }
+        } else {
+            // zum Gegner bewegen
+            goto(nextEnemy.getPos())
+          }
+      } else {
+      
+        var d = Sim.Util.dist(my.pos, Sim.hills[enemyId].getPos())
+        if (d <= 90) {
+          if (cooldown == 0) {
+            cooldown = Sim.Opts.Kampf[type].Trefferrate
+            Sim.fireMissile(my.pos, Sim.hills[enemyId],
+              Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw)
+          }
+        } else {
+          goto(Sim.hills[enemyId].getPos())
         }
-        if (d < 30) {
-          return // nichts zu tun
-        }
-        if (Sim.Util.dist(my.pos, Sim.hills[enemyId].getPos()) >
-          Sim.Opts.Kampf.Bau.Nahzone)
-          goto(nextEnemy.getPos())
-        return
+        
       }
-      var d = Sim.Util.dist(my.pos, Sim.hills[enemyId].getPos())
-      if (d <= Sim.Opts.Kampf.Bau.Nahzone) {
-        if (cooldown == 0) {
-          cooldown = Sim.Opts.Kampf[type].Trefferrate
-          Sim.fireMissile(my.pos, Sim.hills[enemyId],
-            Sim.Opts.Kampf[type].Schaden, Sim.Opts.Kampf[type].GGeschw)
-        }
-        return
-      }
-      goto(Sim.hills[enemyId].getPos())
+    
     }
     
     // constructor

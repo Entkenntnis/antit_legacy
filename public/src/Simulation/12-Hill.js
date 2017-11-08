@@ -55,6 +55,35 @@
       return antPos
     }
     
+    function getUnitSpawnPoint(pos, type) {
+      var party0 = Sim.Util.inRange(pos, Sim.units[0], 300)
+      var party1 = Sim.Util.inRange(pos, Sim.units[1], 300)
+      var all = party0.concat(party1)
+      var k = Sim.Opts.Kampf[type].Körper
+      
+      var antPos
+        
+      for (var i = 0; i < 100; i++) {
+        antPos = {x:pos.x,y:pos.y};
+        var angle = Sim.rng()*Math.PI*2;
+        var radius = Sim.Opts.Kampf.Bau.Körper + k + i*2 + 1 + (Sim.rng()*10)
+        antPos.x += Math.cos(angle)*radius;
+        antPos.y += Math.sin(angle)*radius;
+        var ok = true
+        for (var j = 0; j < all.length; j++) {
+          if (Sim.Util.dist(antPos, all[j].getPos()) < 
+            k + 3 + Sim.Opts.Kampf[all[j].getType()].Körper) {
+            ok = false
+            break  
+          }
+        }
+        if (ok) {
+          break
+        }
+      }
+      return antPos
+    }
+    
     function spawnAnt() {
       if (my.energy >= Sim.Opts.EnergieFürAmeise &&
         Sim.players[my.playerid].getAnts() < Sim.Opts.AmeisenMaximum) {
@@ -73,7 +102,7 @@
         && Sim.players[my.playerid].getUnits() < Sim.Opts.EinheitenLimit) {
         my.energy -= Sim.Opts.Kampf[type].Kosten
         for (var i = 0; i < Sim.Opts.Kampf[type].Anzahl; i++) {
-          var unit = new Sim.Unit(getSpawnPoint(pos), my.playerid, type)
+          var unit = new Sim.Unit(getUnitSpawnPoint(pos, type), my.playerid, type)
           Sim.units[my.playerid].push(unit)
           Sim.players[my.playerid].addUnit()
         }
