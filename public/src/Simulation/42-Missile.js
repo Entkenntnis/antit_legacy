@@ -7,7 +7,7 @@
   Sim.fireMissile = function(pos, dest, impact, speed, type) {
     var id = counter++
     missiles.push({id:id, pos:pos, dest:dest, impact:impact, speed:speed, type:type})
-    Sim.bus.emit('move-missile', id, pos)
+    Sim.Bus.emit('move-missile', id, pos)
   }
   
   Sim.updateMissiles = function(){
@@ -20,13 +20,13 @@
         }
       }
       if (Sim.Util.dist(m.pos, m.dest.getPos()) < m.speed) {
-        Sim.bus.emit('remove-missile', m.id)
+        Sim.Bus.emit('remove-missile', m.id)
         m.dest.hit(m.impact)
         m.id = undefined
       } else {
         var dir = Sim.Util.getDir(m.pos, m.dest.getPos())
         m.pos = Sim.Util.moveDir(m.pos, dir, m.speed)
-        Sim.bus.emit('move-missile', m.id, m.pos)
+        Sim.Bus.emit('move-missile', m.id, m.pos)
       }
     })
     Sim.Util.removeIf(missiles, function(m){

@@ -18,7 +18,7 @@
     
     function updateGO() {
       var height = pid!==undefined?5:0;
-      Sim.bus.emit('move-apple', key, my.pos, height)
+      Sim.Bus.emit('move-apple', key, my.pos, height)
     }
     
     this.addAnt = function(ant) {
@@ -41,7 +41,7 @@
       if (pid !== undefined) {
         var d = Sim.Util.dist(my.pos, Sim.hills[pid].getPos());
         if (d < 10) {
-          Sim.bus.emit('remove-apple', key)
+          Sim.Bus.emit('remove-apple', key)
           Sim.players[pid].addPoints(Sim.Opts.PunkteProApfel);
           Sim.hills[pid].addEnergy(Sim.Opts.EnergieProApfel);
           Sim.players[pid].addApple();

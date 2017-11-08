@@ -190,7 +190,7 @@
     }
     
     // constructor
-    Sim.bus.emit('set-xy', my.width, my.height)
+    Sim.Bus.emit('set-xy', my.width, my.height)
   }
   
   Sim.Playground = Playground

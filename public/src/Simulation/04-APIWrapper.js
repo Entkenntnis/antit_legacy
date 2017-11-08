@@ -82,7 +82,7 @@
         details = "\nVolk: " + Sim.players[API.staticPlayerId].getKI().Name + "\nAufruf: " + API.ctxt;
       }
       alert("MELDUNG\n" + text + details);
-      Sim.bus.emit('abort-simulation')
+      Sim.Bus.emit('abort-simulation')
     }
   }
   

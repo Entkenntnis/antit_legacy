@@ -20,16 +20,16 @@
     var markers = []
     
     function updateGO() {
-      Sim.bus.emit('move-hill', key, my.pos)
+      Sim.Bus.emit('move-hill', key, my.pos)
     }
     
     function setFlagColor() {
-      Sim.bus.emit('change-hill-color', key, Sim.Opts.SpielerFarben[my.playerid])
+      Sim.Bus.emit('change-hill-color', key, Sim.Opts.SpielerFarben[my.playerid])
     }
     
     this.addMarker = function() {
       var key = Hill.markerCounter++
-      Sim.bus.emit('add-marker', key,
+      Sim.Bus.emit('add-marker', key,
         my.pos,
         Sim.Opts.SpielerFarben[my.playerid])
       markers.push({
@@ -155,10 +155,10 @@
       Sim.Util.removeIf(markers, function(m){
         m.cycle++
         if (m.cycle >= Sim.Opts.MarkerDauer) {
-          Sim.bus.emit('remove-marker', m.key)
+          Sim.Bus.emit('remove-marker', m.key)
           return true
         }
-        Sim.bus.emit('update-marker', m.key)
+        Sim.Bus.emit('update-marker', m.key)
         return false
       })
     }

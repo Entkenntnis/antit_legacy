@@ -16,7 +16,7 @@
     function updateGO() {
       var linScale = my.amount / Sim.Opts.ZuckerGröße * Sim.Opts.ZuckerVergrößerung
       var scale = Math.max(Math.pow(linScale, 1/2), 0.000001)
-      Sim.bus.emit('move-sugar', key, my.pos, scale)
+      Sim.Bus.emit('move-sugar', key, my.pos, scale)
     }
     
     this.unload1Sugar = function() {
@@ -25,7 +25,7 @@
         updateGO();
         return true;
       } else {
-        Sim.bus.emit('remove-sugar', key)
+        Sim.Bus.emit('remove-sugar', key)
         return false;
       }
     }

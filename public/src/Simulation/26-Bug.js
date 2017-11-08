@@ -15,7 +15,7 @@
     var towait = 0;
     
     function updateGO() {
-      Sim.bus.emit('move-bug', key,
+      Sim.Bus.emit('move-bug', key,
         my.pos,
         -heading / 180 * Math.PI + Math.PI)
     }

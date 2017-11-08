@@ -3,7 +3,7 @@
 
   var Simulation = function() {
 
-    this.bus = Minibus.create()
+    this.Bus = Minibus.create()
     this.Opts = Optionen
     
     this.init = function(seed) {
@@ -88,7 +88,7 @@
   AntIT._sim = {
     Init : Sim.init,
     Update : Sim.update,
-    getBus : function() { return Sim.bus },
+    getBus : function() { return Sim.Bus },
     getCycles : function() { return Sim.cycles },
     getPoints : function() { 
       return Sim.players.map(function(p){return p.getPoints()}).join(",")

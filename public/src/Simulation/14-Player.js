@@ -17,7 +17,7 @@
     var units = 0
     
     function initHTML() {
-      Sim.bus.emit('add-player-status', id, my.KI.Name, Sim.Opts.SpielerFarben[my.id])
+      Sim.Bus.emit('add-player-status', id, my.KI.Name, Sim.Opts.SpielerFarben[my.id])
     }
     
     function updateDetails(){
@@ -26,11 +26,11 @@
       if (Sim.Opts.Kampfmodus) {
         var energy = Sim.hills[id].getEnergy()
         var lp = Sim.hills[id].getLp()
-        Sim.bus.emit('update-player-stats', id, "(Arbeiter: " + ants + " / Tote: "
+        Sim.Bus.emit('update-player-stats', id, "(Arbeiter: " + ants + " / Tote: "
          + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")"+
           " (Krieger: " + units + " / Energie: " + energy + " / Lebenspunkte: " + lp + ")")
       } else {
-        Sim.bus.emit('update-player-stats', id, "(Ameisen: " + ants + " / Tote: "
+        Sim.Bus.emit('update-player-stats', id, "(Ameisen: " + ants + " / Tote: "
          + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")")
       }
       
@@ -80,7 +80,7 @@
     
     this.addPoints = function(amount) {
       my.points = Math.max(0, my.points + amount)
-      Sim.bus.emit('update-player-points', id, my.points)
+      Sim.Bus.emit('update-player-points', id, my.points)
     }
     
     // constructor

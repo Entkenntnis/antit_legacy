@@ -19,11 +19,11 @@
     var cooldown = 0
     
     function updateGO() {
-      Sim.bus.emit('move-unit', my.key, my.type,
+      Sim.Bus.emit('move-unit', my.key, my.type,
         my.pos,
         -my.heading / 180 * Math.PI + Math.PI)
       if (my.lp < Sim.Opts.Kampf[type].Trefferpunkte) {
-        Sim.bus.emit('move-hb', my.key, my.pos, my.lp / Sim.Opts.Kampf[type].Trefferpunkte)
+        Sim.Bus.emit('move-hb', my.key, my.pos, my.lp / Sim.Opts.Kampf[type].Trefferpunkte)
       }
     }
     
@@ -145,7 +145,7 @@
     }
     
     // constructor
-    Sim.bus.emit('change-unit-color', my.key, my.type, Sim.Opts.SpielerFarben[my.playerid])
+    Sim.Bus.emit('change-unit-color', my.key, my.type, Sim.Opts.SpielerFarben[my.playerid])
     updateGO()
   }
   
@@ -155,7 +155,7 @@
     Sim.Util.removeIf(units, function(unit){
       if (unit.getLp() == 0) {
         Sim.players[unit.getPlayerid()].subUnit()
-        Sim.bus.emit('remove-unit', unit.getKey(), unit.getType())
+        Sim.Bus.emit('remove-unit', unit.getKey(), unit.getType())
         return true
       }
       return false

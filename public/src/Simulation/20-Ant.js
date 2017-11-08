@@ -82,23 +82,23 @@
     
     // visuals
     function setColor() {
-      Sim.bus.emit('change-ant-color', my.key, Sim.Opts.SpielerFarben[my.playerid])
+      Sim.Bus.emit('change-ant-color', my.key, Sim.Opts.SpielerFarben[my.playerid])
     }
     
     function updateGO() {
-      Sim.bus.emit('move-ant', my.key,
+      Sim.Bus.emit('move-ant', my.key,
         my.pos,
         -my.heading / 180 * Math.PI + Math.PI)
       if (my.load > 0) {
-        Sim.bus.emit('move-sugarbox', my.key, my.pos)
+        Sim.Bus.emit('move-sugarbox', my.key, my.pos)
       } else {
-        Sim.bus.emit('remove-sugarbox', my.key)
+        Sim.Bus.emit('remove-sugarbox', my.key)
       }
     }
     
     function removeGO() {
-      Sim.bus.emit('remove-ant', my.key)
-      Sim.bus.emit('remove-sugarbox', my.key)
+      Sim.Bus.emit('remove-ant', my.key)
+      Sim.Bus.emit('remove-sugarbox', my.key)
     }
     
     // jobs - general
