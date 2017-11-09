@@ -29,7 +29,7 @@
     camera = new THREE.PerspectiveCamera(60, 1 /*aspect*/, 0.1, 200000);
     camera.position.set(0, 600, 1700)
     if (View.Opts.Kampfmodus) {
-      camera.position.set(0, 1000, 500)
+      camera.position.set(0, 600, 330)
     }
     
     // the worker in the shadow
@@ -304,13 +304,12 @@
       hb0 = new THREE.Mesh( hbgeo, hbmat )  
       
       // poison ring
-      /*var ring = new THREE.RingBufferGeometry( 20, 50, 8 );
+      var ring = new THREE.RingBufferGeometry( 20, 50, 8 );
       var ringMat = new THREE.MeshPhongMaterial( { color: 0xffff00, side: THREE.DoubleSide, transparent:true, opacity:0.4 } );
       var poisonRing = new THREE.Mesh( ring, ringMat );
       poisonRing.rotation.x = Math.PI / 2;
       poisonRing.position.y = 2
       poison0 = poisonRing
-      scene.add(poison0)*/
       
       /*// magic activation
       var pyramid = new THREE.TetrahedronGeometry(2)
@@ -523,6 +522,10 @@
     Bus.on('remove-sugar', function(key) {
       if (sugarStore.has(key))
         sugarStore.remove(key);
+    })
+    
+    Bus.on('move-spawn-point', function(key, pos) {
+      poisonStore.get(key).position.copy(toViewPos(pos, 2))
     })
     
   };

@@ -6,6 +6,11 @@
   
   function keypresshandler(e){
     
+    if (e.charCode == 114) // r
+      Sim.Fight.flipSpawnPoint(0)
+    if (e.charCode == 112) // p
+      Sim.Fight.flipSpawnPoint(1)
+    
     if (e.charCode == 113) // q
       Sim.Fight.spawnUnit("Arbeitermeise", 0)
     if (e.charCode == 117) // u

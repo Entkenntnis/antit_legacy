@@ -15,6 +15,7 @@
     var collectedApples = 0;
     var deadants = 0;
     var units = 0
+    var cooldown = false
     
     function initHTML() {
       Sim.Bus.emit('add-player-status', id, my.KI.Name, Sim.Opts.SpielerFarben[my.id])
@@ -27,7 +28,8 @@
         var energy = Sim.hills[id].getEnergy()
         var lp = Sim.hills[id].getLp()
         Sim.Bus.emit('update-player-stats', id, "Bau: " + lp + ", Energie: " + energy +
-          ", Einheiten: " + units + ", Arbeiter: " + ants +  "/10, Tote: " + deadants)
+          ", Einheiten: " + units + ", Arbeiter: " + ants +  "/10, Tote: " + deadants +
+          ", Status: " + (cooldown?"laden":"bereit")) 
       } else {
         Sim.Bus.emit('update-player-stats', id, "(Ameisen: " + ants + " / Tote: "
          + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")")
@@ -79,6 +81,16 @@
     
     this.getAnts = function(){
       return ants
+    }
+    
+    this.setCooldown = function(){
+      cooldown = true
+      updateDetails();
+    }
+    
+    this.resetCooldown = function(){
+      cooldown = false
+      updateDetails();
     }
     
     this.addPoints = function(amount) {

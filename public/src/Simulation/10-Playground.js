@@ -80,14 +80,14 @@
     }
     
     this.update = function() {
+      if (Sim.Opts.Kampfmodus) return
       if (timeToNextFeed-- <= 0) {
         timeToNextFeed = Sim.Opts.NahrungsWartezeit;
         var feedHills = [];
         Sim.hills.forEach(function(h){
           var counts = getFoodInRange(h, Sim.Opts.NahrungMaximalEntfernung);
           if (counts.apples < 1 || counts.sugars < 2 || (counts.apples <= 2 && counts.sugars <= 3)) {
-            if (!Sim.Opts.Kampfmodus || counts.sugars < 5)
-              feedHills.push(h);
+            feedHills.push(h);
           }
             
         });
@@ -107,9 +107,7 @@
           } else {
             if (counts.sugars > counts.apples * 2)
               type = "apple";
-          }
-          
-          if (Sim.Opts.Kampfmodus) type = "sugar"     
+          }    
           
           var counter = 100;
           while(counter-- > 0) {

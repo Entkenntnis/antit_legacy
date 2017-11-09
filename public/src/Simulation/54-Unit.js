@@ -84,7 +84,7 @@
       for (var i = 0; i < 30; i++) {
         var diff = Math.floor((i+1)/2) * 15* Math.pow(-1, i)
         var newpos = Sim.Util.moveDir(my.pos, angle + diff,
-          2 * Sim.Opts.Kampf[my.type].Geschwindigkeit)
+          3 * Sim.Opts.Kampf[my.type].Geschwindigkeit)
         if (nocollide || check(newpos)) {
           submit(newpos)
           return
@@ -94,7 +94,7 @@
     
     this.hit = function(impact, type){
       if (type == "Gift" && my.type == "Albinomeise")
-        return
+        impact *= 0.1
       my.lp = Math.max(0, my.lp - impact)
       if (my.lp > 0)
         updateGO()
@@ -171,7 +171,7 @@
       } else {
         nextEnemy = Sim.Util.closest(my.pos, Sim.units[enemyId],
         Sim.Opts.Kampf[type].Sichtweite, function(obj){
-          return obj.getType() == "Arbeitermeise" || obj.getType() == "Albinomeise"
+          return obj.getType() == "Arbeitermeise"
         })
       }
       
@@ -188,7 +188,7 @@
             if (my.type == "Giftmeise") {
               var enemies = Sim.Util.inRange(my.pos, Sim.units[enemyId], rw + kgegner,
                 function(obj){
-                  return obj.getType() == "Arbeitermeise" || obj.getType() == "Albinomeise"
+                  return obj.getType() == "Arbeitermeise"
                 })
               enemies.forEach(function(enemy){
                 Sim.Missile.fire(my.pos, enemy,

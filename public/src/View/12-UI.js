@@ -27,7 +27,7 @@
     if (e.charCode == 51)
       newFps = 140;
     if (e.charCode == 52)
-      newFps = 7500;
+      newFps = 30;
     if (newFps) {
       View.Pulse.setFps(newFps)
     }

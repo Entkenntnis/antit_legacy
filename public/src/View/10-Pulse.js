@@ -25,6 +25,7 @@
     running = true
     Sim.Init(seed)
     startTime = Date.now()
+    Pulse.setFps(Optionen.TicksProSekunde)
   }
   
   function simTick() {
