@@ -19,6 +19,7 @@
   document.addEventListener("keypress", keypresshandler);
   
   function keypresshandler(e){
+    if (View.Opts.Kampfmodus) return
     var newFps = undefined;
     if (e.charCode == 49)
       newFps = 4
@@ -27,7 +28,7 @@
     if (e.charCode == 51)
       newFps = 140;
     if (e.charCode == 52)
-      newFps = 30;
+      newFps = 140;
     if (newFps) {
       View.Pulse.setFps(newFps)
     }
