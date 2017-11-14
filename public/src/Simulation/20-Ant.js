@@ -265,13 +265,13 @@
     // jobs - communication
     this.addSendMemoryJob = function(topic) {
       this.addJob("SEND", undefined, function() {
-        if (Sim.Util.dist(my.pos, myHill().getPos()) < Sim.Opts.HügelRadius) {
-          myHill().addMarker()
+        //if (Sim.Util.dist(my.pos, myHill().getPos()) < Sim.Opts.HügelRadius) {
+          myHill().addMarker(my.pos)
           var curAnts = [];
           Sim.ants.forEach(function (ant) {
             if (ant.getPlayerid() != my.playerid)
               return;
-            if (Sim.Util.dist(ant.getPos(), myHill().getPos()) < Sim.Opts.AmeiseSichtweite)
+            if (Sim.Util.dist(ant.getPos(), my.pos) < Sim.Opts.AmeiseSichtweite * 2)
               curAnts.push(ant);
           });
           curAnts.forEach(function (ant) {
@@ -286,7 +286,7 @@
             if (bkup !== undefined)
               Sim.API.setAnt(bkup);
           })
-        }
+        //}
         return true;
       })
     }

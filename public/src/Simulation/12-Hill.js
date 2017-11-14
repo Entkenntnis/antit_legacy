@@ -27,14 +27,15 @@
       Sim.Bus.emit('change-hill-color', key, Sim.Opts.SpielerFarben[my.playerid])
     }
     
-    this.addMarker = function() {
+    this.addMarker = function(pos) {
       var key = Hill.markerCounter++
       Sim.Bus.emit('add-marker', key,
-        my.pos,
+        pos,
         Sim.Opts.SpielerFarben[my.playerid])
       markers.push({
         key: key,
-        cycle: 0
+        cycle: 0,
+        pos:pos
       })
     }
     
