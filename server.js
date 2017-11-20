@@ -3,6 +3,7 @@
 
 const express = require('express')
 const passport = require('passport')
+const co = require('co')
 
 const app = express()
 
@@ -32,8 +33,13 @@ const db = require('monk')(dbUrl, {authSource:"admin"})
 
 db.then(() => {
   initColonys()
-  app.listen(process.env.NODE_PORT || 3000, process.env.NODE_IP || "localhost");
+  app.listen(process.env.NODE_PORT || 3000, process.env.NODE_IP || "localhost")
 })
+
+process.on('unhandledRejection', function(reason, p){
+    console.log("Unhandled Rejection:", p);
+    process.exit(1)
+});
 
 
 // ----------------------------
@@ -42,7 +48,8 @@ db.then(() => {
 const colonyInfo = {}
 
 function initColonys() {
-  db.get('info').find({}).then((val) => {
+  return co(function*(){
+    var val = yield db.get('info').find({})
     val.forEach(function(colony){
       colonyInfo[colony.colonyName] = colony
     })
@@ -62,35 +69,33 @@ function getColonyCollection(path) {
 
 passport.use(new (require('passport-local').Strategy)(
   {passReqToCallback:true}, 
-  function(req, uname, pw, cb) {
-    req.curCol.find({username: uname, password: pw}, {ants:false}).then((users) => {
-      if (users && users.length == 1) {
-        users[0].colony = req.params.colony
-        return cb(null, users[0])
-      } else {
-        return cb(null, false)
-      }
-    })    
-}));
+  co.wrap(function*(req, uname, pw, cb) {
+    var users = yield req.curCol.find({username: uname, password: pw}, {ants:false})
+    if (users && users.length == 1) {
+      users[0].colony = req.params.colony
+      return cb(null, users[0])
+    } else {
+      return cb(null, false)
+    }
+})));
   
 passport.serializeUser(function(user, cb) {
   cb(null, user.colony + '#' + user._id);
 });
 
-passport.deserializeUser(function(id, cb) {
+passport.deserializeUser(co.wrap(function*(id, cb) {
   var splitterIndex = id.indexOf('#')
   var colony = splitterIndex >= 0 ? id.substring(0, splitterIndex) : ""
   var userid = id.substr(splitterIndex + 1)
   var col = getColonyCollection(colony)
   if (col) {
-    col.find({_id: userid}, {ants:false}).then((users) => {
-      users[0].colony = colony
-      return cb(null, users[0])
-    })
+    var users = yield col.find({_id: userid}, {ants:false})
+    users[0].colony = colony
+    return cb(null, users[0])
   } else {
     cb("invalid id")
-  }  
-});
+  }
+}));
 
 
 // ----------------------------
@@ -136,22 +141,22 @@ function getName(data) {
 function insertAnt(code, userid, col) {
   var antName = getName(code)
   var antId = Math.floor(Date.now()*1000 + Math.random()*999).toString(16);
-  col.update({_id:userid},
-    {$push: {ants: {antid:antId, name:antName, published:false,code:code}}})
+  return col.update({_id:userid},
+      {$push: {ants: {antid:antId, name:antName, published:false,code:code}}})
 }
 
 function saveCode(userid, antid, data, col) {
-  col.update({_id:userid, "ants.antid" : antid},
+  return col.update({_id:userid, "ants.antid" : antid},
     {$set : {"ants.$.code" : data, "ants.$.name": getName(data)}})
 }
 
 function setPublished(userid, antid, val, col) {
-  col.update({_id:userid, "ants.antid" : antid},
+  return col.update({_id:userid, "ants.antid" : antid},
     {$set : {"ants.$.published": val}})
 }
 
 function deleteAnt(userid, antid, col) {
-  col.update({_id:userid},
+  return col.update({_id:userid},
     {$pull : {ants: {antid:antid}}})
 }
 
@@ -261,6 +266,8 @@ function route(options, cb) {
       return function(req, res, next) { next() }
   }
   function returnHome(req, res) { res.redirect(req.curHome) }
+  if (cb.constructor.name == 'GeneratorFunction')
+    cb = co.wrap(cb)
   if (!options.post) {
     app.get('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
   } else {
@@ -277,21 +284,20 @@ app.get("/", function(req, res) {
   res.redirect("/main")
 })
 
-route({name:"/"}, function(req, res) {
+route({name:"/"}, function*(req, res) {
   const userid = req.user ? req.user._id.toString() : undefined
-  req.curCol.find({}, {"ants.code":false}).then((val) => {
-    var result = prepareAnts(val, userid)
-    if (req.user && queryCache[req.sessionID])
-      req.user.previous = queryCache[req.sessionID]
-    res.render('home', {
-      user: req.user,
-      fail: req.query.fail,
-      ants: result.ants,
-      globals: result.globals,
-      highlightElement: 0,
-      devMode:colonyInfo[req.params.colony].debugging,
-      prefix: req.curHome
-    })
+  var val = yield req.curCol.find({}, {"ants.code":false})
+  var result = prepareAnts(val, userid)
+  if (req.user && queryCache[req.sessionID])
+    req.user.previous = queryCache[req.sessionID]
+  res.render('home', {
+    user: req.user,
+    fail: req.query.fail,
+    ants: result.ants,
+    globals: result.globals,
+    highlightElement: 0,
+    devMode:colonyInfo[req.params.colony].debugging,
+    prefix: req.curHome
   })
 })
 
@@ -327,27 +333,25 @@ route({name:"/chals"}, function(req, res) {
     prefix: req.curHome })
 })
 
-route({name:"/new", login:true}, function(req, res, next) {
+route({name:"/new", login:true}, function*(req, res, next) {
   var codeString = require('fs').readFileSync("./newAnt.js", "utf8");
-  insertAnt(codeString, req.user._id, req.curCol)
+  yield insertAnt(codeString, req.user._id, req.curCol)
   next()
 })
 
-route({name:"/edit", login:true}, function(req, res, next) {
-  req.curCol.find({
+route({name:"/edit", login:true}, function*(req, res, next) {
+  var users = yield req.curCol.find({
     _id: req.user._id,
     "ants.antid":req.query.id},
     {"ants.$":1})
-  .then((users) =>{
-    if (users && users.length == 1) {
-      res.render('edit', {
-        data: users[0].ants[0].code,
-        id: req.query.id,
-        prefix: req.curHome })
-    } else {
-      next()
-    }
-  })
+  if (users && users.length == 1) {
+    res.render('edit', {
+      data: users[0].ants[0].code,
+      id: req.query.id,
+      prefix: req.curHome })
+  } else {
+    next()
+  }
 })
 
 route({name:"/save", login:true, post:true}, function(req, res, next) {
