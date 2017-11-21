@@ -4,6 +4,7 @@
 const express = require('express')
 const passport = require('passport')
 const co = require('co')
+const util = require('util')
 
 const app = express()
 
@@ -334,7 +335,7 @@ route({name:"/chals"}, function(req, res) {
 })
 
 route({name:"/new", login:true}, function*(req, res, next) {
-  var codeString = require('fs').readFileSync("./newAnt.js", "utf8");
+  var codeString = yield util.promisify(require('fs').readFile)("./newAnt.js", "utf8")
   yield insertAnt(codeString, req.user._id, req.curCol)
   next()
 })
