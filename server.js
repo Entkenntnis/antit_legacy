@@ -355,20 +355,20 @@ route({name:"/edit", login:true}, function*(req, res, next) {
   }
 })
 
-route({name:"/save", login:true, post:true}, function(req, res, next) {
+route({name:"/save", login:true, post:true}, function*(req, res, next) {
   if (req.body.duplicate) {
-    insertAnt(updateName(req.body.data), req.user._id, req.curCol)
+    yield insertAnt(updateName(req.body.data), req.user._id, req.curCol)
   }
-  saveCode(req.user._id, req.query.id, req.body.data, req.curCol)
+  yield saveCode(req.user._id, req.query.id, req.body.data, req.curCol)
   next()
 })
 
-route({name:"/delete", login:true}, function(req, res, next) {
-  deleteAnt(req.user._id, req.query.id, req.curCol)
+route({name:"/delete", login:true}, function*(req, res, next) {
+  yield deleteAnt(req.user._id, req.query.id, req.curCol)
   next()
 })
 
-route({name:"/simulation"}, function(req, res) {
+route({name:"/simulation"}, function*(req, res) {
   if (req.query.fight == 1) {
     res.render('simulation', {
       code:["", ""],
@@ -384,21 +384,20 @@ route({name:"/simulation"}, function(req, res) {
   if (req.user)
     queryCache[req.sessionID] = req.query
   var antIds = flattenQuery(req.query)
-  req.curCol.find({"ants.antid" : {$in:antIds}}).then((users) => {
-    var ants = findAnts(users, req.user?req.user._id.toString():"", antIds)
-    var hash = setSimulation(req, ants)
-    var seed = req.query.seedon == 1 ? JSON.stringify(req.query.seed).slice(1, -1) : undefined
-    var repeat = req.query.batchon == 1 ? parseInt(req.query.repeat) : undefined
-    if (repeat == NaN) repeat = undefined
-    res.render(repeat ? 'batch' : 'simulation', {
-      code:ants,
-      hash:hash,
-      seed:seed,
-      repeat:repeat,
-      prefix:req.curHome,
-      devMode:colonyInfo[req.params.colony].debugging,
-      fightMode:false})
-  })
+  var users = yield req.curCol.find({"ants.antid" : {$in:antIds}})
+  var ants = findAnts(users, req.user?req.user._id.toString():"", antIds)
+  var hash = setSimulation(req, ants)
+  var seed = req.query.seedon == 1 ? JSON.stringify(req.query.seed).slice(1, -1) : undefined
+  var repeat = req.query.batchon == 1 ? parseInt(req.query.repeat) : undefined
+  if (repeat == NaN) repeat = undefined
+  res.render(repeat ? 'batch' : 'simulation', {
+    code:ants,
+    hash:hash,
+    seed:seed,
+    repeat:repeat,
+    prefix:req.curHome,
+    devMode:colonyInfo[req.params.colony].debugging,
+    fightMode:false})
 })
 
 route({name:"/submit"}, function(req, res) {
@@ -409,13 +408,13 @@ route({name:"/submit"}, function(req, res) {
   }
 })
 
-route({name:"/publish", login:true}, function(req, res, next) {
-  setPublished(req.user._id, req.query.id, true, req.curCol)
+route({name:"/publish", login:true}, function*(req, res, next) {
+  yield setPublished(req.user._id, req.query.id, true, req.curCol)
   next()
 })
 
-route({name:"/unpublish", login:true}, function(req, res, next) {
-  setPublished(req.user._id, req.query.id, false, req.curCol)
+route({name:"/unpublish", login:true}, function*(req, res, next) {
+  yield setPublished(req.user._id, req.query.id, false, req.curCol)
   next()
 })
 
@@ -438,49 +437,42 @@ route({name:"/clearstats", login:true, superuser:true}, function(req, res, next)
   next()
 })
 
-route({name:"/users", login:true, superuser:true}, function(req, res) {
-  req.curCol.find({}, {"ants.code":0}).then((users) => {
-    res.render('users', {users:users, msg: req.query.msg, prefix: req.curHome})
-  })
+route({name:"/users", login:true, superuser:true}, function*(req, res) {
+  var users = yield req.curCol.find({}, {"ants.code":0})
+  res.render('users', {users:users, msg: req.query.msg, prefix: req.curHome})
 })
 
-route({name:"/addUser", login:true, superuser:true, post:true}, function(req, res) {
+route({name:"/addUser", login:true, superuser:true, post:true}, function*(req, res) {
   var existing = undefined
-  req.curCol.find({username:req.body.username}, {_id:1}).then((user) => {
-    if (user && user.length == 1)
-      existing = user[0]._id
-  }).then(() => {
-    if (existing) {
-      req.curCol.update({_id:existing},
-        { $set: {
-          displayName: req.body.displayName,
-          password: req.body.password,
-          superuser: ("superuser" in req.body)}}).then(() => {
-            res.redirect(req.curHome + "/users?msg=3")
-          })
-    } else {
-      req.curCol.insert({
-        username: req.body.username,
+  var user = yield req.curCol.find({username:req.body.username}, {_id:1})
+  if (user && user.length == 1)
+    existing = user[0]._id
+  if (existing) {
+    yield req.curCol.update({_id:existing},
+      { $set: {
         displayName: req.body.displayName,
         password: req.body.password,
-        superuser: ("superuser" in req.body),
-        ants:[]}).then(() => {
-          res.redirect(req.curHome + "/users?msg=2")
-        })
-    }
-  })
+        superuser: ("superuser" in req.body)}})
+    res.redirect(req.curHome + "/users?msg=3")
+  } else {
+    yield req.curCol.insert({
+      username: req.body.username,
+      displayName: req.body.displayName,
+      password: req.body.password,
+      superuser: ("superuser" in req.body),
+      ants:[]})
+    res.redirect(req.curHome + "/users?msg=2")
+  }
 })
 
-route({name:"/deleteUser", login:true, superuser:true}, function(req, res) {
-  req.curCol.find({_id: req.query.id}, {superuser:1}).then((user) => {
-    if (user[0].superuser == false) {
-      req.curCol.remove({_id: req.query.id}).then(() => {
-        res.redirect(req.curHome + "/users?msg=4")
-      })
-    } else {
-      res.redirect(req.curHome + "/users?msg=1")
-    }
-  })
+route({name:"/deleteUser", login:true, superuser:true}, function*(req, res) {
+  var user = yield req.curCol.find({_id: req.query.id}, {superuser:1})
+  if (user[0].superuser == false) {
+    yield req.curCol.remove({_id: req.query.id})
+    res.redirect(req.curHome + "/users?msg=4")
+  } else {
+    res.redirect(req.curHome + "/users?msg=1")
+  }
 })
 
 const rootCode = "xyBk4sp5Q"
@@ -494,25 +486,24 @@ app.get("/root/reload", function(req, res) {
   }
 })
 
-app.get("/root/newcolony", function(req, res) {
+app.get("/root/newcolony", function*(req, res) {
   if (req.query.key == rootCode) {
     if (req.query.name &&
         !colonyInfo[req.query.name] &&
         req.query.name != "root" &&
         req.query.name.length >= 2) {
       db.create('colony_' + req.query.name)
-      db.get('colony_' + req.query.name).insert({
+      yield db.get('colony_' + req.query.name).insert({
         username:"admin",
         displayName:"Administrator",
         password:"bumblebee",
         ants:[],
         superuser:true})
-      .then(db.get('info').insert({
+      yield db.get('info').insert({
         colonyName:req.query.name,
         debugging:false
-      })).then(() => {
-        initColonys()
       })
+      initColonys()
       res.send("ok")
     } else {
       res.send("invalid name")
