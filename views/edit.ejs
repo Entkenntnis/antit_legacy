@@ -98,9 +98,13 @@
       		CodeMirror.showHint(cm, x, {completeSingle:false});
       	}
       });
+      
+      function append(){
+        editor.replaceRange('\n\nAmeise.wenn("", function(){\n  \n})', CodeMirror.Pos(editor.lastLine()))
+      }
 
 </script>
-
+<a href="#" onclick="append()">Ereignis hinzufügen</a>
 </div>
 
   <div style="height:300px"></div>

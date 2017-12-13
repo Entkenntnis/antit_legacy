@@ -19,6 +19,10 @@ Minibus.create = function(){
       })
     }
     
+    this.has = function(route) {
+      return router[route] !== undefined
+    }
+    
     this.emit = function(route, arg1, arg2, arg3, arg4) { // Achtung hier!
       if (!(route in router))
         return

@@ -171,22 +171,8 @@
 	</div>
   </form>
   
-  <% if (devMode) { %>
-  
-  <br><br>
-  <form method="GET" action="<%=prefix%>/level">
-    <select name="id">
-        <% if (ants !== undefined) {
-          for (var i = 0; i < ants.length; i++) { %>
-          <option value="<%=ants[i]._id%>"><%=ants[i].name%></option>
-        <% } } %>
-    </select>
-    <input type="text" name="num" value="1">
-  <input type="submit" value="Level starten" class="btn btn-primary">
-  </form>
-  
-  
-  <!--<p>Neu: <a href="<%=prefix%>/simulation?fight=1">Kampfmodus ausprobieren</a><br><br>Passend dazu: <a href="https://docs.google.com/forms/d/e/1FAIpQLSecx5bwInEpW6go8glDnRRFK88c_4EekrLS9UPl8XuOMrMqgQ/viewform">Feedbackbogen</a></p>-->
+  <% if (devMode) { %>  
+    <br><br><p>Neu: <a href="<%=prefix%>/simulation?fight=1">Kampfmodus ausprobieren</a></p>
   <% } %>
 	
 <% } %>

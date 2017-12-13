@@ -24,9 +24,26 @@
       var func = Sim.players[API.curAnt.getPlayerid()].getKI()[name];
       if (arg == undefined)
         arg = [];
-      if (func == undefined)
-        return;
       if (API.staticPlayerId === undefined)
+        return;
+      
+      ///
+        var bus = Sim.players[API.curAnt.getPlayerid()].getKI().Bus
+        if (bus.has(name)) {
+          API.ctxt = "Ameise." + name // + " = " + func;
+          API.curAnt.refreshInsertionPoint()
+          var args = arg.map(function (obj) {
+            if (!pure && typeof obj == "object")
+              return API.pushObj(obj);
+            return obj;
+          })
+          args.unshift(name)
+          bus.emit.apply(null, args)
+        }
+      
+      ///
+      
+      if (func == undefined)
         return;
       API.ctxt = "Ameise." + name // + " = " + func;
       API.curAnt.refreshInsertionPoint()
@@ -87,7 +104,8 @@
   }
   
   AntIT.NeueAmeise = function (name) {
-    var newAnt = {Name:name};
+    var bus = Minibus.create()
+    var newAnt = {Name:name,Bus:bus,wenn:bus.on};
     if (Sim.API.ants.length < Sim.Opts.MaximaleSpieler) {
       Sim.API.ants.push(newAnt);
     }

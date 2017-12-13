@@ -327,9 +327,13 @@ route({name:"/guide"}, function(req, res) {
     prefix: req.curHome })
 })
 
-route({name:"/chals"}, function(req, res) {
+route({name:"/chals"}, function*(req, res) {
+  const userid = req.user ? req.user._id.toString() : undefined
+  var val = yield req.curCol.find({}, {"ants.code":false})
+  var result = prepareAnts(val, userid)
   res.render('chals', {
     user: req.user,
+    ants: result.ants,
     highlightElement:3,
     prefix: req.curHome })
 })
@@ -368,24 +372,26 @@ route({name:"/delete", login:true}, function*(req, res, next) {
   next()
 })
 
-route({name:"/level"}, function*(req, res) {
+route({name:"/level"}, function*(req, res, next) {
   // eine Ameise laden
+  if (!req.user) return next()
   var users = yield req.curCol.find({
     _id: req.user._id,
     "ants.antid":req.query.id},
     {"ants.$":1})
   if (users && users.length == 1) {
-    res.render('simulation', {
+    return res.render('simulation', {
       code:[users[0].ants[0]],
       hash:"",
       seed:undefined,
       repeat:undefined,
-      prefix:req.curHome,
+      prefix:req.curHome + "/chals",
       devMode:false,
       fightMode:false,
       level:parseInt(req.query.num)
     })
   }
+  next()
 })
 
 route({name:"/simulation"}, function*(req, res) {

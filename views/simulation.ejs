@@ -20,7 +20,7 @@
           <% if (fightMode) { %>
             <script src="/src/14-FightMode.js"></script>
           <% } %>
-          <% if (level != NaN) { %>
+          <% if (!isNaN(level)) { %>
             <script>
               AntIT._optionen.Levelmodus = true
               AntIT._optionen.Level = <%=level%>
