@@ -1,4 +1,5 @@
 // ALL MANAGER
+"use strict";
 (function(Optionen){
 
   var Simulation = function() {
@@ -18,6 +19,7 @@
       Sim.memories = {}
       
       if (Sim.Opts.Kampfmodus) Sim.Fight.init()
+      if (Sim.Opts.Levelmodus) Sim.Level.init()
       
       if (seed) {
         Sim.rng = new Math.seedrandom(seed)
@@ -33,6 +35,8 @@
     
       if (Sim.Opts.Kampfmodus) {
         Sim.Fight.createPlayers()
+      } else if (Sim.Opts.Levelmodus) {
+        Sim.Level.createPlayers()
       } else {
         for(var i = 0; i < Sim.API.ants.length; i++) {
           Sim.hills.push(new Sim.Hill(Sim.playground.getHillPos(), i));
@@ -55,6 +59,8 @@
       });
       
       if (Sim.Opts.Kampfmodus) Sim.Fight.update()
+      
+      if (Sim.Opts.Levelmodus) Sim.Level.update()
       
       Sim.hills.forEach(function(hill) {
         hill.update();

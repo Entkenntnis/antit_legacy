@@ -368,6 +368,26 @@ route({name:"/delete", login:true}, function*(req, res, next) {
   next()
 })
 
+route({name:"/level"}, function*(req, res) {
+  // eine Ameise laden
+  var users = yield req.curCol.find({
+    _id: req.user._id,
+    "ants.antid":req.query.id},
+    {"ants.$":1})
+  if (users && users.length == 1) {
+    res.render('simulation', {
+      code:[users[0].ants[0]],
+      hash:"",
+      seed:undefined,
+      repeat:undefined,
+      prefix:req.curHome,
+      devMode:false,
+      fightMode:false,
+      level:parseInt(req.query.num)
+    })
+  }
+})
+
 route({name:"/simulation"}, function*(req, res) {
   if (req.query.fight == 1) {
     res.render('simulation', {
@@ -378,6 +398,7 @@ route({name:"/simulation"}, function*(req, res) {
       prefix:req.curHome,
       devMode:colonyInfo[req.params.colony].debugging,
       fightMode:true,
+      level:NaN
     })
     return
   }
@@ -397,7 +418,7 @@ route({name:"/simulation"}, function*(req, res) {
     repeat:repeat,
     prefix:req.curHome,
     devMode:colonyInfo[req.params.colony].debugging,
-    fightMode:false})
+    fightMode:false,level:NaN})
 })
 
 route({name:"/submit"}, function(req, res) {

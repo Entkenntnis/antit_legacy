@@ -2,18 +2,25 @@
 (function(View){
 
   var simStatus = undefined
+  var levelStatus = undefined
   
   var hudid = ""
   
   View.Pulse.getBus().on('init', function(hud){
     simStatus = document.createElement("DIV")
+    levelStatus = document.createElement("DIV")
     hudid = hud
     document.getElementById(hudid).appendChild(simStatus)
+    document.getElementById(hudid).appendChild(levelStatus)
     document.getElementById("loading").style.display = "none"
   })
   
   View.Pulse.getBus().on('update-status', function(txt){
     simStatus.innerHTML = txt
+  })
+  
+  View.Sim.getBus().on('update-levelstatus', function(txt){
+    levelStatus.innerHTML = txt
   })
   
   document.addEventListener("keypress", keypresshandler);

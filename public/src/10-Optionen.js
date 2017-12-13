@@ -69,6 +69,7 @@ var AntIT = {};
     , WanzenHügelAbstand : 250
     , ZufallRichtungsVerschiebung : 11
     , EntwicklerModus : false
+    , Levelmodus : false
     , Toleranz : 3
     , ZuckerRadius : 10
     , JobLimit : 100

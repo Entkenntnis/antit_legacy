@@ -20,7 +20,12 @@
           <% if (fightMode) { %>
             <script src="/src/14-FightMode.js"></script>
           <% } %>
-          
+          <% if (level != NaN) { %>
+            <script>
+              AntIT._optionen.Levelmodus = true
+              AntIT._optionen.Level = <%=level%>
+            </script>
+          <% } %>
           <% include sim %>
           <script src="/src/View/00-View.js"></script>
           <script src="/src/View/10-Pulse.js"></script>
