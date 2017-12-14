@@ -23,8 +23,6 @@ app.use(require('express-session')({
 app.use(passport.initialize())
 app.use(passport.session())
 
-const level = require('./level').level
-
 
 // ----------------------------
 // setup
@@ -66,6 +64,17 @@ function getColonyCollection(path) {
     return null
 }
 
+
+// ----------------------------
+// colony
+
+const level = require('./level').level
+const levelbylevel = {}
+level.forEach(function(l){
+  if (levelbylevel[l.level] == undefined)
+    levelbylevel = []
+  levelbylevel[l.level].push(l)
+})
 
 // ----------------------------
 // auth
@@ -230,6 +239,15 @@ function findAnts(users, userid, ids) {
   })
 }
 
+function maximumAnts(level) {
+  var maximum = 10
+  if (level >= 3) { maximum = 20 }
+  if (level >= 5) { maximum = 30 }
+  if (level >= 7) { maximum = 40 }
+  if (level >= 9) { maximum = 50 }
+  return maximum
+}
+
 // ----------------------------
 // route helper
 
@@ -284,21 +302,30 @@ function route(options, cb) {
 // routes
 
 app.get("/", function(req, res) {
-  res.render('landing/main')
+  res.render('landing/main', {
+    colonies : Object.keys(colonyInfo).map(function(key) { return colonyInfo[key]})
+  })
 })
 
 route({name:"/"}, function*(req, res) {
+  if (!req.user) {
+    return res.render('ants/login', {
+      fail: req.query.fail,
+      description : colonyInfo[req.params.colony].description,
+      prefix: req.curHome,
+    })
+  }
   const userid = req.user ? req.user._id.toString() : undefined
   var val = yield req.curCol.find({}, {"ants.code":false})
   var result = prepareAnts(val, userid)
   if (req.user && queryCache[req.sessionID])
     req.user.previous = queryCache[req.sessionID]
-  res.render('home', {
+  res.render('ants/home', {
     user: req.user,
     fail: req.query.fail,
     ants: result.ants,
+    maximum: maximumAnts(req.user.level),
     globals: result.globals,
-    description : colonyInfo[req.params.colony].description,
     highlightElement: 0,
     devMode:colonyInfo[req.params.colony].debugging,
     prefix: req.curHome
@@ -349,17 +376,21 @@ route({name:"/level", login:true}, function*(req, res) {
   var val = yield req.curCol.find({}, {"ants.code":false})
   var levelid = (!isNaN(parseInt(req.query.id))) ? req.query.id : 0
   var result = prepareAnts(val, userid)
-  res.render('level', {
+  res.render('ants/level', {
     user: req.user,
     ants: result.ants,
     highlightElement:3,
     id:levelid,
+    level:levelbylevel,
     prefix: req.curHome })
 })
 
 route({name:"/new", login:true}, function*(req, res, next) {
-  var codeString = yield util.promisify(require('fs').readFile)("./newAnt.js", "utf8")
-  yield insertAnt(codeString, req.user._id, req.curCol)
+  var val = yield req.curCol.find({_id: req.user._id}, {"ants.code":false})
+  if (val[0].ants.length < maximumAnts(req.user.level)) {
+    var codeString = yield util.promisify(require('fs').readFile)("./newAnt.js", "utf8")
+    yield insertAnt(codeString, req.user._id, req.curCol)
+  }
   next()
 })
 

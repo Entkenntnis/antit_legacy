@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <% include ../commonHead %>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron"><h1>AntIT!</h1>
+	      <p>Hallo, <strong><%= user.displayName %>.</strong> Hier beginnt dein Abenteuer. Fange an, neue Ameisenvölker zu erstellen und kontrolliere ihr Verhalten, indem du den Programmcode änderst.</p>
+      </div>
+	
+	    <% include menu %>
+  
+      <%if (user.superuser) {%>
+        <br><br>
+        <p>Admin-Tools:</p>
+        <ul class="nav nav-pills" role="tablist">
+          <li role="presentation"><a href="<%=prefix%>/users">Benutzerverwaltung</a></li>
+          <li role="presentation"><a href="<%=prefix%>/stats">Statistik</a></li>
+          <li role="presentation"><a href="<%=prefix%>/<%=devMode?'nodebug':'debug'%>">Debug umschalten (aktuell: <%=devMode?'an':'aus'%>)</a></li>
+        </ul>
+	    <% } // endif superuser %>
+	    
+	    <div class="page-header">
+	      <h3>Deine Ameisenvölker</h3>
+	    </div>
+	    <% if (ants == undefined || ants.length < maximum) { %>
+	      <p><a href="<%=prefix%>/new">neues Ameisevolk</a></p>
+	    <% } else { %>
+	      <p>Maximum erreicht, mehr Ameisen durch Levelaufstieg.</p>
+	    <% } %>
+	
+	    <% if (ants.length == 0) { %>
+	      <p>Du hast noch keine Ameisenvölker. Fange an, ein neues Volk zu erstellen.</p>
+	    <% } else {%>
+	      <ul class="list-group">
+	        <%for (var i = 0; i < ants.length; i++) { %>
+	          <li class="list-group-item" style="overflow:auto">
+	          <strong><%=ants[i].name%></strong>
+	          <%if(ants[i].published){%> (freigegeben)<%}%>
+	          <div style="float:right;">
+	            <a href="<%=prefix%>/edit?id=<%=ants[i]._id%>" class="btn btn-xs btn-primary">Bearbeiten</a>
+	            <% if (user.level >= 4) { %>
+	              <%if(ants[i].published){%>
+	              <a href="<%=prefix%>/unpublish?id=<%=ants[i]._id%>" class="btn btn-xs btn-warning">Freigabe löschen</a>
+	              <%} else {%>
+	              <a href="<%=prefix%>/publish?id=<%=ants[i]._id%>" class="btn btn-xs btn-info">Freigeben</a>
+	              <%}%>
+              <% } %>
+	            <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='<%=prefix%>/delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-xs btn-danger">Löschen</button>
+	           </div>
+	          </li>
+        	<% } %>
+      	</ul>
+      <%} %>
+    
+    <% if (user && user.level >= 4) { %>
+
+      <%
+        ants.sort(function(x, y){
+          var xn = x.name.toLowerCase()
+          var yn = y.name.toLowerCase()
+          if (yn < xn) return 1
+          if (xn < yn) return -1
+          return 0 })
+        globals.sort(function(x, y){
+          var xn = x.publicName.toLowerCase()
+          var yn = y.publicName.toLowerCase()
+          if (yn < xn) return 1
+          if (xn < yn) return -1
+          return 0 })
+      %>
+  
+  
+	    <div class="page-header">
+	      <h3>Freie Simulation</h3>
+	    </div>
+	    <p><a href="javascript:clear()" style="margin-bottom:10px">Felder zurücksetzen</a></p>
+	    <script>
+	      function clear() {
+	        for (i = 1; i <= 8; i++) {
+	          document.getElementById("team" + i).value = "none";
+	        }
+	        document.getElementById("seedon").checked = false
+	        document.getElementById("batchon").checked = false
+	      }
+	    </script>
+	    <form method="GET" action="<%=prefix%>/simulation"><div>
+	    <% for(var t = 1; t <= 8; t++) { %>
+	        <div style="float:left;padding-left:10px;"> Team <%=t%>:
+	        <select name="team<%=t%>" id="team<%=t%>">
+            <option value="none">-----</option>
+            <% if (ants !== undefined) {
+              for (var i = 0; i < ants.length; i++) { %>
+              <option value="<%=ants[i]._id%>" <%
+                if (user.previous) {
+                  if (user.previous["team" + t] == ants[i]._id) {
+                    %> selected="selected"<%
+                  }
+                }
+              %>><%=ants[i].name%></option>
+            <% } %>
+            <% for (var i = 0; i < globals.length; i++) { %>
+              <option value="<%=globals[i]._id%>"<%
+                if (user.previous) {
+                  if (user.previous["team" + t] == globals[i]._id) {
+                    %>selected="selected"<%
+                  }
+                }
+              %>><%=globals[i].publicName%></option>
+            <% } %>
+            <%} %>
+      </select></div>
+      <% } %></div>
+      <div style="clear:both;"><br>
+      <% if (devMode) { %>
+        <% if (user.previous) { %>
+      <input type="checkbox" id="seedon" name="seedon" value="1"<%=user.previous.seedon==1?'checked':''%>> Seed: <input type="text" name="seed" value="<%=user.previous.seed%>"><br>
+      <input type="checkbox" id="batchon" name="batchon" value="1"<%=user.previous.batchon==1?'checked':''%>> Wiederhole: <input type="text" name="repeat" value="<%=user.previous.repeat%>">
+        <% } else { %>
+      <input type="checkbox" id="seedon" name="seedon" value="1"> Seed: <input type="text" name="seed" value="hello."><br>
+      <input type="checkbox" id="batchon" name="batchon" value="1"> Wiederhole: <input type="text" name="repeat" value="10">
+        <% } %>
+      <br>
+      <br>
+      
+      <% } %>
+      <input type="submit" value="Simulation starten" class="btn btn-success">
+	    </div>
+      </form>
+      
+    <% } %>
+  
+  <% if (devMode) { %>  
+    <br><br><p>Neu: <a href="<%=prefix%>/simulation?fight=1">Kampfmodus ausprobieren</a></p>
+  <% } %>
+  
+  <div style="height:300px"></div>
+</div>
+  </body>
+</html>

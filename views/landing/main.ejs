@@ -8,9 +8,28 @@
 
   <div class="container">
 
-    <br><br><br>
-    <a href="/nov">Kolonie 1</a><br>
-    <a href="/main">Kolonie 2</a>
+    <div class="jumbotron">
+      <h1>AntIT!</h1>
+	    <p>Lerne spielerisch das Programmieren mit der coolsten und spannendsten Simulation der Welt! Erlebe, wie deine Ameisenvölker zum Leben erwachen und ihre Umgebung erobern.</p>
+    </div>
+
+    <div class="page-header">
+	    <h3>Aktuelle Kolonien:</h3>
+	  </div>
+	  <% for(var i = 0; i < colonies.length; i++) { %>
+	    <a href="/<%=colonies[i].colonyName%>"><%=colonies[i].description%></a><br>
+	  <% } %>
+	  
+	  <div class="page-header">
+	    <h3>Starte eine Simulation:</h3>
+	  </div>
+	  <p>Eine öffentliche Simulation starten ...</p>
+	  
+	  <div class="page-header">
+	    <h3>Infos für Lehrer</h3>
+	  </div>
+	  <p>Informationen, wie eine Schule Zugriff bekommt ...</p>
+    
     <div style="height:300px"></div>
   </div>
   </body>
