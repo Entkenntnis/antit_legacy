@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <% include commonHead %>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron"><h1>Level</h1><p>Versuche diese Aufgaben zu lösen. Daran kannst du zeigen, wie gut du schon mit deinen Ameisen umgehen kannst und steige auf.</p>
+	    </div>
+	    
+	    <% include menu %>
+	    
+	    <!-- Here comes the content -->
+	    
+	    <div style="height:40px"></div>
+	    
+	    <% if (id == 0) { %>
+	    
+        <p>Dein aktuelles Level: <%=user.level%></p>
+        
+        <h3>Aufgaben</h3>
+        
+        <% if (user.level >= 1) { %>
+        
+          <h4>Level 1</h4>
+          
+          <p><a href="<%=prefix%>/level?id=1">Erste Schritte</a></p>
+        
+        <% } %>
+        
+      <% } else { %>
+	    
+	      <% ants.sort(function(x, y){
+              var xn = x.name.toLowerCase();
+              var yn = y.name.toLowerCase();
+              if (yn < xn) return 1;
+              if (xn < yn) return -1;
+              return 0;
+            }) %>
+  
+        <br><br>
+        <form method="GET" action="<%=prefix%>/level">
+          <select name="id">
+              <% if (ants !== undefined) {
+                for (var i = 0; i < ants.length; i++) { %>
+                <option value="<%=ants[i]._id%>"><%=ants[i].name%></option>
+              <% } } %>
+          </select>
+        <input type="submit" value="Level starten" class="btn btn-primary">
+        </form>
+	    
+	    <% } %>
+	    
+      <div style="height:300px"></div>
+	    
+    </div>
+  </body>
+</html>

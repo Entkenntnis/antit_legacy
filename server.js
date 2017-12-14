@@ -23,6 +23,8 @@ app.use(require('express-session')({
 app.use(passport.initialize())
 app.use(passport.session())
 
+const level = require('./level').level
+
 
 // ----------------------------
 // setup
@@ -282,7 +284,7 @@ function route(options, cb) {
 // routes
 
 app.get("/", function(req, res) {
-  res.redirect("/main")
+  res.render('landing/main')
 })
 
 route({name:"/"}, function*(req, res) {
@@ -296,6 +298,7 @@ route({name:"/"}, function*(req, res) {
     fail: req.query.fail,
     ants: result.ants,
     globals: result.globals,
+    description : colonyInfo[req.params.colony].description,
     highlightElement: 0,
     devMode:colonyInfo[req.params.colony].debugging,
     prefix: req.curHome
@@ -327,14 +330,30 @@ route({name:"/guide"}, function(req, res) {
     prefix: req.curHome })
 })
 
-route({name:"/chals"}, function*(req, res) {
+route({name:"/wettbewerb", login:true}, function(req, res) {
+  res.render('wettbewerb', {
+    user: req.user,
+    highlightElement:4,
+    prefix: req.curHome })
+})
+
+route({name:"/tutorial", login:true}, function(req, res) {
+  res.render('tutorial', {
+    user: req.user,
+    highlightElement:5,
+    prefix: req.curHome })
+})
+
+route({name:"/level", login:true}, function*(req, res) {
   const userid = req.user ? req.user._id.toString() : undefined
   var val = yield req.curCol.find({}, {"ants.code":false})
+  var levelid = (!isNaN(parseInt(req.query.id))) ? req.query.id : 0
   var result = prepareAnts(val, userid)
-  res.render('chals', {
+  res.render('level', {
     user: req.user,
     ants: result.ants,
     highlightElement:3,
+    id:levelid,
     prefix: req.curHome })
 })
 
@@ -353,6 +372,7 @@ route({name:"/edit", login:true}, function*(req, res, next) {
     res.render('edit', {
       data: users[0].ants[0].code,
       id: req.query.id,
+      user : req.user,
       prefix: req.curHome })
   } else {
     next()
@@ -487,7 +507,9 @@ route({name:"/addUser", login:true, superuser:true, post:true}, function*(req, r
       displayName: req.body.displayName,
       password: req.body.password,
       superuser: ("superuser" in req.body),
-      ants:[]})
+      ants:[],
+      level:1,
+      solved:[]})
     res.redirect(req.curHome + "/users?msg=2")
   }
 })
