@@ -1,5 +1,5 @@
-var Ameise = AntIT.NeueAmeise("...");
+var Ameise = AntIT.NeueAmeise("neue Ameise");
 
 Ameise.wenn("", function(){
-
+    
 })

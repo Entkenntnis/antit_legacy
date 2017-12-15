@@ -34,6 +34,7 @@ const db = require('monk')(dbUrl, {authSource:"admin"})
 
 db.then(() => {
   initColonys()
+  initExercises()
   app.listen(process.env.NODE_PORT || 3000, process.env.NODE_IP || "localhost")
 })
 
@@ -66,15 +67,26 @@ function getColonyCollection(path) {
 
 
 // ----------------------------
-// colony
+// level
 
-const level = require('./level').level
-const levelbylevel = {}
-level.forEach(function(l){
-  if (levelbylevel[l.level] == undefined)
-    levelbylevel = []
-  levelbylevel[l.level].push(l)
-})
+var exercises = {}
+var exIndex = {}
+var tutorials = []
+
+function initExercises() {
+  exercises = require('./exercises').exercises
+  exIndex = {}
+  tutorials = require('./tutorials').tutorials
+  for (var id in exercises) {
+    var ex = exercises[id]
+    if (exIndex[ex.level] == undefined)
+      exIndex[ex.level] = []
+    exIndex[ex.level].push(id)
+  }
+  for (var id in exIndex) {
+    exIndex[id].sort((a,b)=>a-b)
+  }
+}
 
 // ----------------------------
 // auth
@@ -248,6 +260,23 @@ function maximumAnts(level) {
   return maximum
 }
 
+function checkInt(val) {
+  var i = parseInt(val)
+  if (isNaN(i)) i = -1
+  return i
+}
+
+function canUpgrade(user) {
+  if (user.level < 9 && exIndex[user.level]) {
+    var count = 0
+    exIndex[user.level].forEach(function(l){
+      if (user.solved.indexOf(parseInt(l)) >= 0) count++
+    })
+    if (count >= 2 && count * 2 >= exIndex[user.level].length) return true
+  }
+  return false
+}
+
 // ----------------------------
 // route helper
 
@@ -365,24 +394,50 @@ route({name:"/wettbewerb", login:true}, function(req, res) {
 })
 
 route({name:"/tutorial", login:true}, function(req, res) {
-  res.render('tutorial', {
+  res.render('ants/tutorial', {
     user: req.user,
-    highlightElement:5,
+    id : checkInt(req.query.id),
+    tuts : tutorials,
+    highlightElement:checkInt(req.query.id) > 0? -1 : 5,
     prefix: req.curHome })
 })
 
 route({name:"/level", login:true}, function*(req, res) {
-  const userid = req.user ? req.user._id.toString() : undefined
-  var val = yield req.curCol.find({}, {"ants.code":false})
-  var levelid = (!isNaN(parseInt(req.query.id))) ? req.query.id : 0
-  var result = prepareAnts(val, userid)
+
+  // dynamisches Neuladen
+  delete require.cache[require.resolve('./exercises.js')]
+  delete require.cache[require.resolve('./tutorials.js')]
+  initExercises()
+
+  var levelid = checkInt(req.query.id)
+  if (!exercises[levelid] || exercises[levelid].level > req.user.level)
+    levelid = -1
+  var result = undefined
+  if (levelid > 0) {
+    const userid = req.user ? req.user._id.toString() : undefined
+    var val = yield req.curCol.find({}, {"ants.code":false})
+    result = prepareAnts(val, userid)
+  }
   res.render('ants/level', {
     user: req.user,
-    ants: result.ants,
-    highlightElement:3,
+    ants: result ? result.ants : [],
+    highlightElement:result ? -1 : 3,
     id:levelid,
-    level:levelbylevel,
+    exercises: exercises,
+    exIndex:exIndex,
+    upgrade:canUpgrade(req.user),
+    solved:req.user.solved,
     prefix: req.curHome })
+})
+
+route({name:"/upgrade", login:true}, function*(req, res, next) {
+  if (canUpgrade(req.user)) {
+    yield req.curCol.update({_id:req.user._id},
+      { $set: {
+        level: req.user.level + 1}})
+    return res.redirect(req.curHome + "/level")
+  }
+  next()
 })
 
 route({name:"/new", login:true}, function*(req, res, next) {
@@ -423,26 +478,29 @@ route({name:"/delete", login:true}, function*(req, res, next) {
   next()
 })
 
-route({name:"/level"}, function*(req, res, next) {
+route({name:"/levelsim"}, function*(req, res, next) {
   // eine Ameise laden
   if (!req.user) return next()
-  var users = yield req.curCol.find({
-    _id: req.user._id,
-    "ants.antid":req.query.id},
-    {"ants.$":1})
-  if (users && users.length == 1) {
-    return res.render('simulation', {
-      code:[users[0].ants[0]],
-      hash:"",
-      seed:undefined,
-      repeat:undefined,
-      prefix:req.curHome + "/chals",
-      devMode:false,
-      fightMode:false,
-      level:parseInt(req.query.num)
-    })
-  }
-  next()
+  var levelnum = checkInt(req.query.num)
+  if (exercises[levelnum] && exercises[levelnum].level <= req.user.level && req.query.id) {
+    var users = yield req.curCol.find({
+      _id: req.user._id,
+      "ants.antid":req.query.id},
+      {"ants.$":1})
+    if (users && users.length == 1) {
+      return res.render('simulation', {
+        code:[users[0].ants[0]],
+        hash:"",
+        seed:undefined,
+        repeat:undefined,
+        prefix:req.curHome + "/level?id=" + levelnum,
+        devMode:false,
+        fightMode:false,
+        level:levelnum
+      })
+    }
+  } else
+    next()
 })
 
 route({name:"/simulation"}, function*(req, res) {

@@ -12,46 +12,89 @@
 	    
 	    <!-- Here comes the content -->
 	    
-	    <% if (id == 0) { %>
+	    <% if (id < 0) { %>
 	    
 	      <div class="page-header">
-	        <h3>Aufgaben</h3>
+	        <h3>Deine aktuellen Aufgaben</h3>
 	      </div>
 	      
-	      <% for (var i = 1; i <= user.level; i++) { %>
-	        
-	      <% } %>
-        
-        <% if (user.level >= 1) { %>
-        
-          <h4>Level 1</h4>
-          
-          <p><a href="<%=prefix%>/level?id=1">Erste Schritte</a></p>
-        
-        <% } %>
+	      <div class="row">
+	        <div class="col-md-2"></div>
+	        <div class="col-md-8">
+	          <% for (var i = 1; i <= user.level; i++) { %>
+	            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Level <%=i%></h4></div>
+                <div class="panel-body">
+                  <% for (var j = 0; j < exIndex[i].length; j++) { var e = exercises[exIndex[i][j]]%>
+	                  <p><a href="<%=prefix%>/level?id=<%=exIndex[i][j]%>"><%=e.name%></a>
+	                    <% if (solved.indexOf(parseInt(exIndex[i][j])) >= 0) {  %>
+	                      <img src="/static/gruener_Haken.gif" height="20px" style="margin-left:5px">
+	                    <% } %>
+	                  </p>
+	                <% } %>
+                </div>
+              </div>
+              
+	          <% } %>
+	          <% if (user.level < 9) {%>
+	            <% if (!upgrade) { %>
+	              <br><p>Voraussetzungen für das nächste Level:<br>Bearbeite <%=Math.max(2,Math.ceil(user.level+2/2))%> Aufgaben von Level <%=user.level%>
+	              </p>
+              <% } %>
+              <p><a href="<%=prefix%>/upgrade" class="btn btn-primary <%=upgrade?'':'disabled'%>">Level aufsteigen</a></p>
+	          <% } %>
+	        </div>
+	        <div class="col-md-2"></div>
+	      </div>
         
       <% } else { %>
-	    
-	    
-	    <div style="height:40px"></div>
-	      <% ants.sort(function(x, y){
+      
+        <% ants.sort(function(x, y){
               var xn = x.name.toLowerCase();
               var yn = y.name.toLowerCase();
               if (yn < xn) return 1;
               if (xn < yn) return -1;
               return 0;
-            }) %>
-  
-        <br><br>
-        <form method="GET" action="<%=prefix%>/level">
-          <select name="id">
-              <% if (ants !== undefined) {
-                for (var i = 0; i < ants.length; i++) { %>
-                <option value="<%=ants[i]._id%>"><%=ants[i].name%></option>
-              <% } } %>
-          </select>
-        <input type="submit" value="Level starten" class="btn btn-primary">
-        </form>
+            }) 
+          var e = exercises[id]
+        
+        %>
+	    
+	      <div class="page-header">
+	        <h3><%=e.name%></h3>
+	      </div>
+        
+        <div style="height:30px"></div>
+        
+        <%-e.description%>
+        
+        <div style="height:60px"></div>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">Lösung einreichen</div>
+              <div class="panel-body">
+                <form method="GET" action="<%=prefix%>/levelsim">
+                  <input type="hidden" name="num" value="<%=id%>">
+                <% if (ants.length > 0) { %>
+                  <select name="id">
+                    <% if (ants !== undefined) {
+                      for (var i = 0; i < ants.length; i++) { %>
+                      <option value="<%=ants[i]._id%>"><%=ants[i].name%></option>
+                    <% } } %>
+                  </select>
+                  <input style="margin-left:20px" type="submit" value="Level starten" class="btn btn-primary btn-sm">
+                <% } else { %>
+                  Erstelle zuerst ein neues Ameisenvolk.
+                <% } %>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p></p>
+        
 	    
 	    <% } %>
 	    

@@ -13,7 +13,7 @@ function check(num) {
 
 <ul class="nav nav-pills" role="tablist">
   <li role="presentation" <%-check(0)%>><a href="<%=prefix%>/">AntIT! Home</a></li>
-  <li role="presentation" <%-check(3)%>><a href="<%=prefix%>/level">Level</a></li>
+  <li role="presentation" <%-check(3)%>><a href="<%=prefix%>/level">Aufgaben</a></li>
   <% if (user && user.level >= 4) { %>
     <li role="presentation" <%-check(4)%>><a href="<%=prefix%>/wettbewerb">Wettbewerb</a></li>
   <% } %>

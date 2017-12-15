@@ -24,35 +24,42 @@
 	    <div class="page-header">
 	      <h3>Deine Ameisenvölker</h3>
 	    </div>
-	    <% if (ants == undefined || ants.length < maximum) { %>
-	      <p><a href="<%=prefix%>/new">neues Ameisevolk</a></p>
-	    <% } else { %>
-	      <p>Maximum erreicht, mehr Ameisen durch Levelaufstieg.</p>
-	    <% } %>
+	    
+	    <div class = "row"></div>
+	      <div class="col-md-2"></div>
+	      <div class="col-md-8">
+	        <% if (ants == undefined || ants.length < maximum) { %>
+	          <p><a href="<%=prefix%>/new">neues Ameisevolk</a></p>
+	        <% } else { %>
+	          <p>Maximum erreicht, mehr Ameisen bei Levelaufstieg.</p>
+	        <% } %>
 	
-	    <% if (ants.length == 0) { %>
-	      <p>Du hast noch keine Ameisenvölker. Fange an, ein neues Volk zu erstellen.</p>
-	    <% } else {%>
-	      <ul class="list-group">
-	        <%for (var i = 0; i < ants.length; i++) { %>
-	          <li class="list-group-item" style="overflow:auto">
-	          <strong><%=ants[i].name%></strong>
-	          <%if(ants[i].published){%> (freigegeben)<%}%>
-	          <div style="float:right;">
-	            <a href="<%=prefix%>/edit?id=<%=ants[i]._id%>" class="btn btn-xs btn-primary">Bearbeiten</a>
-	            <% if (user.level >= 4) { %>
-	              <%if(ants[i].published){%>
-	              <a href="<%=prefix%>/unpublish?id=<%=ants[i]._id%>" class="btn btn-xs btn-warning">Freigabe löschen</a>
-	              <%} else {%>
-	              <a href="<%=prefix%>/publish?id=<%=ants[i]._id%>" class="btn btn-xs btn-info">Freigeben</a>
-	              <%}%>
-              <% } %>
-	            <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='<%=prefix%>/delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-xs btn-danger">Löschen</button>
-	           </div>
-	          </li>
-        	<% } %>
-      	</ul>
-      <%} %>
+	        <% if (ants.length == 0) { %>
+	          <p>Du hast noch keine Ameisenvölker. Fange an, ein neues Volk zu erstellen.</p>
+	        <% } else {%>
+	          <ul class="list-group">
+	            <%for (var i = 0; i < ants.length; i++) { %>
+	              <li class="list-group-item" style="overflow:auto">
+	              <strong><%=ants[i].name%></strong>
+	              <%if(ants[i].published){%> (freigegeben)<%}%>
+	              <div style="float:right;">
+	                <a href="<%=prefix%>/edit?id=<%=ants[i]._id%>" class="btn btn-xs btn-primary">Bearbeiten</a>
+	                <% if (user.level >= 4) { %>
+	                  <%if(ants[i].published){%>
+	                  <a href="<%=prefix%>/unpublish?id=<%=ants[i]._id%>" class="btn btn-xs btn-warning">Freigabe löschen</a>
+	                  <%} else {%>
+	                  <a href="<%=prefix%>/publish?id=<%=ants[i]._id%>" class="btn btn-xs btn-info">Freigeben</a>
+	                  <%}%>
+                  <% } %>
+	                <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='<%=prefix%>/delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-xs btn-danger">Löschen</button>
+	               </div>
+	              </li>
+            	<% } %>
+          	</ul>
+          <%} %>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
     
     <% if (user && user.level >= 4) { %>
 

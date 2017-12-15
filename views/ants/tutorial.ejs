@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <% include ../commonHead %>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron"><h1>Tutorial</h1><p>Lerne, wie man mit den Ameisen umgeht.</p>
+	    </div>
+	    
+	    <% include menu %>
+	    
+	    <!-- Here comes the content -->
+	    
+	    <% function byId(id) {
+	      for (var i = 0; i < tuts.length; i++) {
+	        if (tuts[i].id == id)
+	          return tuts[i]
+	      }
+	    } %>
+	    
+	    <% if (id < 0) { %>
+      
+        <div class="page-header">
+          <h3>Übersicht</h3>
+        </div>
+        
+        <% var ids = tuts.map(x => x.id).sort((a,b)=>a-b)
+          for (var i = 0; i < ids.length; i++) { var t = byId(ids[i]) %>
+            <p><a href="<%=prefix%>/tutorial?id=<%=t.id%>"><%=t.name%></a></p>
+        <% } %>
+	    
+	    <% } else { %>
+	    
+	      <% var t = byId(id) %>
+	      
+	      <div class="page-header">
+          <h3><%=t.name%></h3>
+        </div>
+        
+        <%-t.text%>
+	    
+	    <% } %>    
+	    
+	    
+      <div style="height:300px"></div>
+	    
+    </div>
+  </body>
+</html>
