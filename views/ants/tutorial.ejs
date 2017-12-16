@@ -12,33 +12,62 @@
 	    
 	    <!-- Here comes the content -->
 	    
-	    <% function byId(id) {
-	      for (var i = 0; i < tuts.length; i++) {
-	        if (tuts[i].id == id)
-	          return tuts[i]
-	      }
-	    } %>
-	    
 	    <% if (id < 0) { %>
       
         <div class="page-header">
-          <h3>Übersicht</h3>
+          <h3>Verfügbare Tutorials</h3>
         </div>
         
-        <% var ids = tuts.map(x => x.id).sort((a,b)=>a-b)
-          for (var i = 0; i < ids.length; i++) { var t = byId(ids[i]) %>
-            <p><a href="<%=prefix%>/tutorial?id=<%=t.id%>"><%=t.name%></a></p>
-        <% } %>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <ul class="list-group">
+            <% for (var i = 1; i <= user.level; i++) { %>
+              <% for (var j = 0; j < index[i].length; j++) { %>
+                <li class="list-group-item">
+                <p><span class="badge" style="background-color:#9954bb">neu</span>
+                  <a href="<%=prefix%>/tutorial?id=<%=index[i][j]%>"><%=tuts[index[i][j]].name%></a>
+                </p>
+                </li>
+              <% } %>
+            <% } %>
+            </ul>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
 	    
 	    <% } else { %>
 	    
-	      <% var t = byId(id) %>
-	      
-	      <div class="page-header">
-          <h3><%=t.name%></h3>
+	      <% var t = tuts[id] %>
+        
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+	          <div class="page-header">
+              <h3><%=t.name%></h3>
+            </div>
+            <%-t.text%>
+            <hr>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Fragen</h3>
+              </div>
+              <div class="panel-body">
+                <p>Kreuze die richtigen Aussagen an. Es sind eins bis sechs Aussagen richtig:</p>
+                <% for (var i = 0; i < t.questions.length; i++) { %>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox"> <%=t.questions[i]%>
+                    </label>
+                  </div>
+                <% } %>
+                <button class="btn btn-info btn-sm">Überprüfen</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2"></div>
         </div>
         
-        <%-t.text%>
 	    
 	    <% } %>    
 	    

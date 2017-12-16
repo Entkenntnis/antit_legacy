@@ -71,12 +71,12 @@ function getColonyCollection(path) {
 
 var exercises = {}
 var exIndex = {}
-var tutorials = []
+var tutorials = {}
+var tutIndex = {}
 
 function initExercises() {
   exercises = require('./exercises').exercises
   exIndex = {}
-  tutorials = require('./tutorials').tutorials
   for (var id in exercises) {
     var ex = exercises[id]
     if (exIndex[ex.level] == undefined)
@@ -85,6 +85,17 @@ function initExercises() {
   }
   for (var id in exIndex) {
     exIndex[id].sort((a,b)=>a-b)
+  }
+  tutorials = require('./tutorials').tutorials
+  tutIndex = {}
+  for (var id in tutorials) {
+    var ex = tutorials[id]
+    if (tutIndex[ex.level] == undefined)
+      tutIndex[ex.level] = []
+    tutIndex[ex.level].push(id)
+  }
+  for (var id in tutIndex) {
+    tutIndex[id].sort((a,b)=>a-b)
   }
 }
 
@@ -393,12 +404,19 @@ route({name:"/wettbewerb", login:true}, function(req, res) {
     prefix: req.curHome })
 })
 
-route({name:"/tutorial", login:true}, function(req, res) {
+route({name:"/tutorial", login:true}, function(req, res, next) {
+  var tutid = checkInt(req.query.id)
+  if (tutid > 0 && (!tutorials[tutid] || tutorials[tutid].level > req.user.level)) return next()
+  
+  delete require.cache[require.resolve('./tutorials.js')]
+  initExercises()
+  
   res.render('ants/tutorial', {
     user: req.user,
-    id : checkInt(req.query.id),
+    id : tutid,
     tuts : tutorials,
-    highlightElement:checkInt(req.query.id) > 0? -1 : 5,
+    index : tutIndex,
+    highlightElement:tutid > 0? -1 : 5,
     prefix: req.curHome })
 })
 
@@ -406,7 +424,6 @@ route({name:"/level", login:true}, function*(req, res) {
 
   // dynamisches Neuladen
   delete require.cache[require.resolve('./exercises.js')]
-  delete require.cache[require.resolve('./tutorials.js')]
   initExercises()
 
   var levelid = checkInt(req.query.id)
@@ -455,7 +472,7 @@ route({name:"/edit", login:true}, function*(req, res, next) {
     "ants.antid":req.query.id},
     {"ants.$":1})
   if (users && users.length == 1) {
-    res.render('edit', {
+    res.render('ants/edit', {
       data: users[0].ants[0].code,
       id: req.query.id,
       user : req.user,

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <% include ../commonHead %>
+  </head>
+  <body>
+
+
+  <div class="container">
+
+  <div class="jumbotron"><h1>Ameisen-Editor</h1>
+	    <p>Bearbeite den Code deines Volks und bestimme das Verhalten deiner Ameisen.</p></div>
+   
+   <form method="POST" action="<%=prefix%>/save?id=<%=id%>" id="editform"><input type="submit" value="Speichern" class="btn btn-success btn-sm">
+    <a class="btn btn-danger btn-sm" href="<%=prefix%>/">Abbrechen</a>
+      <% if (user.level >= 7) { %>
+        <input style="margin-left:30px" type="checkbox" name="duplicate" value="1"> eine Kopie anlegen
+      <% } %><br><br><br>
+    <textarea rows="50" id="editor" name="data"><%-data;%></textarea><br>
+  </form>
+  <link rel="stylesheet" href="/css/codemirror.css">
+  <link rel="stylesheet" href="/css/show-hint.css">
+  <script src="/js/codemirror.js"></script>
+  <script>
+
+
+      function startsWith(str, searchString, position){
+          position = position || 0;
+          return str.substr(position, searchString.length) === searchString;
+      }
+
+      var editor = CodeMirror.fromTextArea(
+        document.getElementById("editor"),
+        {
+          mode: {name:"javascript",globalVars:true},
+          lineNumbers:true,
+          styleActiveLine:true,
+          smartIndent:false,
+          indentUnit:4,
+          matchBrackets:true,
+          autoCloseBrackets:true,
+          extraKeys:{"Ctrl-S":function(){document.getElementById('editform').submit()}}
+        });
+      
+      var x = function(cm) {
+        var cur = cm.getCursor();
+        var token = cm.getTokenAt(cur);
+        var vars = [
+            "Gehe"
+          , "Drehe"
+          , "GeheZuBau"
+          , "GeheZuZiel"
+          , "DreheZuRichtung"
+          , "DreheZuObjekt"
+          , "DreheWegVonObjekt"
+          , "Stehe"
+          , "Stopp"
+          , "NimmZucker"
+          , "LadeZuckerAb"
+          , "TrageApfel"
+          , "Gedächtnis"
+          , "SendeNachricht"
+          , "Zufallszahl"
+          , "Zufallsname"
+          , "BestimmeEntfernung"
+          , "BestimmeRichtung"
+          , "FühreAus"
+          , "AktuelleReichweite"
+          , "AktuelleLast"
+          , "TrägtApfel"
+          , "AktuellePosition"
+          , "AktuelleRunde"
+          , "Blickrichtung"
+          , "AktuellesZiel"
+          , "HeimatBau"
+          , "Umgebung"
+          , "Untätig"
+          , "IstOffen"
+          , "OFFEN"
+          , "if"
+          , "function"
+          , "console.log"
+          , "undefined"
+          , "delete"
+        ];
+        var completions = [];
+        if (token.type == "variable") {
+          vars.forEach(function(f) {
+            if (startsWith(f, token.string))
+            completions.push(f);
+          });
+        }
+        return {list: completions,
+          from: CodeMirror.Pos(cur.line, token.start),
+          to: CodeMirror.Pos(cur.line, token.end)};
+      };
+      
+      editor.on("inputRead", function(cm) {
+      	var filter = new RegExp('[\.a-zA-ZäüöÄÜÖ]','i');
+      	if(cm.display.input.textarea.value.slice(-1).match(filter)){
+      		CodeMirror.showHint(cm, x, {completeSingle:false});
+      	}
+      });
+      
+      function append(){
+        editor.replaceRange('\n\nAmeise.wenn("", function(){\n  \n})', CodeMirror.Pos(editor.lastLine()))
+      }
+
+  </script>
+  <% if (user.level >= 3) { %>
+    <a href="#" onclick="append()" class="btn btn-primary btn-sm">Ereignis hinzufügen</a>
+    </div>
+  <% } %>
+
+  <div style="height:300px"></div>
+  
+  <% include ../scroller %>
+  </body>
+</html>
