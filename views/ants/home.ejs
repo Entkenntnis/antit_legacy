@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <% include ../commonHead %>
+    <% include ../include/commonHead %>
   </head>
   <body>
     <div class="container">
@@ -25,7 +25,7 @@
 	      <h3>Deine Ameisenvölker</h3>
 	    </div>
 	    
-	    <div class = "row"></div>
+	    <div class = "row">
 	      <div class="col-md-2"></div>
 	      <div class="col-md-8">
 	        <% if (ants == undefined || ants.length < maximum) { %>
@@ -138,7 +138,7 @@
       
     <% } %>
   
-  <% if (devMode) { %>  
+  <% if (devMode && (!user.level || user.level >= 7)) { %>  
     <br><br><p>Neu: <a href="<%=prefix%>/simulation?fight=1">Kampfmodus ausprobieren</a></p>
   <% } %>
   

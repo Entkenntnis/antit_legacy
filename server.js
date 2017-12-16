@@ -283,7 +283,7 @@ function canUpgrade(user) {
     exIndex[user.level].forEach(function(l){
       if (user.solved.indexOf(parseInt(l)) >= 0) count++
     })
-    if (count >= 2 && count * 2 >= exIndex[user.level].length) return true
+    if (count * 2 >= exIndex[user.level].length) return true
   }
   return false
 }
@@ -416,8 +416,34 @@ route({name:"/tutorial", login:true}, function(req, res, next) {
     id : tutid,
     tuts : tutorials,
     index : tutIndex,
+    done : req.user.done,
     highlightElement:tutid > 0? -1 : 5,
     prefix: req.curHome })
+})
+
+route({name:"/tutorialcheck", login:true}, function*(req, res, next) {
+  var x = JSON.parse(req.query.data)
+  var id = checkInt(req.query.id)
+  if (id > 0 && x && x.length) {
+    if (tutorials[id]) {
+      if (tutorials[id].solution.length == x.length) {
+        var allright = true
+        for (var i = 0; i < x.length; i++) {
+          if (tutorials[id].solution[i] != x[i])
+            allright = false
+        }
+        if (allright) {
+          if (req.user.done.indexOf(id) < 0) {
+            yield req.curCol.update({_id:req.user._id},
+              { $addToSet: {
+                done: id}})
+          }
+          return res.send("ok")
+        }
+      }
+    }
+  }
+  res.send("bad")
 })
 
 route({name:"/level", login:true}, function*(req, res) {
@@ -495,7 +521,20 @@ route({name:"/delete", login:true}, function*(req, res, next) {
   next()
 })
 
-route({name:"/levelsim"}, function*(req, res, next) {
+var levelstuff = {}
+
+route({name:"/submitlevel", login:true}, function*(req, res) {
+  var l = levelstuff[req.query.hash]
+  if (l) {
+    yield req.curCol.update({_id:req.user._id},
+              { $addToSet: {
+                solved: l.level}})
+    return res.send("ok")
+  }
+  res.send("bad")
+})
+
+route({name:"/levelsim", login:true}, function*(req, res, next) {
   // eine Ameise laden
   if (!req.user) return next()
   var levelnum = checkInt(req.query.num)
@@ -505,9 +544,14 @@ route({name:"/levelsim"}, function*(req, res, next) {
       "ants.antid":req.query.id},
       {"ants.$":1})
     if (users && users.length == 1) {
+      var date = Date.now()
+      var userid = req.user ? req.user._id : undefined
+      var hash = date + "-" + userid + "-" + Math.floor(Math.random()*100000)
+      levelstuff[hash] = {startTime : date, level:levelnum, userid:userid}
+      console.log(levelstuff[hash])
       return res.render('simulation', {
         code:[users[0].ants[0]],
-        hash:"",
+        hash:hash,
         seed:undefined,
         repeat:undefined,
         prefix:req.curHome + "/level?id=" + levelnum,

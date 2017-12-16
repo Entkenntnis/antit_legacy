@@ -19,7 +19,9 @@
       pos: pos,
       playerid: playerid,
       key: playerid + ":" + Ant.counter++,
-      heading: Math.floor(Sim.rng()*360),
+      heading: Sim.Opts.AnfangsRichtung !== undefined ? 
+                Sim.Opts.AnfangsRichtung :
+                Math.floor(Sim.rng()*360),
       load: 0,
       jobs: [],
       insertionPoint: 0,

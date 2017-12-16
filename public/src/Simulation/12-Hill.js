@@ -51,6 +51,12 @@
       var antPos = {x:pos.x,y:pos.y};
       var angle = Sim.rng()*Math.PI*2;
       var radius = Sim.Opts.HügelRadius + (Sim.rng()*10 - 5);
+      if (Sim.Opts.Levelmodus) {
+        if (Sim.Opts.SpawnWinkel !== undefined)
+          angle = Sim.Opts.SpawnWinkel
+        if (Sim.Opts.SpawnRadius !== undefined)
+          radius = Sim.Opts.SpawnRadius
+      }
       antPos.x += Math.cos(angle)*radius;
       antPos.y += Math.sin(angle)*radius;
       return antPos

@@ -41,7 +41,7 @@
     }
   }
  
-  View.Pulse.getBus().on('submit', onSubmit)
+  View.Pulse.getBus().on('submit', View.Opts.Levelmodus ? onSubmitLevel : onSubmit)
   
   function onSubmit(points) {
     var info = View.Pulse.getInfo()
@@ -57,6 +57,29 @@
        }
     });
     request.send();
+  }
+  
+  function onSubmitLevel() {
+    if (View.Sim.getLevel().isDone()) {
+      var info = View.Pulse.getInfo()
+      var request = new XMLHttpRequest();
+      request.open("GET", info.prefix.replace('level', 'submitlevel') + "&hash=" + info.hash);
+      request.addEventListener('load', function(event) {
+         if (request.status >= 200 && request.status < 300) {
+            if (request.responseText == "ok") {
+              simStatus.innerHTML = "Simulation abgeschlossen"
+              alert("Glückwunsch, du hast die Aufgabe geschafft!")
+              var ind = info.prefix.indexOf("?")
+              window.location = info.prefix.substr(0, ind)
+              return
+            }
+         }
+         alert("Du hast die Aufgabe geschafft, aber beim Abschicken ist ein Fehler aufgetreten. Versuche es noch einmal.")
+      });
+      request.send();
+    } else {
+      alert("Du hast das Ziel der Aufgabe nicht erreicht. Probiere es noch einmal.")
+    }
   }
   
   var Sim = View.Sim

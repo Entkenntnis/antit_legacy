@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <% include ../commonHead %>
+    <% include ../include/commonHead %>
   </head>
   <body>
     <div class="container">
@@ -39,10 +39,10 @@
 	          <% if (user.level < 9) {%>
 	            <div class="well">
 	              <% if (!upgrade) { %>
-	                <br><p>Voraussetzungen für das nächste Level:<br>Bearbeite <%=Math.max(2,Math.ceil(user.level+2/2))%> Aufgaben von Level <%=user.level%>
+	                <br><p>Voraussetzungen für das nächste Level:<br>Bearbeite <%=Math.ceil(exIndex[user.level].length/2)%> Aufgaben von Level <%=user.level%>
 	                </p>
                 <% } %>
-                <p><a href="<%=prefix%>/upgrade" class="btn btn-success btn-sm <%=upgrade?'':'disabled'%>">Level aufsteigen</a></p>
+                <a href="<%=prefix%>/upgrade" class="btn btn-success btn-sm <%=upgrade?'':'disabled'%>">Level aufsteigen</a>
               </div>
 	          <% } %>
 	        </div>

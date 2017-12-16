@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <% include ../commonHead %>
+    <% include ../include/commonHead %>
   </head>
   <body>
     <div class="container">
@@ -25,9 +25,10 @@
             <% for (var i = 1; i <= user.level; i++) { %>
               <% for (var j = 0; j < index[i].length; j++) { %>
                 <li class="list-group-item">
-                <p><span class="badge" style="background-color:#9954bb">neu</span>
+                  <% console.log(done); if (done.indexOf(parseInt(index[i][j])) < 0) { %>
+                    <span class="badge" style="background-color:#9954bb">neu</span>
+                  <% } %>
                   <a href="<%=prefix%>/tutorial?id=<%=index[i][j]%>"><%=tuts[index[i][j]].name%></a>
-                </p>
                 </li>
               <% } %>
             <% } %>
@@ -47,23 +48,46 @@
               <h3><%=t.name%></h3>
             </div>
             <%-t.text%>
-            <hr>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Fragen</h3>
+            <% if (!t.noq) { %>
+              <hr>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Quiz</h3>
+                </div>
+                <div class="panel-body">
+                  <% for (var i = 0; i < t.questions.length; i++) { %>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="question<%=i%>"> <%=t.questions[i]%>
+                      </label>
+                    </div>
+                  <% } %>
+                  <button class="btn btn-info btn-sm" onclick="submit()">Überprüfen</button>
+                </div>
               </div>
-              <div class="panel-body">
-                <p>Kreuze die richtigen Aussagen an. Es sind eins bis sechs Aussagen richtig:</p>
-                <% for (var i = 0; i < t.questions.length; i++) { %>
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox"> <%=t.questions[i]%>
-                    </label>
-                  </div>
-                <% } %>
-                <button class="btn btn-info btn-sm">Überprüfen</button>
-              </div>
-            </div>
+              <script>
+                function submit() {
+                  var request = new XMLHttpRequest();
+                  var answer = []
+                  for (var i = 0; i < <%=t.questions.length%>; i++) {
+                    answer.push(document.getElementById("question" + i).checked)
+                  }
+                  var link = "<%=prefix%>" + "/tutorialcheck?data=" + JSON.stringify(answer) + "&id=<%=id%>"
+                  request.open("GET", link);
+                  request.addEventListener('load', function(event) {
+                     if (request.status >= 200 && request.status < 300) {
+                        if (request.responseText == "ok") {
+                          alert("Glückwunsch, die Antwort ist richtig!")
+                          window.location = "<%=prefix%>/tutorial"
+                        } else {
+                          alert("Die Antwort ist falsch.")
+                        }
+                     }
+                  });
+                  request.send();
+                }           
+              </script>
+            <% } %>
           </div>
           <div class="col-md-2"></div>
         </div>

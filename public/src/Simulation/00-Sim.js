@@ -60,7 +60,7 @@
       
       if (Sim.Opts.Kampfmodus) Sim.Fight.update()
       
-      if (Sim.Opts.Levelmodus) Sim.Level.update()
+      //if (Sim.Opts.Levelmodus) Sim.Level.update()
       
       Sim.hills.forEach(function(hill) {
         hill.update();
@@ -84,6 +84,7 @@
   AntIT._sim = {
     Init : Sim.init,
     Update : Sim.update,
+    getLevel : function() { return Sim.Level },
     getBus : function() { return Sim.Bus },
     getCycles : function() { return Sim.cycles },
     getPoints : function() { 

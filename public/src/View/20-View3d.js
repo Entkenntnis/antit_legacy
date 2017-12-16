@@ -27,7 +27,7 @@
     
     // the floor lies in the xz-plane, don't worry about aspect here, will be done on resize 
     camera = new THREE.PerspectiveCamera(60, 1 /*aspect*/, 0.1, 200000);
-    camera.position.set(0, 600, 1700)
+    camera.position.set(0, 600, 1400)
     if (View.Opts.Kampfmodus) {
       camera.position.set(0, 600, 330)
     }
@@ -257,6 +257,7 @@
         obj.children[0].children[0].material.color.setHex(0x000000);
         obj.children[0].children[2].material.color.setHex(0xffffff);
         var s = Optionen.HügelGröße
+        obj.rotation.y = -Math.PI/2
         obj.scale.set(s, s, s)
         hill0 = obj;
       }.bind(this));
