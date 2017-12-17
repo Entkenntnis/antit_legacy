@@ -20,7 +20,7 @@
     1 : {
       init : function(){
         level1Init()
-        Sim.Opts.Runden = 1000
+        Sim.Opts.Runden = 900
         Sim.Opts.AnfangsRichtung = 0
       },
       create : function(){
@@ -43,7 +43,7 @@
     2 : {
       init : function() {
         level1Init()
-        Sim.Opts.Runden = 1000
+        Sim.Opts.Runden = 800
         Sim.Opts.AnfangsRichtung = 0
       },
       create : function(){
@@ -55,6 +55,29 @@
           var ok = true
           Sim.ants.forEach(function(f){
             if (Sim.Util.dist({x:864,y:712}, f.getPos()) > 10)
+              ok = false
+          })
+          if (ok)
+            return true
+        }
+        return false
+      }
+    },
+    
+    3 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 900
+      },
+      create : function(){
+        level1create()
+        Sim.Bus.emit('move-spawn-point', 0, {x:176,y:392})
+      },
+      isDone : function(){
+        if (Sim.ants.length == 20) {
+          var ok = true
+          Sim.ants.forEach(function(f){
+            if (Sim.Util.dist({x:176,y:392}, f.getPos()) > 10)
               ok = false
           })
           if (ok)

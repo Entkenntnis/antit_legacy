@@ -305,7 +305,7 @@
       hb0 = new THREE.Mesh( hbgeo, hbmat )  
       
       // poison ring
-      var ring = new THREE.RingBufferGeometry( 20, 50, 8 );
+      var ring = new THREE.RingBufferGeometry( 10, 20, 8 );
       var ringMat = new THREE.MeshPhongMaterial( { color: 0xffff00, side: THREE.DoubleSide, transparent:true, opacity:0.4 } );
       var poisonRing = new THREE.Mesh( ring, ringMat );
       poisonRing.rotation.x = Math.PI / 2;

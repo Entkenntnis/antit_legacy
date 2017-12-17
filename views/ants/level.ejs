@@ -5,7 +5,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="jumbotron"><h1>Level</h1><p>Versuche diese Aufgaben zu lösen. Daran kannst du zeigen, wie gut du schon mit deinen Ameisen umgehen kannst und steige auf.</p>
+      <div class="jumbotron"><h1>Aufgaben</h1><!--<p>Versuche diese Aufgaben zu lösen. Daran kannst du zeigen, wie gut du schon mit deinen Ameisen umgehen kannst und steige auf.</p>-->
 	    </div>
 	    
 	    <% include menu %>
@@ -42,7 +42,7 @@
 	                <br><p>Voraussetzungen für das nächste Level:<br>Bearbeite <%=Math.ceil(exIndex[user.level].length/2)%> Aufgaben von Level <%=user.level%>
 	                </p>
                 <% } %>
-                <a href="<%=prefix%>/upgrade" class="btn btn-success btn-sm <%=upgrade?'':'disabled'%>">Level aufsteigen</a>
+                <a href="<%=prefix%>/upgrade" class="btn btn-warning btn-sm <%=upgrade?'':'disabled'%>">Level aufsteigen</a>
               </div>
 	          <% } %>
 	        </div>
@@ -84,7 +84,7 @@
                   <select name="id">
                     <% if (ants !== undefined) {
                       for (var i = 0; i < ants.length; i++) { %>
-                      <option value="<%=ants[i]._id%>"><%=ants[i].name%></option>
+                      <option value="<%=ants[i]._id%>" <%=ants[i]._id == previous ? 'selected="selected"' : ''%>><%=ants[i].name%></option>
                     <% } } %>
                   </select>
                   <input style="margin-left:20px" type="submit" value="Level starten" class="btn btn-success btn-sm">

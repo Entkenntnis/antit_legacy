@@ -39,15 +39,22 @@
           indentUnit:4,
           matchBrackets:true,
           autoCloseBrackets:true,
-          extraKeys:{"Ctrl-S":function(){document.getElementById('editform').submit()}}
+      <% if (user.level >= 4) { %>  extraKeys:{"Ctrl-S":function(){document.getElementById('editform').submit()}}
+      <% } %>
         });
       
       var x = function(cm) {
         var cur = cm.getCursor();
         var token = cm.getTokenAt(cur);
         var vars = [
+        
+        // Level 1
             "Gehe"
           , "Drehe"
+          , "DreheZuRichtung"
+          
+        // Level 2
+          <% if (user.level >= 2 ) { %>
           , "GeheZuBau"
           , "GeheZuZiel"
           , "DreheZuRichtung"
@@ -82,6 +89,7 @@
           , "console.log"
           , "undefined"
           , "delete"
+          <% } %>
         ];
         var completions = [];
         if (token.type == "variable") {

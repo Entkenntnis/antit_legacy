@@ -91,17 +91,52 @@ module.exports.tutorials = {
   3 : {
     level : 1,
     name : "Grundlagen der Programmierung",
-    text : "lalala",
-    noq : true,
+    text : `
+      <p class="lead"><em>Und wie steuert man jetzt die Ameisen?</em></p>
+    
+      <p>Die Ameisen werden nicht per Hand einzeln gesteuert - das wäre bei der großen Menge an Ameisen etwas mühsam - sondern mithilfe von Programm-Code. Das ist ein besonderer Text, den der Computer einlesen kann und der das genaue Verhalten der Ameisen bestimmt. Wenn du ein neues Ameisenvolk erstellt, ihm einen Namen gibst und dann auf "Bearbeiten" klickst, dann erscheint folgendes Fenster:
+      </p>
+      
+      <p><img src="/images/01_editor.png" title="Sehr kreativer Name ..."></img></p>
+      
+      <p>Das ist das Grundgerüst jeder Ameise. In der ersten Zeile wird festgelegt, dass wir eine Ameise programmieren wollen (und nicht ein Auto oder eine Waschmaschine). Dazu rufen wir eine Funktion namens "NeueAmeise" auf, die uns dann eine neue Ameise erzeugt. Diese speichern wir in der Variablen "Ameise". In den Anführungszeichen steht der Name der Ameise. Du kannst ihn jederzeit ändern, wenn du willst.
+      </p>
+      
+      <p>Es gibt ganz viele verschiedene Möglichkeiten, Programmcode zu schreiben und Software aufzubauen. Umso wichtiger ist es zu wissen, was für eine Struktur man aktuell verwendet. Unsere Ameisen werden mit <strong>Ereignissen</strong> programmiert. Das nennt man dann ereignis-orientierte Programmierung. Sprich mir also nach: Womit werden die Ameisen programmiert? 
+      </p>
+      
+      <p class="lead"><em>Mit Ereignissen, ist doch pipi einfach ...</em></p>
+      
+      <p>Schön das zu hören. Aber du solltest noch erfahren, was ein Ereignis überhaupt ist: Ein Ereignis ist ein Satz mit der Form: "Wenn die Ameise <...>, dann tut die Ameise <...>". Wenn die Bedingung im ersten Teil des Satzes eintritt, dann wird das Verhalten im zweiten Teil des Satzes ausgeführt.
+      </p>
+      
+      <p>Die Bedingungen sind bei den Ameisen bereits fest vorgegeben. Für den Anfang reicht uns ein einziges Ereignis: <code>IstGeboren</code>. Der Name des Ereignis wird in Zeile 3 zwischen die Anführungszeichen geschrieben:
+      </p>
+      
+      <p><img src="/images/01_editor2.png" title="Vorsicht mit der Groß- und Kleinschreibung!"></img></p>
+      
+      <p>Jetzt haben wir es fasst geschafft. Nun brauchen wir noch Befehle, die die Ameise ausführen kann. Befehle werden jetzt zwischen die Zeile 3 und die Zeile 5 hineingeschrieben. Auf jede Zeile kommt genau ein Befehl. Man schreibt zuerst den Namen des Befehls und hängt dann runde Klammern hinten dran. Die meisten Befehle nehmen einen Parameter, wie z.B. eine Zahl. Befehle werden eingerückt, damit man besser erkennt, zu welchem Ereignis sie gehören.
+      </p>
+      
+      <p class="lead"><em>Können wir die Ameise endlich bewegen? Wie heißen dazu die Befehle?</em></p>
+      
+      <p>Der erste Befehl heißt <code>Gehe</code> und er nimmt als Parameter die Anzahl der Schritte. Der zweite Befehl heißt <code>Drehe</code>. Dieser nimmt als Parameter einen Winkel in Grad, um den sich die Ameise im Uhrzeigersinn (also nach rechts) dreht. Um nach links zu drehen nimmt man einen negativen Winkel. Wenn man also 200 Schritte gehen, sich um 90 Grad nach rechts drehen und weitere 100 Schritte gehen will, dann schreibt man:
+      </p>
+      
+      <p><img src="/images/01_editor3.png" title="Rücke die Befehle mit der TAB-Taste ein."></img></p>
+      
+      <p>Die Befehle werden bei Geburt der Ameise der Reihenfolge nach von oben nach unten von jeder Ameise ausgeführt. Alles klar? Dann kannst du gleich mit den Aufgaben loslegen!
+      </p>
+    `,
     questions : [
-      "Frage 1",
-      "Frage 2",
-      "Frage 3",
-      "Frage 4",
-      "Frage 5",
-      "Frage 6"
+      "Der Name eines Ameisenvolks lässt sich nach dem Erstellen nicht mehr ändern.",
+      "Ameisen werden ereignis-orientiert programmiert.",
+      "Wir haben bisher nur das Ereignis \"IstGeboren\" kennengelernt.",
+      "Jeder Befehl braucht runde Klammern.",
+      "Jeder Befehl kommt auf eine eigene Zeile.",
+      "Wir kennen bisher die Befehle Geh und Dreh."
     ],
-    solution : [0,0,0,1,1,1],
+    solution : [0,1,1,1,1,0],
   },
   /*2 : {
     level : 1,

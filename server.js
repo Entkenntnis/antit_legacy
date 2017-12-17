@@ -4,7 +4,6 @@
 const express = require('express')
 const passport = require('passport')
 const co = require('co')
-const util = require('util')
 
 const app = express()
 
@@ -446,6 +445,8 @@ route({name:"/tutorialcheck", login:true}, function*(req, res, next) {
   res.send("bad")
 })
 
+var levelCache = {}
+
 route({name:"/level", login:true}, function*(req, res) {
 
   // dynamisches Neuladen
@@ -456,10 +457,14 @@ route({name:"/level", login:true}, function*(req, res) {
   if (!exercises[levelid] || exercises[levelid].level > req.user.level)
     levelid = -1
   var result = undefined
+  var previous = undefined
   if (levelid > 0) {
     const userid = req.user ? req.user._id.toString() : undefined
     var val = yield req.curCol.find({}, {"ants.code":false})
     result = prepareAnts(val, userid)
+    if (levelCache[req.sessionID]) {
+      previous = levelCache[req.sessionID][levelid]
+    }
   }
   res.render('ants/level', {
     user: req.user,
@@ -468,6 +473,7 @@ route({name:"/level", login:true}, function*(req, res) {
     id:levelid,
     exercises: exercises,
     exIndex:exIndex,
+    previous:previous,
     upgrade:canUpgrade(req.user),
     solved:req.user.solved,
     prefix: req.curHome })
@@ -486,7 +492,11 @@ route({name:"/upgrade", login:true}, function*(req, res, next) {
 route({name:"/new", login:true}, function*(req, res, next) {
   var val = yield req.curCol.find({_id: req.user._id}, {"ants.code":false})
   if (val[0].ants.length < maximumAnts(req.user.level)) {
-    var codeString = yield util.promisify(require('fs').readFile)("./newAnt.js", "utf8")
+    var codeString = `var Ameise = AntIT.NeueAmeise("` + req.query.name + `");
+
+Ameise.wenn("", function(){
+    
+})`
     yield insertAnt(codeString, req.user._id, req.curCol)
   }
   next()
@@ -538,6 +548,8 @@ route({name:"/levelsim", login:true}, function*(req, res, next) {
   // eine Ameise laden
   if (!req.user) return next()
   var levelnum = checkInt(req.query.num)
+  if (!levelCache[req.sessionID]) levelCache[req.sessionID] = {}
+  levelCache[req.sessionID][levelnum] = req.query.id
   if (exercises[levelnum] && exercises[levelnum].level <= req.user.level && req.query.id) {
     var users = yield req.curCol.find({
       _id: req.user._id,
@@ -548,7 +560,6 @@ route({name:"/levelsim", login:true}, function*(req, res, next) {
       var userid = req.user ? req.user._id : undefined
       var hash = date + "-" + userid + "-" + Math.floor(Math.random()*100000)
       levelstuff[hash] = {startTime : date, level:levelnum, userid:userid}
-      console.log(levelstuff[hash])
       return res.render('simulation', {
         code:[users[0].ants[0]],
         hash:hash,

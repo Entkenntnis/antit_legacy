@@ -5,11 +5,25 @@
   </head>
   <body>
     <div class="container">
-      <div class="jumbotron"><h1>AntIT!</h1>
-	      <p>Hallo, <strong><%= user.displayName %>.</strong> Hier beginnt dein Abenteuer. Fange an, neue Ameisenvölker zu erstellen und kontrolliere ihr Verhalten, indem du den Programmcode änderst.</p>
+      <div class="jumbotron"><h1>AntIT! Home</h1>
+	      <!--<p>Hallo, <strong><%= user.displayName %>.</strong> Hier beginnt dein Abenteuer. Fange an, neue Ameisenvölker zu erstellen und kontrolliere ihr Verhalten, indem du den Programmcode änderst.</p>-->
       </div>
 	
 	    <% include menu %>
+      <%
+        ants.sort(function(x, y){
+          var xn = x.name.toLowerCase()
+          var yn = y.name.toLowerCase()
+          if (yn < xn) return 1
+          if (xn < yn) return -1
+          return 0 })
+        globals.sort(function(x, y){
+          var xn = x.publicName.toLowerCase()
+          var yn = y.publicName.toLowerCase()
+          if (yn < xn) return 1
+          if (xn < yn) return -1
+          return 0 })
+      %>
   
       <%if (user.superuser) {%>
         <br><br>
@@ -29,7 +43,15 @@
 	      <div class="col-md-2"></div>
 	      <div class="col-md-8">
 	        <% if (ants == undefined || ants.length < maximum) { %>
-	          <p><a href="<%=prefix%>/new">neues Ameisevolk</a></p>
+	          <p><button class ="btn btn-success btn-sm" onclick="newAnt()">neues Ameisevolk</button></p>
+	          <script>
+	            function newAnt() {
+	              var x = prompt("Name des neuen Ameisenvolks:")
+	              if (x) {
+	                window.location = "<%=prefix%>/new?name=" + x
+                }
+	            }
+	          </script>
 	        <% } else { %>
 	          <p>Maximum erreicht, mehr Ameisen bei Levelaufstieg.</p>
 	        <% } %>
@@ -62,21 +84,6 @@
       </div>
     
     <% if (user && user.level >= 4) { %>
-
-      <%
-        ants.sort(function(x, y){
-          var xn = x.name.toLowerCase()
-          var yn = y.name.toLowerCase()
-          if (yn < xn) return 1
-          if (xn < yn) return -1
-          return 0 })
-        globals.sort(function(x, y){
-          var xn = x.publicName.toLowerCase()
-          var yn = y.publicName.toLowerCase()
-          if (yn < xn) return 1
-          if (xn < yn) return -1
-          return 0 })
-      %>
   
   
 	    <div class="page-header">
