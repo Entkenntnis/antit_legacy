@@ -23,7 +23,7 @@
 	        <div class="col-md-8">
 	          <% for (var i = 1; i <= user.level; i++) { %>
 	            <div class="panel panel-default">
-                <div class="panel-heading"><h4>Level <%=i%></h4></div>
+                <div class="panel-heading">Level <%=i%></div>
                 <div class="panel-body">
                   <% for (var j = 0; j < exIndex[i].length; j++) { var e = exercises[exIndex[i][j]]%>
 	                  <p><a href="<%=prefix%>/level?id=<%=exIndex[i][j]%>"><%=e.name%></a>
@@ -69,6 +69,10 @@
 	          <div class="page-header">
 	            <h3><%=e.name%></h3>
 	          </div>
+	          
+	          <script>
+	            document.getElementById("site-title").innerHTML += " - " + "<%=e.name%>"
+	          </script>
             
             <div style="height:30px"></div>
             

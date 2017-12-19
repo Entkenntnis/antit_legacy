@@ -83,6 +83,14 @@
       return ants
     }
     
+    this.getSugar = function(){
+      return collectedSugar
+    }
+    
+    this.getApple = function(){
+      return collectedApples
+    }
+    
     this.setCooldown = function(){
       cooldown = true
       updateDetails();

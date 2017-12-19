@@ -39,7 +39,7 @@
           indentUnit:4,
           matchBrackets:true,
           autoCloseBrackets:true,
-      <% if (user.level >= 4) { %>  extraKeys:{"Ctrl-S":function(){document.getElementById('editform').submit()}}
+      <% if (user.level >= 2) { %>  extraKeys:{"Ctrl-S":function(){document.getElementById('editform').submit()}}
       <% } %>
         });
       
@@ -54,17 +54,28 @@
           , "DreheZuRichtung"
           
         // Level 2
-          <% if (user.level >= 2 ) { %>
+          
+          <% if (user.level >= 2) { %>
+          
           , "GeheZuBau"
+          , "NimmZucker"
+          , "LadeZuckerAb"
+          , "TrageApfel"
+          
+          
+          <% } %>
+          
+          
+       // Level 9
+          
+          <% if (user.level >= 9 ) { %>
+          
           , "GeheZuZiel"
           , "DreheZuRichtung"
           , "DreheZuObjekt"
           , "DreheWegVonObjekt"
           , "Stehe"
           , "Stopp"
-          , "NimmZucker"
-          , "LadeZuckerAb"
-          , "TrageApfel"
           , "Gedächtnis"
           , "SendeNachricht"
           , "Zufallszahl"

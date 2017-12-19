@@ -138,6 +138,127 @@ module.exports.tutorials = {
     ],
     solution : [0,1,1,1,1,0],
   },
+  4 : {
+    level : 2,
+    name : "Nahrungsmittel",
+    text : `
+      <p>In diesem Tutorial lernst du, wie deine Ameisen Zucker und Äpfel sammeln können. Im Grunde ist es kinderleicht und daher wird dieses Tutorial recht kurz sein.
+      </p>
+      
+      <p>Um Zucker zu sammeln, muss du deine Ameise zuerst ganz nah an den Zuckerhaufen hinbewegen. Wenn die Ameise am Zucker steht, führst du den Befehl <code>NimmZucker()</code> aus. Damit lädt sich die Ameise ein Stückchen Zucker auf.
+      </p>
+      
+      <p><img src="/images/02_ameisezucker.jpg" class="img-thumbnail" title="Ein richtig perfekter Zuckerwürfel auf ihrem Rücken!"></img></p>
+      
+      <p>Jetzt muss die Ameise nach Hause. Dazu gibt es den Befehl <code>GeheZuBau()</code>, der die Ameise direkt in den Bau führt. Die Ameisen sind wie Geister - sie müssen nicht um Hindernisse herumgehen, sondern können einfach durch alles hindurchlaufen. Auch wenn das komisch aussieht: Es ist für dich als Entwickler ziemlich praktisch.
+      </p>
+      
+      <p>Die zwei Befehle, die du gerade kennengelernt hast, brauchen keinen Parameter. Deshalb steht nichts in den runden Klammern. Die Klammern sind aber trotzdem wichtig! Wenn du sie vergisst, wird der Befehl einfach nicht ausgeführt.
+      </p>
+      
+      <p>Am Ende, wenn die Ameise im Bau steht, kann sie mit dem Befehl <code>LadeZuckerAb()</code> den Zucker in den Bau geben. Dann erhält du deine Punkte dafür und die Menge wird in der Statistik angezeigt.
+      </p>
+      
+      <p>Für Äpfel gibt es nur einen Befehl: <code>TrageApfel()</code>. Sobald die Ameise am Apfel steht, kann sie diesen Befehl ausführen. Dann fängt sie an, auf ihre Kollegen zu warten. Wenn vier Ameisen zusammenkommen, tragen sie den Apfel zurück zum Bau. Das alles steht in diesem einen Befehl. Du musst dich nur darum kümmern, dass die Kollegen zum Apfel hinfinden.
+      </p>
+      
+      <p><img src="/images/02_apfel.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></img></p>
+      
+      <p>Auch in diesem Bild sieht man: Die Ameisen stehen so perfekt auf der gleichen Stelle, dass man nicht erkennt, dass es eigentlich vier Ameisen sind. Ziemlich raffiniert, nicht?
+      </p>
+    
+    `,
+    questions : [
+      "Der Befehl NimmZucker() hat nur in der Nähe eines Zuckerhaufens Wirkung.",
+      "Die Ameisen wissen immer, wo ihr Heimatbau liegt.",
+      "Der Zucker wird im Bau automatisch abgeladen.",
+      "TrageApfel() darf man nur ausführen, wenn schon genügend Ameisen am Apfel stehen.",
+      "Ameisen sind wie Geister - sie können durch Gegenstände hindurchlaufen",
+      "Man braucht mindestens drei Ameisen, um einen Apfel zu tragen."
+    ],
+    solution : [1,1,0,0,1,0],
+  },
+  5 : {
+    level : 2,
+    name : "Effektives Arbeiten",
+    text : `
+      <p>Du hast jetzt bereits ein wenig Erfahrung mit dem Programmieren von Ameisen. Dieses Tutorial möchte dir noch ein paar kleine Tricks zeigen, mit denen du schon fast wie ein "Profi" arbeiten kann.
+      </p>
+      
+      <h4>Simulationsgeschwindigkeit einstellen</h4>
+      
+      <p>Vielleicht die nützlichste Funktion überhaupt: Mit den Zahlentasten 1, 2 und 3 kannst du während der Simulation von einer Aufgabe die Geschwindigkeit einstellen. 2 ist normal, 1 ist Zeitlupe und 3 ist ganz schnell. Die Aufgabe wird immer erst am Ende der Simulation ausgewertet und damit kann man die Wartezeit am Ende etwas verkürzen.
+      </p>
+      
+      <h4>Mit Tabs arbeiten</h4>
+      
+      <p>Wenn man nur in einen Tab arbeitet, ist es oft sehr umständlich, die Ameise zu bearbeiten und sich dann bei den Aufgaben durchzuklicken, um das Level zu starten. Das Problem lässt sich geschickt lösen, in dem man zwei Tabs im Browser verwendet:
+      </p>
+      
+      <p><img src="/images/02_tabs.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></img></p>
+      
+      <p>In einem Tab kann man den Editor öffen, in anderem die Simulation laufen lassen. Wenn man die Ameise speichert, reicht es, die Simulation neu zu laden (mit einem Klick auf den runden Pfeil oder mit der Taste F5) - schon wird die neue Version der Ameise ausgeführt. Wer will kann auch den Bildschirm teilen und einen Tab links und den anderen Tab rechts anzeigen lassen.
+      </p>
+      
+      <h4>Sonderzeichen tippen</h4>
+      
+      <p>Hast du ausversehen eine Klammer oder ein Ausführungszeichen gelöscht und findest das Zeichen nicht mehr? Hier eine kleine Übersicht:
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <td>(</td>
+            <td>Shift + 8</td>
+          </tr>
+          <tr>
+            <td>)</td>
+            <td>Shift + 9</td>
+          </tr>
+          <tr>
+            <td>"</td>
+            <td>Shift + 2</td>
+          </tr>
+          <tr>
+            <td>/</td>
+            <td>Shift + 7</td>
+          </tr>
+          <tr>
+            <td>{</td>
+            <td>Alt Gr + 7</td>
+          </tr>
+          <tr>
+            <td>}</td>
+            <td>Alt Gr + 0</td>
+          </tr>
+        </tbody>
+      </table> 
+      
+      Falls dir das Tippen schwerfällt (selbst mit Auto-Vervollständigung und Vorlage), kann du mit einem Tipptrainer (z.B. Tipp10) etwas üben. Tippen ist nichts weiter als Übungssache und wer das nicht kann ist einfach ... hm ... faul.
+      </p>
+      
+      <h4>Mit Tastenkürzel speichern</h4>
+      
+      <p>ProTip: Anstatt auf "Speichern" zu klicken, kann man den Editor auch mit Strg-S schließen. Praktisch, wenn man nach dem Tippen nicht gleich zur Maus greifen möchte.</p>
+      
+      <h4>Kommentare nutzen</h4>
+      
+      <p>Oft möchte man etwas ausprobieren, aber nicht den ganzen Code löschen. In dieser Situation können einzelne Zeilen mit <code>//</code> auskommentiert werden:
+      </p>
+      
+      <p><img src="/images/02_kommentar.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></img></p>
+      
+      <p>Zeile 7 und 8 sind auskommentiert und werden nicht ausgeführt.
+      </p>
+    `,
+    questions : [
+      "Taste 1 ist die normale Geschwindigkeit.",
+      "Man kann mehrerer Tabs für AntIT! nutzen.",
+      "Die Seite kann mit F11 neugeladen werden.",
+      "Die öffnende geschweifte Klammer wird mit Alt Gr + 7 getippt.",
+      "Mit Strg + S kann man im Editor speichern.",
+      "Zwei Schrägstriche kommentieren eine Zeile im Code aus."
+    ],
+    solution : [0,1,0,1,1,1],
+  },
   /*2 : {
     level : 1,
     name : "Herzlich Willkommen 2",

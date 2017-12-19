@@ -40,6 +40,33 @@ module.exports.exercises = {
     level : 1,
   },
   
+  4 : {
+    name : "Lecker, Zucker",
+    description : `
+      <p>300 Schritte vor dir befindet sich ein Zuckerhaufen. Baue ihn ab, indem du jede Ameise einmal ein Zuckerstückchen tragen lässt. Aber Achtung: Komm den Wanzen nicht zu nahe!
+      </p>
+    `,
+    level : 2,
+  },
+  
+  5 : {
+    name : "Ein großer Apfel",
+    description : `
+      <p>Schon vier Ameisen reichen aus, um diesen Apfel zum Bau zu tragen - wenn auch recht langsam. Der Apfel liegt bei den Koordinaten (100|400). Passe auch diesmal wieder auf die Wanzen auf!
+      </p>
+    `,
+    level : 2,
+  },
+  
+  6 : {
+    name : "Labyrinth",
+    description : `
+      <p>Oh je, der Zuckerhaufen ist ja von Wanzen eingezäunt! Findest du trotzdem einen Weg, diesen Zuckerhaufen abzubauen? Seien Koordinaten lauten (400|-200), die Wanzen stehen immer in einem Abstand von 50 Einheiten.
+      </p>
+    `,
+    level : 2,
+  },
+  
   /*2 : {
     name : "Koordinaten",
     description : "Das ist die Beschreibung zur zweiten Aufgabe.",

@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+      <% include ../include/commonHead %>
+        <style>
+            body { margin: 0, overflow: hidden; overflow-y:hidden}
+            canvas { width:100%; height:100% }
+        </style>
+    </head>
+    <body>
+          <script src="/js/three.min.js"></script>
+          <script src="/js/orbit.js"></script>
+          <script src="/js/stats.min.js"></script>
+          <script src="/js/seedrandom.min.js"></script>
+          <script src="/js/mybus.js"></script>
+          <script src="/src/10-Optionen.js"></script>
+          <% if (devMode) { %>
+            <script src="/src/12-DeveloperMode.js"></script>
+          <% } %>
+          <% if (fightMode) { %>
+            <script src="/src/14-FightMode.js"></script>
+          <% } %>
+          <% if (!isNaN(level)) { %>
+            <script>
+              AntIT._optionen.Levelmodus = true
+              AntIT._optionen.Level = <%=level%>
+            </script>
+          <% } %>
+          <% include ../include/simRessources %>
+          <script src="/src/View/00-View.js"></script>
+          <script src="/src/View/10-Pulse.js"></script>
+          <script src="/src/View/12-UI.js"></script>
+          <script src="/src/View/20-View3d.js"></script>
+          <script src="/src/View/99-Seal.js"></script>
+          
+        <div style="position: absolute; z-index: 1; left: 50px; bottom: 40px; width:400px; height:40px;font-size:1em;color:white;">
+	<p>Maus: Links - drehen / Rechts - ziehen<br />Touch: Wischen - ziehen / lang tippen - drehen</p>
+</div>
+
+<div style="position: absolute; z-index: 3; right: 50px; top: 50px;font-size:1em;color:white;background-color:rgba(255,255,255,0.5);">
+	<a href="<%=prefix%>/" class="btn btn-primary">zurück</a>
+</div>
+<script>
+  document.getElementById("site-title").innerHTML += " - " + "<%=title%>"
+
+  function hide(){
+    document.getElementById("hud").style.height = "25px";
+    document.getElementById("collapse").innerHTML = '<a href="javascript:show()">[+]</a>';
+  }
+  function show(){
+    document.getElementById("hud").style.height = "";
+    document.getElementById("collapse").innerHTML = '<a href="javascript:hide()">[--]</a>';
+  }
+</script>
+
+<div id="hud" style="position: absolute; z-index: 2; left: 50px; top: 50px;padding:4px;font-size:1em;font-family:arial;background-color:rgba(255,255,255,<%=fightMode?0.8:0.5%>);overflow:hidden"></div>
+<div id="collapse" style="position: absolute; z-index: 2; left: 20px; top: 50px;padding:4px;font-size:1em;font-family:arial;background-color:rgba(255,255,255,0.5);">
+  <a href="javascript:hide()">[--]</a></div>
+
+<div id="loading" style="position: absolute; z-index: 5;top: 100px;font-size:2em;color:white;">
+	<span class="label label-default" id="intro-text">Simulationsfehler!</span>
+</div>
+<script>
+<%
+
+  function btoa(str) {
+    var buffer
+      ;
+
+    if (str instanceof Buffer) {
+      buffer = str;
+    } else {
+      buffer = new Buffer(str.toString(), 'binary');
+    }
+
+    return buffer.toString('base64');
+  }
+
+
+  var atLeastOnFile = false;
+  if (code) {
+    code.forEach(function(c){
+      atLeastOnFile = true;
+      if (devMode) {
+        %>(function(){
+        
+
+
+<%-c.code%>
+
+
+        
+        })();<%
+      } else {
+        var exportCode = btoa('(function(){' + c.code + '})();')
+        %>eval(atob("<%-exportCode%>"));
+        <%
+      }
+    });
+  }
+
+%>document.getElementById("intro-text").innerHTML = "Dateien werden geladen ...";<%
+
+  if (!atLeastOnFile && !fightMode) {%>
+    document.getElementById('intro-text').innerHTML = "Keine Ameise geladen!"
+    throw "Keine Ameise geladen!"
+  <%} 
+
+%>
+AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", "<%-seed%>");
+
+</script>
+    </body>
+</html>
+

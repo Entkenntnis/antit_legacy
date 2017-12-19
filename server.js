@@ -76,10 +76,9 @@ var tutIndex = {}
 function initExercises() {
   exercises = require('./exercises').exercises
   exIndex = {}
+  for (var i = 1; i <= 9; i++) exIndex [i] = []
   for (var id in exercises) {
     var ex = exercises[id]
-    if (exIndex[ex.level] == undefined)
-      exIndex[ex.level] = []
     exIndex[ex.level].push(id)
   }
   for (var id in exIndex) {
@@ -87,10 +86,9 @@ function initExercises() {
   }
   tutorials = require('./tutorials').tutorials
   tutIndex = {}
+  for (var i = 1; i <= 9; i++) tutIndex [i] = []
   for (var id in tutorials) {
     var ex = tutorials[id]
-    if (tutIndex[ex.level] == undefined)
-      tutIndex[ex.level] = []
     tutIndex[ex.level].push(id)
   }
   for (var id in tutIndex) {
@@ -483,8 +481,12 @@ route({name:"/upgrade", login:true}, function*(req, res, next) {
   if (canUpgrade(req.user)) {
     yield req.curCol.update({_id:req.user._id},
       { $set: {
-        level: req.user.level + 1}})
-    return res.redirect(req.curHome + "/level")
+        level: ++req.user.level}})
+    return res.render('ants/levelup', {
+      user : req.user,
+      highlightElement:-1,
+      prefix: req.curHome
+    })
   }
   next()
 })
@@ -492,7 +494,7 @@ route({name:"/upgrade", login:true}, function*(req, res, next) {
 route({name:"/new", login:true}, function*(req, res, next) {
   var val = yield req.curCol.find({_id: req.user._id}, {"ants.code":false})
   if (val[0].ants.length < maximumAnts(req.user.level)) {
-    var codeString = `var Ameise = AntIT.NeueAmeise("` + req.query.name + `");
+    var codeString = `var Ameise = AntIT.NeueAmeise("` + req.query.name + `")
 
 Ameise.wenn("", function(){
     
@@ -560,7 +562,7 @@ route({name:"/levelsim", login:true}, function*(req, res, next) {
       var userid = req.user ? req.user._id : undefined
       var hash = date + "-" + userid + "-" + Math.floor(Math.random()*100000)
       levelstuff[hash] = {startTime : date, level:levelnum, userid:userid}
-      return res.render('simulation', {
+      return res.render('ants/simulation', {
         code:[users[0].ants[0]],
         hash:hash,
         seed:undefined,
@@ -568,7 +570,8 @@ route({name:"/levelsim", login:true}, function*(req, res, next) {
         prefix:req.curHome + "/level?id=" + levelnum,
         devMode:false,
         fightMode:false,
-        level:levelnum
+        level:levelnum,
+        title:exercises[levelnum].name,
       })
     }
   } else

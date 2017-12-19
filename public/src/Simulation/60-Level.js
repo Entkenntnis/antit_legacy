@@ -9,6 +9,8 @@
     Sim.Opts.WanzeGeschwindigkeit = 0
     Sim.Opts.SpawnRadius = 70
     Sim.Opts.SpawnWinkel = 0
+    Sim.Opts.ZufallRichtungsVerschiebung = 0
+    Sim.Opts.WanzenAngriff = 300
   }
   
   function level1create() {
@@ -86,6 +88,88 @@
         return false
       }
     },
+    
+    4 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 1200
+        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.ZuckerGröße = 100
+        Sim.Opts.EnergieProZucker = 0
+      },
+      create : function(){
+        level1create()
+        Sim.sugars.push(new Sim.Sugar({x:824,y:512}));
+        Sim.bugs.push(new Sim.Bug({x:674,y:512}))
+        Sim.bugs.push(new Sim.Bug({x:624,y:412}))
+        Sim.bugs.push(new Sim.Bug({x:614,y:612}))
+      },
+      isDone : function(){
+        return Sim.players[0].getSugar() == 100
+      }
+    },
+    
+    5 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 1200
+        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.AnfangsEnergie = 800
+        Sim.Opts.EnergieProApfel = 0
+      },
+      create : function(){
+        level1create()
+        Sim.apples.push(new Sim.Apple({x:624,y:112}));
+        Sim.bugs.push(new Sim.Bug({x:624,y:362}))
+        Sim.bugs.push(new Sim.Bug({x:524,y:112}))
+      },
+      isDone : function(){
+        return Sim.players[0].getApple() == 1
+      }
+    },
+    
+    6 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 1500
+        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.ZuckerGröße = 100
+        Sim.Opts.EnergieProZucker = 0
+      },
+      create : function(){
+        level1create()
+        Sim.sugars.push(new Sim.Sugar({x:924,y:712}));
+        var bugs = [
+          [-1,-2],
+          [0,-2],
+          [1,-2],
+          [1,-1],
+          [1,0],
+          [1,1],
+          [0,1],
+          [-1,1],
+          [-1,0],
+          [-2,0],
+          [-3,0],
+          [-3,-1],
+          [-3,-2],
+          [-1,-3],
+          [-1,-4],
+          [-2,-4],
+          [-3,-4],
+          [-4,-4],
+          [-5,-4],
+          [-5,-3],
+          [-5,-2],
+        ]
+        bugs.forEach(function(diff){
+          Sim.bugs.push(new Sim.Bug({x:924+50*diff[0],y:712-50*diff[1]}))
+        })
+      },
+      isDone : function(){
+        return Sim.players[0].getSugar() == 100
+      }
+    },
   }
   
   var l = levels[Sim.Opts.Level]
@@ -93,7 +177,7 @@
   function init() {
     if (!l)
       throw "Unbekanntes Level"
-    Sim.Bus.emit('update-levelstatus', "Level " + Sim.Opts.Level + " gestartet")
+    //Sim.Bus.emit('update-levelstatus', "Level " + Sim.Opts.Level + " gestartet")
     l.init()
   }
   
@@ -103,7 +187,7 @@
   
   function isDone() {
     var d = l.isDone()
-    Sim.Bus.emit('update-levelstatus', "Level " + Sim.Opts.Level + (d ? " geschafft" : " beendet"))
+    //Sim.Bus.emit('update-levelstatus', "Level " + Sim.Opts.Level + (d ? " geschafft" : " beendet"))
     return  d
   }
   
