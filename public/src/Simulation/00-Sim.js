@@ -60,7 +60,7 @@
       
       if (Sim.Opts.Kampfmodus) Sim.Fight.update()
       
-      //if (Sim.Opts.Levelmodus) Sim.Level.update()
+      if (Sim.Opts.Levelmodus) Sim.Level.update()
       
       Sim.hills.forEach(function(hill) {
         hill.update();

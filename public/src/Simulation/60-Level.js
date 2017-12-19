@@ -22,7 +22,7 @@
     1 : {
       init : function(){
         level1Init()
-        Sim.Opts.Runden = 900
+        Sim.Opts.Runden = 1000
         Sim.Opts.AnfangsRichtung = 0
       },
       create : function(){
@@ -45,7 +45,7 @@
     2 : {
       init : function() {
         level1Init()
-        Sim.Opts.Runden = 800
+        Sim.Opts.Runden = 1000
         Sim.Opts.AnfangsRichtung = 0
       },
       create : function(){
@@ -69,7 +69,7 @@
     3 : {
       init : function() {
         level1Init()
-        Sim.Opts.Runden = 900
+        Sim.Opts.Runden = 1000
       },
       create : function(){
         level1create()
@@ -131,7 +131,7 @@
     6 : {
       init : function() {
         level1Init()
-        Sim.Opts.Runden = 1500
+        Sim.Opts.Runden = 2000
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.ZuckerGröße = 100
         Sim.Opts.EnergieProZucker = 0
@@ -191,10 +191,18 @@
     return  d
   }
   
+  function update() {
+    if (Sim.cycles % 100 == 50) {
+      if (isDone())
+        Sim.Bus.emit('submit-level')
+    }
+  }
+  
   Sim.Level = {
     init : init,
     createPlayers: createPlayers,
     isDone : isDone,
+    update : update,
   }
 
 })(AntIT._rawsim)

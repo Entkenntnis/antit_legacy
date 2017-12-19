@@ -74,7 +74,7 @@ module.exports.tutorials = {
       <p>Die Ameisen sind sehr treue Untertanen. Sie tun genau das, was in ihrer Programm festgelegt wurde. Um ein Ameisenvolk zu programmieren, kann du unter dem Menüpunkt "AntIT! Home" ein neues Ameisenvolk anlegen. Wenn du auf bearbeiten klickst, dann erscheint der Code-Editor. Hier kannst du das Verhalten der Ameisen so definieren, wie du es haben willst. Und mit Macht kommt auch Verantwortung: Solltest die Ameisen irgendetwas falsch machen, dann wirst natürlich du zur Rechenschaft gezogen:
       </p>
       
-      <p><img src="/images/01_overview.png" title="Wenn dir ein Ameisenvolk nicht gefällt, kannst du es wieder löschen."></img></p>
+      <p><img src="/images/01_overview.png" class="img-thumbnail" title="Wenn dir ein Ameisenvolk nicht gefällt, kannst du es wieder löschen."></img></p>
       
       <p>Im nächsten Tutorial wirst du lernen, wie man mit dem Code-Editor das Verhalten der Ameisen programmiert.</p>
     `,
@@ -97,7 +97,7 @@ module.exports.tutorials = {
       <p>Die Ameisen werden nicht per Hand einzeln gesteuert - das wäre bei der großen Menge an Ameisen etwas mühsam - sondern mithilfe von Programm-Code. Das ist ein besonderer Text, den der Computer einlesen kann und der das genaue Verhalten der Ameisen bestimmt. Wenn du ein neues Ameisenvolk erstellt, ihm einen Namen gibst und dann auf "Bearbeiten" klickst, dann erscheint folgendes Fenster:
       </p>
       
-      <p><img src="/images/01_editor.png" title="Sehr kreativer Name ..."></img></p>
+      <p><img src="/images/01_editor.png" class="img-thumbnail" title="Sehr kreativer Name ..."></img></p>
       
       <p>Das ist das Grundgerüst jeder Ameise. In der ersten Zeile wird festgelegt, dass wir eine Ameise programmieren wollen (und nicht ein Auto oder eine Waschmaschine). Dazu rufen wir eine Funktion namens "NeueAmeise" auf, die uns dann eine neue Ameise erzeugt. Diese speichern wir in der Variablen "Ameise". In den Anführungszeichen steht der Name der Ameise. Du kannst ihn jederzeit ändern, wenn du willst.
       </p>
@@ -113,7 +113,7 @@ module.exports.tutorials = {
       <p>Die Bedingungen sind bei den Ameisen bereits fest vorgegeben. Für den Anfang reicht uns ein einziges Ereignis: <code>IstGeboren</code>. Der Name des Ereignis wird in Zeile 3 zwischen die Anführungszeichen geschrieben:
       </p>
       
-      <p><img src="/images/01_editor2.png" title="Vorsicht mit der Groß- und Kleinschreibung!"></img></p>
+      <p><img src="/images/01_editor2.png" class="img-thumbnail" title="Vorsicht mit der Groß- und Kleinschreibung!"></img></p>
       
       <p>Jetzt haben wir es fasst geschafft. Nun brauchen wir noch Befehle, die die Ameise ausführen kann. Befehle werden jetzt zwischen die Zeile 3 und die Zeile 5 hineingeschrieben. Auf jede Zeile kommt genau ein Befehl. Man schreibt zuerst den Namen des Befehls und hängt dann runde Klammern hinten dran. Die meisten Befehle nehmen einen Parameter, wie z.B. eine Zahl. Befehle werden eingerückt, damit man besser erkennt, zu welchem Ereignis sie gehören.
       </p>
@@ -123,7 +123,7 @@ module.exports.tutorials = {
       <p>Der erste Befehl heißt <code>Gehe</code> und er nimmt als Parameter die Anzahl der Schritte. Der zweite Befehl heißt <code>Drehe</code>. Dieser nimmt als Parameter einen Winkel in Grad, um den sich die Ameise im Uhrzeigersinn (also nach rechts) dreht. Um nach links zu drehen nimmt man einen negativen Winkel. Wenn man also 200 Schritte gehen, sich um 90 Grad nach rechts drehen und weitere 100 Schritte gehen will, dann schreibt man:
       </p>
       
-      <p><img src="/images/01_editor3.png" title="Rücke die Befehle mit der TAB-Taste ein."></img></p>
+      <p><img src="/images/01_editor3.png" class="img-thumbnail" title="Rücke die Befehle mit der TAB-Taste ein."></img></p>
       
       <p>Die Befehle werden bei Geburt der Ameise der Reihenfolge nach von oben nach unten von jeder Ameise ausgeführt. Alles klar? Dann kannst du gleich mit den Aufgaben loslegen!
       </p>
@@ -187,7 +187,7 @@ module.exports.tutorials = {
       
       <h4>Simulationsgeschwindigkeit einstellen</h4>
       
-      <p>Vielleicht die nützlichste Funktion überhaupt: Mit den Zahlentasten 1, 2 und 3 kannst du während der Simulation von einer Aufgabe die Geschwindigkeit einstellen. 2 ist normal, 1 ist Zeitlupe und 3 ist ganz schnell. Die Aufgabe wird immer erst am Ende der Simulation ausgewertet und damit kann man die Wartezeit am Ende etwas verkürzen.
+      <p>Vielleicht die nützlichste Funktion überhaupt: Mit den Zahlentasten 1, 2 und 3 kannst du während der Simulation von einer Aufgabe die Geschwindigkeit einstellen. 2 ist normal, 1 ist Zeitlupe und 3 ist ganz schnell.
       </p>
       
       <h4>Mit Tabs arbeiten</h4>
@@ -195,7 +195,7 @@ module.exports.tutorials = {
       <p>Wenn man nur in einen Tab arbeitet, ist es oft sehr umständlich, die Ameise zu bearbeiten und sich dann bei den Aufgaben durchzuklicken, um das Level zu starten. Das Problem lässt sich geschickt lösen, in dem man zwei Tabs im Browser verwendet:
       </p>
       
-      <p><img src="/images/02_tabs.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></img></p>
+      <p><img src="/images/02_tabs.png" class="img-thumbnail" title="Firefox, Chrome, Edge - nutze den Browser, der dir gefällt."></img></p>
       
       <p>In einem Tab kann man den Editor öffen, in anderem die Simulation laufen lassen. Wenn man die Ameise speichert, reicht es, die Simulation neu zu laden (mit einem Klick auf den runden Pfeil oder mit der Taste F5) - schon wird die neue Version der Ameise ausgeführt. Wer will kann auch den Bildschirm teilen und einen Tab links und den anderen Tab rechts anzeigen lassen.
       </p>
@@ -244,7 +244,7 @@ module.exports.tutorials = {
       <p>Oft möchte man etwas ausprobieren, aber nicht den ganzen Code löschen. In dieser Situation können einzelne Zeilen mit <code>//</code> auskommentiert werden:
       </p>
       
-      <p><img src="/images/02_kommentar.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></img></p>
+      <p><img src="/images/02_kommentar.png" class="img-thumbnail" title="Da hat jemand den Ereignisnamen vergessen."></img></p>
       
       <p>Zeile 7 und 8 sind auskommentiert und werden nicht ausgeführt.
       </p>

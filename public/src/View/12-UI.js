@@ -59,6 +59,8 @@
     request.send();
   }
   
+  View.Sim.getBus().on('submit-level', onSubmitLevel)
+  
   function onSubmitLevel() {
     if (View.Sim.getLevel().isDone()) {
       var info = View.Pulse.getInfo()
