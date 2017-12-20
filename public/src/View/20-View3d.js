@@ -140,6 +140,7 @@
     var sugarBox0 = undefined
     var marker0 = undefined
     var poison0 = undefined
+    var poison20 = undefined
     var gamefloor = undefined
     var width = 0
     var height = 0
@@ -152,6 +153,7 @@
     var sugarBoxStore = undefined
     var markerStore = undefined
     var poisonStore =undefined
+    var poisonStore2 = undefined
     this.needRedraw = true
     
     var riesenmeise0 = undefined
@@ -312,6 +314,14 @@
       poisonRing.position.y = 2
       poison0 = poisonRing
       
+      // red ring
+      var ring2 = new THREE.RingBufferGeometry( 50, 55, 24 );
+      var ringMat2 = new THREE.MeshPhongMaterial( { color: 0xff0000, side: THREE.DoubleSide, transparent:true, opacity:0.4 } );
+      var poisonRing2 = new THREE.Mesh( ring2, ringMat2 );
+      poisonRing2.rotation.x = Math.PI / 2;
+      poisonRing2.position.y = 2
+      poison20 = poisonRing2
+      
       /*// magic activation
       var pyramid = new THREE.TetrahedronGeometry(2)
       var pyramidMat = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
@@ -345,7 +355,7 @@
       sugarBoxStore = new UnitStore(sugarBox0);
       markerStore = new UnitStore(marker0);
       poisonStore = new UnitStore(poison0);
-      
+      poisonStore2 = new UnitStore(poison20)
       
       kampfStore = new UnitStore(kampfmeise0)
       riesenStore = new UnitStore(riesenmeise0)
@@ -527,6 +537,10 @@
     
     Bus.on('move-spawn-point', function(key, pos) {
       poisonStore.get(key).position.copy(toViewPos(pos, 2))
+    })
+    
+    Bus.on('move-spawn-point2', function(key, pos) {
+      poisonStore2.get(key).position.copy(toViewPos(pos, 2))
     })
     
   };

@@ -23,8 +23,27 @@
 	        <div class="col-md-8">
 	          <% for (var i = 1; i <= user.level; i++) { %>
 	            <div class="panel panel-default">
-                <div class="panel-heading">Level <%=i%></div>
-                <div class="panel-body">
+                <div class="panel-heading" onclick="flip(<%=i%>)" style="cursor:pointer;">Level <%=i%></div>
+                <%
+                  var ok = (i != user.level)
+                  exIndex[i].forEach(function(id){
+                    if (solved.indexOf(parseInt(id)) < 0)
+                      ok = false
+                  })
+                %>
+                <script>
+                  function flip(id) {
+                    var e = document.getElementById("level" + id)
+                    if (e) {
+                      if (e.style.display == "none") {
+                        e.style.display = ""
+                      } else {
+                        e.style.display = "none"
+                      }
+                    }
+                  }
+                </script>
+                <div class="panel-body" <%=ok?"style=display:none":''%> id="level<%=i%>">
                   <% for (var j = 0; j < exIndex[i].length; j++) { var e = exercises[exIndex[i][j]]%>
 	                  <p><a href="<%=prefix%>/level?id=<%=exIndex[i][j]%>"><%=e.name%></a>
 	                    <% if (solved.indexOf(parseInt(exIndex[i][j])) >= 0) {  %>

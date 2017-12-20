@@ -65,13 +65,19 @@
           
           <% } %>
           
+        // Level 3
+          
+          <% if (user.level >= 3) { %>
+          
+          , "GeheZuZiel"
+          
+          <% } %>
+          
           
        // Level 9
           
           <% if (user.level >= 9 ) { %>
           
-          , "GeheZuZiel"
-          , "DreheZuRichtung"
           , "DreheZuObjekt"
           , "DreheWegVonObjekt"
           , "Stehe"
@@ -122,12 +128,12 @@
       });
       
       function append(){
-        editor.replaceRange('\n\nAmeise.wenn("", function(){\n  \n})', CodeMirror.Pos(editor.lastLine()))
+        editor.replaceRange('\n\nAmeise.wenn("", function(){\n    \n})', CodeMirror.Pos(editor.lastLine()))
       }
 
   </script>
   <% if (user.level >= 3) { %>
-    <a href="#" onclick="append()" class="btn btn-primary btn-sm">Ereignis hinzufügen</a>
+    <button onclick="append()" class="btn btn-primary btn-sm">Ereignis hinzufügen</button>
     </div>
   <% } %>
 

@@ -59,12 +59,60 @@ module.exports.exercises = {
   },
   
   6 : {
-    name : "Labyrinth",
+    name : "Zweimal Zucker",
     description : `
-      <p>Oh je, der Zuckerhaufen ist ja von Wanzen eingezäunt! Findest du trotzdem einen Weg, diesen Zuckerhaufen abzubauen? Seien Koordinaten lauten (400|-200), die Wanzen stehen immer in einem Abstand von 50 Einheiten.
+      <p>Zweihundert Schritte über dem Bau und zweihundert Schritte unter dem Bau befindet sich jeweils ein Zuckerhaufen. Baue beide vollständig ab.
       </p>
     `,
     level : 2,
+  },
+  
+  7 : {
+    name : "Labyrinth",
+    description : `
+      <p>Oh je, der Zuckerhaufen ist ja von Wanzen eingezäunt! Findest du trotzdem einen Weg, diesen Zuckerhaufen abzubauen? Seien Koordinaten lauten (400|-200), die Wanzen stehen immer in einem Abstand von 50 Schritten.
+      </p>
+    `,
+    level : 2,
+  },
+  
+  8 : {
+    name : "Zuckersuche",
+    description : `
+      <p>Normalerweise wissen die Ameisen nicht genau, wo sich die Nahrungsmittel befinden. So auch bei diesen Aufgaben. Dein Ziel ist es, den Zuckerhaufen abzubauen. Dieser wird innerhalb einer der roten Ringe erscheinen. Die Mittelpunkt der Rings befinden sich bei (0|-200), (0|-400) und (200|-400). Jeder Ring hat einen Radius von 50 Schritten.
+      </p>
+    `,
+    level : 3,
+  },
+  
+  9 : {
+    name : "Apfel unter Zeitdruck",
+    description : `
+      <p>Im Umkreis von (300|300) wird ein Apfel erscheinen. Du hast 20 Ameisen, aber nur wenig Zeit. Schaffst du es, den Apfel unter gemeinsamer Anstrengung rechtzeitig zum Bau zu bringen?
+      </p>
+    `,
+    level : 3,
+  },
+  
+  10 : {
+    name : "Apfelquadrat",
+    description : `
+      <p>Der Bau steht im Mittelpunkt eines Quadrats aus Äpfeln. Die Seitenlänge des Quadrats beträgt 400 Schritte. Sammle alle vier Äpfel ein. Diesmal darfst du dir Zeit lassen.
+      </p>
+    `,
+    level : 3,
+  },
+  
+  11 : {
+    name : "Zucker-TicTacToe",
+    description : `
+      <p>Diesmal gibt es viel Zucker zu holen! In drei der neun Felder erscheinen Zuckerhaufen und diese wollen eingesammelt werden. Es bringt Glück, wenn die drei Felder genau eine Reihe oder eine Diagonale bilden :) Der Mittelpunkt des mittleren Felds liegt bei (400|0), die anderen Felder haben jeweils einen Abstand von 150 Schritten.
+      </p>
+      
+      <p>Für diese Aufgabe empfiehlt es sich, "Himmelsrichtungen" aus Level 1 bearbeitet zu haben. Außerdem befindet sich der Mittelpunkt des Baus bei den Koordinaten (-70|0)
+      </p>
+    `,
+    level : 3,
   },
   
   /*2 : {

@@ -159,7 +159,7 @@ module.exports.tutorials = {
       <p>Am Ende, wenn die Ameise im Bau steht, kann sie mit dem Befehl <code>LadeZuckerAb()</code> den Zucker in den Bau geben. Dann erhält du deine Punkte dafür und die Menge wird in der Statistik angezeigt.
       </p>
       
-      <p>Für Äpfel gibt es nur einen Befehl: <code>TrageApfel()</code>. Sobald die Ameise am Apfel steht, kann sie diesen Befehl ausführen. Dann fängt sie an, auf ihre Kollegen zu warten. Wenn vier Ameisen zusammenkommen, tragen sie den Apfel zurück zum Bau. Das alles steht in diesem einen Befehl. Du musst dich nur darum kümmern, dass die Kollegen zum Apfel hinfinden.
+      <p>Für Äpfel gibt es nur einen Befehl: <code>TrageApfel()</code>. Sobald die Ameise am Apfel steht, kann sie diesen Befehl ausführen. Dann fängt sie an, auf ihre Kollegen zu warten. Wenn vier Ameisen zusammenkommen, tragen sie den Apfel zurück zum Bau. Das alles steckt in diesem einen Befehl. Du musst dich nur darum kümmern, dass die Kollegen zum Apfel hinfinden.
       </p>
       
       <p><img src="/images/02_apfel.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></img></p>
@@ -258,6 +258,24 @@ module.exports.tutorials = {
       "Zwei Schrägstriche kommentieren eine Zeile im Code aus."
     ],
     solution : [0,1,0,1,1,1],
+  },
+  6 : {
+    level : 3,
+    name : "Äpfel und Zucker finden",
+    text : `
+      <p>
+      </p>
+    `,
+    noq : true,
+    questions : [
+      "Frage 1",
+      "Frage 2",
+      "Frage 3",
+      "Frage 4",
+      "Frage 5",
+      "Frage 6"
+    ],
+    solution : [0,0,0,1,1,1],
   },
   /*2 : {
     level : 1,
