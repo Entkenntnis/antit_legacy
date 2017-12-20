@@ -263,10 +263,42 @@ module.exports.tutorials = {
     level : 3,
     name : "Äpfel und Zucker finden",
     text : `
-      <p>
+      <p class="lead"><em>Gibt es noch mehr Ereignisse als nur "IstGeboren"?</em></p>
+      
+      <p>Ja. Und du wirst in diesem Tutorial zwei neue Ereignisse kennenlernen. Bereit? Dann lasst uns beginnen.
+      </p>
+      
+      <p>Wenn du jetzt den Editor öffnest, dann kannst du mit eine Klick auf "Ereignis hinzufügen" ein neues Ereignis erstellen. Nehmen wir also an, du verwendest bereits "IstGeboren" und möchtest noch ein Ereignis hinzufügen. Dann sieht der Code so aus:
+      </p>
+      
+      <p><img src="/images/03_ereignis.png" class="img-thumbnail" title="Lass zwischen den Ereignissen eine Zeile frei."></img></p>
+      
+      <p>In Zeile 7 bis 9 findest du den eingefügten Code. Das erste Ereignis, dass wir neu lernen werden, heißt "SiehtZucker". Dieses Ereignis wird aufgerufen, sobald die Ameise in Sichtweite einen Zuckerhaufen erkennt. Die Ameise kann 70 Schritte weit sehen. Schreibe den Namen des Ereignis zwischen die Anführungsstriche:
+      </p>
+      
+      <p><img src="/images/03_editor2.png" class="img-thumbnail" title="Groß-/Kleinschreibung beachten"></img></p>
+      
+      <p>Dieses Ereignis besitzt außerdem einen Parameter, der angibt, wo der Zuckerhaufen sich befindet. Gib diesem Parameter einen Namen, in dem du ihn zwischen die runden Klammern schreibst. Meist verwendet man ein kleingeschriebenes Wort, hier also konkret "zucker":
+      </p>
+      
+      <p><img src="/images/03_editor3.png" class="img-thumbnail" title="'zucker' kann nun innerhalb des Ereignis verwendet werden."></img></p>
+      
+      <p>Passend dazu gibt es einen neuen Befehl namens <code>GeheZuZiel(ort)</code>, mit denen du an solche Orte hingehen kannst. Dazu schreibt du den Namen des Orts zwischen die runden Klammern des Befehls. Wenn die Namen übereinstimmen, dann färbt sich der Code hellblau ein:
+      </p>
+      
+      <p><img src="/images/03_editor4.png" class="img-thumbnail" title="Einrücken nicht vergessen"></img></p>
+      
+      <p>Fertig. Wir haben jetzt der Ameise beigebracht, dass sie zum Zucker hinläuft, sobald sie welchen sieht. Jetzt müssen wir nicht mehr den genauen Standort des Zuckers kennen, um ihn abbauen zu können. Stattdessen können wir die Gegend ablaufen und nach einen Zuckerhaufen suchen. Wie bei IstGestorben können auch alle anderen bisherigen Befehle in SiehtZucker verwendet werden. Das kannst du in den folgenden Aufgaben üben.
+      </p>
+      
+      <p>Das ganze funktioniert genauso auch für Äpfel und sieht dann so aus:
+      </p>
+      
+      <p><img src="/images/03_editor5.png" class="img-thumbnail" title="Alle Zucker wurden mit Apfel ersetzt ..."></img></p>
+      
+      <p>Im nächsten Level wirst du dann noch zwei weitere Ereignisse kennenlernen!
       </p>
     `,
-    noq : true,
     questions : [
       "Frage 1",
       "Frage 2",
