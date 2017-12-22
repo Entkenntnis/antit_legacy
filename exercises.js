@@ -115,6 +115,15 @@ module.exports.exercises = {
     level : 3,
   },
   
+  12 : {
+    name : "Dummy",
+    description : `
+      <p>Lalala
+      </p>
+    `,
+    level : 4,
+  },
+  
   /*2 : {
     name : "Koordinaten",
     description : "Das ist die Beschreibung zur zweiten Aufgabe.",

@@ -268,7 +268,7 @@ module.exports.tutorials = {
       <p>Ja. Und du wirst in diesem Tutorial zwei neue Ereignisse kennenlernen. Bereit? Dann lasst uns beginnen.
       </p>
       
-      <p>Wenn du jetzt den Editor öffnest, dann kannst du mit eine Klick auf "Ereignis hinzufügen" ein neues Ereignis erstellen. Nehmen wir also an, du verwendest bereits "IstGeboren" und möchtest noch ein Ereignis hinzufügen. Dann sieht der Code so aus:
+      <p>Wenn du jetzt den Editor öffnest, dann kannst du mit eine Klick auf "Ereignis hinzufügen" ein neues Ereignis erstellen. Nehmen wir also an, du verwendest bereits "IstGeboren". Klicke jetzt auf "Ereignis hinzufügen". Dann sieht der Code so aus:
       </p>
       
       <p><img src="/images/03_ereignis.png" class="img-thumbnail" title="Lass zwischen den Ereignissen eine Zeile frei."></img></p>
@@ -300,14 +300,14 @@ module.exports.tutorials = {
       </p>
     `,
     questions : [
-      "Frage 1",
-      "Frage 2",
-      "Frage 3",
-      "Frage 4",
-      "Frage 5",
-      "Frage 6"
+      "Es gibt insgesamt nur ein Ereignis für die Ameisen.",
+      "Den Code für ein neues Ereignis muss man jedes komplett selber schreiben.",
+      "Die Ameise hat eine Sichtweite von 70 Schritten.",
+      "Den Parameter von SiehtZucker darf man nennen wie man will. 'zucker' war nur ein Beispiel.",
+      "GeheZuZiel nimmt keinen Paramter.",
+      "Innerhalb von SiehtApfel kann man nur einen Befehl schreiben."
     ],
-    solution : [0,0,0,1,1,1],
+    solution : [0,0,1,1,0,0],
   },
   /*2 : {
     level : 1,
