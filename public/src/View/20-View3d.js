@@ -322,6 +322,9 @@
       poisonRing2.position.y = 2
       poison20 = poisonRing2
       
+      // explosion manager
+      
+      
       /*// magic activation
       var pyramid = new THREE.TetrahedronGeometry(2)
       var pyramidMat = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
@@ -541,6 +544,63 @@
     
     Bus.on('move-spawn-point2', function(key, pos) {
       poisonStore2.get(key).position.copy(toViewPos(pos, 2))
+    })
+    
+    var explosions = {}
+    var explosionCounter = 1
+    
+    Bus.on('set-explosion', function(pos, color) {
+      var key = explosionCounter++
+      var position = toViewPos(pos, 4)
+      var geometry = new THREE.Geometry();
+      var dirs = []
+      for ( var i = 0; i < 100; i ++ ) {
+
+	      var point = new THREE.Vector3();
+	      point.copy(position)
+
+	      geometry.vertices.push( point );
+        dirs.push(new THREE.Vector3(
+          Math.random()*40-20,
+          Math.random()*30-10,
+          Math.random()*40-20
+        ))
+      }
+
+      var material = new THREE.PointsMaterial( { color: color, size:10 } );
+
+      var explosion = new THREE.Points( geometry, material );
+
+      scene.add( explosion );
+      
+      explosions[key] = {
+        geo : geometry,
+        mat : material,
+        obj : explosion,
+        dir : dirs,
+        ttl : 30,
+      }
+    })
+    
+    Bus.on('update-explosions', function(key) {
+      var toremove = []
+      for (var key in explosions) {
+        var expl = explosions[key]
+        expl.ttl--
+        if (expl.ttl < 0) {
+          toremove.push(key)
+          continue
+        }
+        expl.dir.forEach(function(dir, id){
+          expl.geo.vertices[id].add(dir)
+        })
+        expl.geo.verticesNeedUpdate = true
+        expl.mat.size *= 0.95
+      }
+      toremove.forEach(function(key){
+        scene.remove(explosions[key].obj)
+        delete explosions[key]
+      })
     })
     
   };

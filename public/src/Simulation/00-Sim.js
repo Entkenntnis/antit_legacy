@@ -68,6 +68,33 @@
       
       Sim.playground.update();
       Sim.cycles++
+      
+      if (Sim.cycles == 100) {
+        Sim.Bus.emit('set-explosion', {x:900,y:500}, 0x00ff00)
+      }
+      if (Sim.cycles == 110) {
+        Sim.Bus.emit('set-explosion', {x:800,y:500}, 0x0000ff)
+      }
+      if (Sim.cycles == 100) {
+        Sim.Bus.emit('set-explosion', {x:800,y:400}, 0x00ff00)
+      }
+      if (Sim.cycles == 110) {
+        Sim.Bus.emit('set-explosion', {x:900,y:400}, 0x0000ff)
+      }
+      if (Sim.cycles == 120) {
+        Sim.Bus.emit('set-explosion', {x:900,y:400}, 0xff00ff)
+      }
+      if (Sim.cycles == 120) {
+        Sim.Bus.emit('set-explosion', {x:800,y:500}, 0xff00ff)
+      }
+      if (Sim.cycles == 120) {
+        Sim.Bus.emit('set-explosion', {x:800,y:500}, 0xFFD700)
+      }
+      if (Sim.cycles == 120) {
+        Sim.Bus.emit('set-explosion', {x:900,y:400}, 0xFFD700)
+      }
+      
+      Sim.Bus.emit('update-explosions')
     }
     
     this.playerCount = function() {
