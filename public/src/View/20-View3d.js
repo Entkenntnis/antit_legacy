@@ -154,6 +154,7 @@
     var markerStore = undefined
     var poisonStore =undefined
     var poisonStore2 = undefined
+    var poisonCloud = undefined
     this.needRedraw = true
     
     var riesenmeise0 = undefined
@@ -306,7 +307,7 @@
       var hbmat = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
       hb0 = new THREE.Mesh( hbgeo, hbmat )  
       
-      // poison ring
+      // (poison) ring
       var ring = new THREE.RingBufferGeometry( 10, 20, 8 );
       var ringMat = new THREE.MeshPhongMaterial( { color: 0xffff00, side: THREE.DoubleSide, transparent:true, opacity:0.4 } );
       var poisonRing = new THREE.Mesh( ring, ringMat );
@@ -321,6 +322,9 @@
       poisonRing2.rotation.x = Math.PI / 2;
       poisonRing2.position.y = 2
       poison20 = poisonRing2
+      
+      // poisonCloud
+      poisonCloud = textureLoader.load('/assets/particle.jpg')
       
       /*// magic activation
       var pyramid = new THREE.TetrahedronGeometry(2)
@@ -473,6 +477,10 @@
       bugStore.get(key).rotation.y = roty
     })
     
+    Bus.on('remove-bug', function(key) {
+      bugStore.remove(key)
+    })
+    
     Bus.on('add-marker', function(key, pos, color) {
       var marker = markerStore.get(key)
       setMarkerColor(marker, color)
@@ -541,6 +549,34 @@
     
     Bus.on('move-spawn-point2', function(key, pos) {
       poisonStore2.get(key).position.copy(toViewPos(pos, 2))
+    })
+        
+    var poisons = {}
+    
+    Bus.on('spawn-poison', function(key, pos, color) {
+      var position = toViewPos(pos, 4)
+      var geometry = new THREE.Geometry()
+      var d = 80
+      for (var i = 0; i < 300; i++) {
+        var p = new THREE.Vector3()
+        p.copy(position)
+        var x = Math.random()*d*2-d
+        var z = Math.random()*d*2-d
+        if (Math.sqrt(x*x+z*z) <= d) {
+          p.x += x; p.z += z
+          p.y = Math.random()*5+2
+          geometry.vertices.push(p)
+        }
+      }
+      var material = new THREE.PointsMaterial({color:color, size:30, map:poisonCloud, blending: THREE.AdditiveBlending, transparent:true})
+      material.depthWrite=false
+      var obj = new THREE.Points(geometry, material)
+      scene.add(obj)
+      poisons[key] = obj
+    })
+    
+    Bus.on('remove-poison', function(key) {
+      scene.remove(poisons[key])
     })
     
   };

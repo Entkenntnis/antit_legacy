@@ -16,6 +16,7 @@
     var deadants = 0;
     var units = 0
     var cooldown = false
+    var poison = 0
     
     function initHTML() {
       Sim.Bus.emit('add-player-status', id, my.KI.Name, Sim.Opts.SpielerFarben[my.id])
@@ -32,7 +33,8 @@
           ", Status: " + (cooldown?"laden":"bereit")) 
       } else {
         Sim.Bus.emit('update-player-stats', id, "(Ameisen: " + ants + " / Tote: "
-         + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + ")")
+         + deadants + " / Zucker: " + collectedSugar + " / Äpfel: " + collectedApples + 
+         " / Gift: " + poison + ")")
       }
       
     }
@@ -50,6 +52,10 @@
     this.addAnt = function(){
       ants++;
       updateDetails();
+    }
+    
+    this.addPoison = function(){
+      poison++
     }
     
     this.addUnit = function(){

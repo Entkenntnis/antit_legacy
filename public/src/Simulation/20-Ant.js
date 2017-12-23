@@ -29,6 +29,7 @@
       energy: Sim.Opts.AmeisenEnergie,
       previousBug: undefined,
       memory:{},
+      poison:true
     })
     
     // helper
@@ -69,6 +70,7 @@
     
     function reachedHome() {
       my.lap = 0;
+      my.poison = true
     }
     
     function addSugar(load) {
@@ -199,6 +201,15 @@
       this.addSimpleJob(function(){
         my.jobs = [];
         my.insertionPoint = 0;
+      })
+    }
+    
+    this.addPoisonJob = function() {
+      this.addSimpleJob(function(){
+        if (my.poison) {
+          my.poison = false
+          Sim.poisons.push(new Sim.Poison(my.playerid, {x:my.pos.x, y:my.pos.y}))
+        }
       })
     }
     

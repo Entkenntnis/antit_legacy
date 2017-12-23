@@ -131,6 +131,10 @@
   API.addFunc("TrageApfel", function () {
     API.curAnt.addAppleSetupJob();
   });
+  
+  API.addFunc("SetzeGift", function() {
+    API.curAnt.addPoisonJob()
+  })
 
   API.addFunc("FühreAus", function (funktion) {
     if (typeof funktion != "function") {

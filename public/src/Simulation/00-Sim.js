@@ -16,6 +16,7 @@
       Sim.ants = []
       Sim.apples = []
       Sim.bugs = []
+      Sim.poisons = []
       Sim.memories = {}
       
       if (Sim.Opts.Kampfmodus) Sim.Fight.init()
@@ -65,6 +66,14 @@
       Sim.hills.forEach(function(hill) {
         hill.update();
       });
+      
+      Sim.poisons.forEach(function(poison){
+        poison.update()
+      })
+      
+      Sim.Util.removeIf(Sim.poisons, function(p){
+        return p.getTtl() <= 0
+      })
       
       Sim.playground.update();
       Sim.cycles++

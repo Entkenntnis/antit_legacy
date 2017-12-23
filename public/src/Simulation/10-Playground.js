@@ -172,12 +172,51 @@
         return apple.reachedHome()
       });
       
+      Sim.Util.removeIf(Sim.bugs, function(bug){
+        var poisonNear = Sim.Util.inRange(bug.getPos(),
+          Sim.poisons, 80)
+        var pCounter = {}
+        poisonNear.forEach(function(p){
+          if (!pCounter) return
+          var pid = p.getPlayerid()
+          if (!pCounter[pid]) pCounter[pid] = 0
+          pCounter[pid]++
+          if (pCounter[pid] >= 3) {
+            Sim.players[pid].addPoison()
+            Sim.players[pid].addPoints(1000)
+            bug.die()
+            pCounter = undefined
+          }
+        })
+        if (!pCounter) return true
+        else return false
+      })
+      
       Sim.Util.removeIf(Sim.ants, function(ant) {
         var reason = undefined
         if (ant.getLap() > Sim.Opts.AmeisenReichweite) {
           reason = "Müdigkeit"
         } else if (ant.getEnergy() <= 0) {
           reason = "Wanze"
+        } else {
+          // check poison
+          var poisonNear = Sim.Util.inRange(ant.getPos(),
+            Sim.poisons, 80, function(p){
+              return p.getPlayerid() == ant.getPlayerid()
+            })
+          var pCounter = {}
+          poisonNear.forEach(function(p){
+            if (!pCounter) return
+            var pid = p.getPlayerid()
+            if (!pCounter[pid]) pCounter[pid] = 0
+            pCounter[pid]++
+            if (pCounter[pid] >= 3) {
+              reason = "Gift"
+              Sim.players[pid].addPoison()
+              Sim.players[pid].addPoints(500)
+              pCounter = undefined
+            }
+          })  
         }
         if (reason) {
           Sim.API.setAnt(ant)

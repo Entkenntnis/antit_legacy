@@ -281,6 +281,24 @@
         return Sim.players[0].getSugar() == 300
       }
     },
+    
+    12 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 3000
+        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.ZuckerGröße = 100
+        Sim.Opts.EnergieProZucker = 0
+      },
+      create : function(){
+        level1create()
+        Sim.bugs.push(new Sim.Bug({x:924,y:562}))
+        Sim.bugs.push(new Sim.Bug({x:924,y:550}))
+      },
+      isDone : function(){
+        return false
+      }
+    },
   }
   
   var l = levels[Sim.Opts.Level]

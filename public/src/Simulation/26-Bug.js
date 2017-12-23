@@ -60,6 +60,10 @@
       updateGO();
     }
     
+    this.die = function(){
+      Sim.Bus.emit('remove-bug', key)
+    }
+    
     // constructor
     updateGO();
   }
