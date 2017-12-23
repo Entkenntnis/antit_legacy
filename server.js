@@ -108,6 +108,12 @@ passport.use(new (require('passport-local').Strategy)(
       var user = users[0]
       // patching old users
       if (!user.level) {
+        yield req.curCol.update({_id:user._id},
+          { $set : {
+            level : 1,
+            done : [],
+            solved : [],
+          }})
         user.level = 1
         user.done = []
         user.solved = []
