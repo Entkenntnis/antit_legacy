@@ -27,7 +27,7 @@ module.exports.tutorials = {
       <p>Für die Aufgaben wirst du dein Ameisenvolk programmieren und damit ein ganz bestimmtes Ziel erfüllen. Wie das genau funktioniert wirst du im nächsten Tutorial lernen.
       </p>
       
-      <p>Ab Level 4 kannst du außerdem am Ameisenwettbewerb teilnehmen. Du kannst gegen die anderen Teilnehmer der Ausbildung antreten und dich mit ihnen messen. Gelöste Aufgaben bringen dir Bonuspunkte, die deine Ameisen stärker machen.
+      <p>Ab Level 5 kannst du außerdem am Ameisenwettbewerb teilnehmen. Du kannst gegen die anderen Teilnehmer der Ausbildung antreten und dich mit ihnen messen. Gelöste Aufgaben bringen dir Bonuspunkte, die deine Ameisen stärker machen.
       </p>
       
       <p>Die Ausbildung ist so angelegt, dass du dir alle Fähigkeiten selber beibringen kannst. Vielleicht wird das für dich erstmal eine ungewohnte Erfahrung sein. Um dir zu helfen gibt es am Ende jedes Tutorials ein kleines Quiz. Kreuze die richtigen Aussagen an und lasse sie überprüfen. Es können null bis alle Aussagen richtig sein.
@@ -164,7 +164,7 @@ module.exports.tutorials = {
       
       <p><img src="/images/02_apfel.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></img></p>
       
-      <p>Auch in diesem Bild sieht man: Die Ameisen stehen so perfekt auf der gleichen Stelle, dass man nicht erkennt, dass es eigentlich vier Ameisen sind. Ziemlich raffiniert, nicht?
+      <p>Auch in diesem Bild sieht man: Die Ameisen stehen so perfekt auf der gleichen Stelle, dass man nicht erkennt, dass es eigentlich vier Ameisen sind. Diese Ameisen unterscheiden sich in diesem Punkt doch sehr von ihren natürlichen Verwandten da draußen.
       </p>
     
     `,

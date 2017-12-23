@@ -105,7 +105,14 @@ passport.use(new (require('passport-local').Strategy)(
     var users = yield req.curCol.find({username: uname, password: pw}, {ants:false})
     if (users && users.length == 1) {
       users[0].colony = req.params.colony
-      return cb(null, users[0])
+      var user = users[0]
+      // patching old users
+      if (!user.level) {
+        user.level = 1
+        user.done = []
+        user.solved = []
+      }
+      return cb(null, user)
     } else {
       return cb(null, false)
     }
