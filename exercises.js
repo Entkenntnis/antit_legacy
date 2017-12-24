@@ -116,12 +116,60 @@ module.exports.exercises = {
   },
   
   12 : {
-    name : "Dummy",
+    name : "Auf die Wanzen!",
+    description : `
+      <p>Endlich ist es an der Zeit, es den Wanzen mal richtig zu zeigen. Vergifte die Wanzen, die sich bei den Koordinaten (500|-300), (0|400) und (-300|100) befinden. Vergiss nicht zwischendurch, die Giftladung neu im Bau aufzuladen. Die Wanzen bleiben aber weiterhin gefräßig. Himmelsrichtungen können hilfreich sein.
+      </p>
+    `,
+    level : 4,
+  },
+  
+  13 : {
+    name : "Zucker in Dauerschleife",
+    description : `
+      <p>Du bist jetzt in der Lage, die Ameisen in Dauerschleife zu bewegen. Das wird in dieser Aufgabe ziemlich praktisch sein: In jeweils 300 Schritten Abstand zum Bau befinden sich drei Orte, an denen Zuckerhaufen erscheinen. Du wirst viel Zeit haben. Dein Ziel ist es, 250 Stück Zucker einzusammeln. Das entspricht 5 Zuckerhäufchen.
+      </p>
+      
+      <p>Verwende das Ereignis "Wartet". Je nach dem, wie du die Schleife anlegst, wirst du auch den Paramter "OFFEN" brauchen. Vergiss nicht, immer wieder zum Bau zurückzukehren um die Reichweite wiederherzustellen.
+      </p>
+    `,
+    level : 4,
+  },
+  
+  14 : {
+    name : "Verteidigung!",
+    description : `
+      <p>Eine Horde gegnerischer Ameisen greift deinen Bau an! Verteidige dich mit Gift und stelle sicher, dass bis Ende der Simulation kein Gegner näher als 200 Schritte an den Bau herankommt.
+      </p>
+    `,
+    level : 4,
+  },
+  
+  15 : {
+    name : "Zucker / Apfel freisprengen",
     description : `
       <p>Lalala
       </p>
     `,
     level : 4,
+  },
+  
+  16 : {
+    name : "Timing mit 3 Wanzen",
+    description : `
+      <p>Lalala
+      </p>
+    `,
+    level : 4,
+  },
+  
+  17 : {
+    name : "Demnächst verfügbar",
+    description : `
+      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      </p>
+    `,
+    level : 5,
   },
   
   /*2 : {

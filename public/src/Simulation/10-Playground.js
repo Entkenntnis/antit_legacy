@@ -219,9 +219,11 @@
           })  
         }
         if (reason) {
-          Sim.API.setAnt(ant)
-          Sim.API.callUserFunc("IstGestorben", [reason])
-          Sim.API.close()
+          if (Sim.players[ant.getPlayerid()]) { // for dummy ants
+            Sim.API.setAnt(ant)
+            Sim.API.callUserFunc("IstGestorben", [reason])
+            Sim.API.close()
+          }
           ant.die()
           return true
         }

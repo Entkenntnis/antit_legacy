@@ -10,7 +10,7 @@
 
   // ANT
 
-  function Ant(pos, playerid) {
+  function Ant(pos, playerid, dummy) {
     
     Ant.counter = Ant.counter || 1;
     
@@ -28,6 +28,7 @@
       lap: 0,
       energy: Sim.Opts.AmeisenEnergie,
       previousBug: undefined,
+      previousAnt: undefined,
       memory:{},
       poison:true
     })
@@ -65,7 +66,8 @@
     
     this.die = function() {
       removeGO()
-      myPlayer().subAnt();
+      if (myPlayer())
+        myPlayer().subAnt();
     }
     
     function reachedHome() {
@@ -450,6 +452,23 @@
       }
     }
     
+    function senseOtherTeam() {
+      if (!Sim.players[my.playerid].getKI().Bus.has("SiehtGegner"))
+        return
+      var ant = Sim.Util.closest(my.pos, Sim.ants, Sim.Opts.AmeiseSichtweite,
+        function(a){
+          return a.getPlayerid() == my.playerid
+        });
+      if (ant) {
+        if (ant != my.previousAnt) {
+          Sim.API.callUserFunc("SiehtGegner", [ant]);
+          my.previousAnt = ant;
+        }
+      } else {
+        my.previousAnt = undefined;
+      }
+    }
+    
     function wait() {
       if(my.jobs.length == 0) {
         Sim.API.callUserFunc("Wartet");
@@ -458,11 +477,13 @@
     
     // update
     this.update = function() {
+      if (dummy) return
       Sim.API.setAnt(this);
       execJob.bind(this)()
       senseSugar.bind(this)()
       senseApple.bind(this)()
       senseBug()
+      senseOtherTeam.bind(this)()
       wait()
       Sim.API.callUserFunc("Tick");
       validateMemory()

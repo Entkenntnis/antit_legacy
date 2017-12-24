@@ -550,6 +550,15 @@
     Bus.on('move-spawn-point2', function(key, pos) {
       poisonStore2.get(key).position.copy(toViewPos(pos, 2))
     })
+    
+    Bus.on('set-ring', function(pos, color, size) {
+      var ring = new THREE.RingBufferGeometry( size.inner, size.outer, 24 );
+      var ringMat = new THREE.MeshPhongMaterial( { color: color, side: THREE.DoubleSide, transparent:true, opacity:0.4 } );
+      var poisonRing = new THREE.Mesh( ring, ringMat );
+      poisonRing.rotation.x = Math.PI / 2;
+      scene.add(poisonRing)
+      poisonRing.position.copy(toViewPos(pos, 2))
+    })
         
     var poisons = {}
     

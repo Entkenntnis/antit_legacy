@@ -73,13 +73,22 @@
           
           <% } %>
           
+        // Level 4
+          
+          <% if (user.level >= 4) { %>
+          
+          , "SetzeGift"
+          , "OFFEN"
+          
+          <% } %>
+          
           
        // Level 9
           
           <% if (user.level >= 9 ) { %>
           
-          , "DreheZuObjekt"
           , "DreheWegVonObjekt"
+          , "DreheZuObjekt"
           , "Stehe"
           , "Stopp"
           , "Gedächtnis"
@@ -100,7 +109,6 @@
           , "Umgebung"
           , "Untätig"
           , "IstOffen"
-          , "OFFEN"
           , "if"
           , "function"
           , "console.log"

@@ -309,6 +309,53 @@ module.exports.tutorials = {
     ],
     solution : [0,0,1,1,0,0],
   },
+  7 : {
+    level : 4,
+    name : "Mit Gift gegen Wanzen und Gegner",
+    text : `
+      <p>In diesem Tutorial lernst du, wie sich die Ameisen verteidigen können. Dazu haben die Ameisen die Möglichkeit, eine Giftwolke mit einem Radius von 80 Schritten um sich herum zu sprühen. Sie hält 4 Sekunden lang. Solange nur eine Wolke da ist, passiert den Wanzen und den Ameisen aus dem gegnerischen Team nichts. Überlappen sich allerdings drei Wolken, dann werden die Gegner vergiftet und sterben.
+      </p>
+      
+      <p>Die Giftwolke kann man mit dem Befehl <code>SetzeGift()</code> versprühen. Jede Ameise kann maximal eine Giftwolke auf einmal setzen. Danach muss sie zum Bau zurück und dort ihre Ladung wiederherstellen.
+      </p>
+      
+      <p><img src="/images/04_gift.png" class="img-thumbnail" title="Es kommt immer auf die Dosis an!"></img></p>
+      
+      <p>Um die Ladungen gezielt auf die Gegner setzen zu können gibt es dazu zwei neue Ereignisse: SiehtWanze und SiehtGegner. Beide werden aufgerufen, sobald ein feindliches Objekt in Sicht kommt. Als Parameter übergeben sie das gesichtete Objekt. Man kann z.B. den Befehl <code>DreheWegVonObjekt()</code> darauf anwenden:
+      </p>
+      
+      <p><img src="/images/04_wanze.png" class="img-thumbnail" title="Bloß nicht zu nahe kommen!"></img></p>
+      
+      <p>Analog dazu das Ereignis mit dem Gegner:
+      </p>
+      
+      <p><img src="/images/04_gegner.png" class="img-thumbnail" title="Bloß nicht zu nahe kommen!"></img></p>
+    `,
+    questions : [
+      "Frage 1",
+      "Frage 2",
+      "Frage 3",
+      "Frage 4",
+      "Frage 5",
+      "Frage 6"
+    ],
+    solution : [0,0,0,1,1,1],
+  },
+  8 : {
+    level : 4,
+    name : "Ameisen in Arbeitsschleife",
+    text : "lalala",
+    noq : true,
+    questions : [
+      "Frage 1",
+      "Frage 2",
+      "Frage 3",
+      "Frage 4",
+      "Frage 5",
+      "Frage 6"
+    ],
+    solution : [0,0,0,1,1,1],
+  },
   /*2 : {
     level : 1,
     name : "Herzlich Willkommen 2",

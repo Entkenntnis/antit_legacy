@@ -56,6 +56,11 @@
     
     this.addPoison = function(){
       poison++
+      updateDetails();
+    }
+    
+    this.getPoison = function(){
+      return poison
     }
     
     this.addUnit = function(){
