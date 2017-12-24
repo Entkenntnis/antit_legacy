@@ -146,18 +146,21 @@ module.exports.exercises = {
   },
   
   15 : {
-    name : "Zucker / Apfel freisprengen",
+    name : "Befreiungsaktion",
     description : `
-      <p>Lalala
+      <p>Zwei Zuckerhaufen und ein Apfel sind von Wanzen umzingelt. Schaffst du es, sie einzusammeln und von den Wanzen zu befreien?
+      </p>
+      
+      <p>An manchen Stellen ist diese Aufgabe etwas knifflig. Die Nahrungsmittel sind 300 Schritte vom Bau entfernt, die Wanzen stehen in einem Umkreis von 40 Schritten außen herum. Ein Zuckerhaufen hat eine Größe von 250 Zuckerstückchen. Außerdem erscheinen durch das Sammeln von Nahrungsmitteln neue Ameisen.
       </p>
     `,
     level : 4,
   },
   
   16 : {
-    name : "Timing mit 3 Wanzen",
+    name : "Angriffs-Timing",
     description : `
-      <p>Lalala
+      <p>Drei Wanzen laufen über das Spielfeld. Um sie zu treffen braucht es ein genaues Timing.
       </p>
     `,
     level : 4,

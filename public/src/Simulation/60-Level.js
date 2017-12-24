@@ -373,6 +373,80 @@
         })
       }
     },
+    
+    15 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 3000
+        Sim.Opts.SpawnWinkel = undefined
+        Sim.Opts.SpawnRadius = undefined
+      },
+      create : function(){
+        level1create()
+        Sim.apples.push(new Sim.Apple({x:755,y:512}))
+        Sim.sugars.push(new Sim.Sugar({x:155,y:512}))
+        Sim.sugars.push(new Sim.Sugar({x:455,y:212}))
+        function bugify(pos) {
+          for (var i = 0; i < 360; i += 45) {
+            Sim.bugs.push(new Sim.Bug(Sim.Util.moveDir(pos, i, 30)))
+          }
+        }
+        bugify({x:755,y:512})
+        bugify({x:155,y:512})
+        bugify({x:455,y:212})
+      },
+      isDone : function(){
+        return Sim.players[0].getSugar() == 500 && Sim.players[0].getApple() == 1
+      },
+    },
+    
+    16 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 3000
+        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.AnfangsEnergie = 800
+      },
+      create : function(){
+        level1create()
+        Sim.bugs.push(new Sim.Bug({x:355,y:912}))
+        Sim.bugs.push(new Sim.Bug({x:1224,y:112}))
+        Sim.bugs.push(new Sim.Bug({x:1024,y:212}))
+        Sim.tmp = {}
+        Sim.tmp.b1 = Sim.bugs[0]
+        Sim.tmp.b2 = Sim.bugs[1]
+        Sim.tmp.b3 = Sim.bugs[2]
+        Sim.tmp.b1.setHeading(0)
+        Sim.tmp.b2.setHeading(90)
+        Sim.tmp.b3.setHeading(180)
+      },
+      update : function(){
+        var zyklus = Sim.cycles % 400
+        if (zyklus < 199) {
+          Sim.tmp.b1.setPos(Sim.Util.moveDir(Sim.tmp.b1.getPos(), 0, 3))
+          Sim.tmp.b2.setPos(Sim.Util.moveDir(Sim.tmp.b2.getPos(), 90, 3))
+          Sim.tmp.b3.setPos(Sim.Util.moveDir(Sim.tmp.b3.getPos(), 180, 3))
+        }
+        else if (zyklus == 199) {
+          Sim.tmp.b1.setHeading(180)
+          Sim.tmp.b2.setHeading(270)
+          Sim.tmp.b3.setHeading(0)
+        }
+        else if (zyklus < 399) {
+          Sim.tmp.b1.setPos(Sim.Util.moveDir(Sim.tmp.b1.getPos(), 180, 3))
+          Sim.tmp.b2.setPos(Sim.Util.moveDir(Sim.tmp.b2.getPos(), 270, 3))
+          Sim.tmp.b3.setPos(Sim.Util.moveDir(Sim.tmp.b3.getPos(), 0, 3))
+        }
+        else if (zyklus == 399) {
+          Sim.tmp.b1.setHeading(0)
+          Sim.tmp.b2.setHeading(90)
+          Sim.tmp.b3.setHeading(180)
+        }
+      },
+      isDone : function(){
+        return Sim.players[0].getPoison() == 3
+      },
+    },
   }
   
   var l = levels[Sim.Opts.Level]

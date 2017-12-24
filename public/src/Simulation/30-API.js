@@ -73,6 +73,17 @@
     if (runden > 0)
       API.curAnt.addWaitJob(runden);
   });
+  
+  // changing API name
+  API.addFunc("Warte", function (runden) {
+    if (typeof runden !== "number" || runden < 0) {
+      API.message("Die Funktion 'Stehe(runden)' erwartet als Argument eine positive Zahl.");
+      return;
+    }
+    runden = Math.round(runden);
+    if (runden > 0)
+      API.curAnt.addWaitJob(runden);
+  });
 
   API.addFunc("DreheZuObjekt", function (objekt) {
     if (!(typeof objekt == "object") || !("getPos" in objekt)) {

@@ -13,11 +13,23 @@
     var togo = 0;
     var torotate = 0;
     var towait = 0;
+    var alive = true
     
     function updateGO() {
+      if (!alive) return
       Sim.Bus.emit('move-bug', key,
         my.pos,
         -heading / 180 * Math.PI + Math.PI)
+    }
+    
+    this.setHeading = function(h) {
+      heading = h
+      updateGO()
+    }
+    
+    this.setPos = function(pos) {
+      my.pos = pos
+      updateGO()
     }
     
     this.update = function() {
@@ -61,6 +73,7 @@
     }
     
     this.die = function(){
+      alive = false
       Sim.Bus.emit('remove-bug', key)
     }
     
