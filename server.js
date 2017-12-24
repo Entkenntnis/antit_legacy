@@ -408,7 +408,7 @@ route({name:"/guide"}, function(req, res) {
 })
 
 route({name:"/wettbewerb", login:true}, function(req, res) {
-  res.render('wettbewerb', {
+  res.render('ants/wettbewerb', {
     user: req.user,
     highlightElement:4,
     prefix: req.curHome })

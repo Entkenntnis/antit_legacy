@@ -321,7 +321,10 @@ module.exports.tutorials = {
       
       <p><img src="/images/04_gift.png" class="img-thumbnail" title="Es kommt immer auf die Dosis an!"></img></p>
       
-      <p>Um die Ladungen gezielt auf die Gegner setzen zu können gibt es dazu zwei neue Ereignisse: SiehtWanze und SiehtGegner. Beide werden aufgerufen, sobald ein feindliches Objekt in Sicht kommt. Als Parameter übergeben sie das gesichtete Objekt. Man kann z.B. den Befehl <code>DreheWegVonObjekt()</code> darauf anwenden:
+      <p>Die einzelne Wolke im Bild oben ist noch harmlos. Wenn zwei weitere hinzukommen, dann wird es für die Gegner gefährlich. Hier ist also eine ordentliche Koordination der Ameisen gefragt.
+      </p>
+      
+      <p>Um die Ladungen gezielt auf die Gegner setzen zu können gibt es dazu zwei neue Ereignisse: SiehtWanze und SiehtGegner. Beide werden aufgerufen, sobald ein feindliches Objekt in Sicht kommt. Als Parameter übergeben sie das gesichtete Objekt. Dieser Parameter wird bei den Aufgaben dieses Levels noch nicht gebraucht. Es ist aber gut zu wissen, dass es sie gibt. Ungenutzte Paramter können auch ganz weggelassen werden.
       </p>
       
       <p><img src="/images/04_wanze.png" class="img-thumbnail" title="Bloß nicht zu nahe kommen!"></img></p>
@@ -329,32 +332,57 @@ module.exports.tutorials = {
       <p>Analog dazu das Ereignis mit dem Gegner:
       </p>
       
-      <p><img src="/images/04_gegner.png" class="img-thumbnail" title="Bloß nicht zu nahe kommen!"></img></p>
+      <p><img src="/images/04_gegner.png" class="img-thumbnail" title="Hau ab!"></img></p>
+      
+      <p>Damit sind die Ameisen nun in der Lage, Gegner und Wanzen zu erkennen und sich mit Gift zu verteidigen.
+      </p>
     `,
     questions : [
-      "Frage 1",
-      "Frage 2",
-      "Frage 3",
-      "Frage 4",
-      "Frage 5",
-      "Frage 6"
+      "Die Ameisen können Gegner mit ihren Greifern zwicken.",
+      "Der Angriff hat eine Reichweite von 80 Schritten",
+      "Die Giftwolke bleibt für immer auf dem Spielfeld.",
+      "Nach jeder Giftwolke muss die Ameise zurück, um eine neue Ladung zu holen.",
+      "Erst ab drei überlappenden Giftwolken wird die Dosis tödlich.",
+      "SiehtWanze und SiehtGegner besitzen einen Parameter, der in diesem Level noch nicht gebraucht wird."
     ],
-    solution : [0,0,0,1,1,1],
+    solution : [0,1,0,1,1,1],
   },
   8 : {
     level : 4,
     name : "Ameisen in Arbeitsschleife",
-    text : "lalala",
-    noq : true,
+    text : `
+      <p>Um das Ziel mancher Aufgaben zu erreichen braucht es viel Arbeit. Dabei soll keine Ameise untätig in der Gegend herumstehen. Um genau solche Ameisen anzusprechen, gibt es das Ereignis "Wartet". Es nimmt keinen Parameter und wird für die Ameisen aufgerufen, die ihre Befehle abgearbeitet haben und gerade nichts zu tun haben.
+      </p>
+      
+      <p><img src="/images/04_wartet.png" class="img-thumbnail" title="Hau ab!"></img></p>
+      
+      <p>Das ist ein guter Ort, um Befehle zu programmieren, die die Ameisen in Dauerschleife ausführen sollen. Denn sobald die Ameise fertig ist, wird sie ja mit diesem Ereignis von vorne beginnen. Somit kann man den Ameisen Wiederholungen beibringen, z.B. damit sie das Spielfeld absucht.
+      </p>
+      
+      <p>Umgekehrt ist es manchmal auch nützlich, die Ameise eine gewisse Zeitspanne warten zu lassen. Hier müssen wir noch kurz ansprechen, wie die Zeit für die Ameisen vergeht: Für die Ameise läuft die Simulation in Runden ab. Pro Sekunde werden 40 Runden simuliert. Mit dem Befehl <code>Warte(zeit)</code> kann die Ameise eine bestimmte Anzahl von Runden warten. Um zwei Sekunden zu warten, schreibt man den Befehl <code>Warte(80)</code>
+      </p>
+      
+      <h4>Kleine technische Ergänzung:
+      </h4>
+      
+      <p>Wenn die Ameise ständig in Bewegung ist, dann kommt sie irgendwann an ihre Reichweitengrenze von 3000 Schritten. In diesem Fall soll sie zum Bau zurückkehren. Nun ist es so, dass die Ameise in zwei verschiedenen Zuständen sein kann: offen oder geschlossen. Solange sie kein Ziel anvisiert, ist sie offen (z.B. durch Befehle wie Gehe oder Drehe). Sobald sie aber ein Ziel anvisiert oder anvisieren wird (wenn der Befehl also erteilt ist, nur noch nicht ausgeführt), dann wird die Ameise geschlossen. Konkret geschieht das durch die Befehle GeheZuBau() und GeheZuZiel().
+      </p>
+      
+      <p>Wenn die Ameise geschlossen ist, dann ignoriert sie alle Nahrungsmittel auf ihrem Weg. Auf dem Rückweg zum Bau ist das normalerweise auch erwünscht. Möchte man nun, dass die Ameise auf dem Weg zum Bau trotzdem Nahrungsmittel wahrnimmt, dann gibt es den Befehl <code>GeheZuBau(OFFEN)</code>. Dieser Befehl lässt die Ameise zum Bau gehen, ohne dass die Ameise geschlossen wird. Damit lassen sich nun Suchpfade programmieren, auf denen die Ameise nach einer gewissen Zeit zurückkehrt und trotzdem Nahrungsmittel findet.
+      </p>
+      
+      <p>Umgehen lässt sich das Problem auch, wenn man die Reihenfolge der Befehle abändert. Das ist dann wieder stark von der konkreten Situation abhängig. Als Faustregel: Wenn die Ameise Nahrungsmittel ignoriert, obwohl die Ereignisse dafür angelegt sind, dann mal den Parameter <code>OFFEN</code> ausprobieren.
+      </p>
+    `,
     questions : [
-      "Frage 1",
-      "Frage 2",
-      "Frage 3",
-      "Frage 4",
-      "Frage 5",
-      "Frage 6"
+      "Das Ereignis Wartet wird aufgerufen, wenn die Ameise nichts mehr zu tun hat.",
+      "Das Ereignis besitzt einen Parameter.",
+      "Mit 'Wartet' können Wiederholungen programmiert werden.",
+      "In einer Sekunde vergehen 60 Runden.",
+      "Warte(3) wartet 3 Sekunden.",
+      "Wenn die Ameise ein Ziel anvisiert, dann ist sie offen."
     ],
-    solution : [0,0,0,1,1,1],
+    solution : [1,0,1,0,0,0],
   },
   /*2 : {
     level : 1,

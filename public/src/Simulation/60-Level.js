@@ -378,32 +378,6 @@
       init : function() {
         level1Init()
         Sim.Opts.Runden = 3000
-        Sim.Opts.SpawnWinkel = undefined
-        Sim.Opts.SpawnRadius = undefined
-      },
-      create : function(){
-        level1create()
-        Sim.apples.push(new Sim.Apple({x:755,y:512}))
-        Sim.sugars.push(new Sim.Sugar({x:155,y:512}))
-        Sim.sugars.push(new Sim.Sugar({x:455,y:212}))
-        function bugify(pos) {
-          for (var i = 0; i < 360; i += 45) {
-            Sim.bugs.push(new Sim.Bug(Sim.Util.moveDir(pos, i, 30)))
-          }
-        }
-        bugify({x:755,y:512})
-        bugify({x:155,y:512})
-        bugify({x:455,y:212})
-      },
-      isDone : function(){
-        return Sim.players[0].getSugar() == 500 && Sim.players[0].getApple() == 1
-      },
-    },
-    
-    16 : {
-      init : function() {
-        level1Init()
-        Sim.Opts.Runden = 3000
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.AnfangsEnergie = 800
       },
@@ -445,6 +419,32 @@
       },
       isDone : function(){
         return Sim.players[0].getPoison() == 3
+      },
+    },
+    
+    16 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 3000
+        Sim.Opts.SpawnWinkel = undefined
+        Sim.Opts.SpawnRadius = undefined
+      },
+      create : function(){
+        level1create()
+        Sim.apples.push(new Sim.Apple({x:755,y:512}))
+        Sim.sugars.push(new Sim.Sugar({x:155,y:512}))
+        Sim.sugars.push(new Sim.Sugar({x:455,y:212}))
+        function bugify(pos) {
+          for (var i = 0; i < 360; i += 45) {
+            Sim.bugs.push(new Sim.Bug(Sim.Util.moveDir(pos, i, 30)))
+          }
+        }
+        bugify({x:755,y:512})
+        bugify({x:155,y:512})
+        bugify({x:455,y:212})
+      },
+      isDone : function(){
+        return Sim.players[0].getSugar() == 500 && Sim.players[0].getApple() == 1
       },
     },
   }
