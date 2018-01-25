@@ -22,19 +22,17 @@ app.use(require('express-session')({
 app.use(passport.initialize())
 app.use(passport.session())
 
+const [databaseURL, nodejsPort, nodejsIP] = process.argv.slice(2)
 
 // ----------------------------
 // setup
 
-const dbUrl = process.env.ANTME_DB_URL ||
-  'mongodb://dal_mongoadmin:Theesh7aiB@localhost/antme'
-
-const db = require('monk')(dbUrl, {authSource:"admin"})
+const db = require('monk')(databaseURL, {authSource:"admin"})
 
 db.then(() => {
   initColonys()
   initExercises()
-  app.listen(process.env.NODE_PORT || 3000, process.env.NODE_IP || "localhost")
+  app.listen(nodejsPort, nodejsIP)
 })
 
 process.on('unhandledRejection', function(reason, p){
