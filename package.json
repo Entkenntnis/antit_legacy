@@ -5,7 +5,7 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node --use_strict server.js"
+    "start": "node --use_strict index.js"
   },
   "author": "David Li <entkenntnis@gmx.net>",
   "license": "ISC",

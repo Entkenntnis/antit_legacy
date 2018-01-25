@@ -1,107 +1,22 @@
+var app = {}
+
+require('./server/00_config')(app)
+require('./server/05_database')(app)
+require('./server/10_express')(app)
+
 // ----------------------------
 // application
 
-const express = require('express')
 const passport = require('passport')
 const co = require('co')
 
-const app = express()
 
-app.set('views', __dirname + '/views')
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
-app.disable('x-powered-by')
-
-app.use(require('cookie-parser')())
-app.use(require('body-parser').urlencoded({extended: true }))
-app.use(require('express-session')({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: false }))
-
-app.use(passport.initialize())
-app.use(passport.session())
-
-var config
-try {
-  config = require('./config')
-} catch (e) {
-  console.log("config.js file not readable. Please configure the server first!")
-  process.exit(0)
-}
-
-// ----------------------------
-// setup
-
-const db = require('monk')(config.databaseUrl, {authSource:"admin"})
-
-db.then(() => {
-  initColonys()
-  initExercises()
-  app.listen(config.serverPort, config.serverIp)
-})
 
 process.on('unhandledRejection', function(reason, p){
-    console.log("Unhandled Rejection:", p);
-    process.exit(1)
+  console.log("Unhandled Rejection:", p);
+  process.exit(1)
 });
 
-
-// ----------------------------
-// colony
-
-const colonyInfo = {}
-
-function initColonys() {
-  return co(function*(){
-    var val = yield db.get('info').find({})
-    val.forEach(function(colony){
-      colonyInfo[colony.colonyName] = colony
-    })
-  })
-}
-
-function getColonyCollection(path) {
-  if (path && colonyInfo[path] && colonyInfo[path].colonyName == path)
-    return db.get('colony_' + path)
-  else
-    return null
-}
-
-
-// ----------------------------
-// level
-
-var exercises = {}
-var exIndex = {}
-var tutorials = {}
-var tutIndex = {}
-
-function initExercises() {
-  exercises = require('./exercises').exercises
-  exIndex = {}
-  for (var i = 1; i <= 9; i++) exIndex [i] = []
-  for (var id in exercises) {
-    var ex = exercises[id]
-    exIndex[ex.level].push(id)
-  }
-  for (var id in exIndex) {
-    exIndex[id].sort((a,b)=>a-b)
-  }
-  tutorials = require('./tutorials').tutorials
-  tutIndex = {}
-  for (var i = 1; i <= 9; i++) tutIndex [i] = []
-  for (var id in tutorials) {
-    var ex = tutorials[id]
-    tutIndex[ex.level].push(id)
-  }
-  for (var id in tutIndex) {
-    tutIndex[id].sort((a,b)=>a-b)
-  }
-}
-
-// ----------------------------
-// auth
 
 passport.use(new (require('passport-local').Strategy)(
   {passReqToCallback:true}, 
@@ -136,7 +51,7 @@ passport.deserializeUser(co.wrap(function*(id, cb) {
   var splitterIndex = id.indexOf('#')
   var colony = splitterIndex >= 0 ? id.substring(0, splitterIndex) : ""
   var userid = id.substr(splitterIndex + 1)
-  var col = getColonyCollection(colony)
+  var col = app.getColonyCollection(colony)
   if (col) {
     var users = yield col.find({_id: userid}, {ants:false})
     users[0].colony = colony
@@ -344,10 +259,10 @@ function route(options, cb) {
   if (cb.constructor.name == 'GeneratorFunction')
     cb = co.wrap(cb)
   if (!options.post) {
-    app.get('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
+    app.express.get('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
   } else {
-    app.post('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
-    app.get('/:colony' + options.name, checkColony(), getLogin(), returnHome)
+    app.express.post('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
+    app.express.get('/:colony' + options.name, checkColony(), getLogin(), returnHome)
   }
 }
 
@@ -355,9 +270,9 @@ function route(options, cb) {
 // ----------------------------
 // routes
 
-app.get("/", function(req, res) {
+app.express.get("/", function(req, res) {
   res.render('landing/main', {
-    colonies : Object.keys(colonyInfo).map(function(key) { return colonyInfo[key]})
+    colonies : Object.keys(app.colonyInfo).map(function(key) { return app.colonyInfo[key]})
   })
 })
 
@@ -365,7 +280,7 @@ route({name:"/"}, function*(req, res) {
   if (!req.user) {
     return res.render('ants/login', {
       fail: req.query.fail,
-      description : colonyInfo[req.params.colony].description,
+      description : app.colonyInfo[req.params.colony].description,
       prefix: req.curHome,
     })
   }
@@ -381,7 +296,7 @@ route({name:"/"}, function*(req, res) {
     maximum: maximumAnts(req.user.level),
     globals: result.globals,
     highlightElement: 0,
-    devMode:colonyInfo[req.params.colony].debugging,
+    devMode:app.colonyInfo[req.params.colony].debugging,
     prefix: req.curHome
   })
 })
@@ -420,16 +335,16 @@ route({name:"/wettbewerb", login:true}, function(req, res) {
 
 route({name:"/tutorial", login:true}, function(req, res, next) {
   var tutid = checkInt(req.query.id)
-  if (tutid > 0 && (!tutorials[tutid] || tutorials[tutid].level > req.user.level)) return next()
+  if (tutid > 0 && (!app.tutorials[tutid] || app.tutorials[tutid].level > req.user.level)) return next()
   
-  delete require.cache[require.resolve('./tutorials.js')]
-  initExercises()
+  //delete require.cache[require.resolve('./tutorials.js')]
+  //initExercises()
   
   res.render('ants/tutorial', {
     user: req.user,
     id : tutid,
-    tuts : tutorials,
-    index : tutIndex,
+    tuts : app.tutorials,
+    index : app.tutIndex,
     done : req.user.done,
     highlightElement:tutid > 0? -1 : 5,
     prefix: req.curHome })
@@ -439,11 +354,11 @@ route({name:"/tutorialcheck", login:true}, function*(req, res, next) {
   var x = JSON.parse(req.query.data)
   var id = checkInt(req.query.id)
   if (id > 0 && x && x.length) {
-    if (tutorials[id]) {
-      if (tutorials[id].solution.length == x.length) {
+    if (app.tutorials[id]) {
+      if (app.tutorials[id].solution.length == x.length) {
         var allright = true
         for (var i = 0; i < x.length; i++) {
-          if (tutorials[id].solution[i] != x[i])
+          if (app.tutorials[id].solution[i] != x[i])
             allright = false
         }
         if (allright) {
@@ -465,11 +380,11 @@ var levelCache = {}
 route({name:"/level", login:true}, function*(req, res) {
 
   // dynamisches Neuladen
-  delete require.cache[require.resolve('./exercises.js')]
-  initExercises()
+  //delete require.cache[require.resolve('./exercises.js')]
+  //initExercises()
 
   var levelid = checkInt(req.query.id)
-  if (!exercises[levelid] || exercises[levelid].level > req.user.level)
+  if (!app.exercises[levelid] || app.exercises[levelid].level > req.user.level)
     levelid = -1
   var result = undefined
   var previous = undefined
@@ -486,8 +401,8 @@ route({name:"/level", login:true}, function*(req, res) {
     ants: result ? result.ants : [],
     highlightElement:result ? -1 : 3,
     id:levelid,
-    exercises: exercises,
-    exIndex:exIndex,
+    exercises: app.exercises,
+    exIndex:app.exIndex,
     previous:previous,
     upgrade:canUpgrade(req.user),
     solved:req.user.solved,
@@ -603,7 +518,7 @@ route({name:"/simulation"}, function*(req, res) {
       seed:undefined,
       repeat:undefined,
       prefix:req.curHome,
-      devMode:colonyInfo[req.params.colony].debugging,
+      devMode:app.colonyInfo[req.params.colony].debugging,
       fightMode:true,
       level:NaN
     })
@@ -624,7 +539,7 @@ route({name:"/simulation"}, function*(req, res) {
     seed:seed,
     repeat:repeat,
     prefix:req.curHome,
-    devMode:colonyInfo[req.params.colony].debugging,
+    devMode:app.colonyInfo[req.params.colony].debugging,
     fightMode:false,level:NaN})
 })
 
@@ -647,12 +562,12 @@ route({name:"/unpublish", login:true}, function*(req, res, next) {
 })
 
 route({name:"/debug", login:true, superuser:true}, function(req, res) {
-  colonyInfo[req.params.colony].debugging = true
+  app.colonyInfo[req.params.colony].debugging = true
   res.redirect(req.curHome)
 })
 
 route({name:"/nodebug", login:true, superuser:true}, function(req, res) {
-  colonyInfo[req.params.colony].debugging = false
+  app.colonyInfo[req.params.colony].debugging = false
   res.redirect(req.curHome)
 })
 
@@ -708,7 +623,7 @@ route({name:"/deleteUser", login:true, superuser:true}, function*(req, res) {
 /*
 const rootCode = "xyBk4sp5Q"
 
-app.get("/root/reload", function(req, res) {
+application.get("/root/reload", function(req, res) {
   if (req.query.key == rootCode) {
     initColonys()
     res.send("ok")
@@ -717,7 +632,7 @@ app.get("/root/reload", function(req, res) {
   }
 })
 
-app.get("/root/newcolony", function*(req, res) {
+application.get("/root/newcolony", function*(req, res) {
   if (req.query.key == rootCode) {
     if (req.query.name &&
         !colonyInfo[req.query.name] &&
