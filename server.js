@@ -22,17 +22,23 @@ app.use(require('express-session')({
 app.use(passport.initialize())
 app.use(passport.session())
 
-const [databaseURL, nodejsPort, nodejsIP] = process.argv.slice(2)
+var config
+try {
+  config = require('./config')
+} catch (e) {
+  console.log("config.js file not readable. Please configure the server first!")
+  process.exit(0)
+}
 
 // ----------------------------
 // setup
 
-const db = require('monk')(databaseURL, {authSource:"admin"})
+const db = require('monk')(config.databaseUrl, {authSource:"admin"})
 
 db.then(() => {
   initColonys()
   initExercises()
-  app.listen(nodejsPort, nodejsIP)
+  app.listen(config.serverPort, config.serverIp)
 })
 
 process.on('unhandledRejection', function(reason, p){
