@@ -690,6 +690,7 @@ route({name:"/addUser", login:true, superuser:true, post:true}, function*(req, r
       superuser: ("superuser" in req.body),
       ants:[],
       level:1,
+      done:[],
       solved:[]})
     res.redirect(req.curHome + "/users?msg=2")
   }
