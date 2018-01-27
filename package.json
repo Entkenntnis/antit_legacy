@@ -3,23 +3,19 @@
   "version": "1.0.0",
   "description": "AntIT! simulation platform using node.js and WebGL",
   "private": true,
-  "main": "server.js",
+  "main": "base.js",
   "scripts": {
-    "start": "node --use_strict index.js"
+    "start": "node --use_strict base.js"
   },
   "author": "David Li <entkenntnis@gmx.net>",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.3",
     "co": "^4.6.0",
-    "connect-ensure-login": "^0.1.1",
-    "cookie-parser": "^1.4.3",
     "ejs": "^2.3.3",
-    "express": "^4.15.4",
+    "express": "^4.16.2",
     "express-session": "^1.15.5",
     "mongodb": "^2.2.9",
-    "monk": "^6.0.3",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "monk": "^6.0.3"
   }
 }

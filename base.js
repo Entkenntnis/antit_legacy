@@ -16,6 +16,7 @@ App.db = require('monk')(App.config.databaseUrl, {authSource:"admin"})
 
 require('./server/00_safeHeaders')(App)
 require('./server/10_dbSessions')(App)
+require('./server/20_antit')(App)
 
 process.on('unhandledRejection', function(reason, p){
   console.log("Unbehandelte Ausnahme:", p);
@@ -25,29 +26,5 @@ process.on('unhandledRejection', function(reason, p){
 App.db.then(() => {
   App.express.listen(App.config.serverPort, App.config.serverIp)
   console.log("Server gestartet!")
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-App.express.get('/', (req, res) => {
-  if (!req.session.views) req.session.views = 0
-  req.session.views++
-  res.send(JSON.stringify(req.session))
-})
-
-App.express.get('/nop', (req, res) => {
-  res.send(JSON.stringify(req.session))
-  console.log(req.session.id)
 })
 

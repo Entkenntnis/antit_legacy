@@ -1,65 +1,88 @@
-var app = {}
-
-require('./server/00_config')(app)
-require('./server/05_database')(app)
-require('./server/10_express')(app)
-
+ 
+module.exports = function(App) {
 // ----------------------------
 // application
 
-const passport = require('passport')
 const co = require('co')
 
+App.db.then(() => {
+  initColonys()
+  initExercises()
+})
 
 
-process.on('unhandledRejection', function(reason, p){
-  console.log("Unhandled Rejection:", p);
-  process.exit(1)
-});
+
+// ----------------------------
+// colony
+
+const colonyInfo = {}
+
+function initColonys() {
+  return co(function*(){
+    var val = yield App.db.get('info').find({})
+    val.forEach(function(colony){
+      colonyInfo[colony.colonyName] = colony
+    })
+  })
+}
+
+function getColonyCollection(path) {
+  if (path && colonyInfo[path] && colonyInfo[path].colonyName == path)
+    return App.db.get('colony_' + path)
+  else
+    return null
+}
 
 
-passport.use(new (require('passport-local').Strategy)(
-  {passReqToCallback:true}, 
-  co.wrap(function*(req, uname, pw, cb) {
-    var users = yield req.curCol.find({username: uname, password: pw}, {ants:false})
-    if (users && users.length == 1) {
-      users[0].colony = req.params.colony
-      var user = users[0]
-      // patching old users
-      if (!user.level) {
-        yield req.curCol.update({_id:user._id},
-          { $set : {
-            level : 1,
-            done : [],
-            solved : [],
-          }})
-        user.level = 1
-        user.done = []
-        user.solved = []
-      }
-      return cb(null, user)
-    } else {
-      return cb(null, false)
-    }
-})));
-  
-passport.serializeUser(function(user, cb) {
-  cb(null, user.colony + '#' + user._id);
-});
+// ----------------------------
+// level
 
-passport.deserializeUser(co.wrap(function*(id, cb) {
-  var splitterIndex = id.indexOf('#')
-  var colony = splitterIndex >= 0 ? id.substring(0, splitterIndex) : ""
-  var userid = id.substr(splitterIndex + 1)
-  var col = app.getColonyCollection(colony)
-  if (col) {
-    var users = yield col.find({_id: userid}, {ants:false})
-    users[0].colony = colony
-    return cb(null, users[0])
-  } else {
-    cb("invalid id")
+var exercises = {}
+var exIndex = {}
+var tutorials = {}
+var tutIndex = {}
+
+function initExercises() {
+  exercises = require('../exercises').exercises
+  exIndex = {}
+  for (var i = 1; i <= 9; i++) exIndex [i] = []
+  for (var id in exercises) {
+    var ex = exercises[id]
+    exIndex[ex.level].push(id)
   }
-}));
+  for (var id in exIndex) {
+    exIndex[id].sort((a,b)=>a-b)
+  }
+  tutorials = require('../tutorials').tutorials
+  tutIndex = {}
+  for (var i = 1; i <= 9; i++) tutIndex [i] = []
+  for (var id in tutorials) {
+    var ex = tutorials[id]
+    tutIndex[ex.level].push(id)
+  }
+  for (var id in tutIndex) {
+    tutIndex[id].sort((a,b)=>a-b)
+  }
+}
+
+// ----------------------------
+// auth
+
+App.express.use(function(req, res, next){
+  console.log("user auth middleware")
+  if (req.session.loggedIn) {
+    var col = getColonyCollection(req.session.colony)
+    co(function*(){
+      var users = yield col.find({_id: req.session.userid}, {ants:false})
+      users[0].colony = req.session.colony
+      req.user = users[0]
+      console.log(req.user)
+      console.log("user set up")
+      next()
+    })
+  } else
+    next()
+})
 
 
 // ----------------------------
@@ -224,7 +247,7 @@ const queryCache = {}
 
 function loginMiddleware(superuser) {
   return function(req, res, next) {
-    if (!req.isAuthenticated || !req.isAuthenticated() ||
+    if (!req.session.loggedIn ||
       (superuser && req.user.superuser == false)) {
       return res.redirect(req.curHome)
     }
@@ -259,10 +282,10 @@ function route(options, cb) {
   if (cb.constructor.name == 'GeneratorFunction')
     cb = co.wrap(cb)
   if (!options.post) {
-    app.express.get('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
+    App.express.get('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
   } else {
-    app.express.post('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
-    app.express.get('/:colony' + options.name, checkColony(), getLogin(), returnHome)
+    App.express.post('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
+    App.express.get('/:colony' + options.name, checkColony(), getLogin(), returnHome)
   }
 }
 
@@ -270,17 +293,19 @@ function route(options, cb) {
 // ----------------------------
 // routes
 
-app.express.get("/", function(req, res) {
+App.express.get("/", function(req, res) {
   res.render('landing/main', {
-    colonies : Object.keys(app.colonyInfo).map(function(key) { return app.colonyInfo[key]})
+    colonies : Object.keys(colonyInfo).map(function(key) { return colonyInfo[key]})
   })
 })
 
 route({name:"/"}, function*(req, res) {
+  console.log("home route")
+  console.log(req.user)
   if (!req.user) {
     return res.render('ants/login', {
       fail: req.query.fail,
-      description : app.colonyInfo[req.params.colony].description,
+      description : colonyInfo[req.params.colony].description,
       prefix: req.curHome,
     })
   }
@@ -296,19 +321,49 @@ route({name:"/"}, function*(req, res) {
     maximum: maximumAnts(req.user.level),
     globals: result.globals,
     highlightElement: 0,
-    devMode:app.colonyInfo[req.params.colony].debugging,
+    devMode:colonyInfo[req.params.colony].debugging,
     prefix: req.curHome
   })
 })
 
-route({name:"/login", post:true}, function(req, res, next) {
-  passport.authenticate('local', {
-    failureRedirect: req.curHome + '/?fail=1',
-    successRedirect: req.curHome})(req, res, next)
+route({name:"/login", post:true}, function*(req, res, next) {
+  
+  console.log("posting to login")
+  console.log(req.params)
+  var colony = req.params.colony
+  var users = yield req.curCol.find({
+    username: req.body.username,
+    password: req.body.password,
+  }, {ants:false})
+  
+  console.log(req.params)
+  if (users && users.length == 1) {
+    users[0].colony = colony
+    var user = users[0]
+    // patching old users
+    if (!user.level) {
+      yield req.curCol.update({_id:user._id},
+        { $set : {
+          level : 1,
+          done : [],
+          solved : [],
+        }})
+      user.level = 1
+      user.done = []
+      user.solved = []
+    }
+    req.session.loggedIn = true
+    req.session.userid = user._id
+    req.session.colony = colony
+    return res.redirect(req.curHome)
+  }
+  res.redirect(req.curHome + '/?fail=1')
 })
 
 route({name:"/logout"}, function(req, res, next) {
-  req.logout()
+  delete req.session.loggedIn
+  delete req.session.userid
+  delete req.session.colony
   next()
 })
 
@@ -335,16 +390,16 @@ route({name:"/wettbewerb", login:true}, function(req, res) {
 
 route({name:"/tutorial", login:true}, function(req, res, next) {
   var tutid = checkInt(req.query.id)
-  if (tutid > 0 && (!app.tutorials[tutid] || app.tutorials[tutid].level > req.user.level)) return next()
+  if (tutid > 0 && (!tutorials[tutid] || tutorials[tutid].level > req.user.level)) return next()
   
-  //delete require.cache[require.resolve('./tutorials.js')]
-  //initExercises()
+  delete require.cache[require.resolve('../tutorials.js')]
+  initExercises()
   
   res.render('ants/tutorial', {
     user: req.user,
     id : tutid,
-    tuts : app.tutorials,
-    index : app.tutIndex,
+    tuts : tutorials,
+    index : tutIndex,
     done : req.user.done,
     highlightElement:tutid > 0? -1 : 5,
     prefix: req.curHome })
@@ -354,11 +409,11 @@ route({name:"/tutorialcheck", login:true}, function*(req, res, next) {
   var x = JSON.parse(req.query.data)
   var id = checkInt(req.query.id)
   if (id > 0 && x && x.length) {
-    if (app.tutorials[id]) {
-      if (app.tutorials[id].solution.length == x.length) {
+    if (tutorials[id]) {
+      if (tutorials[id].solution.length == x.length) {
         var allright = true
         for (var i = 0; i < x.length; i++) {
-          if (app.tutorials[id].solution[i] != x[i])
+          if (tutorials[id].solution[i] != x[i])
             allright = false
         }
         if (allright) {
@@ -380,11 +435,11 @@ var levelCache = {}
 route({name:"/level", login:true}, function*(req, res) {
 
   // dynamisches Neuladen
-  //delete require.cache[require.resolve('./exercises.js')]
-  //initExercises()
+  delete require.cache[require.resolve('../exercises.js')]
+  initExercises()
 
   var levelid = checkInt(req.query.id)
-  if (!app.exercises[levelid] || app.exercises[levelid].level > req.user.level)
+  if (!exercises[levelid] || exercises[levelid].level > req.user.level)
     levelid = -1
   var result = undefined
   var previous = undefined
@@ -401,8 +456,8 @@ route({name:"/level", login:true}, function*(req, res) {
     ants: result ? result.ants : [],
     highlightElement:result ? -1 : 3,
     id:levelid,
-    exercises: app.exercises,
-    exIndex:app.exIndex,
+    exercises: exercises,
+    exIndex:exIndex,
     previous:previous,
     upgrade:canUpgrade(req.user),
     solved:req.user.solved,
@@ -518,7 +573,7 @@ route({name:"/simulation"}, function*(req, res) {
       seed:undefined,
       repeat:undefined,
       prefix:req.curHome,
-      devMode:app.colonyInfo[req.params.colony].debugging,
+      devMode:colonyInfo[req.params.colony].debugging,
       fightMode:true,
       level:NaN
     })
@@ -539,7 +594,7 @@ route({name:"/simulation"}, function*(req, res) {
     seed:seed,
     repeat:repeat,
     prefix:req.curHome,
-    devMode:app.colonyInfo[req.params.colony].debugging,
+    devMode:colonyInfo[req.params.colony].debugging,
     fightMode:false,level:NaN})
 })
 
@@ -562,12 +617,12 @@ route({name:"/unpublish", login:true}, function*(req, res, next) {
 })
 
 route({name:"/debug", login:true, superuser:true}, function(req, res) {
-  app.colonyInfo[req.params.colony].debugging = true
+  colonyInfo[req.params.colony].debugging = true
   res.redirect(req.curHome)
 })
 
 route({name:"/nodebug", login:true, superuser:true}, function(req, res) {
-  app.colonyInfo[req.params.colony].debugging = false
+  colonyInfo[req.params.colony].debugging = false
   res.redirect(req.curHome)
 })
 
@@ -620,46 +675,7 @@ route({name:"/deleteUser", login:true, superuser:true}, function*(req, res) {
     res.redirect(req.curHome + "/users?msg=1")
   }
 })
-/*
-const rootCode = "xyBk4sp5Q"
-
-application.get("/root/reload", function(req, res) {
-  if (req.query.key == rootCode) {
-    initColonys()
-    res.send("ok")
-  } else {
-    res.send("invalid key")
-  }
-})
-
-application.get("/root/newcolony", function*(req, res) {
-  if (req.query.key == rootCode) {
-    if (req.query.name &&
-        !colonyInfo[req.query.name] &&
-        req.query.name != "root" &&
-        req.query.name.length >= 2) {
-      db.create('colony_' + req.query.name)
-      yield db.get('colony_' + req.query.name).insert({
-        username:"admin",
-        displayName:"Administrator",
-        password:"bumblebee",
-        ants:[],
-        superuser:true})
-      yield db.get('info').insert({
-        colonyName:req.query.name,
-        debugging:false
-      })
-      initColonys()
-      res.send("ok")
-    } else {
-      res.send("invalid name")
-    }
-  } else {
-    res.send("invalid key")
-  }
-})
 
 
 
-
-*/
+}
