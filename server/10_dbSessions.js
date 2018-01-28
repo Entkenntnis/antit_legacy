@@ -43,7 +43,7 @@ module.exports = function(App) {
 
   DBStore.prototype.touch = function touch(sessionId, session, callback) {
     if (session && session.expires) {
-      if (new Date(session.expires).getTime() <= Date.now() + (1000 * 60 * 30))
+      if (new Date(session.expires).getTime() <= Date.now() + (1000 * 60 * 60 * 2))
         return DBStore.prototype.set(sessionId, session, callback)
     }
     callback && setImmediate(callback)

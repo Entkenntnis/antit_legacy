@@ -2,12 +2,12 @@
 module.exports = function(App) {
 // ----------------------------
 // application
+  initExercises()
 
 const co = require('co')
 
 App.db.then(() => {
   initColonys()
-  initExercises()
 })
 
 
@@ -257,17 +257,14 @@ function loginMiddleware(superuser) {
 
 function checkColony() {
   return function handleColony(req, res, next) {
-    var path = req.params.colony
-    var collection = getColonyCollection(path)
-    if (collection && (!req.user || req.user.colony == path)) {
-      req.curCol = collection
-      req.curHome = '/' + path
-      next()
-    } else {
-      if (req.user)
-        req.logout()
-      res.redirect("/")
+    if (req.session.loggedIn) {
+      var collection = getColonyCollection(req.session.colony)
+      if (collection) {
+        req.curCol = collection
+        req.curHome = '/'
+      }
     }
+    next()
   }
 }
 
@@ -289,15 +286,85 @@ function route(options, cb) {
   }
 }
 
+var csurf = require('csurf')()
+
 
 // ----------------------------
 // routes
 
-App.express.get("/", function(req, res) {
+App.express.get('/login/:colony',csurf, function(req, res, next) {
+  if (req.session.loggedIn)
+    res.redirect('/')
+  else {
+    if (colonyInfo[req.params.colony]) {
+      console.log("rendering login")
+      res.render('ants/login', {
+        fail: req.query.fail,
+        description: colonyInfo[req.params.colony].description,
+        colony: req.params.colony,
+        csrfToken: req.csrfToken(),
+      })
+    } else
+      res.redirect('/')
+  }
+})
+
+App.express.post('/login/:colony', csurf, co.wrap(function*(req, res, next){
+  var colony = req.params.colony
+  var collection = getColonyCollection(colony)
+  if (collection) {
+    var users = yield collection.find({
+      username: req.body.username,
+      password: req.body.password,
+    }, {ants:false})
+    if (users && users.length == 1) {
+      users[0].colony = colony
+      var user = users[0]
+      // patching old users
+      if (!user.level) {
+        yield collection.update({_id:user._id},
+          { $set : {
+            level : 1,
+            done : [],
+            solved : [],
+          }})
+        user.level = 1
+        user.done = []
+        user.solved = []
+      }
+      req.session.loggedIn = true
+      req.session.userid = user._id
+      req.session.colony = colony
+      // now user is logged in
+      return res.redirect('/')
+    }
+  }
+  res.redirect(req.path + '/?fail=1')
+}))
+
+
+App.express.get("/", co.wrap(function*(req, res) {
+  if (req.session.loggedIn) {
+    const userid = req.user ? req.user._id.toString() : undefined
+    var val = yield getColonyCollection(req.session.colony).find({}, {"ants.code":false})
+    var result = prepareAnts(val, userid)
+    if (req.user && queryCache[req.sessionID])
+      req.user.previous = queryCache[req.sessionID]
+    return res.render('ants/home', {
+      user: req.user,
+      fail: req.query.fail,
+      ants: result.ants,
+      maximum: maximumAnts(req.user.level),
+      globals: result.globals,
+      highlightElement: 0,
+      devMode:colonyInfo[req.session.colony].debugging,
+      prefix: req.curHome
+    })
+  }
   res.render('landing/main', {
     colonies : Object.keys(colonyInfo).map(function(key) { return colonyInfo[key]})
   })
-})
+}))
 
 route({name:"/"}, function*(req, res) {
   console.log("home route")
@@ -306,7 +373,7 @@ route({name:"/"}, function*(req, res) {
     return res.render('ants/login', {
       fail: req.query.fail,
       description : colonyInfo[req.params.colony].description,
-      prefix: req.curHome,
+      prefix: '/' + req.params.colony,
     })
   }
   const userid = req.user ? req.user._id.toString() : undefined
@@ -321,7 +388,7 @@ route({name:"/"}, function*(req, res) {
     maximum: maximumAnts(req.user.level),
     globals: result.globals,
     highlightElement: 0,
-    devMode:colonyInfo[req.params.colony].debugging,
+    devMode:colonyInfo[req.session.colony].debugging,
     prefix: req.curHome
   })
 })
@@ -331,7 +398,7 @@ route({name:"/login", post:true}, function*(req, res, next) {
   console.log("posting to login")
   console.log(req.params)
   var colony = req.params.colony
-  var users = yield req.curCol.find({
+  var users = yield getColonyCollection(colony).find({
     username: req.body.username,
     password: req.body.password,
   }, {ants:false})
@@ -355,7 +422,7 @@ route({name:"/login", post:true}, function*(req, res, next) {
     req.session.loggedIn = true
     req.session.userid = user._id
     req.session.colony = colony
-    return res.redirect(req.curHome)
+    return res.redirect('/' + colony)
   }
   res.redirect(req.curHome + '/?fail=1')
 })

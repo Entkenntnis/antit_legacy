@@ -7,7 +7,7 @@
 
     <div class="container">
     
-      <div style="height:200px"></div>
+      <div class="visible-lg visible-md" style="height:200px"></div>
       
       <div class="row">
         <div class="col-md-4"></div>
@@ -21,13 +21,14 @@
             </div>
             <div class="panel-body">
               <p><%=description%></p>
-              <form action="<%=prefix%>/login" method="post">
+              <form action="/login/<%=colony%>" method="post">
                 <div class="form-group">
                   <label for="startup" class="control-label">Benutzername:</label>
                   <input id="startup" type="text" class="form-control" name="username"/><br>
                   <label for="pw" class="control-label">Passwort:</label>
                   <input type="password" id="pw" class="form-control" name="password"/><br>
                   <input type="submit" value="Anmelden" class="btn btn-primary"/>
+                  <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
                 </div>
               </form>
               <p class="text-right"><a href="/">Mehr Informationen</a></p>
