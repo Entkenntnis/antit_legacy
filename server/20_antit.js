@@ -6,32 +6,12 @@ module.exports = function(App) {
 
 const co = require('co')
 
-App.db.then(() => {
-  initColonys()
-})
 
 
 
 // ----------------------------
 // colony
 
-const colonyInfo = {}
-
-function initColonys() {
-  return co(function*(){
-    var val = yield App.db.get('info').find({})
-    val.forEach(function(colony){
-      colonyInfo[colony.colonyName] = colony
-    })
-  })
-}
-
-function getColonyCollection(path) {
-  if (path && colonyInfo[path] && colonyInfo[path].colonyName == path)
-    return App.db.get('colony_' + path)
-  else
-    return null
-}
 
 
 // ----------------------------
@@ -68,21 +48,7 @@ function initExercises() {
 // ----------------------------
 // auth
 
-App.express.use(function(req, res, next){
-  console.log("user auth middleware")
-  if (req.session.loggedIn) {
-    var col = getColonyCollection(req.session.colony)
-    co(function*(){
-      var users = yield col.find({_id: req.session.userid}, {ants:false})
-      users[0].colony = req.session.colony
-      req.user = users[0]
-      console.log(req.user)
-      console.log("user set up")
-      next()
-    })
-  } else
-    next()
-})
+
 
 
 // ----------------------------
@@ -258,7 +224,7 @@ function loginMiddleware(superuser) {
 function checkColony() {
   return function handleColony(req, res, next) {
     if (req.session.loggedIn) {
-      var collection = getColonyCollection(req.session.colony)
+      var collection = App.colo.getCol(req.session.colony)
       if (collection) {
         req.curCol = collection
         req.curHome = '/'
@@ -285,154 +251,6 @@ function route(options, cb) {
     App.express.get('/:colony' + options.name, checkColony(), getLogin(), returnHome)
   }
 }
-
-var csurf = require('csurf')()
-
-
-// ----------------------------
-// routes
-
-App.express.get('/login/:colony',csurf, function(req, res, next) {
-  if (req.session.loggedIn)
-    res.redirect('/')
-  else {
-    if (colonyInfo[req.params.colony]) {
-      console.log("rendering login")
-      res.render('ants/login', {
-        fail: req.query.fail,
-        description: colonyInfo[req.params.colony].description,
-        colony: req.params.colony,
-        csrfToken: req.csrfToken(),
-      })
-    } else
-      res.redirect('/')
-  }
-})
-
-App.express.post('/login/:colony', csurf, co.wrap(function*(req, res, next){
-  var colony = req.params.colony
-  var collection = getColonyCollection(colony)
-  if (collection) {
-    var users = yield collection.find({
-      username: req.body.username,
-      password: req.body.password,
-    }, {ants:false})
-    if (users && users.length == 1) {
-      users[0].colony = colony
-      var user = users[0]
-      // patching old users
-      if (!user.level) {
-        yield collection.update({_id:user._id},
-          { $set : {
-            level : 1,
-            done : [],
-            solved : [],
-          }})
-        user.level = 1
-        user.done = []
-        user.solved = []
-      }
-      req.session.loggedIn = true
-      req.session.userid = user._id
-      req.session.colony = colony
-      // now user is logged in
-      return res.redirect('/')
-    }
-  }
-  res.redirect(req.path + '/?fail=1')
-}))
-
-
-App.express.get("/", co.wrap(function*(req, res) {
-  if (req.session.loggedIn) {
-    const userid = req.user ? req.user._id.toString() : undefined
-    var val = yield getColonyCollection(req.session.colony).find({}, {"ants.code":false})
-    var result = prepareAnts(val, userid)
-    if (req.user && queryCache[req.sessionID])
-      req.user.previous = queryCache[req.sessionID]
-    return res.render('ants/home', {
-      user: req.user,
-      fail: req.query.fail,
-      ants: result.ants,
-      maximum: maximumAnts(req.user.level),
-      globals: result.globals,
-      highlightElement: 0,
-      devMode:colonyInfo[req.session.colony].debugging,
-      prefix: req.curHome
-    })
-  }
-  res.render('landing/main', {
-    colonies : Object.keys(colonyInfo).map(function(key) { return colonyInfo[key]})
-  })
-}))
-
-route({name:"/"}, function*(req, res) {
-  console.log("home route")
-  console.log(req.user)
-  if (!req.user) {
-    return res.render('ants/login', {
-      fail: req.query.fail,
-      description : colonyInfo[req.params.colony].description,
-      prefix: '/' + req.params.colony,
-    })
-  }
-  const userid = req.user ? req.user._id.toString() : undefined
-  var val = yield req.curCol.find({}, {"ants.code":false})
-  var result = prepareAnts(val, userid)
-  if (req.user && queryCache[req.sessionID])
-    req.user.previous = queryCache[req.sessionID]
-  res.render('ants/home', {
-    user: req.user,
-    fail: req.query.fail,
-    ants: result.ants,
-    maximum: maximumAnts(req.user.level),
-    globals: result.globals,
-    highlightElement: 0,
-    devMode:colonyInfo[req.session.colony].debugging,
-    prefix: req.curHome
-  })
-})
-
-route({name:"/login", post:true}, function*(req, res, next) {
-  
-  console.log("posting to login")
-  console.log(req.params)
-  var colony = req.params.colony
-  var users = yield getColonyCollection(colony).find({
-    username: req.body.username,
-    password: req.body.password,
-  }, {ants:false})
-  
-  console.log(req.params)
-  if (users && users.length == 1) {
-    users[0].colony = colony
-    var user = users[0]
-    // patching old users
-    if (!user.level) {
-      yield req.curCol.update({_id:user._id},
-        { $set : {
-          level : 1,
-          done : [],
-          solved : [],
-        }})
-      user.level = 1
-      user.done = []
-      user.solved = []
-    }
-    req.session.loggedIn = true
-    req.session.userid = user._id
-    req.session.colony = colony
-    return res.redirect('/' + colony)
-  }
-  res.redirect(req.curHome + '/?fail=1')
-})
-
-route({name:"/logout"}, function(req, res, next) {
-  delete req.session.loggedIn
-  delete req.session.userid
-  delete req.session.colony
-  next()
-})
 
 route({name:"/doku"}, function(req, res) {
   res.render('doku', {
@@ -640,7 +458,7 @@ route({name:"/simulation"}, function*(req, res) {
       seed:undefined,
       repeat:undefined,
       prefix:req.curHome,
-      devMode:colonyInfo[req.params.colony].debugging,
+      devMode:App.colo.get(req.params.colony).debugging,
       fightMode:true,
       level:NaN
     })
@@ -661,7 +479,7 @@ route({name:"/simulation"}, function*(req, res) {
     seed:seed,
     repeat:repeat,
     prefix:req.curHome,
-    devMode:colonyInfo[req.params.colony].debugging,
+    devMode:App.colo.get(req.params.colony).debugging,
     fightMode:false,level:NaN})
 })
 
@@ -684,12 +502,12 @@ route({name:"/unpublish", login:true}, function*(req, res, next) {
 })
 
 route({name:"/debug", login:true, superuser:true}, function(req, res) {
-  colonyInfo[req.params.colony].debugging = true
+  App.colo.get(req.params.colony).debugging = true
   res.redirect(req.curHome)
 })
 
 route({name:"/nodebug", login:true, superuser:true}, function(req, res) {
-  colonyInfo[req.params.colony].debugging = false
+  App.colo.get(req.params.colony).debugging = false
   res.redirect(req.curHome)
 })
 

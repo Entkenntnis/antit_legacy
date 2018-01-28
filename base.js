@@ -14,16 +14,20 @@ App.express.use(require('body-parser').urlencoded({extended: true }))
 
 App.db = require('monk')(App.config.databaseUrl, {authSource:"admin"})
 
+App.start = App.db
+
 require('./server/00_safeHeaders')(App)
 require('./server/10_dbSessions')(App)
+require('./server/15_colonies')(App)
 require('./server/20_antit')(App)
+require('./server/30_routes')(App)
 
 process.on('unhandledRejection', function(reason, p){
   console.log("Unbehandelte Ausnahme:", p);
   throw "Es ist ein Fehler aufgetreten und der Server wird beendet."
 })
 
-App.db.then(() => {
+App.start.then(() => {
   App.express.listen(App.config.serverPort, App.config.serverIp)
   console.log("Server gestartet!")
 })
