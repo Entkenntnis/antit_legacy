@@ -13,6 +13,7 @@ App.express.use(require('express').static('public'))
 App.express.use(require('body-parser').urlencoded({extended: true }))
 
 App.db = require('monk')(App.config.databaseUrl, {authSource:"admin"})
+App.csurf = require('csurf')()
 
 App.start = App.db
 

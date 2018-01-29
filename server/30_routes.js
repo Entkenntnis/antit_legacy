@@ -1,5 +1,4 @@
  
-const csurf = require('csurf')()
 const co = require('co')
 
 function maximumAnts(level) {
@@ -52,7 +51,7 @@ module.exports = function(App) {
       next()
   })
 
-  App.express.get('/login/:colony', csurf, function(req, res, next) {
+  App.express.get('/login/:colony', App.csurf, function(req, res, next) {
     if (req.session.loggedIn)
       res.redirect('/')
     else {
@@ -70,7 +69,7 @@ module.exports = function(App) {
     }
   })
 
-  App.express.post('/login/:colony', csurf, co.wrap(function*(req, res, next){
+  App.express.post('/login/:colony', App.csurf, co.wrap(function*(req, res, next){
     var colony = req.params.colony
     var collection = App.colo.getCol(colony)
     if (collection) {
@@ -124,7 +123,7 @@ module.exports = function(App) {
       })
     }
     res.render('landing/main', {
-      colonies : Object.keys(App.colo.all()).map(function(key) { return App.colo.get(key)})
+      colonies : App.colo.all()
     })
   }))
 
