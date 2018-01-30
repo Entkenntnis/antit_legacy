@@ -11,6 +11,7 @@ App.express.set('views', __dirname + '/views')
 App.express.set('view engine', 'ejs')
 App.express.use(require('express').static('public'))
 App.express.use(require('body-parser').urlencoded({extended: true }))
+App.express.use(require('connect-flash')())
 
 App.db = require('monk')(App.config.databaseUrl, {authSource:"admin"})
 App.csurf = require('csurf')()

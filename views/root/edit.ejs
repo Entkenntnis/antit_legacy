@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+      <% include ../include/commonHead %>
+    </head>
+    <body>
+      <div class="container">
+        <div class="jumbotron"><h1>Server-Verwaltung</h1></div>
+        
+        <h2>Kolonie <%=existing?'bearbeiten':'erstellen'%></h2>
+        
+        <form method="post" action="/root/save">
+          <input type="hidden" name="_csrf" value="<%=csrf%>"/>
+          
+          Name der Kolonie: <input name="colonyName" <%-existing?`readonly value="${colony.colonyName}"`:''%> required minlength="3"/><br>
+          Der Name ist eindeutig und besteht aus Kleinbuchstaben und Ziffern. Wird systemintern verwendet.<br><br>
+          
+          Beschreibung: <input size="100" name="description" value="<%=colony.description%>" required><br>
+          Dieser Text wird dem Benutzer angezeigt.<br><br>
+          
+          Aktiv: <input type="checkbox" name="active" <%-(existing&&!colony.active)?'':'checked'%>/><br>
+          Entscheidet darüber, ob die Kolonie in der Auflistung angezeigt wird oder nicht. Anmeldung trotzdem möglich.<br><br>
+          
+          <% if (existing) { %>
+          
+          Erstellt am: <input size="30" name="created" value="<%=colony.created.toISOString()%>"><br>
+          Kolonien werden absteigend nach Datum sortiert.<br><br>
+          
+          Statistik:<br>
+          <%=stats.superuser%> Administratoren<br>
+          (<%=stats.adminNames.join(', ')%>)<br>
+          <%=stats.user%> Benutzer<br>
+          (<%=stats.userNames.join(', ')%>)<br>
+          <%=stats.ants%> Ameisen<br>
+          <%=stats.published%> Freigaben<br>
+          <br>
+          
+          <% } %>
+          
+          <br>
+          
+          <a href="/root" class="btn btn-warning btn-sm">Abbrechen</a>
+          <input type="Submit" class="btn btn-primary btn-sm" value="Speichern"/>
+        </form>
+        
+        <div style="height:300px"></div>
+      </div>
+    </body>
+</html>
+
+
+

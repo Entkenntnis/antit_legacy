@@ -363,7 +363,7 @@ route({name:"/upgrade", login:true}, function*(req, res, next) {
   next()
 })
 
-route({name:"/new", login:true}, function*(req, res, next) {
+/*route({name:"/new", login:true}, function*(req, res, next) {
   var val = yield req.curCol.find({_id: req.user._id}, {"ants.code":false})
   if (val[0].ants.length < maximumAnts(req.user.level)) {
     var codeString = `var Ameise = AntIT.NeueAmeise("` + req.query.name + `")
@@ -374,7 +374,7 @@ Ameise.wenn("", function(){
     yield insertAnt(codeString, req.user._id, req.curCol)
   }
   next()
-})
+})*/
 
 route({name:"/edit", login:true}, function*(req, res, next) {
   var users = yield req.curCol.find({

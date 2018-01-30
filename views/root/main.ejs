@@ -5,32 +5,31 @@
     </head>
     <body>
       <div class="container">
-        <div class="jumbotron"><h1>Root Server-Verwaltung</h1></div>
+        <div class="jumbotron"><h1>Server-Verwaltung</h1></div>
         
         <% if (auth) { %>
         
-          <% for (var i = 0; i < colonies.length; i++) { %>
-            <p <%-colonies[i].active?'':'style="color:grey"'%>><%=colonies[i].colonyName%>: "<%=colonies[i].description%>", erstellt am <%=colonies[i].created.toLocaleDateString()%>
-              <form method="post" action="/root/activate">
-                <input type="hidden" name="path" value="<%=colonies[i].colonyName%>">
-                <input type="submit" class="btn btn-sm btn-primary" value="<%=colonies[i].active?'Deaktivieren':'Aktivieren'%>">
-                <input type="hidden" name="_csrf" value="<%=csrf%>">
-              </form>
-            </p>
-            <hr>
-          <% } %>
+          <% if (message) { %>
           
-          <form method="post" action="/root/add">
-            Kolonie hinzufügen:<br>
-            Kürzel: <input type="input" name="path"><br>
-            Beschreibung: <input type="input" size="100" name="description"><br>
-            <input type="hidden" name="_csrf" value="<%=csrf%>">
-            <input type="submit" value="Los">
-          </form>
+            <div class="alert alert-<%-message.indexOf("OK")<0?'warning':'success'%>"><%-message%></div>
+          
+          <% } %>
+        
+          <ul>
+            <% for (var i = 0; i < colonies.length; i++) { %>
+              <li style="color:<%=colonies[i].active?'black':'grey'%>"><%=colonies[i].colonyName%> | <a href="/root/edit/<%=colonies[i].colonyName%>">Bearbeiten</a></li>
+            <% } %>
+          </ul>
+          
+          <p><a href="/root/new">Neue Kolonie</a></p>
           
           <hr>
           
-          <a href="/root/logout">Ausloggen</a>
+          <p>Funktionen, um Benutzer hin und her zu schieben ...</p>
+          
+          <hr>
+          
+          <a class="btn btn-sm btn-warning" href="/root/logout">Ausloggen</a>
         
         <% } else { %>
         
