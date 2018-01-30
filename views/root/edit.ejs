@@ -27,12 +27,12 @@
           Kolonien werden absteigend nach Datum sortiert.<br><br>
           
           Statistik:<br>
-          <%=stats.superuser%> Administratoren<br>
+          <%=stats.superuser%> Administrator<%=stats.superuser!=1?'en':''%><br>
           (<%=stats.adminNames.join(', ')%>)<br>
           <%=stats.user%> Benutzer<br>
           (<%=stats.userNames.join(', ')%>)<br>
-          <%=stats.ants%> Ameisen<br>
-          <%=stats.published%> Freigaben<br>
+          <%=stats.ants%> Ameise<%=stats.ants!=1?'n':''%><br>
+          <%=stats.published%> Freigabe<%=stats.published!=1?'n':''%><br>
           <br>
           
           <% } %>
@@ -42,6 +42,23 @@
           <a href="/root" class="btn btn-warning btn-sm">Abbrechen</a>
           <input type="Submit" class="btn btn-primary btn-sm" value="Speichern"/>
         </form>
+        
+        
+          
+        <% if (existing && stats && stats.user + stats.superuser == 0) { %>
+        
+        <br><br><hr>
+          
+          <h3>Danger Zone</h3>
+        
+          <form method="post" action="/root/delete">
+            <input type="hidden" name="_csrf" value="<%=csrf%>"/>
+            <input type="hidden" name="colonyName" value="<%=colony.colonyName%>"/>
+            Willst du diese Kolonie löschen?<br>
+            <input type="submit" class="btn btn-sm btn-danger" value="Ja, Kolonie endgültig löschen"/>
+          </form>
+        
+        <% } %>
         
         <div style="height:300px"></div>
       </div>

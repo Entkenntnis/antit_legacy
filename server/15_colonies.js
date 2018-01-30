@@ -18,6 +18,10 @@ module.exports = function(App) {
       colonyIndex.sort((a, b) => {
         return b.created - a.created
       })
+      for (var i = 0; i < colonyIndex.length; i++) {
+        var col = stringToCollection(colonyIndex[i].colonyName)
+        yield col.createIndex({username:1})
+      }
     })
   }
   
@@ -45,11 +49,11 @@ module.exports = function(App) {
       published: 0,
     }
     content.forEach(function(user){
-      stats.user++
       if (user.superuser) {
         stats.superuser++
         stats.adminNames.push(user.username)
       } else {
+        stats.user++
         stats.userNames.push(user.username)
       }
       user.ants.forEach(function(ant){
@@ -150,6 +154,23 @@ module.exports = function(App) {
       yield readinColonies()
       req.flash('/root', "OK: Eintrag gespeichert")
     }
+    res.redirect('/root')
+  }))
+  
+  App.express.post('/root/delete', App.csurf, co.wrap(function*(req, res) {
+    let path = req.body.colonyName
+    let col = stringToCollection(path)
+    if (col) {
+      let users = yield col.find({})
+      if (users.length == 0) {
+        yield App.db.get('info').remove({colonyName: path})
+        yield col.drop()
+        yield readinColonies()
+        req.flash('/root', "OK: Kolonie wurde erfolgreich entfernt")
+      } else
+        req.flash('/root', "Kolonie ist nicht leer")
+    } else
+      req.flash('/root', "Kolonie konnte nicht gefunden werden")
     res.redirect('/root')
   }))
 }
