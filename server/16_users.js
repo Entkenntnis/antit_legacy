@@ -89,7 +89,7 @@ module.exports = function(App) {
     }
     if (user && user.length == 1) {
       res.render('admin/useredit', {
-        user: user,
+        user: user[0],
         existing: true,
         csrf: req.csrfToken(),
       })
@@ -107,5 +107,56 @@ module.exports = function(App) {
     })
   })
   
+  App.express.post('/user/save', auth, App.csurf, co.wrap(function*(req, res) {
+    let id = req.body.userid
+    let uname = req.body.username
+    let pwd = req.body.password
+    let dname = req.body.displayName
+    if (!dname) dname = uname
+    let superuser = "superuser" in req.body
+    let col = App.colo.getCol(req.session.colony)
+    if (id && id.length == 24) {
+      // we are doing user update
+      col.update({_id:id}, {
+        $set : {
+          username: uname,
+          password: pwd,
+          displayName: dname,
+          superuser: superuser,
+        }
+      })
+      req.flash('admin/users', "OK: Benutzerdaten wurden aktualisiert.")
+    } else {
+      col.insert({
+        username: uname,
+        displayName: dname,
+        password: pwd,
+        superuser: superuser,
+        ants:[],
+        level:1,
+        done:[],
+        solved:[],
+      })
+      req.flash('admin/users', "OK: Neuer Benutzer wurde hinzugefügt.")
+    }
+    
+    
+    let existingUser = yield col.find({username:req.body.username})
+    if (existingUser.length > 1) {
+      req.flash('admin/users', "Warnung: mehrere Benutzer mit gleichen Namen!")
+    }
+    res.redirect('/users')
+  }))
   
+  App.express.post('/user/delete', auth, App.csurf, co.wrap(function*(req, res) {
+    try {
+      
+      let result = yield App.colo.getCol(req.session.colony).remove({_id:req.body.userid}, {justOne: true})
+      if (result.deletedCount == 1)
+        req.flash('admin/users', "OK: Benutzer gelöscht.")
+    } catch (e) { 
+      console.log(e)
+    }
+    res.redirect('/users')
+  }))
 }

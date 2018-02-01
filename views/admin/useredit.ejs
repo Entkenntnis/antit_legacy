@@ -9,6 +9,73 @@
         
         <h2>Benutzer <%=existing?'bearbeiten':'erstellen'%></h2>
         
+         <form method="post" action="/user/save">
+          <input type="hidden" name="_csrf" value="<%=csrf%>"/>
+          <% if (existing) { %>
+            <input type="hidden" name="userid" value="<%=user._id%>"/>
+          <% } %>
+          
+          Benutzername: <input name="username" value="<%=existing?user.username:''%>" required minlength="3"/><br>
+          Eindeutiger Benutzername zur Anmeldung am Server<br><br>
+          
+          Anzeigename: <input name="displayname" value="<%=existing?user.displayName:''%>"/><br>
+          Optionaler Name, der zur Anzeige verwendet wird<br><br>
+          
+          Passwort: <input name="password" value="<%=existing?user.password:''%>" required/><br>
+          Anmeldepasswort.<br><br>
+          
+          Superuser: <input type="checkbox" name="superuser" <%-(existing&&user.superuser)?'checked':''%>/><br>
+          Administrator mit erweiterten Rechten<br><br>
+          
+          <% if (existing) { %>
+          
+            <% user.ants.sort((a, b) => a.name > b.name ? 1: -1) %>
+          
+            Ameisen:
+          
+            <ul>
+            
+              <% for (var i = 0; i < user.ants.length; i++) { %>
+              
+                <li><%=user.ants[i].name%> (<%=user.ants[i].antid%>) <em><%=user.ants[i].published?'freigegeben':''%></em>
+              
+              <% } %>
+            
+            </ul>
+          
+          <% } %>
+          
+          <br><br>
+          
+          <a href="/users" class="btn btn-warning btn-sm">Abbrechen</a>
+          <input type="Submit" class="btn btn-primary btn-sm" value="Speichern"/>
+        </form>
+        
+        <% if (existing) { %>
+        
+        <br><br><hr>
+          
+          <h3>Danger Zone</h3>
+        
+          <form method="post" id="danger-form" action="/user/delete">
+            <input type="hidden" name="_csrf" value="<%=csrf%>"/>
+            <input type="hidden" name="userid" value="<%=user._id%>"/>
+            Willst du diesen Benutzer löschen?<br>
+            <a onclick="reallySubmit()" class="btn btn-sm btn-danger"/>Ja, Benutzer und Ameisen endgültig löschen</a>
+          </form>
+        
+        <% } %>
+        
+        <script>
+        
+        function reallySubmit() {
+          if (confirm('Benutzer und Ameisen endgültig löschen?')) {
+            document.getElementById('danger-form').submit()
+          }
+        }
+        
+        </script>
+        
         <div style="height:300px"></div>
       </div>
     </body>
