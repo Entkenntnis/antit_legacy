@@ -12,8 +12,8 @@
       <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-          <%if(fail == "1"){%>
-            <div class="alert alert-danger" role="alert"><strong>Anmeldung gescheitert!</strong> Überprüfe bitte Benutzername und Passwort.</div>
+          <%if(message.length > 0){%>
+            <div class="alert alert-danger" role="alert"><%-message[0]%></div>
           <%}%>
           <div class="panel panel-primary">
             <div class="panel-heading">

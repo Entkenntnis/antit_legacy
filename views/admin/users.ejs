@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+      <% include ../include/commonHead %>
+    </head>
+    <body>
+      <div class="container">
+        <div class="jumbotron"><h1>Benutzer</h1></div>
+        
+        <% if (message) { %>
+          
+          <div class="alert alert-<%-message.indexOf("OK")<0?'warning':'success'%>"><%-message%></div>
+        
+        <% } %>
+        
+        <p><%=colony.description%>:</p>
+        
+        <ul>
+        
+          <% for (var i = 0; i < users.length; i++) { %>
+          
+            <li><%=users[i].username%> <%-users[i].superuser?'<strong>[admin]</strong>':''%> <a href="/users/edit/<%=users[i]._id%>">Bearbeiten</a>
+            </li>
+          
+          <% } %>
+        
+        </ul>
+        
+        <a href="/user/new">Neuer Benutzer</a>
+        
+        <hr>
+        
+        <a href="/<%=root?'root':''%>">zurück</a>
+        
+        <div style="height:300px"></div>
+      </div>
+    </body>
+</html>
