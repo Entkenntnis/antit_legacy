@@ -24,9 +24,7 @@ module.exports = function(App) {
 
   App.express.post('/login/:colony', App.csurf, co.wrap(function*(req, res, next){
     if (!req.session.loggedIn) {
-      console.log('pre-login')
       yield App.users.login(req.body.username, req.body.password, req.params.colony, req)
-      console.log('post-login')
       if (req.session.loggedIn)
         res.redirect('/')
       else {
@@ -39,7 +37,6 @@ module.exports = function(App) {
 
 
   App.express.get("/", co.wrap(function*(req, res) {
-    console.log(req.session)
     if (req.session.loggedIn) {
       let userid = req.user._id.toString()
       var val = yield App.colo.getCol(req.session.colony).find({}, {"ants.code":false})

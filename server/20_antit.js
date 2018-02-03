@@ -1,18 +1,4 @@
  
-module.exports = function(App) {
-// ----------------------------
-// application
-  initExercises()
-
-const co = require('co')
-
-
-
-
-// ----------------------------
-// colony
-
-
 
 // ----------------------------
 // level
@@ -45,78 +31,7 @@ function initExercises() {
   }
 }
 
-// ----------------------------
-// auth
 
-
-
-
-// ----------------------------
-// ant helper
-
-var simulations = []
-
-function prepareAnts(users, myid) {
-  var result = {ants:[], globals:[]}
-  users.forEach(function(v){
-    if (v._id.toString() == myid) {
-      result.ants = v.ants
-      result.ants.forEach(function(a){
-        a._id = a.antid
-      })
-    } else {
-      v.ants.forEach(function(w){
-        if (w.published) {
-          w.publicName = "@" + v.displayName + "/" + w.name
-          w._id = w.antid
-          result.globals.push(w)
-        }
-      })
-    }
-  })
-  return result
-}
-
-function getName(data) {
-  var eofl = data.indexOf("\n");
-  if (eofl >= 0) {
-    data = data.substring(0, eofl);
-  }
-  var namestart = data.indexOf("\"");
-  var nameend = data.lastIndexOf("\"");
-  var name = data.substring(namestart + 1, nameend);
-  if (namestart < 0 || nameend < 0) {
-    name = "[ohne Namen]";
-  }
-  return name;
-}
-
-function insertAnt(code, userid, col) {
-  var antName = getName(code)
-  var antId = Math.floor(Date.now()*1000 + Math.random()*999).toString(16);
-  return col.update({_id:userid},
-      {$push: {ants: {antid:antId, name:antName, published:false,code:code}}})
-}
-
-function saveCode(userid, antid, data, col) {
-  return col.update({_id:userid, "ants.antid" : antid},
-    {$set : {"ants.$.code" : data, "ants.$.name": getName(data)}})
-}
-
-function setPublished(userid, antid, val, col) {
-  return col.update({_id:userid, "ants.antid" : antid},
-    {$set : {"ants.$.published": val}})
-}
-
-function deleteAnt(userid, antid, col) {
-  return col.update({_id:userid},
-    {$pull : {ants: {antid:antid}}})
-}
-
-function updateName(code) {
-  var index = code.indexOf("\"") + 1;
-  return code.slice(0, index) + "[Kopie] " + code.slice(index)
-}
 
 function setSimulation(req, ants) {
   var date = Date.now()
@@ -180,14 +95,7 @@ function findAnts(users, userid, ids) {
   })
 }
 
-function maximumAnts(level) {
-  var maximum = 10
-  if (level >= 3) { maximum = 20 }
-  if (level >= 5) { maximum = 30 }
-  if (level >= 7) { maximum = 40 }
-  if (level >= 9) { maximum = 50 }
-  return maximum
-}
+
 
 function checkInt(val) {
   var i = parseInt(val)
@@ -211,46 +119,6 @@ function canUpgrade(user) {
 
 const queryCache = {}
 
-function loginMiddleware(superuser) {
-  return function(req, res, next) {
-    if (!req.session.loggedIn ||
-      (superuser && req.user.superuser == false)) {
-      return res.redirect(req.curHome)
-    }
-    next()
-  }
-}
-
-function checkColony() {
-  return function handleColony(req, res, next) {
-    if (req.session.loggedIn) {
-      var collection = App.colo.getCol(req.session.colony)
-      if (collection) {
-        req.curCol = collection
-        req.curHome = '/'
-      }
-    }
-    next()
-  }
-}
-
-function route(options, cb) {
-  function getLogin() {
-    if (options.login)
-      return loginMiddleware(options.superuser)
-    else
-      return function(req, res, next) { next() }
-  }
-  function returnHome(req, res) { res.redirect(req.curHome) }
-  if (cb.constructor.name == 'GeneratorFunction')
-    cb = co.wrap(cb)
-  if (!options.post) {
-    App.express.get('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
-  } else {
-    App.express.post('/:colony' + options.name, checkColony(), getLogin(), cb, returnHome)
-    App.express.get('/:colony' + options.name, checkColony(), getLogin(), returnHome)
-  }
-}
 
 route({name:"/doku"}, function(req, res) {
   res.render('doku', {
@@ -363,47 +231,7 @@ route({name:"/upgrade", login:true}, function*(req, res, next) {
   next()
 })
 
-/*route({name:"/new", login:true}, function*(req, res, next) {
-  var val = yield req.curCol.find({_id: req.user._id}, {"ants.code":false})
-  if (val[0].ants.length < maximumAnts(req.user.level)) {
-    var codeString = `var Ameise = AntIT.NeueAmeise("` + req.query.name + `")
 
-Ameise.wenn("", function(){
-    
-})`
-    yield insertAnt(codeString, req.user._id, req.curCol)
-  }
-  next()
-})*/
-
-route({name:"/edit", login:true}, function*(req, res, next) {
-  var users = yield req.curCol.find({
-    _id: req.user._id,
-    "ants.antid":req.query.id},
-    {"ants.$":1})
-  if (users && users.length == 1) {
-    res.render('ants/edit', {
-      data: users[0].ants[0].code,
-      id: req.query.id,
-      user : req.user,
-      prefix: req.curHome })
-  } else {
-    next()
-  }
-})
-
-route({name:"/save", login:true, post:true}, function*(req, res, next) {
-  if (req.body.duplicate) {
-    yield insertAnt(updateName(req.body.data), req.user._id, req.curCol)
-  }
-  yield saveCode(req.user._id, req.query.id, req.body.data, req.curCol)
-  next()
-})
-
-route({name:"/delete", login:true}, function*(req, res, next) {
-  yield deleteAnt(req.user._id, req.query.id, req.curCol)
-  next()
-})
 
 var levelstuff = {}
 
@@ -491,16 +319,8 @@ route({name:"/submit"}, function(req, res) {
   }
 })
 
-route({name:"/publish", login:true}, function*(req, res, next) {
-  yield setPublished(req.user._id, req.query.id, true, req.curCol)
-  next()
-})
 
-route({name:"/unpublish", login:true}, function*(req, res, next) {
-  yield setPublished(req.user._id, req.query.id, false, req.curCol)
-  next()
-})
-
+/*
 route({name:"/debug", login:true, superuser:true}, function(req, res) {
   App.colo.get(req.params.colony).debugging = true
   res.redirect(req.curHome)
@@ -509,7 +329,7 @@ route({name:"/debug", login:true, superuser:true}, function(req, res) {
 route({name:"/nodebug", login:true, superuser:true}, function(req, res) {
   App.colo.get(req.params.colony).debugging = false
   res.redirect(req.curHome)
-})
+})*/
 
 route({name:"/stats", login:true, superuser:true}, function(req, res) {
   res.render('stats', {data:simulations, prefix: req.curHome})
@@ -520,47 +340,4 @@ route({name:"/clearstats", login:true, superuser:true}, function(req, res, next)
   next()
 })
 
-route({name:"/users", login:true, superuser:true}, function*(req, res) {
-  var users = yield req.curCol.find({}, {"ants.code":0})
-  res.render('users', {users:users, msg: req.query.msg, prefix: req.curHome})
-})
 
-route({name:"/addUser", login:true, superuser:true, post:true}, function*(req, res) {
-  var existing = undefined
-  var user = yield req.curCol.find({username:req.body.username}, {_id:1})
-  if (user && user.length == 1)
-    existing = user[0]._id
-  if (existing) {
-    yield req.curCol.update({_id:existing},
-      { $set: {
-        displayName: req.body.displayName,
-        password: req.body.password,
-        superuser: ("superuser" in req.body)}})
-    res.redirect(req.curHome + "/users?msg=3")
-  } else {
-    yield req.curCol.insert({
-      username: req.body.username,
-      displayName: req.body.displayName,
-      password: req.body.password,
-      superuser: ("superuser" in req.body),
-      ants:[],
-      level:1,
-      done:[],
-      solved:[]})
-    res.redirect(req.curHome + "/users?msg=2")
-  }
-})
-
-route({name:"/deleteUser", login:true, superuser:true}, function*(req, res) {
-  var user = yield req.curCol.find({_id: req.query.id}, {superuser:1})
-  if (user[0].superuser == false) {
-    yield req.curCol.remove({_id: req.query.id})
-    res.redirect(req.curHome + "/users?msg=4")
-  } else {
-    res.redirect(req.curHome + "/users?msg=1")
-  }
-})
-
-
-
-}

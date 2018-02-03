@@ -5,7 +5,6 @@ const session = require('express-session')
 
 module.exports = function(App) {
   
-  
   const sessionDB = App.db.get('sessions')
   sessionDB.createIndex({ expires: 1 }, { expireAfterSeconds: 0 })
   
@@ -16,23 +15,18 @@ module.exports = function(App) {
   require('util').inherits(DBStore, session.Store)
 
   DBStore.prototype.set = function set(sessionId, session, callback) {
-    console.log('set session ' + sessionId + JSON.stringify(session))
     if (session && session.cookie && session.cookie.expires) {
       var s = {
         sid:sessionId,
         session:JSON.stringify(session),
         expires:new Date(session.cookie.expires)
       }
-      return sessionDB.update({sid:sessionId}, s, {upsert: true}, () => {
-        console.log('done')
-        callback()
-      })
+      return sessionDB.update({sid:sessionId}, s, {upsert: true}, callback)
     } else
     callback && setImmediate(callback, sessionId)
   }
 
   DBStore.prototype.get = function get(sessionId, callback) {
-    console.log('get session ' + sessionId)
     sessionDB.findOne({sid:sessionId}).then((doc) => {
       if (!doc || !doc.session || !doc.expires)
         callback()

@@ -30,8 +30,8 @@ module.exports = function(App) {
   }
   
   function normalAuthMiddleware(req, res, next) {
-    if (req.session.loggedIn && App.colo.get(req.params.colony)) {
-      next
+    if (req.session.loggedIn && App.colo.get(req.session.colony)) {
+      next()
     } else
       res.redirect('/')
   }
