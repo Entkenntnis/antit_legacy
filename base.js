@@ -22,6 +22,7 @@ require('./server/00_safeHeaders')(App)
 require('./server/10_dbSessions')(App)
 require('./server/15_colonies')(App)
 require('./server/16_users')(App)
+require('./server/17_ants')(App)
 //require('./server/20_antit')(App)
 require('./server/30_routes')(App)
 

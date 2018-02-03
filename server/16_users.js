@@ -29,9 +29,17 @@ module.exports = function(App) {
     delete req.session.colony
   }
   
+  function normalAuthMiddleware(req, res, next) {
+    if (req.session.loggedIn && App.colo.get(req.params.colony)) {
+      next
+    } else
+      res.redirect('/')
+  }
+  
   App.users = {
     login: login,
-    logout, logout,
+    logout: logout,
+    auth: normalAuthMiddleware,
   }
   
   // load user for every request

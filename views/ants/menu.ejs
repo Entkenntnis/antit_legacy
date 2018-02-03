@@ -12,11 +12,11 @@ function check(num) {
 %>
 
 <ul class="nav nav-pills" role="tablist">
-  <li role="presentation" <%-check(0)%>><a href="<%=prefix%>/">AntIT! Home</a></li>
-  <li role="presentation" <%-check(3)%>><a href="<%=prefix%>/level">Aufgaben</a></li>
+  <li role="presentation" <%-check(0)%>><a href="/">AntIT! Home</a></li>
+  <li role="presentation" <%-check(3)%>><a href="/level">Aufgaben</a></li>
   <% if (user && user.level >= 5) { %>
-    <li role="presentation" <%-check(4)%>><a href="<%=prefix%>/wettbewerb">Wettbewerb</a></li>
+    <li role="presentation" <%-check(4)%>><a href="/wettbewerb">Wettbewerb</a></li>
   <% } %>
-  <li role="presentation" <%-check(5)%>><a href="<%=prefix%>/tutorial">Tutorials</a></li>
-  <li role="presentation"><a href="<%=prefix%>/logout">abmelden...</a></li>
+  <li role="presentation" <%-check(5)%>><a href="/tutorial">Tutorials</a></li>
+  <li role="presentation"><a href="/logout">abmelden...</a></li>
 </ul>

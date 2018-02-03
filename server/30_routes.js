@@ -1,35 +1,6 @@
  
 const co = require('co')
 
-function maximumAnts(level) {
-  var maximum = 10
-  if (level >= 3) { maximum = 20 }
-  if (level >= 5) { maximum = 30 }
-  if (level >= 7) { maximum = 40 }
-  if (level >= 9) { maximum = 50 }
-  return maximum
-}
-
-function prepareAnts(users, myid) {
-  var result = {ants:[], globals:[]}
-  users.forEach(function(v){
-    if (v._id.toString() == myid) {
-      result.ants = v.ants
-      result.ants.forEach(function(a){
-        a._id = a.antid
-      })
-    } else {
-      v.ants.forEach(function(w){
-        if (w.published) {
-          w.publicName = "@" + v.displayName + "/" + w.name
-          w._id = w.antid
-          result.globals.push(w)
-        }
-      })
-    }
-  })
-  return result
-}
 
 module.exports = function(App) {
 // ----------------------------
@@ -53,7 +24,9 @@ module.exports = function(App) {
 
   App.express.post('/login/:colony', App.csurf, co.wrap(function*(req, res, next){
     if (!req.session.loggedIn) {
+      console.log('pre-login')
       yield App.users.login(req.body.username, req.body.password, req.params.colony, req)
+      console.log('post-login')
       if (req.session.loggedIn)
         res.redirect('/')
       else {
@@ -66,21 +39,19 @@ module.exports = function(App) {
 
 
   App.express.get("/", co.wrap(function*(req, res) {
+    console.log(req.session)
     if (req.session.loggedIn) {
       let userid = req.user._id.toString()
       var val = yield App.colo.getCol(req.session.colony).find({}, {"ants.code":false})
-      var result = prepareAnts(val, userid)
-      /*if (req.user && queryCache[req.sessionID])
-        req.user.previous = queryCache[req.sessionID]*/
+      var result = App.ants.prepareAnts(val, userid)
+      if (req.session.cachedQuery)
+        req.user.previous = req.session.cachedQuery
       return res.render('ants/home', {
         user: req.user,
-        fail: req.query.fail,
         ants: result.ants,
-        maximum: maximumAnts(req.user.level),
+        maximum: App.ants.maximumAnts(req.user.level),
         globals: result.globals,
         highlightElement: 0,
-        devMode: App.colo.get(req.session.colony).debugging,
-        prefix: req.curHome,
         colonyInfo : App.colo.get(req.session.colony).description,
       })
     } else
@@ -89,10 +60,10 @@ module.exports = function(App) {
       })
   }))
 
-  App.express.get("/logout", function(req, res) {
+  App.express.get("/logout", co.wrap(function*(req, res) {
     App.users.logout(req)
     res.redirect('/')
-  })
+  }))
 
 
 

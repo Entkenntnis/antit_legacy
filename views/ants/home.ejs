@@ -29,9 +29,8 @@
         <br><br>
         <p>Admin-Tools:</p>
         <ul class="nav nav-pills" role="tablist">
-          <li role="presentation"><a href="<%=prefix%>/users">Benutzerverwaltung</a></li>
-          <li role="presentation"><a href="<%=prefix%>/stats">Statistik</a></li>
-          <li role="presentation"><a href="<%=prefix%>/<%=devMode?'nodebug':'debug'%>">Debug umschalten (aktuell: <%=devMode?'an':'aus'%>)</a></li>
+          <li role="presentation"><a href="/users">Benutzerverwaltung</a></li>
+          <li role="presentation"><a href="/stats">Statistik</a></li>
         </ul>
 	    <% } // endif superuser %>
 	    
@@ -48,7 +47,7 @@
 	            function newAnt() {
 	              var x = prompt("Name des neuen Ameisenvolks:")
 	              if (x) {
-	                window.location = "<%=prefix%>/new?name=" + x
+	                window.location = "/new?name=" + x
                 }
 	            }
 	          </script>
@@ -65,15 +64,15 @@
 	              <strong><%=ants[i].name%></strong>
 	              <%if(ants[i].published){%> (freigegeben)<%}%>
 	              <div style="float:right;">
-	                <a href="<%=prefix%>/edit?id=<%=ants[i]._id%>" class="btn btn-xs btn-primary">Bearbeiten</a>
+	                <a href="/edit?id=<%=ants[i]._id%>" class="btn btn-xs btn-primary">Bearbeiten</a>
 	                <% if (user.level >= 5) { %>
 	                  <%if(ants[i].published){%>
-	                  <a href="<%=prefix%>/unpublish?id=<%=ants[i]._id%>" class="btn btn-xs btn-warning">Freigabe löschen</a>
+	                  <a href="/unpublish?id=<%=ants[i]._id%>" class="btn btn-xs btn-warning">Freigabe löschen</a>
 	                  <%} else {%>
-	                  <a href="<%=prefix%>/publish?id=<%=ants[i]._id%>" class="btn btn-xs btn-info">Freigeben</a>
+	                  <a href="/publish?id=<%=ants[i]._id%>" class="btn btn-xs btn-info">Freigeben</a>
 	                  <%}%>
                   <% } %>
-	                <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='<%=prefix%>/delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-xs btn-danger">Löschen</button>
+	                <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='/delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-xs btn-danger">Löschen</button>
 	               </div>
 	              </li>
             	<% } %>
@@ -100,7 +99,7 @@
 	        document.getElementById("batchon").checked = false
 	      }
 	    </script>
-	    <form method="GET" action="<%=prefix%>/simulation"><div>
+	    <form method="GET" action="/simulation"><div>
 	    <% for(var t = 1; t <= 8; t++) { %>
 	        <div style="float:left;padding-left:10px;"> Team <%=t%>:
 	        <select name="team<%=t%>" id="team<%=t%>">
@@ -128,7 +127,7 @@
       </select></div>
       <% } %></div>
       <div style="clear:both;"><br>
-      <% if (devMode) { %>
+      <% if (false) { %>
         <% if (user.previous) { %>
       <input type="checkbox" id="seedon" name="seedon" value="1"<%=user.previous.seedon==1?'checked':''%>> Seed: <input type="text" name="seed" value="<%=user.previous.seed%>"><br>
       <input type="checkbox" id="batchon" name="batchon" value="1"<%=user.previous.batchon==1?'checked':''%>> Wiederhole: <input type="text" name="repeat" value="<%=user.previous.repeat%>">
@@ -146,8 +145,8 @@
       
     <% } %>
   
-  <% if (devMode && (!user.level || user.level >= 7)) { %>  
-    <br><br><p>Neu: <a href="<%=prefix%>/simulation?fight=1">Kampfmodus ausprobieren</a></p>
+  <% if ((!user.level || user.level >= 7)) { %>  
+    <br><br><p>Neu: <a href="/simulation?fight=1">Kampfmodus ausprobieren</a></p>
   <% } %>
   
   <div style="height:300px"></div>
