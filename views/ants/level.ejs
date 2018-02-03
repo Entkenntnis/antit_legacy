@@ -45,7 +45,7 @@
                 </script>
                 <div class="panel-body" <%=ok?"style=display:none":''%> id="level<%=i%>">
                   <% for (var j = 0; j < exIndex[i].length; j++) { var e = exercises[exIndex[i][j]]%>
-	                  <p><a href="<%=prefix%>/level?id=<%=exIndex[i][j]%>"><%=e.name%></a>
+	                  <p><a href="/level?id=<%=exIndex[i][j]%>"><%=e.name%></a>
 	                    <% if (solved.indexOf(parseInt(exIndex[i][j])) >= 0) {  %>
 	                      <img src="/static/gruener_Haken.gif" height="20px" style="margin-left:5px">
 	                    <% } %>
@@ -61,7 +61,7 @@
 	                <br><p>Voraussetzungen für das nächste Level:<br>Bearbeite <%=Math.ceil(exIndex[user.level].length/2)%> Aufgaben von Level <%=user.level%>
 	                </p>
                 <% } %>
-                <a href="<%=prefix%>/upgrade" class="btn btn-warning btn-sm <%=upgrade?'':'disabled'%>">Level aufsteigen</a>
+                <a href="/upgrade" class="btn btn-warning btn-sm <%=upgrade?'':'disabled'%>">Level aufsteigen</a>
               </div>
 	          <% } %>
 	        </div>
@@ -101,7 +101,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">Lösung einreichen</div>
               <div class="panel-body">
-                <form method="GET" action="<%=prefix%>/levelsim">
+                <form method="GET" action="/levelsim">
                   <input type="hidden" name="num" value="<%=id%>">
                 <% if (ants.length > 0) { %>
                   <select name="id">

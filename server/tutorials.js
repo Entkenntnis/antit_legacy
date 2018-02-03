@@ -10,8 +10,9 @@ module.exports.tutorials = {
       
       <p>Sehr gut, sehr gut. Um dich so gut wie möglich auf diese Reise vorzubereiten, werden wir dich zuerst in den nötigen Grundlagen ausbilden. Diese Ausbildung wird für dich im Land der Ameisen stattfinden.</p>
       
-      <p class="lead"><em>Ach nö! Ich will nicht mit Ameisen spielen - ich will mit Drachen kämpfen!</em></p>
+      <p><img src="/images/ameiseapfel.png" class="img-thumbnail" title="Hey Jo!"></img></p>
       
+      <p class="lead"><em>Ach nö! Ich will nicht mit Ameisen spielen - ich will mit Drachen kämpfen!</em></p>
       
       <p>Mein Junge, mein Mädchen! Jeder große Meister hat auch mal klein angefangen. Und du wirst sehen: Selbst die Ameisen werden dich ordentlich auf Trab halten. Auch in der Mathematik fängt man nicht mit der Integralrechnung an, sondern mit den Grundrechenarten. Wenn du bereits Erfahrung hast, dann werden dir die Aufgaben keine großen Schwierigkeiten bereiten. Wenn das für die die erste Programmiererfahrung ist, dann darfst du dir ruhig Zeit nehmen. Manche Dinge brauchen eine Weile, bis man sie verstehst. Du wirst sehen, es wird dir Spaß - da bin ich mir ganz sicher.
       </p>
@@ -142,6 +143,7 @@ module.exports.tutorials = {
     level : 2,
     name : "Nahrungsmittel",
     text : `
+      
       <p>In diesem Tutorial lernst du, wie deine Ameisen Zucker und Äpfel sammeln können. Im Grunde ist es kinderleicht und daher wird dieses Tutorial recht kurz sein.
       </p>
       
@@ -155,6 +157,8 @@ module.exports.tutorials = {
       
       <p>Die zwei Befehle, die du gerade kennengelernt hast, brauchen keinen Parameter. Deshalb steht nichts in den runden Klammern. Die Klammern sind aber trotzdem wichtig! Wenn du sie vergisst, wird der Befehl einfach nicht ausgeführt.
       </p>
+      
+      <p><img src="/images/ameisezucker.png" width="400px" class="img-thumbnail" title="Huch!"></img></p>
       
       <p>Am Ende, wenn die Ameise im Bau steht, kann sie mit dem Befehl <code>LadeZuckerAb()</code> den Zucker in den Bau geben. Dann erhält du deine Punkte dafür und die Menge wird in der Statistik angezeigt.
       </p>

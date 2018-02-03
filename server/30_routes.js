@@ -57,12 +57,17 @@ module.exports = function(App) {
       })
   }))
 
-  App.express.get("/logout", co.wrap(function*(req, res) {
+  App.express.get("/logout", App.users.auth, co.wrap(function*(req, res) {
     App.users.logout(req)
     res.redirect('/')
   }))
 
-
+  App.express.get('/wettbewerb', App.users.auth, function(req, res) {
+      res.render('ants/wettbewerb', {
+        user: req.user,
+        highlightElement: 4,
+      })
+  })
 
 
 
