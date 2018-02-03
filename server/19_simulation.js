@@ -119,7 +119,7 @@ module.exports = function(App) {
   App.express.get('/clearstats', App.users.auth, function(req, res) {
     if (req.user.superuser)
       simulations = []
-    res.redirect('/clearstats')
+    res.redirect('/stats')
   })
 }
 
