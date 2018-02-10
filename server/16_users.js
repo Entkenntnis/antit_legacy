@@ -82,9 +82,22 @@ module.exports = function(App) {
     users.sort(function(a,b){
       return a.username.toLowerCase()>b.username.toLowerCase()?1:-1
     })
+    let otherUsers = []
+    if (req.session.rootLoggedIn) {
+      for (let col of App.colo.all()) {
+        if (col.colonyName == req.session.colony) continue
+        let cusers = yield App.colo.getCol(col.colonyName).find({}, {username:1, superuser:1})
+        cusers.sort((a, b) => a.username.toLowerCase() > b.username.toLowerCase() ? 1 : -1 )
+        cusers.forEach(u => {
+          otherUsers.push({colony: col.colonyName, user: u})
+        })
+      }
+    }
+    
     res.render('admin/users', {
       users: users,
       root: req.session.rootLoggedIn,
+      otherUsers: otherUsers,
       colony: App.colo.get(req.session.colony),
       message: req.flash('admin/users').join('<br>'),
     })

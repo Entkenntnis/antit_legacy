@@ -28,6 +28,20 @@
         
         <a href="/user/new">Neuer Benutzer</a>
         
+        <% if (root) { %>
+        
+          <br><br>Benutzer importieren:<br>
+          
+          <select name="importedUser">
+            <% for (var i = 0; i < otherUsers.length; i++) { %>
+              <option><%=otherUsers[i].colony + "/" + otherUsers[i].user.username%></option>
+            <% } %>
+          </select>
+          
+          <br>
+        
+        <% } %>
+        
         <hr>
         
         <a href="/<%=root?'root':''%>">zurück</a>

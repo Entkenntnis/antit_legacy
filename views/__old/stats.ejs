@@ -50,6 +50,7 @@ function calcSum(data) {
         <% }%>
         <ul class="list-group">
         <% for (var i = data.length - 1; i >= 0; i--) { 
+          if (data[i].colony != col) continue
            var c = data[i] 
            if (!c.result) { continue } %>
           <li class="list-group-item">
@@ -66,7 +67,7 @@ function calcSum(data) {
           </li>
         <% } %>
         </ul>
-        <a class="btn btn-primary" href="<%=prefix%>/">zurück</a>
+        <a class="btn btn-primary" href="/">zurück</a>
         <div style="height:300px"></div>
       </div>
     </body>

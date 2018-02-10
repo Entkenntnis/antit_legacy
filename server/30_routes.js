@@ -41,8 +41,9 @@ module.exports = function(App) {
       let userid = req.user._id.toString()
       var val = yield App.colo.getCol(req.session.colony).find({}, {"ants.code":false})
       var result = App.ants.prepareAnts(val, userid)
-      if (req.session.cachedQuery)
+      if (req.session.cachedQuery) {
         req.user.previous = req.session.cachedQuery
+      }
       return res.render('ants/home', {
         user: req.user,
         ants: result.ants,
@@ -67,6 +68,20 @@ module.exports = function(App) {
         user: req.user,
         highlightElement: 4,
       })
+  })
+  
+  App.express.get('/doku', function(req, res) {
+    res.render('__old/doku', {
+      user: undefined,
+      highlightElement:-1,
+      prefix: '/' })
+  })
+  
+  App.express.get('/guide', function(req, res) {
+    res.render('__old/guide', {
+      user: undefined,
+      highlightElement:-1,
+      prefix: '/' })
   })
 
 
