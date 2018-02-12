@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+      <% include ../include/commonHead %>
+    </head>
+    <body>
+      <div class="container">
+        <div class="jumbotron"><h1>Fortschrittsübersicht</h1></div>
+        
+        <% var tutorials = 8 %>
+        
+        <h3>Übersicht Tutorials</h3>
+        
+        <table class="table table-hover">
+          <thead><tr><th>User</th><% for (var i = 1; i <= tutorials; i++) { %><th><%=i%></th><%}%></tr></thead>
+          <tbody>
+          <% for (var i = 0; i < users.length; i++) { %>
+          
+            <tr>
+              <td><%=users[i].username%></td>
+              <% for (var j = 1; j <= tutorials; j++) { %>
+                <td><%=users[i].done.indexOf(j)>=0?'X':''%></td>
+              <% } %>
+            </tr>
+          
+          <% } %>
+          </tbody>
+        </table>
+        
+        <% var chals = 16 %>
+        
+        <h3>Übersicht Aufgaben Level 1 bis 4</h3>
+        
+        <table class="table table-hover">
+          <thead><tr><th>User</th><% for (var i = 1; i <= chals; i++) { %><th><%=i%></th><%}%></tr></thead>
+          <tbody>
+          <% for (var i = 0; i < users.length; i++) { %>
+          
+            <tr>
+              <td><%=users[i].username%><%=users[i].level < 5?'('+users[i].level+')':''%></td>
+              <% for (var j = 1; j <= chals; j++) { %>
+                <td><%=users[i].solved.indexOf(j)>=0?'X':''%></td>
+              <% } %>
+            </tr>
+          
+          <% } %>
+          </tbody>
+        </table>
+        
+        <% var chals2 = 1 %>
+        
+        <h3>Übersicht Aufgaben Level 5+</h3>
+        
+        <table class="table table-hover">
+          <thead><tr><th>User</th><% for (var i = 1; i <= chals; i++) { %><th><%=i+chals%></th><%}%></tr></thead>
+          <tbody>
+          <% for (var i = 0; i < users.length; i++) { %>
+            <% if (users[i].level < 5) continue %>
+            <tr>
+              <td><%=users[i].username%> (<%=users[i].level%>)</td>
+              <% for (var j = 1; j <= chals; j++) { %>
+                <td><%=users[i].solved.indexOf(j+chals)>=0?'X':''%></td>
+              <% } %>
+            </tr>
+          
+          <% } %>
+          </tbody>
+        </table>
+        
+        <hr>
+        
+        <a href="/">zurück</a>
+        
+        <div style="height:300px"></div>
+      </div>
+    </body>
+</html>
