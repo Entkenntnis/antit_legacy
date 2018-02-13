@@ -9,6 +9,8 @@ function prepareAnts(users, myid) {
       result.ants = v.ants
       result.ants.forEach(function(a){
         a._id = a.antid
+        if (a.published)
+          a.name += ' (freig.)'
       })
     } else {
       v.ants.forEach(function(w){
@@ -20,6 +22,8 @@ function prepareAnts(users, myid) {
       })
     }
   })
+  result.ants.sort((a,b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
+  result.globals.sort((a,b) => a.publicName.toLowerCase() > b.publicName.toLowerCase() ? 1 : -1)
   return result
 }
 

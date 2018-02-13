@@ -39,16 +39,12 @@ module.exports = function(App) {
   App.express.get("/", co.wrap(function*(req, res) {
     if (req.session.loggedIn) {
       let userid = req.user._id.toString()
-      var val = yield App.colo.getCol(req.session.colony).find({}, {"ants.code":false})
+      var val = yield App.colo.getCol(req.session.colony).find({username:req.user.username}, {"ants.code":false})
       var result = App.ants.prepareAnts(val, userid)
-      if (req.session.cachedQuery) {
-        req.user.previous = req.session.cachedQuery
-      }
       return res.render('ants/home', {
         user: req.user,
         ants: result.ants,
         maximum: App.ants.maximumAnts(req.user.level),
-        globals: result.globals,
         highlightElement: 0,
         colonyInfo : App.colo.get(req.session.colony).description,
       })
@@ -63,12 +59,20 @@ module.exports = function(App) {
     res.redirect('/')
   }))
 
-  App.express.get('/wettbewerb', App.users.auth, function(req, res) {
-      res.render('ants/wettbewerb', {
-        user: req.user,
-        highlightElement: 4,
-      })
-  })
+  App.express.get('/wettbewerb', App.users.auth, co.wrap(function*(req, res) {
+    let userid = req.user._id.toString()
+    var val = yield App.colo.getCol(req.session.colony).find({}, {"ants.code":false})
+    var result = App.ants.prepareAnts(val, userid)
+    if (req.session.cachedQuery) {
+      req.user.previous = req.session.cachedQuery
+    }
+    res.render('ants/wettbewerb', {
+      user: req.user,
+      ants: result.ants,
+      globals: result.globals,
+      highlightElement: 4,
+    })
+  }))
   
   App.express.get('/doku', function(req, res) {
     res.render('__old/doku', {

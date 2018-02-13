@@ -10,20 +10,6 @@
       </div>
 	
 	    <% include menu %>
-      <%
-        ants.sort(function(x, y){
-          var xn = x.name.toLowerCase()
-          var yn = y.name.toLowerCase()
-          if (yn < xn) return 1
-          if (xn < yn) return -1
-          return 0 })
-        globals.sort(function(x, y){
-          var xn = x.publicName.toLowerCase()
-          var yn = y.publicName.toLowerCase()
-          if (yn < xn) return 1
-          if (xn < yn) return -1
-          return 0 })
-      %>
   
       <%if (user.superuser) {%>
         <br><br>
@@ -78,71 +64,18 @@
 	              </li>
             	<% } %>
           	</ul>
-            <p style="font-color:grey">Aktuelle Kolonie: <%=colonyInfo%></p>
           <%} %>
         </div>
         <div class="col-md-2"></div>
       </div>
     
+    <br><hr>
+    <p>Hallo <strong><%=user.displayName%></strong> auf der Kolonie "<%=colonyInfo%>"</p>
+    
     <% if (user && user.level >= 5) { %>
   
   
-	    <div class="page-header">
-	      <h3>Freie Simulation</h3>
-	    </div>
-	    <p><a href="javascript:clear()" style="margin-bottom:10px">Felder zurücksetzen</a></p>
-	    <script>
-	      function clear() {
-	        for (i = 1; i <= 8; i++) {
-	          document.getElementById("team" + i).value = "none";
-	        }
-	        document.getElementById("seedon").checked = false
-	        document.getElementById("batchon").checked = false
-	      }
-	    </script>
-	    <form method="GET" action="/simulation"><div>
-	    <% for(var t = 1; t <= 8; t++) { %>
-	        <div style="float:left;padding-left:10px;"> Team <%=t%>:
-	        <select name="team<%=t%>" id="team<%=t%>">
-            <option value="none">-----</option>
-            <% if (ants !== undefined) {
-              for (var i = 0; i < ants.length; i++) { %>
-              <option value="<%=ants[i]._id%>" <%
-                if (user.previous) {
-                  if (user.previous["team" + t] == ants[i]._id) {
-                    %> selected="selected"<%
-                  }
-                }
-              %>><%=ants[i].name%></option>
-            <% } %>
-            <% for (var i = 0; i < globals.length; i++) { %>
-              <option value="<%=globals[i]._id%>"<%
-                if (user.previous) {
-                  if (user.previous["team" + t] == globals[i]._id) {
-                    %>selected="selected"<%
-                  }
-                }
-              %>><%=globals[i].publicName%></option>
-            <% } %>
-            <%} %>
-      </select></div>
-      <% } %></div>
-      <div style="clear:both;"><br>
-      <% if (false) { %>
-        <% if (user.previous) { %>
-      <input type="checkbox" id="seedon" name="seedon" value="1"<%=user.previous.seedon==1?'checked':''%>> Seed: <input type="text" name="seed" value="<%=user.previous.seed%>"><br>
-      <input type="checkbox" id="batchon" name="batchon" value="1"<%=user.previous.batchon==1?'checked':''%>> Wiederhole: <input type="text" name="repeat" value="<%=user.previous.repeat%>">
-        <% } else { %>
-      <input type="checkbox" id="seedon" name="seedon" value="1"> Seed: <input type="text" name="seed" value="hello."><br>
-      <input type="checkbox" id="batchon" name="batchon" value="1"> Wiederhole: <input type="text" name="repeat" value="10">
-        <% } %>
-      <br>
-      <br>
-      
-      <% } %>
-      <input type="submit" value="Simulation starten" class="btn btn-success">
-	    </div>
-      </form>
+	    
       
     <% } %>
   
