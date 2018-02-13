@@ -62,7 +62,7 @@ module.exports = function(App) {
   App.express.get('/wettbewerb', App.users.auth, co.wrap(function*(req, res) {
     let userid = req.user._id.toString()
     var val = yield App.colo.getCol(req.session.colony).find({}, {"ants.code":false})
-    var result = App.ants.prepareAnts(val, userid)
+    var result = App.ants.prepareAnts(val, userid, true)
     if (req.session.cachedQuery) {
       req.user.previous = req.session.cachedQuery
     }

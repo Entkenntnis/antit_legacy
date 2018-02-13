@@ -2,14 +2,14 @@
 const co = require('co')
  
  
-function prepareAnts(users, myid) {
+function prepareAnts(users, myid, addSuffix) {
   var result = {ants:[], globals:[]}
   users.forEach(function(v){
     if (v._id.toString() == myid) {
       result.ants = v.ants
       result.ants.forEach(function(a){
         a._id = a.antid
-        if (a.published)
+        if (a.published && addSuffix)
           a.name += ' (freig.)'
       })
     } else {
