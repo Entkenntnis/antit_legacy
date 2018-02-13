@@ -9,7 +9,7 @@ var AntIT = {};
   
  var Optionen = {
       MaximaleSpieler : 8
-    , Runden : 750
+    , Runden : 7500
     , SpielfeldVerhältnis : 4.0/3.0
     , SpielfeldGrundGröße : 600000
     , HügelAbstand : 500

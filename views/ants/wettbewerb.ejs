@@ -65,13 +65,96 @@
       <br>
       
       <% } %>
-      <input type="submit" value="Simulation starten" class="btn btn-success">
+      <input type="submit" value="Simulation starten" class="btn btn-success btn-sm">
 	    </div>
       </form>
       
       <div class="page-header">
 	      <h3>Ergebnisse</h3>
 	    </div>
+	    
+      <table class="table table-hover">
+        <thead>
+          <tr><th>Team</th><th>Simulationen</th><th>durchschnittliche Punktzahl</th>
+          </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+      </table>
+      
+      <p id="log"></p>
+
+      <script>
+      function loadData() {
+        var request = new XMLHttpRequest()
+        request.open("GET", "/ranking")
+        request.addEventListener('load', function(event) {
+          if (request.status >= 200 && request.status < 300) {
+            var table = document.getElementById('data')
+            table.innerHTML = ""
+            var data = JSON.parse(request.responseText)
+            data.stats.forEach(function(e){
+              var row = document.createElement('tr')
+              var t1 = document.createElement('td')
+              t1.innerHTML = e.name
+              var t2 = document.createElement('td')
+              t2.innerHTML = e.count
+              var t3 = document.createElement('td')
+              t3.innerHTML = Math.round(e.points)
+              row.appendChild(t1)
+              row.appendChild(t2)
+              row.appendChild(t3)
+              table.appendChild(row)
+            })
+            var log = document.getElementById('log')
+            log.innerHTML = ""
+            for (var i = 0; i < data.log.length; i++) {
+              log.innerHTML += data.log[i]
+              log.innerHTML += "<br>"
+            }
+          }
+          setTimeout(loadData, 10000)
+        })
+        request.send()
+      }
+      
+      loadData()
+      </script>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
 	    
       <div style="height:300px"></div>
 	    
