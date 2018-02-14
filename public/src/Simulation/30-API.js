@@ -64,6 +64,7 @@
     }
   })
 
+  // back compat
   API.addFunc("Stehe", function (runden) {
     if (typeof runden !== "number" || runden < 0) {
       API.message("Die Funktion 'Stehe(runden)' erwartet als Argument eine positive Zahl.");
@@ -74,7 +75,6 @@
       API.curAnt.addWaitJob(runden);
   });
   
-  // changing API name
   API.addFunc("Warte", function (runden) {
     if (typeof runden !== "number" || runden < 0) {
       API.message("Die Funktion 'Stehe(runden)' erwartet als Argument eine positive Zahl.");
@@ -141,7 +141,7 @@
     return Math.round(Sim.Util.getDir(a.getPos(), b.getPos()));
   });
 
-  API.addFunc("Richtung", function (a, b) {
+  API.addFunc("Winkel", function (a, b) {
     if (!(typeof a == "object") || !("getPos" in a) || !(typeof b == "object") || !("getPos" in b)) {
       API.message("Die Funktion 'BestimmeRichtung(a, b)' konnte für die übergebenen Objekte keine Position bestimmen.");
       return;

@@ -195,9 +195,9 @@ module.exports.exercises = {
   },
   
   20 : {
-    name : "Nur über dem Bau",
+    name : "Der richtige Zuckerhaufen",
     description : `
-      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      <p>Vom Geburtsort der Ameisen aus liegen im Norden drei Zuckerhaufen. Die Ameisen sollen sich bei dem südlichsten Zuckerhaufen versammeln, dessen Richtung vom Bau aus gesehen größer als 180 Grad ist. Schaffst du es, die Ameisen richtig zu navigieren?
       </p>
     `,
     level : 5,
@@ -206,7 +206,7 @@ module.exports.exercises = {
   21 : {
     name : "-- Platzhalter --",
     description : `
-      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      <p>Hinweis: Es gibt auch die Befehle DreheZuObjekt und DreheWegVonObjekt
       </p>
     `,
     level : 5,
@@ -215,7 +215,7 @@ module.exports.exercises = {
   22 : {
     name : "-- Platzhalter --",
     description : `
-      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      <p>...
       </p>
     `,
     level : 5,

@@ -388,6 +388,74 @@ module.exports.tutorials = {
     ],
     solution : [1,0,1,0,0,0],
   },
+  9 : {
+    level : 5,
+    name : "Der Ameisenwettbewerb",
+    text : `
+      <p>Ab Level 5 kann man am Ameisenwettbewerb teilnehmen.<br>
+      Spielregeln: 20 Ameisen werden um den Bau herum geboren. Äpfel, Zucker und Wanzen erscheinen auf dem Spielfeld. Ziel ist es, möglichst viele Punkte zu sammeln. Es gibt Punkte für eingesammelte Äpfel (1000), Zucker (25 pro Stückchen, 1250 pro Haufen) und getötete Wanzen und Gegner (je 500 Punkte).<br>
+      Ameisen können durch Wanzen und Müdigkeit sterben. Nahrungsmittel lassen neue Ameisen entstehen. Bevölkerungslimit sind 100 Ameisen.<br>
+      Eine Simulation dauert 7500 Runden (~ 3 Minuten), danach wird ausgewertet.<br><br>
+      Simlationen können mit beliebigen Ameisen ausgeführt werden. Um in der Ergebnisliste aufgenommen zu werden gibt es ein paar Bedingungen:<br>
+      1. Das Ameisenvolk muss freigegeben sein. Anderen Spielern soll damit die Möglichkeit gegeben werden, gegen deine Ameise zu spielen<br>
+      2. Pro Simulationen müssen 2 bis 4 Ameisen teilnhemen aus jeweils verschiedenen Teams. Alle Ameisen pro Simulation müssen auch freigegeben sein.<br>
+      3. Die Simulation zählt dann, wenn sie bis zum Ende durchgeführt wurde. Die Statusleiste zeigt dann "Simulation abgeschlossen" an.<br><br>
+      Die durchschnittliche Punktzahl entscheidet dann darüber, auf welcher Platzierung man sich befindet.<br><br>
+      Viel Erfolg!
+      </p>
+    `,
+    questions : [
+      "wahr",
+      "falsch",
+      "falsch",
+      "wahr",
+      "wahr",
+      "wahr"
+    ],
+    solution : [1,0,0,1,1,1],
+  },
+  10 : {
+    level : 5,
+    name : "Programmieren mit Bedingungen",
+    text : `
+      <p>Wir lernen jetzt, Befehle unter Bedingungen auszuführen. Dazu gibt es den if-Block. Im Kern besteht er aus dem Wort 'if', einer runden Klammer mit der Bedingung und einer geschweiften Klammer mit den Befehlen, die unter dieser Bedingungen stehen:
+      </p>
+      
+      <p><img src="/images/if_1.png" class="img-thumbnail" title="Beim Cursor kommen die Befehle hin. Einrücken nicht vergessen!"></img></p>
+      
+      <p>Man kann als Bedingungen verschiedene Vergleiche verwenden. Am besten, wir schauen uns ein paar Beispiele an:
+      </p>
+      
+      <p><img src="/images/if_2.png" class="img-thumbnail" title=""></img></p>
+      
+      <p>Hier wird der Befehl ausgeführt, wenn die Reichweite der Ameise größer als 2000 beträgt. <code>Reichweite</code> ist eine vordefinierter Wert, den die Ameise jederzeit verwenden kann. Ein anderer solcher Wert ist <code>Runde</code>:
+      </p>
+      
+      <p><img src="/images/if_3.png" class="img-thumbnail" title=""></img></p>
+      
+      <p>Der Befehl wird genau in der Runde 200 ausgeführt. Man beachte die doppelten Ist-Gleich-Zeichen! Schauen wir uns noch ein weiteres Beispiel an:
+      </p>
+      
+      <p><img src="/images/if_4.png" class="img-thumbnail" title=""></img></p>
+      
+      <p>Hier verwenden wir als Vergleich ein kleiner gleich. Als neue Funktion gibt es den Befehl <code>Distanz</code>. Diese kann von zwei Objekten auf dem Spielfeld die Entfernung berechnen. Dazu schreibt man sie mit Komma getrennt in die runden Klammern. Vordefinierte Objekte sind <code>Bau</code> für den Heimatbau und <code>Position</code> für die aktuelle Position der Ameise. Zusätzlich können Objekte aus Sieht...-Ereignissen verwendet werden. Ein letztes Beispiel:
+      </p>
+      
+      <p><img src="/images/if_5.png" class="img-thumbnail" title=""></img></p>
+      
+      <p>Mit der Funktion <code>Winkel</code> kann der Blickwinkel bestimmt werden, aus dem das erste Objekt das zweite Objekt sieht. Die Zahl entspricht der Richtung, wie bei DreheZuRichtung. Ein anschauliches Beispiel: Wenn sich die Ameise genau über dem Bau befindet, dann ergibt die Berechnung oben 270.
+      </p>
+    `,
+    questions : [
+      "Eine Bedingung besteht aus 'if' und dahinter geschweiften Klammern.",
+      "Innerhalb der geschweiften Klammer können mehrere Befehle stehen.",
+      "Gleichheit wird mit = überprüft.",
+      "Es können die Operatoren >= und <= verwendet werden.",
+      "Mithilfe von Distanz kann die Entfernung von zwei Objekten bestimmt werden.",
+      "Sichtungsobjekte können wir Vermessungen nicht verwendet werden."
+    ],
+    solution : [0,1,0,1,1,0],
+  },
   /*2 : {
     level : 1,
     name : "Herzlich Willkommen 2",

@@ -543,9 +543,9 @@
         if (Sim.ants.length == 20) {
           var ok = true
           Sim.ants.forEach(function(ant){
-            if (ant.LEVELMARKED && (ant.getLap() > 0 || Sim.Util.dist(ant, Sim.hills[0])<60))
+            if (ant.LEVELMARKED && (ant.getLap() > 0 || Sim.Util.dist(ant.getPos(), Sim.hills[0])<60))
               ok = false
-            if (!ant.LEVELMARKED && Sim.Util.dist(ant, Sim.hills[0]) > 200)
+            if (!ant.LEVELMARKED && Sim.Util.dist(ant.getPos(), Sim.hills[0]) > 200)
               ok = false
           })
           return ok
@@ -561,27 +561,21 @@
       },
       create : function(){
         level1create()
+        function diffx() { return Sim.rng()*40-20+855 }
+        Sim.sugars.push(new Sim.Sugar({x:diffx(),y:780}))
+        Sim.sugars.push(new Sim.Sugar({x:diffx(),y:500}))
+        Sim.sugars.push(new Sim.Sugar({x:diffx(),y:330}))
       },
       onSpawn : function(ant){
-        var angle = Sim.rng()*360
-        var dist = Sim.rng()*300 + 70
-        if (angle < 185 && angle > 175)
-          angle = 175
-        var x = {x:455,y:512}
-        var y = Sim.Util.moveDir(x, angle, dist)
-        ant.setPos(y)
+        ant.setPos({x:455+400,y:512+400})
         ant.reachedHome()
-        if (angle <= 180)
-          ant.LEVELMARKED = true
       },
       isDone : function(){
         if (Sim.ants.length == 20) {
           var ok = true
           Sim.ants.forEach(function(ant){
-            if (ant.LEVELMARKED && (ant.getLap() > 0 || Sim.Util.dist(ant, Sim.hills[0])<60))
-              ok = false
-            if (!ant.LEVELMARKED && Sim.Util.dist(ant, Sim.hills[0]) > 200)
-              ok = false
+            var distance = Sim.Util.dist(ant.getPos(), Sim.sugars[1].getPos())
+            if (distance > 10) ok = false
           })
           return ok
         }
