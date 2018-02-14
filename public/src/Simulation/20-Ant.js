@@ -73,6 +73,7 @@
       my.lap = 0;
       my.poison = true
     }
+    this.reachedHome = reachedHome
     
     function addSugar(load) {
       myPlayer().addPoints(load*Sim.Opts.PunkteProZucker);

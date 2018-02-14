@@ -178,7 +178,24 @@ module.exports.exercises = {
   },
   
   18 : {
-    name : "IF 2",
+    name : "Blick nach Norden",
+    description : `
+      <p>Alle Ameisen, die in der Runde 340 oder danach geboren werden, sollen sich in Richtung Norden drehen. Die anderen bleiben so, wie sie sind.</p>
+    `,
+    level : 5,
+  },
+  
+  19 : {
+    name : "Nicht zu weit weg",
+    description : `
+      <p>Die Ameisen werden rings um den Bau geboren. Sollten sie sich außerhalb der blauen Zone mit Radius 200 befinden, dann kehren sie zum Bau zurück. Ansonsten bewegen sie sich nicht von der Stelle.
+      </p>
+    `,
+    level : 5,
+  },
+  
+  20 : {
+    name : "Nur über dem Bau",
     description : `
       <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
       </p>
@@ -186,13 +203,31 @@ module.exports.exercises = {
     level : 5,
   },
   
-  19 : {
-    name : "Demnächst verfügbar",
+  21 : {
+    name : "-- Platzhalter --",
     description : `
       <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
       </p>
     `,
     level : 5,
+  },
+  
+  22 : {
+    name : "-- Platzhalter --",
+    description : `
+      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      </p>
+    `,
+    level : 5,
+  },
+  
+  23 : {
+    name : "Demnächst verfügbar",
+    description : `
+      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      </p>
+    `,
+    level : 6,
   },
   
   /*2 : {

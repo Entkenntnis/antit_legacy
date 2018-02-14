@@ -115,6 +115,7 @@
      API.message("Die Funktion 'GeheZuZiel(ziel)' konnte das unbekannte Ziel nicht anvisieren.");
   });
 
+  // back compat
   API.addFunc("BestimmeEntfernung", function (a, b) {
     if (!(typeof a == "object") || !("getPos" in a) || !(typeof b == "object") || !("getPos" in b)) {
       API.message("Die Funktion 'BestimmeEntfernung(a, b)' konnte für die übergebenen Objekte keine Position bestimmen.");
@@ -123,7 +124,24 @@
     return Math.round(Sim.Util.dist(a.getPos(), b.getPos()));
   });
 
+  API.addFunc("Distanz", function (a, b) {
+    if (!(typeof a == "object") || !("getPos" in a) || !(typeof b == "object") || !("getPos" in b)) {
+      API.message("Die Funktion 'Dist(a, b)' konnte für die übergebenen Objekte keine Position bestimmen.");
+      return;
+    }
+    return Math.round(Sim.Util.dist(a.getPos(), b.getPos()));
+  });
+
+  // back compat
   API.addFunc("BestimmeRichtung", function (a, b) {
+    if (!(typeof a == "object") || !("getPos" in a) || !(typeof b == "object") || !("getPos" in b)) {
+      API.message("Die Funktion 'BestimmeRichtung(a, b)' konnte für die übergebenen Objekte keine Position bestimmen.");
+      return;
+    }
+    return Math.round(Sim.Util.getDir(a.getPos(), b.getPos()));
+  });
+
+  API.addFunc("Richtung", function (a, b) {
     if (!(typeof a == "object") || !("getPos" in a) || !(typeof b == "object") || !("getPos" in b)) {
       API.message("Die Funktion 'BestimmeRichtung(a, b)' konnte für die übergebenen Objekte keine Position bestimmen.");
       return;
@@ -202,8 +220,13 @@
   API.antProp('Blickrichtung', function(){
     return API.curAnt.getHeading();
   });
-
+  
+  // back compat
   API.antProp('HeimatBau', function(){
+    return API.pushObj(Sim.hills[API.curAnt.getPlayerid()]);
+  });
+
+  API.antProp('Bau', function(){
     return API.pushObj(Sim.hills[API.curAnt.getPlayerid()]);
   });
 
@@ -218,11 +241,21 @@
     return false;
   });
 
+  // back compat
   API.antProp('AktuellePosition', function(){
     return API.pushObj(new Sim.Position(API.curAnt.getPos()), true);
   });
 
+  API.antProp('Position', function(){
+    return API.pushObj(new Sim.Position(API.curAnt.getPos()), true);
+  });
+
+  // back compat
   API.antProp('AktuelleRunde', function(){
+    return Sim.cycles
+  });
+
+  API.antProp('Runde', function(){
     return Sim.cycles
   });
 

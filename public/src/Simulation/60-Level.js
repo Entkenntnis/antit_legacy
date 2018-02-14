@@ -486,6 +486,108 @@
         return false
       },
     },
+ 
+    18 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 1000
+        Sim.Opts.SpawnWinkel = 0
+        Sim.Opts.SpawnRadius = 100
+        Sim.Opts.AnfangsRichtung = 90
+      },
+      create : function(){
+        level1create()
+      },
+      onSpawn : function(ant){
+        if (Sim.cycles >= 340) {
+          ant.LEVELMARKED = true
+        }
+      },
+      isDone : function(){
+        if (Sim.ants.length == 20) {
+          var ok = true
+          Sim.ants.forEach(function(ant){
+            if (ant.LEVELMARKED && ant.getHeading() != 270)
+              ok = false
+            if (!ant.LEVELMARKED && ant.getHeading() != 90)
+              ok = false
+          })
+          return ok
+        }
+        return false
+      },
+    },
+ 
+    19 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 1000
+      },
+      create : function(){
+        level1create()
+        Sim.Bus.emit('set-ring', {x:455,y:512}, 0x0000aa, {inner:190,outer:200})
+      },
+      onSpawn : function(ant){
+        var angle = Sim.rng()*360
+        var dist = Sim.rng()*300 + 70
+        if (dist < 210 && dist > 180)
+          dist = 180
+        var x = {x:455,y:512}
+        var y = Sim.Util.moveDir(x, angle, dist)
+        ant.setPos(y)
+        ant.reachedHome()
+        if (dist <= 200)
+          ant.LEVELMARKED = true
+      },
+      isDone : function(){
+        if (Sim.ants.length == 20) {
+          var ok = true
+          Sim.ants.forEach(function(ant){
+            if (ant.LEVELMARKED && (ant.getLap() > 0 || Sim.Util.dist(ant, Sim.hills[0])<60))
+              ok = false
+            if (!ant.LEVELMARKED && Sim.Util.dist(ant, Sim.hills[0]) > 200)
+              ok = false
+          })
+          return ok
+        }
+        return false
+      },
+    },
+ 
+    20 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 1000
+      },
+      create : function(){
+        level1create()
+      },
+      onSpawn : function(ant){
+        var angle = Sim.rng()*360
+        var dist = Sim.rng()*300 + 70
+        if (angle < 185 && angle > 175)
+          angle = 175
+        var x = {x:455,y:512}
+        var y = Sim.Util.moveDir(x, angle, dist)
+        ant.setPos(y)
+        ant.reachedHome()
+        if (angle <= 180)
+          ant.LEVELMARKED = true
+      },
+      isDone : function(){
+        if (Sim.ants.length == 20) {
+          var ok = true
+          Sim.ants.forEach(function(ant){
+            if (ant.LEVELMARKED && (ant.getLap() > 0 || Sim.Util.dist(ant, Sim.hills[0])<60))
+              ok = false
+            if (!ant.LEVELMARKED && Sim.Util.dist(ant, Sim.hills[0]) > 200)
+              ok = false
+          })
+          return ok
+        }
+        return false
+      },
+    },
   }
   
   var l = levels[Sim.Opts.Level]
