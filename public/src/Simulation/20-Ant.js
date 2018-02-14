@@ -45,8 +45,7 @@
     // movement
     this.setPos = function(newpos) {
       my.lap += Sim.Util.dist(my.pos, newpos);
-      my.pos.x = newpos.x;
-      my.pos.y = newpos.y;
+      my.pos = {x:newpos.x, y: newpos.y}
       updateGO();
     }
     

@@ -167,6 +167,26 @@ module.exports.exercises = {
   },
   
   17 : {
+    name : "Alles fit?",
+    description : `
+      <p>Bei dieser Aufgabe werden die Ameisen bereits am Ziel geboren. Allerdings sind etwa 50% der Ameisen noch nicht fit - sie haben eine Reichweite kleiner als 2000. Diese Ameisen sollen zum Bau zurücklaufen, ihre Reichweite auf 3000 aufladen (passiert dort automatisch) und zum Sammelpunkt zurückkehren, der 300 Schritte vor dem Bau liegt.
+      </p>
+      
+      <p>Wichtig: Hat die Ameise genug Reichweite, dann soll sie sich nicht bewegen!</p>
+    `,
+    level : 5,
+  },
+  
+  18 : {
+    name : "IF 2",
+    description : `
+      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      </p>
+    `,
+    level : 5,
+  },
+  
+  19 : {
     name : "Demnächst verfügbar",
     description : `
       <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.

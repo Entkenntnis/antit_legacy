@@ -57,6 +57,7 @@ module.exports = function(App) {
         userNames:ants.map(a => a.username),
         userid:userid,
         countable: allpub && ants.length >= 2 && ants.length <= 4 && alldifferent,
+        toCount: false,
         username:req.user?req.user.displayName : undefined,
         start:date,
         expires: new Date(date + 10 * 60 * 1000), // 10 minutes
@@ -78,7 +79,7 @@ module.exports = function(App) {
           if (results.length == s[0].antsName.length) {
             yield simDB.update({_id: s[0]._id}, {$set :
               { result : results,
-                toCount : true,
+                toCount : s.countable,
                 expires: new Date(new Date(s[0].expires).getTime() + 7 * 24 * 60 * 60 * 1000 )}}) // store one week
             ful(true)
           } else

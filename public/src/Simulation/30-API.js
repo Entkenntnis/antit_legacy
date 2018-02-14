@@ -190,7 +190,12 @@
     return API.curAnt.getLoad();
   });
 
+  // back compat
   API.antProp('AktuelleReichweite', function(){
+    return Sim.Opts.AmeisenReichweite - API.curAnt.getLap();
+  });
+  
+  API.antProp('Reichweite', function(){
     return Sim.Opts.AmeisenReichweite - API.curAnt.getLap();
   });
 

@@ -16,6 +16,7 @@
   function level1create() {
     Sim.hills.push(new Sim.Hill({x:Sim.playground.getWidth()/3,y:Sim.playground.getHeight()/2}, 0))
     Sim.players.push(new Sim.Player(0, Sim.API.ants[0]))
+    // Hillpos: 455.3 | 512.5
   }
   
   function getRandPos(pos) {
@@ -447,6 +448,44 @@
         return Sim.players[0].getSugar() == 500 && Sim.players[0].getApple() == 1
       },
     },
+ 
+    17 : {
+      init : function() {
+        level1Init()
+        Sim.Opts.Runden = 1000
+        Sim.Opts.SpawnWinkel = 0
+        Sim.Opts.SpawnRadius = 300
+        Sim.Opts.AnfangsRichtung = 0
+      },
+      create : function(){
+        level1create()
+        Sim.Bus.emit('move-spawn-point', 0, {x:755,y:512})
+      },
+      onSpawn : function(ant){
+        if (Math.random() < 0.5) {
+          var x = ant.getPos()
+          var y = {x:x.x, y:x.y + 1000}
+          ant.setPos(y)
+          ant.setPos(x)
+          ant.LEVELMARKED = true
+        }
+      },
+      isDone : function(){
+        if (Sim.ants.length == 20) {
+          var ok = true
+          Sim.ants.forEach(function(ant){
+            if (Sim.Util.dist({x:755,y:512}, ant.getPos()) > 10)
+              ok = false
+            if (!ant.LEVELMARKED && ant.getLap() != 0)
+              ok = false
+            if (ant.getLap() >= 1000)
+              ok = false
+          })
+          return ok
+        }
+        return false
+      },
+    },
   }
   
   var l = levels[Sim.Opts.Level]
@@ -468,6 +507,10 @@
     return  d
   }
   
+  function onAntSpawn(ant) {
+    if (l.onSpawn) l.onSpawn(ant)
+  }
+  
   function update() {
     if (l.update) l.update()
     if (Sim.cycles % 100 == 40) {
@@ -484,6 +527,7 @@
     createPlayers: createPlayers,
     isDone : isDone,
     update : update,
+    onAntSpawn : onAntSpawn,
   }
 
 })(AntIT._rawsim)

@@ -68,6 +68,9 @@
         my.energy -= Sim.Opts.EnergieFürAmeise;
         var newAnt = new Sim.Ant(getSpawnPoint(pos), my.playerid)
         Sim.ants.push(newAnt);
+        if (Sim.Opts.Levelmodus) {
+          Sim.Level.onAntSpawn(newAnt)
+        }
         Sim.players[my.playerid].addAnt();
         Sim.API.setAnt(newAnt);
         Sim.API.callUserFunc("IstGeboren");
