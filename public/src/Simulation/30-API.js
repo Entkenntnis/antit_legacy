@@ -110,7 +110,7 @@
       return API.curAnt.gotoHome(sense);
     if (ziel.constructor.name == "Apple")
       return API.curAnt.addGotoJob(ziel, Sim.apples, "Apfel", sense);
-    if (ziel.constructor.name == "Position")
+    if (ziel.constructor.name == "Position" || ziel.getPos)
       return API.curAnt.addGotoJob(ziel, undefined, "Position", sense);
      API.message("Die Funktion 'GeheZuZiel(ziel)' konnte das unbekannte Ziel nicht anvisieren.");
   });

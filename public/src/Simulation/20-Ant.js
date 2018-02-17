@@ -432,7 +432,12 @@
       var sugar = Sim.Util.closest(my.pos, Sim.sugars, Sim.Opts.AmeiseSichtweite);
       if (sugar != undefined) {
         if (antWaitSugarTout <= 0) {
-          Sim.API.callUserFunc("SiehtZucker", [sugar])
+          var pos = sugar.getPos()
+          var obj = {
+            Nummer: Sim.sugars.indexOf(sugar),
+            getPos: function() { return pos },
+          }
+          Sim.API.callUserFunc("SiehtZucker", [obj], true)
           antWaitSugarTout = 9
         }
       }
