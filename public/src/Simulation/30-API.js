@@ -175,6 +175,7 @@
 
   API.addFunc("SendeNachricht", function(betreff, wert) {
     return API.curAnt.addSendMemoryJob(betreff);
+    // ok, jetzt wird gerockt!!!
   });
 
   API.addFunc("Zufallsname", function() {
