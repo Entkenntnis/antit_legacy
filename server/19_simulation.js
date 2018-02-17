@@ -144,7 +144,7 @@ module.exports = function(App) {
   
   App.express.get('/ranking', App.users.auth, co.wrap(function*(req, res) {
     let users = yield App.colo.getCol(req.session.colony).find({}, {ants: false})
-    let results = yield simDB.find({toCount:true})
+    let results = yield simDB.find({colony:req.session.colony, toCount:true})
     let stats = users.map(u => {
       var sum = 0
       var count = 0
