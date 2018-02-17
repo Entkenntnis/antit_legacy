@@ -424,19 +424,31 @@
       }
     }
     
+    var antWaitSugarTout = 0
+    
     function senseSugar() {
+      antWaitSugarTout--
       if (!this.isSensing()) return
       var sugar = Sim.Util.closest(my.pos, Sim.sugars, Sim.Opts.AmeiseSichtweite);
       if (sugar != undefined) {
-        Sim.API.callUserFunc("SiehtZucker", [sugar]);
+        if (antWaitSugarTout <= 0) {
+          Sim.API.callUserFunc("SiehtZucker", [sugar])
+          antWaitSugarTout = 9
+        }
       }
     }
     
+    var antWaitAppleTout = 0
+    
     function senseApple() {
+      antWaitAppleTout--
       if (!this.isSensing()) return
       var apple = Sim.Util.closest(my.pos, Sim.apples, Sim.Opts.AmeiseSichtweite);
       if (apple != undefined && apple.needHelp(Sim.API.curAnt)) {
-        Sim.API.callUserFunc("SiehtApfel", [apple]);
+        if (antWaitAppleTout <= 0) {
+          Sim.API.callUserFunc("SiehtApfel", [apple])
+          antWaitAppleTout = 9
+        }
       }
     }
     
@@ -469,9 +481,15 @@
       }
     }
     
+    var antWaitTout = 0
+    
     function wait() {
+      antWaitTout--
       if(my.jobs.length == 0) {
-        Sim.API.callUserFunc("Wartet");
+        if (antWaitTout <= 0) {
+          Sim.API.callUserFunc("Wartet")
+          antWaitTout = 9
+        }
       }
     }
     

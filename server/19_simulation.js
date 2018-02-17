@@ -119,7 +119,7 @@ module.exports = function(App) {
       seed:seed,
       repeat:repeat,
       prefix:'/',
-      devMode:false,
+      devMode:req.user.level == 9,
       fightMode:false,level:NaN})
   }))
   
