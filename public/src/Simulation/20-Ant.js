@@ -277,8 +277,15 @@
       })
     }
     
+    this.addSendSelf = function(betreff, arg1) {
+      this.addJob("SENDSELF", undefined, function() {
+        Sim.API.callUserFunc(betreff, [arg1])
+        return true
+      })
+    }
+    
     // jobs - communication
-    this.addSendMemoryJob = function(topic) {
+    this.addSendMemoryJob = function(topic, arg1, arg2, arg3) {
       this.addJob("SEND", undefined, function() {
         //if (Sim.Util.dist(my.pos, myHill().getPos()) < Sim.Opts.HügelRadius) {
           myHill().addMarker(my.pos)
@@ -286,9 +293,12 @@
           Sim.ants.forEach(function (ant) {
             if (ant.getPlayerid() != my.playerid)
               return;
-            if (Sim.Util.dist(ant.getPos(), my.pos) < Sim.Opts.AmeiseSichtweite * 2)
+            //if (Sim.Util.dist(ant.getPos(), my.pos) < Sim.Opts.AmeiseSichtweite * 2)
               curAnts.push(ant);
           });
+          curAnts.sort(function(a, b) {
+            return Sim.Util.dist(a.getPos(), my.pos) > Sim.Util.dist(b.getPos(), my.pos) ? 1 : -1
+          })
           curAnts.forEach(function (ant) {
             if (ant == Sim.API.curAnt || !ant.isSensing())
               return
@@ -297,6 +307,7 @@
               Sim.API.close();
             Sim.API.setAnt(ant);
             Sim.API.callUserFunc("EmpfängtNachricht", [bkup.getMemory(), topic], true);
+            Sim.API.callUserFunc(":" + topic, [arg1, arg2, arg3])
             Sim.API.close();
             if (bkup !== undefined)
               Sim.API.setAnt(bkup);
@@ -432,12 +443,7 @@
       var sugar = Sim.Util.closest(my.pos, Sim.sugars, Sim.Opts.AmeiseSichtweite);
       if (sugar != undefined) {
         if (antWaitSugarTout <= 0) {
-          var pos = sugar.getPos()
-          var obj = {
-            Nummer: Sim.sugars.indexOf(sugar),
-            getPos: function() { return pos },
-          }
-          Sim.API.callUserFunc("SiehtZucker", [obj], true)
+          Sim.API.callUserFunc("SiehtZucker", [sugar, sugar.getKey()])
           antWaitSugarTout = 9
         }
       }
@@ -451,7 +457,7 @@
       var apple = Sim.Util.closest(my.pos, Sim.apples, Sim.Opts.AmeiseSichtweite);
       if (apple != undefined && apple.needHelp(Sim.API.curAnt)) {
         if (antWaitAppleTout <= 0) {
-          Sim.API.callUserFunc("SiehtApfel", [apple])
+          Sim.API.callUserFunc("SiehtApfel", [apple, apple.getKey()])
           antWaitAppleTout = 9
         }
       }

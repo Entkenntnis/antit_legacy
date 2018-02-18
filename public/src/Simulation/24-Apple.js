@@ -21,6 +21,10 @@
       Sim.Bus.emit('move-apple', key, my.pos, height)
     }
     
+    this.getKey = function() {
+      return key
+    }
+    
     this.addAnt = function(ant) {
       if (this.needHelp(ant)) {
         this.ants.push(ant);

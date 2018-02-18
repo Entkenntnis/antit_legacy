@@ -55,7 +55,7 @@
     }
     
     this.pushObj = function(obj, timeless) {
-      return new Sim.SimObject(obj, timeless);
+      return new Sim.SimObject(obj, true);
     }
     
     this.getObj = function(simObj) {

@@ -140,6 +140,16 @@
     }
     return Math.round(Sim.Util.getDir(a.getPos(), b.getPos()));
   });
+  
+  API.addFunc("Aktiv", function(x) {
+    if (x.constructor.name == "Apple") {
+      return Sim.apples.indexOf(x) >= 0
+    }
+    if (x.constructor.name == "Sugar") {
+      return Sim.sugars.indexOf(x) >= 0
+    }
+    return false
+  })
 
   API.addFunc("Winkel", function (a, b) {
     if (!(typeof a == "object") || !("getPos" in a) || !(typeof b == "object") || !("getPos" in b)) {
@@ -173,10 +183,14 @@
     API.curAnt.addCustomJob(funktion);
   })
 
-  API.addFunc("SendeNachricht", function(betreff, wert) {
-    return API.curAnt.addSendMemoryJob(betreff);
+  API.addFunc("SendeNachricht", function(betreff, arg1, arg2, arg3) {
+    return API.curAnt.addSendMemoryJob(betreff, arg1, arg2, arg3);
     // ok, jetzt wird gerockt!!!
   });
+  
+  API.addFunc("SendeSelber", function(betreff, arg1) {
+    return API.curAnt.addSendSelf(betreff, arg1)
+  })
 
   API.addFunc("Zufallsname", function() {
     var parts = "bcdfghjklmnpqrstvwxyz";

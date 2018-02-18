@@ -30,6 +30,10 @@
       }
     }
     
+    this.getKey = function() {
+      return key
+    }
+    
     // constructor
     updateGO();
   }
