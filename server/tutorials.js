@@ -456,6 +456,24 @@ module.exports.tutorials = {
     ],
     solution : [0,1,0,1,1,0],
   },
+  11 : {
+    level : 6,
+    name : "Weitere Inhalte",
+    text : `
+      <p>Für weitere Inhalte besuche folgende Datei: <a href="/script.pdf">AntIT für Fortgeschrittene</a>
+      </p>
+    `,
+    noq : true,
+    questions : [
+      "Frage 1",
+      "Frage 2",
+      "Frage 3",
+      "Frage 4",
+      "Frage 5",
+      "Frage 6"
+    ],
+    solution : [0,0,0,1,1,1],
+  },
   /*2 : {
     level : 1,
     name : "Herzlich Willkommen 2",
