@@ -515,7 +515,7 @@
       senseOtherTeam.bind(this)()
       wait()
       Sim.API.callUserFunc("Tick");
-      validateMemory()
+      //validateMemory()
       Sim.API.close();
     }  
     
