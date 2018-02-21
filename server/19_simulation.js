@@ -79,7 +79,7 @@ module.exports = function(App) {
           if (results.length == s[0].antsName.length) {
             yield simDB.update({_id: s[0]._id}, {$set :
               { result : results,
-                toCount : s.countable,
+                toCount : s[0].countable,
                 expires: new Date(new Date(s[0].expires).getTime() + 7 * 24 * 60 * 60 * 1000 )}}) // store one week
             ful(true)
           } else
