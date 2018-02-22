@@ -37,14 +37,15 @@
         {
           mode: {name:"javascript",globalVars:true},
           lineNumbers:true,
-          styleActiveLine:true,
-          smartIndent:false,
+          smartIndent:true,
           indentUnit:4,
           matchBrackets:true,
           autoCloseBrackets:true,
       <% if (user.level >= 2) { %>  extraKeys:{"Ctrl-S":function(){document.getElementById('editform').submit()}}
       <% } %>
         });
+        CodeMirror.keyMap.default["Shift-Tab"] = "indentLess";
+        CodeMirror.keyMap.default["Tab"] = "indentMore";
       
       var x = function(cm) {
         var cur = cm.getCursor();

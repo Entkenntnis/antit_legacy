@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-      <% include commonHead %>
+      <% include ../include/commonHead %>
         <style>
             body { margin: 0}
             canvas { width:100%; height:100% }
@@ -18,7 +18,7 @@
             <script src="/src/14-FightMode.js"></script>
           <% } %>
           
-          <% include sim %>
+          <% include ../include/simRessources %>
           
           <script src="/src/View/00-View.js"></script>
           <script src="/src/View/10-Pulse.js"></script>
@@ -56,7 +56,7 @@
 	        <span class="label label-default" id="intro-text">Simulationsfehler!</span>
         </div>
         <div style="position: absolute; z-index: 3; right: 50px; top: 50px;font-size:1em;color:white;background-color:rgba(255,255,255,0.5);">
-	        <a href="<%=prefix%>/" class="btn btn-primary">zurück</a>
+	        <a href="/wettbewerb" class="btn btn-primary">zurück</a>
         </div>
         <br>
         
@@ -123,7 +123,12 @@ function start(){
     var hud = "hud" + counter
     document.getElementById("batchstat").innerHTML = counter + " von <%=repeat%>"
     counter++
+    var autoscroll = false
+    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 30) {
+        autoscroll = true
+    }
     AntIT.StarteSimulation(null, null, "<%-seed%>", hud)
+    if (autoscroll) window.scrollTo(0,document.body.scrollHeight);
   }
 }
 var counter = 1
