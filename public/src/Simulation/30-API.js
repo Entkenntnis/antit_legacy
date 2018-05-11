@@ -222,6 +222,14 @@
   API.antProp('AktuelleLast', function(){
     return API.curAnt.getLoad();
   });
+  
+  API.antProp('InGift', function(){
+    var poisonNear = Sim.Util.inRange(API.curAnt.getPos(),
+      Sim.poisons, 80, function(p){
+      return p.getPlayerid() == API.curAnt.getPlayerid()
+    })
+    return poisonNear.length > 0
+  });
 
   // back compat
   API.antProp('AktuelleReichweite', function(){
