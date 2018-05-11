@@ -49,6 +49,14 @@ const co = require('co')
 module.exports = function(App) {
   initExercises()
   
+  App.getNewTuts = function(user) {
+    let count = 0
+    for (var i = 1; i <= user.level; i++) {
+      count += tutIndex[i].length
+    }
+    return count - user.done.length
+  }
+  
   App.express.get('/tutorial', App.users.auth, function(req, res) {
     var tutid = checkInt(req.query.id)
     if (tutid > 0 && (!tutorials[tutid] || tutorials[tutid].level > req.user.level))
@@ -64,6 +72,7 @@ module.exports = function(App) {
       index : tutIndex,
       done : req.user.done,
       highlightElement:tutid > 0? -1 : 5,
+      newtuts: App.getNewTuts(req.user),
     })
   })
   
@@ -117,6 +126,7 @@ module.exports = function(App) {
       user: req.user,
       ants: result ? result.ants : [],
       highlightElement:result ? -1 : 3,
+      newtuts: App.getNewTuts(req.user),
       id:levelid,
       exercises: exercises,
       exIndex:exIndex,
@@ -134,6 +144,7 @@ module.exports = function(App) {
       return res.render('ants/levelup', {
         user : req.user,
         highlightElement:-1,
+        newtuts: App.getNewTuts(req.user),
       })
     }
     res.redirect('/')

@@ -46,6 +46,7 @@ module.exports = function(App) {
         ants: result.ants,
         maximum: App.ants.maximumAnts(req.user.level),
         highlightElement: 0,
+        newtuts: App.getNewTuts(req.user),
         colonyInfo : App.colo.get(req.session.colony).description,
       })
     } else
@@ -71,6 +72,7 @@ module.exports = function(App) {
       ants: result.ants,
       globals: result.globals,
       highlightElement: 4,
+      newtuts: App.getNewTuts(req.user),
     })
   }))
   
@@ -78,6 +80,7 @@ module.exports = function(App) {
     res.render('__old/doku', {
       user: undefined,
       highlightElement:-1,
+      newtuts: 0,
       prefix: '/' })
   })
   
@@ -85,6 +88,7 @@ module.exports = function(App) {
     res.render('__old/guide', {
       user: undefined,
       highlightElement:-1,
+      newtuts: 0,
       prefix: '/' })
   })
   
