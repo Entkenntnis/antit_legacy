@@ -134,6 +134,11 @@ module.exports = function(App) {
     let pwd = req.body.password
     let dname = req.body.displayname
     if (!dname) dname = uname
+    let ulevel = parseInt(req.body.level)
+    if ([1,2,3,4,5,6,7,8,9].indexOf(ulevel) < 0) {
+      ulevel = 1
+      req.flash('admin/users', "Warnung: Level ungültig, wurde auf Level 1 gesetzt!")
+    }
     let superuser = "superuser" in req.body
     let col = App.colo.getCol(req.session.colony)
     if (id && id.length == 24) {
@@ -144,6 +149,7 @@ module.exports = function(App) {
           password: pwd,
           displayName: dname,
           superuser: superuser,
+          level: ulevel,
         }
       })
       req.flash('admin/users', "OK: Benutzerdaten wurden aktualisiert.")
