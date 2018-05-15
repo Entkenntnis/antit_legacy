@@ -422,6 +422,10 @@
       setAntBodyColor(antStore.get(key), color)
     })
     
+    Bus.on('change-ant-level-color', function(key, color1, color2) {
+      console.log('Hi, setze die Farbe der Ameise ' + key)
+    })
+    
     Bus.on('move-ant', function(key, pos, roty) {
       var antBody = antStore.get(key)
       antBody.position.copy(toViewPos(pos))
@@ -586,6 +590,19 @@
     
     Bus.on('remove-poison', function(key) {
       scene.remove(poisons[key])
+    })
+    
+    var grid = undefined
+    
+    Bus.on('show-grid', function(pos){
+      if (grid == undefined) {
+        var size = 1400;
+        grid = new THREE.GridHelper( size, size/50 );
+        grid.position.copy(toViewPos(pos, 2))
+        scene.add( grid );
+      } else {
+        grid.visible = !grid.visible
+      }
     })
     
   };

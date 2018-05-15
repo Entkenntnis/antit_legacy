@@ -99,6 +99,9 @@
     getPoints : function() { 
       return Sim.players.map(function(p){return p.getPoints()}).join(",")
     },
+    placeGrid : function() {
+      Sim.Bus.emit('show-grid', Sim.hills[0].getPos())
+    }
   }
 
 })(AntIT._optionen)

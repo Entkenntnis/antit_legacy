@@ -13,6 +13,7 @@
     document.getElementById(hudid).appendChild(simStatus)
     document.getElementById(hudid).appendChild(levelStatus)
     document.getElementById("loading").style.display = "none"
+    document.addEventListener("keypress", keypresshandler);
   })
   
   View.Pulse.getBus().on('update-status', function(txt){
@@ -22,8 +23,6 @@
   View.Sim.getBus().on('update-levelstatus', function(txt){
     levelStatus.innerHTML = txt
   })
-  
-  document.addEventListener("keypress", keypresshandler);
   
   function keypresshandler(e){
     if (View.Opts.Kampfmodus) return
@@ -38,6 +37,10 @@
       newFps = 140;
     if (newFps) {
       View.Pulse.setFps(newFps)
+    }
+    if (e.charCode == 71 || e.charCode == 103) { // G
+      View.Sim.placeGrid()
+      View.Pulse.getBus().emit('redraw')
     }
   }
  
