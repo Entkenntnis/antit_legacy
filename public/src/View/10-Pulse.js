@@ -97,12 +97,13 @@
   View.Pulse = Pulse
   
   
-  AntIT.StarteSimulation = function(h, p, s, hud){
+  AntIT.StarteSimulation = function(h, p, s, hud, levels){
     hash = h
     prefix = p
     seed = s
     if (hud)
       hudid = hud
+    Sim.setLevels(levels)
     bus.emit('start')
   }
 

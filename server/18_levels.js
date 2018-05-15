@@ -166,6 +166,7 @@ module.exports = function(App) {
         var userid = req.user ? req.user._id : undefined
         var hash = date + "-" + userid + "-" + Math.floor(Math.random()*100000)
         req.session.currentSim = {startTime : date, level:levelnum, userid:userid}
+        users[0].ants[0].level = users[0].level
         return res.render('ants/simulation', {
           code:[users[0].ants[0]],
           hash:hash,

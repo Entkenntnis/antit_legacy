@@ -18,6 +18,7 @@ function findAnts(users, userid, ids) {
           if (a.published || user._id.toString() == userid) {
             ants[a.antid] = a
             ants[a.antid].username = user.username
+            ants[a.antid].level = user.level
           }
         }
       })
@@ -113,14 +114,17 @@ module.exports = function(App) {
     var seed = req.query.seedon == 1 ? JSON.stringify(req.query.seed).slice(1, -1) : undefined
     var repeat = req.query.batchon == 1 ? parseInt(req.query.repeat) : undefined
     if (repeat == NaN) repeat = undefined
-    res.render(repeat ? '__old/batch' : '__old/simulation', {
+    res.render(repeat ? '__old/batch' : 'ants/simulation', {
       code:ants,
       hash:hash,
       seed:seed,
       repeat:repeat,
-      prefix:'/',
+      prefix:'/wettbewerb',
       devMode:req.user.level == 10,
-      fightMode:false,level:NaN})
+      fightMode:false,
+      level:NaN,
+      title:"Wettbewerb",
+    })
   }))
   
   
@@ -138,8 +142,12 @@ module.exports = function(App) {
   }))
   
   App.express.get('/clearstats', App.users.auth, co.wrap(function*(req, res) {
-    yield simDB.remove({colony: req.session.colony})
-    res.redirect('/stats')
+    if (req.user.superuser) {
+      yield simDB.remove({colony: req.session.colony})
+      res.redirect('/stats')
+    } else {
+      res.redirect('/')
+    }
   }))
   
   App.express.get('/ranking', App.users.auth, co.wrap(function*(req, res) {

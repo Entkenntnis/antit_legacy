@@ -84,6 +84,8 @@
     // visuals
     function setColor() {
       Sim.Bus.emit('change-ant-color', my.key, Sim.Opts.SpielerFarben[my.playerid])
+      // TODO add color map
+      Sim.Bus.emit('change-ant-level-color', my.key, Sim.levels[my.playerid])
     }
     
     function updateGO() {

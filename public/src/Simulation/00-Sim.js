@@ -101,7 +101,10 @@
     },
     placeGrid : function() {
       Sim.Bus.emit('show-grid', Sim.hills[0].getPos())
-    }
+    },
+    setLevels : function(l) {
+      Sim.levels = l
+    },
   }
 
 })(AntIT._optionen)

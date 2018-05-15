@@ -423,7 +423,8 @@
     })
     
     Bus.on('change-ant-level-color', function(key, color1, color2) {
-      console.log('Hi, setze die Farbe der Ameise ' + key)
+      // TODO set color to ant
+      console.log('Hi, setze die Farbe der Ameise ' + key + " mit Level " + color1)
     })
     
     Bus.on('move-ant', function(key, pos, roty) {

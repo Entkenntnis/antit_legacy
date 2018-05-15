@@ -61,6 +61,7 @@
 	<span class="label label-default" id="intro-text">Simulationsfehler!</span>
 </div>
 <script>
+"use strict";
 <%
 
   function btoa(str) {
@@ -86,14 +87,22 @@
         
 
 
-<%-c.code%>
+          <%-c.code%>
 
 
         
         })();<%
       } else {
-        var exportCode = btoa('(function(){' + c.code + '})();')
-        %>eval(atob("<%-exportCode%>"));
+        var exportCode = btoa('(function(){' + c.code + '}).call(42);')
+        %>
+        var whitelist = ['AntIT', 'Gehe', 'Drehe', 'DreheZuRichtung', 'GeheZuBau', 'NimmZucker',
+          'LadeZuckerAb', 'TrageApfel', 'GeheZuZiel', 'Warte', 'SetzeGift', 'OFFEN',
+          'Reichweite', 'Runde', 'Distanz', 'Winkel', 'Bau', 'Position', 'DreheWegVonObjekt',
+          'DreheZuObjekt', 'Gedächtnis', 'SendeNachricht', 'SendeSelber', 'Zufallszahl',
+          'Zufallsname', 'consolebku', 'Aktiv', 'InGift']
+        var consolebku = {log:console.log}
+        
+        eval('(function(' +  Object.keys(window).filter(function(x){return whitelist.indexOf(x)< 0}).join(",") + '){var console = consolebku;' + atob("<%-exportCode%>") + '})();');
         <%
       }
     });
@@ -107,7 +116,8 @@
   <%} 
 
 %>
-AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", "<%-seed%>");
+var levels = [<%-code.map(function(a){return a.level}).join(',')%>]
+AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", "<%-seed%>", null, levels);
 
 </script>
     </body>
