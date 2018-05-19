@@ -3,71 +3,41 @@ module.exports.tutorials = {
     level : 1,
     name : "Herzlich Willkommen!",
     text : `
-      <p>Während du diese Zeilen liest, bist du höchst wahrscheinlich Teil einer Schülergruppe, die gerade an einem Ameisen-Workshop teilnimmt. Vielleicht freust du dich schon auf den Tag/die nächsten Tage - vielleicht aber denkst du dir auch nur: Was soll das schon wieder?
+      <p>Während du diese Zeilen liest, bist du höchst wahrscheinlich Teil einer Schülergruppe, die gerade an einem Ameisen-Workshop teilnimmt. Vielleicht freust du dich schon auf den Tag/die nächsten Tage. Du bist neugierig darauf, was man mit diesen Ameisen alles machen kann. Schön, dass du da bist! Vielleicht aber denkst du dir auch nur: Was soll das schon wieder?
       </p>
       
-      <p>Die Wenigsten kommen hier an und haben eine Vorstellung, was sie erwarten wird. Genausowenig haben die Menschen eine Vorstellung davon, was es heißt zu programmieren. In einer Zeit, in der wir tagtäglich mit IT in Verbindung stehen, ist das ziemlich schade. Denn dadurch entgeht uns die Chance, unsere Lebenswelt besser zu verstehen. Und es entgeht und die Chance, diese Welt mitzugestalten.
+      <p>Die Wenigsten kommen hier an und haben eine Vorstellung, was sie erwarten wird. Genausowenig haben die meisten Menschen eine Vorstellung davon, was es heißt zu programmieren. In einer Zeit, in der wir tagtäglich mit IT in Verbindung stehen, ist das ziemlich schade. Denn dadurch entgeht uns die Chance, unsere Lebenswelt besser zu verstehen. Und es entgeht und die Chance, diese Welt mitzugestalten.
       </p>
       
-      <p>AntIT! ist mit dem Wunsch entstanden, dir das Programmieren beizubringen. Selbst wenn man am Ende des Workshops kein fertiger Programmierer ist - soll AntIT! doch einen Einblick geben, was Programmieren bedeutet. Beim Programmieren erlebt man, wie der eigene Code das Verhalten des Computers steuert und verändert. Gleichzeitig ist man auch gezwungen, sich mit der Funktionsweise des Computer selber auseinsanderzusetzen. Je besser man den Computer und seine Software versteht, umso besser kann man selber Code schreiben. Du lernst hier nicht nur, wie man Ameisen steuert, sondern gleichzeitig auch, wie dein Code vom Computer ausgeführt wird. Beide Teile gehören zum Programmieren dazu. Und du wirst das nicht nur theoretisch lernen, sondern du wirst das auch ganz praktisch ausprobieren können.
+      <p>AntIT! ist mit dem Wunsch entstanden, dir das Programmieren beizubringen. Selbst wenn man am Ende des Workshops kein fertiger Programmierer ist - sollte AntIT! doch einen Einblick geben, was Programmieren bedeutet. Beim Programmieren erlebt man, wie der eigene Code das Verhalten des Computers steuert und verändert. Gleichzeitig ist man auch gezwungen, sich mit der Funktionsweise des Computer selber auseinanderzusetzen. Je besser man den Computer und seine Software versteht, umso besser kann man selber Code schreiben. Du lernst hier nicht nur, wie man Ameisen steuert, sondern gleichzeitig auch, wie dein Code vom Computer ausgeführt wird. Beide Teile gehören zum Programmieren dazu. Und du wirst das nicht nur theoretisch lernen, sondern du wirst das auch ganz praktisch ausprobieren können.
       </p>
       
-      <p>Das wird dich hier erwarten. Und das wird eine Herausforderung sein. Etwas Neues zu lernen ist anstrengend und verbraucht Energie und Aufmerksamkeit. Auf diesem Weg wollen wir dich so gut wie möglich begleiten.
+      <p>Das wird dich hier erwarten. Und das wird eine Herausforderung sein. Etwas Neues zu lernen ist anstrengend und verbraucht Energie und Aufmerksamkeit. Auf diesem Weg wollen wir dich so gut wie möglich begleiten:
       </p>
       
-      <p>Als erstes kann man 
-      </p>
+      <ul>
+        <li>Alle Inhalte des Workshops können vollständig über Tutorials gelernt werden. Du kannst ganz nach deinem Tempo arbeiten. Wenn dich Themen besonders interessieren kannst du dir da mehr Zeit nehmen. Solltest du etwas wieder vergessen haben kannst du jederzeit auf die vorherigen Tutorials zurückgreifen. Damit liegt die Kontrolle ganz bei dir.
+        </li>
+        <li>Unmittelbar nach dem Tutorial findest du ein kleines Quiz, mit dem du dich abfragen kannst. Ein Quiz enthält sechs Antwortmöglichkeiten, von denen keine bis alle richtig sein können. Kreuze die richtigen Antworten an. Das Quiz ist weniger als Prüfung gedacht, sondern vielmehr als kleiner "Energizer" zwischendurch. Nach dem Quiz wird auch das Tutorial als fertig markiert.
+        </li>
+        <li>Die Inhalte der Workshops können praktisch an Aufgaben ausprobiert werden. Diese knüpfen eng an die erlernten Inhalte an, fordern aber manchmal ein bisschen Umdenken. An den Aufgaben kannst du deinen Lernfortschritt ablesen und sehen, ob du es wirklich verstanden hast.
+        </li>
+        <li>Das Auge programmiert mit: Bei AntIT! haben wir uns bemüht, die Oberfläche und die Simulation möglichst anschaulich zu gestalten. Sind diese Ameisen nicht süß?
+        </li>
+      </ul>
+      <img src="/images/ameiseapfel.png" class="img-thumbnail" title="Hey Jo!"></img>
     
-    
-    
-    
-      <div style="height:300px"></div>
-    
-    
-      <p>Willkommen, liebe Abenteurer, in der Welt von AntIT! Hier beginnt deine große Reise durch die Informatik. Wege voller Schätze und Gefahren liegen vor dir. Entdecke neue, unbekannte Landschaften und lerne dein Potenzial kennen. Dein Ziel ist es, zum Meister der IT zu werden - ein Meister, der die unfassbare Rechenkraft des Computers beherrscht und damit wunderbare Welten erschaffen und gestalten kann. Bist du bereit? Möchtest du dich dieser Herausforderung stellen?
+      <br><br>
+      <p>Ach, herrlich ... So, das ist jetzt genug an Informationen. Bearbeite zum Schluss noch dieses Quiz:
       </p>
-      
-      <p class="lead"><em>Ja, ich will!</em></p>
-      
-      <p>Sehr gut, sehr gut. Um dich so gut wie möglich auf diese Reise vorzubereiten, werden wir dich zuerst in den nötigen Grundlagen ausbilden. Diese Ausbildung wird für dich im Land der Ameisen stattfinden.</p>
-      
-      <p><img src="/images/ameiseapfel.png" class="img-thumbnail" title="Hey Jo!"></img></p>
-      
-      <p class="lead"><em>Ach nö! Ich will nicht mit Ameisen spielen - ich will mit Drachen kämpfen!</em></p>
-      
-      <p>Mein Junge, mein Mädchen! Jeder große Meister hat auch mal klein angefangen. Und du wirst sehen: Selbst die Ameisen werden dich ordentlich auf Trab halten. Auch in der Mathematik fängt man nicht mit der Integralrechnung an, sondern mit den Grundrechenarten. Wenn du bereits Erfahrung hast, dann werden dir die Aufgaben keine großen Schwierigkeiten bereiten. Wenn das für die die erste Programmiererfahrung ist, dann darfst du dir ruhig Zeit nehmen. Manche Dinge brauchen eine Weile, bis man sie verstehst. Du wirst sehen, es wird dir Spaß - da bin ich mir ganz sicher.
-      </p>
-      
-      <p class="lead"><em>Können wir endlich anfangen und weniger labern?</em></p>
-      
-      <p>Mein Junge, mein Mädchen! Du hast noch viel zu lernen. Die Fähigkeit zur Geduld und zum Zuhören sind nämlich ganz wichtig für die Ausbildung. Aber nun möchte ich dich nicht mehr länger auf die Folter spannen. Hier ist der Plan:
-      </p>
-      
-      <p>Es gibt insgesamt neun Level. Du beginnt jetzt auf Level 1. Die Ausbildung hast du abgeschlossen, wenn du Level 9 erreicht hast. Danach bist du bereit, deinen weiteren Weg alleine zu gehen. In jedem Level werden ein paar neue Themen behandelt. Dazu gibt es Aufgaben. Wenn du mindestens die Hälfte der Aufgaben löst, kannst du in das nächste Level aufsteigen.
-      </p>
-      
-      <p>Für die Aufgaben wirst du dein Ameisenvolk programmieren und damit ein ganz bestimmtes Ziel erfüllen. Wie das genau funktioniert wirst du im nächsten Tutorial lernen.
-      </p>
-      
-      <p>Ab Level 5 kannst du außerdem am Ameisenwettbewerb teilnehmen. Du kannst gegen die anderen Teilnehmer der Ausbildung antreten und dich mit ihnen messen. Gelöste Aufgaben bringen dir Bonuspunkte, die deine Ameisen stärker machen.
-      </p>
-      
-      <p>Die Ausbildung ist so angelegt, dass du dir alle Fähigkeiten selber beibringen kannst. Vielleicht wird das für dich erstmal eine ungewohnte Erfahrung sein. Um dir zu helfen gibt es am Ende jedes Tutorials ein kleines Quiz. Kreuze die richtigen Aussagen an und lasse sie überprüfen. Es können null bis alle Aussagen richtig sein.
-      </p>
-      
-      <p>Hast du soweit noch Fragen?</p>
-      
-      <p class="lead"><em>Nein! Ich bin top informiert. Jetzt möchte ich loslegen!</em></p>
-      
-      <p>Dann kannst du an folgenden Fragen gleich mal sehen, ob du mir auch wirklich gut zugehört hast:</p>
     `,
     questions : [
-      "Jeder große Meister hat auch mal klein angefangen.",
-      "Es ist wichtig, die Ausbildung so schnell wie möglich zu durchlaufen.",
-      "Man kann acht Mal im Level aufsteigen.",
-      "Ab Level 9 kannst du am Ameisenwettbewerb teilnehmen.",
-      "Das lösen der Aufgaben bringt dir nichts für den Wettbewerb.",
-      "Es wird Wert darauf gelegt, dass du dir selber Themen erarbeitest.",
+      "Viele Menschen können sich unter Programmieren wenig vorstellen.",
+      "Das Tempo des Workshops ist streng vorgegeben.",
+      "Ameisen haben 6 Beine.",
+      "Neues zu lernen geht ganz locker.",
+      "Man muss dieses Quiz wie eine Prüfung behandeln.",
+      "Programmierer sollten verstehen, wie ein Computer funktioniert.",
     ],
     solution : [1,0,1,0,0,1],
   },
