@@ -3,6 +3,27 @@ module.exports.tutorials = {
     level : 1,
     name : "Herzlich Willkommen!",
     text : `
+      <p>Während du diese Zeilen liest, bist du höchst wahrscheinlich Teil einer Schülergruppe, die gerade an einem Ameisen-Workshop teilnimmt. Vielleicht freust du dich schon auf den Tag/die nächsten Tage - vielleicht aber denkst du dir auch nur: Was soll das schon wieder?
+      </p>
+      
+      <p>Die Wenigsten kommen hier an und haben eine Vorstellung, was sie erwarten wird. Genausowenig haben die Menschen eine Vorstellung davon, was es heißt zu programmieren. In einer Zeit, in der wir tagtäglich mit IT in Verbindung stehen, ist das ziemlich schade. Denn dadurch entgeht uns die Chance, unsere Lebenswelt besser zu verstehen. Und es entgeht und die Chance, diese Welt mitzugestalten.
+      </p>
+      
+      <p>AntIT! ist mit dem Wunsch entstanden, dir das Programmieren beizubringen. Selbst wenn man am Ende des Workshops kein fertiger Programmierer ist - soll AntIT! doch einen Einblick geben, was Programmieren bedeutet. Beim Programmieren erlebt man, wie der eigene Code das Verhalten des Computers steuert und verändert. Gleichzeitig ist man auch gezwungen, sich mit der Funktionsweise des Computer selber auseinsanderzusetzen. Je besser man den Computer und seine Software versteht, umso besser kann man selber Code schreiben. Du lernst hier nicht nur, wie man Ameisen steuert, sondern gleichzeitig auch, wie dein Code vom Computer ausgeführt wird. Beide Teile gehören zum Programmieren dazu. Und du wirst das nicht nur theoretisch lernen, sondern du wirst das auch ganz praktisch ausprobieren können.
+      </p>
+      
+      <p>Das wird dich hier erwarten. Und das wird eine Herausforderung sein. Etwas Neues zu lernen ist anstrengend und verbraucht Energie und Aufmerksamkeit. Auf diesem Weg wollen wir dich so gut wie möglich begleiten.
+      </p>
+      
+      <p>Als erstes kann man 
+      </p>
+    
+    
+    
+    
+      <div style="height:300px"></div>
+    
+    
       <p>Willkommen, liebe Abenteurer, in der Welt von AntIT! Hier beginnt deine große Reise durch die Informatik. Wege voller Schätze und Gefahren liegen vor dir. Entdecke neue, unbekannte Landschaften und lerne dein Potenzial kennen. Dein Ziel ist es, zum Meister der IT zu werden - ein Meister, der die unfassbare Rechenkraft des Computers beherrscht und damit wunderbare Welten erschaffen und gestalten kann. Bist du bereit? Möchtest du dich dieser Herausforderung stellen?
       </p>
       

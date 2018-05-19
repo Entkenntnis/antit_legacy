@@ -62,8 +62,10 @@ module.exports = function(App) {
     if (tutid > 0 && (!tutorials[tutid] || tutorials[tutid].level > req.user.level))
       return res.redirect('/')
     
-    //delete require.cache[require.resolve('./tutorials.js')]
-    //initExercises()
+    if (App.config.devmode) {
+      delete require.cache[require.resolve('./tutorials.js')]
+      initExercises()
+    }
     
     res.render('ants/tutorial', {
       user: req.user,
