@@ -24,7 +24,7 @@
           Passwort: <input name="password" value="<%=existing?user.password:''%>" required/><br>
           Anmeldepasswort.<br><br>
           
-          Level: <input name="level" value="<%=existing?user.level:''%>"><br>
+          Level: <input name="level" value="<%=existing?user.level:'1'%>"><br>
           Bestimmt, wie viele Aufgaben und Funktionen freigeschaltet sind.<br><br>
           
           Superuser: <input type="checkbox" name="superuser" <%-(existing&&user.superuser)?'checked':''%>/><br>

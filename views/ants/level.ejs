@@ -23,7 +23,7 @@
 	        <div class="col-md-8">
 	          <% for (var i = 1; i <= user.level; i++) { %>
 	            <div class="panel panel-default">
-                <div class="panel-heading" onclick="flip(<%=i%>)" style="cursor:pointer;">Level <%=i%></div>
+                <div class="panel-heading" onclick="flip(<%=i%>)" style="cursor:pointer;">Stufe <%=i%></div>
                 <%
                   var ok = (i != user.level)
                   exIndex[i].forEach(function(id){
@@ -58,7 +58,7 @@
 	          <% if (user.level < 9) {%>
 	            <div class="well">
 	              <% if (!upgrade) { %>
-	                <br><p>Voraussetzungen für das nächste Level:<br>Bearbeite <%=Math.ceil(exIndex[user.level].length/2)%> Aufgaben von Level <%=user.level%>
+	                <br><p>Voraussetzungen für die nächste Stufe:<br>Bearbeite <%=Math.ceil(exIndex[user.level].length/2)%> Aufgaben von Stufe <%=user.level%>.
 	                </p>
                 <% } %>
                 <a href="/upgrade" class="btn btn-warning btn-sm <%=upgrade?'':'disabled'%>">Level aufsteigen</a>
