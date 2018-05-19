@@ -424,7 +424,11 @@
     
     Bus.on('change-ant-level-color', function(key, color1, color2) {
       // TODO set color to ant
-      console.log('Hi, setze die Farbe der Ameise ' + key + " mit Level " + color1)
+      var ant = antStore.get(key)
+      ant.children[0].children[2].material = new THREE.MeshPhongMaterial({color:color1})
+      ant.children[0].children[9].material = new THREE.MeshPhongMaterial({color:color1})
+      ant.children[0].children[1].material = new THREE.MeshPhongMaterial({color:color2})
+      ant.children[0].children[11].material = new THREE.MeshPhongMaterial({color:color2})
     })
     
     Bus.on('move-ant', function(key, pos, roty) {

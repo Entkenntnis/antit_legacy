@@ -20,6 +20,17 @@ var AntIT = {};
     , BauErreichtRadius : 10
     , SpielerFarben : [0xff0000, 0x0000ff, 0x00ff00, 0x00ffff,
                        0xffff00, 0xff00ff, 0xffffff, 0x000000]
+    , FühlerFarben : [
+      [0xffffff, 0xffff00],
+      [0xffff00, 0xffff00],
+      [0xffff00, 0xff6200],
+      [0xff6200, 0xff6200],
+      [0xff6200, 0x00bd23],
+      [0x00bd23, 0x00bd23],
+      [0x0011ff, 0x0011ff],
+      [0x914803, 0x914803],
+      [0x000000, 0x000000],
+    ]
     , ZuckerGröße : 250
     , ZuckerVergrößerung : 0.1
     , ApfelGröße : 2.0

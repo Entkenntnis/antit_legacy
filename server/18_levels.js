@@ -160,7 +160,7 @@ module.exports = function(App) {
       var users = yield App.colo.getCol(req.session.colony).find({
         _id: req.user._id,
         "ants.antid":req.query.id},
-        {"ants.$":1})
+        {"ants.$":1,"level":1})
       if (users && users.length == 1) {
         var date = Date.now()
         var userid = req.user ? req.user._id : undefined
