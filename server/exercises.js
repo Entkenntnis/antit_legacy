@@ -48,7 +48,7 @@ module.exports.exercises = {
       <p>Mit der Taste G kannst du dir während der Simulation eine Koordinatengitter anzeigen lassen. Das Gitter hat einen Abstand von 50 Ameisenschritten. Damit kannst du die Koordinaten der Checkpoints bestimmen. Tipp: Die Diagonale eines Gitters ist 71 Ameisenschritte lang.
       </p>
       
-      <p>In der Informatik in dieses Problem als "Traveling Salesman" berühmt geworden. Für viele Checkpoints wird es ziemlich schwer, eine optimale Route zu berechnen.
+      <p>In der Informatik in dieses Problem als "Traveling Salesman" berühmt geworden. Mit vielen Checkpoints auf dem Spielfeld wird es ziemlich schwer, eine optimale Route zu berechnen.
       </p>
     `,
     level : 1,

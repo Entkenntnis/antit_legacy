@@ -100,45 +100,35 @@ module.exports.tutorials = {
     level : 1,
     name : "Grundlagen der Programmierung [API]",
     text : `
-      <p class="lead"><em>Und wie steuert man jetzt die Ameisen?</em></p>
-    
-      <p>Die Ameisen werden nicht per Hand einzeln gesteuert - das wäre bei der großen Menge an Ameisen etwas mühsam - sondern mithilfe von Programm-Code. Das ist ein besonderer Text, den der Computer einlesen kann und der das genaue Verhalten der Ameisen bestimmt. Wenn du ein neues Ameisenvolk erstellt, ihm einen Namen gibst und dann auf "Bearbeiten" klickst, dann erscheint folgendes Fenster:
+      <p>Im letzten Tutorial hast du bereits dein erstes Ameisenvolk programmiert. Im Grunde ist es für den Anfang ziemlich einfach. Erstelle ein neues Ameisenvolk und nenne es "Stufe 1 Aufgabe". Wenn du die Ameise bearbeitest, dann sieht der Code so aus:
       </p>
       
-      <p><img src="/images/01_editor.png" class="img-thumbnail" title="Sehr kreativer Name ..."></img></p>
+      <p><img src="/images/l1_schnipsel_name_falsch.png" class="img-thumbnail" title="Sehr kreativer Name ..."></img></p>
       
-      <p>Das ist das Grundgerüst jeder Ameise. In der ersten Zeile wird festgelegt, dass wir eine Ameise programmieren wollen (und nicht ein Auto oder eine Waschmaschine). Dazu rufen wir eine Funktion namens "NeueAmeise" auf, die uns dann eine neue Ameise erzeugt. Diese speichern wir in der Variablen "Ameise". In den Anführungszeichen steht der Name der Ameise. Du kannst ihn jederzeit ändern, wenn du willst.
+      <p>Aber ups! Es gibt ja in Stufe 1 mehrere Aufgaben und du möchtest gerne für jede Aufgabe eine eigene Ameise anlegen. Der Name der Ameise lässt sich zum Glück noch nachträglich ändern, indem die erste Zeile angepasst wird:
       </p>
       
-      <p>Es gibt ganz viele verschiedene Möglichkeiten, Programmcode zu schreiben und Software aufzubauen. Umso wichtiger ist es zu wissen, was für eine Struktur man aktuell verwendet. Unsere Ameisen werden mit <strong>Ereignissen</strong> programmiert. Das nennt man dann ereignis-orientierte Programmierung. Sprich mir also nach: Womit werden die Ameisen programmiert? 
+      <p><img src="/images/l1_schnipsel_name.png" class="img-thumbnail" title="Ordnung muss sein, nicht?"></img></p>
+      
+      <p>So, passt. Die Zeilen 3 bis 5 definieren ein Ereignis. Später können noch weitere Ereignisse hinzukommen. Ereignisse werden nie verschachtelt! Innerhalb eines Ereignis kommt nur Code hinein. Weitere Ereignisse kommen in eigene Zeilen.</p>
+      
+      <p>Wir müssen außerdem bei jedem Ereignis angeben, von welchem Typ er ist. Innerhalb einer Ameise sollte es pro Typ nur eine Definition geben. Der einzige Typ, den wir aktuell kennen, ist <code>"IstGeboren"</code>. Dieses Ereignis wird genau einmal bei der Geburt der Ameise aufgerufen. Trage den Typ ein und füge schon mal ein paar Zeilen Code ein:
       </p>
       
-      <p class="lead"><em>Mit Ereignissen, ist doch pipi einfach ...</em></p>
+      <p><img src="/images/l1_schnipsel_event.png" class="img-thumbnail" title="Befehle innerhalb von Ereignisse werden eingerückt. Nutze die Tab-Taste."></img></p>
       
-      <p>Schön das zu hören. Aber du solltest noch erfahren, was ein Ereignis überhaupt ist: Ein Ereignis ist ein Satz mit der Form: "Wenn die Ameise <...>, dann tut die Ameise <...>". Wenn die Bedingung im ersten Teil des Satzes eintritt, dann wird das Verhalten im zweiten Teil des Satzes ausgeführt.
+      <p>Es gibt den Befehl <code>Gehe</code> und den Befehl <code>Drehe</code>. Wenn der Geh-Befehl ausgeführt wird, dann bewegt sich die Ameise geradeaus nach vorne um die angegebene Anzahl Schritte. Beim Dreh-Befehl dreht sich die Ameise um den angegebenen Winkel im Uhrzeigersinn. Positive Winkel entsprechen damit Rechtsdrehungen, der Befehl in Zeile 5 entspricht einer 90-Grad-Drehung nach links.
       </p>
       
-      <p>Die Bedingungen sind bei den Ameisen bereits fest vorgegeben. Für den Anfang reicht uns ein einziges Ereignis: <code>IstGeboren</code>. Der Name des Ereignis wird in Zeile 3 zwischen die Anführungszeichen geschrieben:
+      <p>Jeder Befehl wird mit runden Klammern abgeschlossen, selbst wenn mal in den Klammern nichts steht. Fehlen die Klammern, dann wird der Befehl auch nicht ausgeführt. Basta.
       </p>
       
-      <p><img src="/images/01_editor2.png" class="img-thumbnail" title="Vorsicht mit der Groß- und Kleinschreibung!"></img></p>
-      
-      <p>Jetzt haben wir es fasst geschafft. Nun brauchen wir noch Befehle, die die Ameise ausführen kann. Befehle werden jetzt zwischen die Zeile 3 und die Zeile 5 hineingeschrieben. Auf jede Zeile kommt genau ein Befehl. Man schreibt zuerst den Namen des Befehls und hängt dann runde Klammern hinten dran. Die meisten Befehle nehmen einen Parameter, wie z.B. eine Zahl. Befehle werden eingerückt, damit man besser erkennt, zu welchem Ereignis sie gehören.
-      </p>
-      
-      <p class="lead"><em>Können wir die Ameise endlich bewegen? Wie heißen dazu die Befehle?</em></p>
-      
-      <p>Der erste Befehl heißt <code>Gehe</code> und er nimmt als Parameter die Anzahl der Schritte. Der zweite Befehl heißt <code>Drehe</code>. Dieser nimmt als Parameter einen Winkel in Grad, um den sich die Ameise im Uhrzeigersinn (also nach rechts) dreht. Um nach links zu drehen nimmt man einen negativen Winkel. Wenn man also 200 Schritte gehen, sich um 90 Grad nach rechts drehen und weitere 100 Schritte gehen will, dann schreibt man:
-      </p>
-      
-      <p><img src="/images/01_editor3.png" class="img-thumbnail" title="Rücke die Befehle mit der TAB-Taste ein."></img></p>
-      
-      <p>Die Befehle werden bei Geburt der Ameise der Reihenfolge nach von oben nach unten von jeder Ameise ausgeführt. Alles klar? Dann kannst du gleich mit den Aufgaben loslegen!
+      <p>Du kannst jetzt mit dieser Ameise weiterarbeiten für die erste Aufgabe von Stufe 1. Ein letzter Hinweis zum Schluss: Tutorials mit dem Zusatz [API] stellen neue Befehle vor. Diese werden rot im Text hervorgehoben und erleichtern damit die Suche nach bestimmten Funktionen.
       </p>
     `,
     questions : [
       "Der Name eines Ameisenvolks lässt sich nach dem Erstellen nicht mehr ändern.",
-      "Ameisen werden ereignis-orientiert programmiert.",
+      "Pro Ereignistyp soll es in einer Ameise nur eine Definition geben.",
       "Wir haben bisher nur das Ereignis \"IstGeboren\" kennengelernt.",
       "Jeder Befehl braucht runde Klammern.",
       "Jeder Befehl kommt auf eine eigene Zeile.",
