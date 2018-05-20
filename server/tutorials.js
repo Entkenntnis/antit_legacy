@@ -25,6 +25,7 @@ module.exports.tutorials = {
         <li>Das Auge programmiert mit: Bei AntIT! haben wir uns bemüht, die Oberfläche und die Simulation möglichst anschaulich zu gestalten. Sind diese Ameisen nicht süß?
         </li>
       </ul>
+      
       <img src="/images/ameiseapfel.png" class="img-thumbnail" title="Hey Jo!"></img>
     
       <br><br>
@@ -45,36 +46,51 @@ module.exports.tutorials = {
     level : 1,
     name : "Die Welt der Ameisen",
     text : `
-      <p>Sag Hallo zu Bofei und seinen Kollegen:
+      <p>Beginnen wir gleich damit, die Welt der Ameisen zu erkunden. Diese gesamte Website entspricht einem "Dorf", in dem die Ameisen und vor allem auch deren Programmierer leben. Die Bibliothek kennst du jetzt bereits. Du wirst jetzt noch das Dorfzentrum und den Trainingsplatz kennenlernen. Folge dazu den Anweisungen dieser Schritt-für-Schritt-Anleitung:
       </p>
       
-      <p><img src="/images/01_bofei.jpg" class="img-thumbnail" title="Sehen die Ameisen nicht süß aus?"></img></p>
-    
-      <p>Die Ameisen leben auf einem rechteckigen Stück Boden. Dein Volk hat einen Bau, der den Mittelpunkt des Lebens darstellt: Dort werden neue Ameisen geboren und dort wird auch die gesamte Nahrung der Ameisen gesammelt. Um den Bau herum befinden sich Nahrungsmittel: Es gibt Zuckerhaufen und Äpfel, die natürlich gerne eingesammelt werden. Aus der Entfernung sieht das Ganze so aus:
+      <ol>
+        <li><p>Gehe ins Dorfzentrum und klicke auf "Neues Ameisenvolk".</p>
+        </li>
+        <li><p>Gib den Ameisen den Namen "Hallo Welt".</p>
+        </li>
+        <li><p>Öffne die Ameisen, in dem du auf "Bearbeiten" klickst.</p>
+        </li>
+        <li><p>Trage die fehlenden Teile in Zeile 3 und Zeile 4 ein:
+        <img src="/images/l1_schnipsel_hallowelt.png" class="img-thumbnail" title="Der Code wird automatisch gefärbt."></img></p>
+        </li>
+        <li><p>Gehe auf den Trainingsplatz.
+        </p></li>
+        <li><p>Klicke auf die Aufgabe "Erste Schritte" von Stufe 1.
+        </p></li>
+        <li><p>Wähle bei "Lösung einreichen" deine neue Ameise "Hallo Welt" und klicke auf "Level starten".
+        </p></li>
+      </ol>
+      
+      <p>Fertig. Wenn alles gutgegangen ist sieht du folgenden Bildschirm:</p>
+      <p><img src="/images/l1_overview.png" class="img-thumbnail" title="Der gelbe Kreis hinten rechts ist Teil der ersten Aufgabe."></img>
       </p>
       
-      <p><img src="/images/02_welt.jpg" class="img-thumbnail" title="Scheint es nicht so, als ob der Boden schweben würde?"></img></p>
-      
-      <p>Als Feinde gibt es die gefräßigen Wanzen, die gerne mal Ameisen zum Frühstück verputzen. Vor denen sollte man sich in Acht nehmen. Später werden wir noch sehen, wie man sich ihnen zur Wehr setzen kann.
+      <p>Der Startpunkt der Ameisen ist der Ameisenbau. Ameisen werden dort in der Mitte geboren. Dein Programm hat bewirkt, dass sie sich aus dem Bau herausbewegen. Dein Ameisenvolk hat die Farbe rot. Die Körperteile der Ameise sind passend zur Farbe des Baus.
       </p>
       
-      <p><img src="/images/01_bug.jpg" class="img-thumbnail" title="Wie schön die Wanzen doch glänzen ..."></img></p>
-      
-      <p>Im Wettbewerb werden noch andere Ameisen das Spielfeld bevölkern. Dann geht es richtig zur Sache und man versucht sich gegenseitig die Nahrungsmittel wegzuschnappen. Doch nicht nur Gegner sind ein Problem für die Ameisen: Jede Ameise hat nur eine bestimmte Reichweite und muss immer wieder zum Bau zurück, um sich auszuruhen. Vergessen sie das, dann sterben sie. Aber mit bisschen Geschick lässt sich das ganz gut umgehen.
+      <p>Die Ameisen haben Fühler, deren Farben deiner aktuellen Stufe entsprechen. Sie sind an den Judo-Gürtelfarben angelehnt, und gehen über orange, grün, blau und braun schließlich zu den schwarzen Fühlern auf Stufe 9.
       </p>
       
-      <p>Die Ameisen sind sehr treue Untertanen. Sie tun genau das, was in ihrer Programm festgelegt wurde. Um ein Ameisenvolk zu programmieren, kann du unter dem Menüpunkt "AntIT! Home" ein neues Ameisenvolk anlegen. Wenn du auf bearbeiten klickst, dann erscheint der Code-Editor. Hier kannst du das Verhalten der Ameisen so definieren, wie du es haben willst. Und mit Macht kommt auch Verantwortung: Solltest die Ameisen irgendetwas falsch machen, dann wirst natürlich du zur Rechenschaft gezogen:
+      <p>Du kannst dich in der Welt umschauen. Mit gedrückter linken Maustaste lässt sich die Ansicht drehen, mit Mausrad zoomt man und mit der rechten Maustaste kann man die Ansicht verschieben.
       </p>
       
-      <p><img src="/images/01_overview.png" class="img-thumbnail" title="Wenn dir ein Ameisenvolk nicht gefällt, kannst du es wieder löschen."></img></p>
+      <p>Oben links ist die Statusübersicht. In der ersten Zeile wird angezeigt, wie viel Zeit noch bleibt, bis die Simulation zu Ende ist. Die Aufgaben müssen innerhalb dieser Zeit gelöst werden. Die Punktzahl wird später in der Kampfarena wichtig. Diese erhält man, wenn man Nahrungsmittel sammelt oder Gegner vergiftet.
+      </p>
       
-      <p>Im nächsten Tutorial wirst du lernen, wie man mit dem Code-Editor das Verhalten der Ameisen programmiert.</p>
+      <p>Das Diagramm ganz oben links gibt die Anzahl der Ticks pro Sekunden aus. Dies entspricht der Geschwindigkeit der Simulation. Diese führt im Normalfall 40 Rechenschritte, sog. Ticks, in einer Sekunde aus. Falls du eine komplizierte Ameise entwickelst, die viel Rechenleistung verbraucht, kann diese Anzahl sinken.
+      </p>
     `,
     questions : [
-      "Der Bau ist für die Ameisen das Zentrum des Lebens.",
-      "Als Nahrung gibt es Zucker, Äpfel und Birnen.",
-      "Wanzen sind vollkommen harmlos und ungefährlich.",
-      "Ameisen können unbegrenzt herumlaufen.",
+      "Ameisen starten im Ameisenbau.",
+      "Auf der Stufe 1 hat man komplett weiße Fühler.",
+      "Die Ansicht ist fixiert und kann nicht bewegt werden.",
+      "Die Simulation läuft mit 60 TPS.",
       "Ameisen tun und lassen, was sie wollen.",
       "Du bist verantwortlich für das Verhalten der Ameisen."
     ],
@@ -82,7 +98,7 @@ module.exports.tutorials = {
   },
   3 : {
     level : 1,
-    name : "Grundlagen der Programmierung",
+    name : "Grundlagen der Programmierung [API]",
     text : `
       <p class="lead"><em>Und wie steuert man jetzt die Ameisen?</em></p>
     

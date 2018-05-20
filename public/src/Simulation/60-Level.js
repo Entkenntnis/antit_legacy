@@ -7,7 +7,7 @@
     Sim.Opts.NahrungMindestEntfernung = 100000
     Sim.Opts.WanzeDrehgeschwindigkeit = 0
     Sim.Opts.WanzeGeschwindigkeit = 0
-    Sim.Opts.SpawnRadius = 70
+    Sim.Opts.SpawnRadius = 0
     Sim.Opts.SpawnWinkel = 0
     Sim.Opts.ZufallRichtungsVerschiebung = 0
     Sim.Opts.WanzenAngriff = 300
