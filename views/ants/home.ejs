@@ -67,12 +67,15 @@
 	              </li>
             	<% } %>
           	</ul>
+          	<% if (user.level >= 2) { %>
+              <p><%=ants.length%> von <%=maximum%> Ameisenvölkern in Verwendung.</p>
+            <% } %>
           <%} %>
         </div>
         <div class="col-md-2"></div>
       </div>
     
-    <br><hr>
+    <hr>
     <p>Hallo <strong><%=user.displayName%></strong> auf der Kolonie "<%=colonyInfo%>"</p>
     
     <% if (user && user.level >= 5) { %>
