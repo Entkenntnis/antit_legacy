@@ -107,9 +107,10 @@ module.exports = function(App) {
   
   App.express.get('/level', App.users.auth, co.wrap(function*(req, res) {
     
-    
-    //delete require.cache[require.resolve('./exercises.js')]
-    //initExercises()
+    if (App.config.devmode) {
+      delete require.cache[require.resolve('./exercises.js')]
+      initExercises()
+    }
     
     var levelid = checkInt(req.query.id)
     if (!exercises[levelid] || exercises[levelid].level > req.user.level)

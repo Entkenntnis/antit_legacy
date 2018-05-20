@@ -2,7 +2,15 @@ module.exports.exercises = {
   1 : {
     name : "Erste Schritte",
     description : `
-      <p>Bewege alle Ameisen in den gelben Bereich hinein. Gehe dazu 455 Schritt geradeaus, drehe dich um 128 Grad nach links und gehe weitere 353 Schritte geradeaus.
+      <p>Auf dem Spielfeld befinden sich drei Checkpoints. Laufe mit allen Ameisen diese Checkpoints in einer beliebigen Reihenfolge ab. Die Orte der Checkpoints werden in einem Koordinatensystem angegeben. Der Ursprung befindet sich im Mittelpunkt des Baus. Die x-Achse zeigt aus der Anfangsansicht nach rechts, die y-Achse nach oben, wie aus der Schule gewohnt.
+      </p>
+      
+      <p>Checkpoint 1 : (300|100)<br>
+      Checkpoint 2: (-200|-200)<br>
+      Checkpoint 3: (0|400)
+      </p>
+      
+      <p>Die Ameisen werden mit Blick in Richtung x-Achse geboren.
       </p>
     `,
     level : 1,

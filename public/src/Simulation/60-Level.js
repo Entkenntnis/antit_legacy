@@ -1,7 +1,7 @@
 "use strict";
 (function(Sim){
 
-  function level1Init() {
+  function defaultLevelInit() {
     Sim.Opts.NahrungsWartezeit = 100000
     Sim.Opts.WanzenProSpieler = 0
     Sim.Opts.NahrungMindestEntfernung = 100000
@@ -13,7 +13,10 @@
     Sim.Opts.WanzenAngriff = 300
   }
   
-  function level1create() {
+  var hillx = 455.3
+  var hilly = 512.5
+  
+  function defaultLevelCreate() {
     Sim.hills.push(new Sim.Hill({x:Sim.playground.getWidth()/3,y:Sim.playground.getHeight()/2}, 0))
     Sim.players.push(new Sim.Player(0, Sim.API.ants[0]))
     // Hillpos: 455.3 | 512.5
@@ -27,20 +30,37 @@
   var levels = {
     1 : {
       init : function(){
-        level1Init()
-        Sim.Opts.Runden = 1000
+        defaultLevelInit()
+        Sim.Opts.Runden = 2000
         Sim.Opts.AnfangsRichtung = 0
       },
       create : function(){
-        level1create()
-        Sim.Bus.emit('move-spawn-point', 0, {x:763,y:234})
+        defaultLevelCreate()
+        Sim.l1_checkpoints = [
+          {x:hillx+300,y:hilly-100},
+          {x:hillx-200,y:hilly+200},
+          {x:hillx,y:hilly-400}
+        ];
+        [0,1,2].forEach(function(id){
+          Sim.Bus.emit('move-spawn-point', id, Sim.l1_checkpoints[id])
+        })
+      },
+      update : function(){
+        Sim.ants.forEach(function(a){
+          [0,1,2].forEach(function(id){
+            if (Sim.Util.dist(Sim.l1_checkpoints[id], a.getPos()) < 15) {
+              a["hasc" + (id+1)] = true
+            }
+          })
+        })
       },
       isDone : function(){
         if (Sim.ants.length == 20) {
           var ok = true
-          Sim.ants.forEach(function(f){
-            if (Sim.Util.dist({x:763,y:234}, f.getPos()) > 10)
-              ok = false
+          Sim.ants.forEach(function(a){
+            /*if (Sim.Util.dist({x:763,y:234}, f.getPos()) > 10)
+              ok = false*/
+            if (!(a.hasc1 && a.hasc2 && a.hasc3)) ok = false
           })
           if (ok)
             return true
@@ -50,12 +70,12 @@
     },
     2 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1000
         Sim.Opts.AnfangsRichtung = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.Bus.emit('move-spawn-point', 0, {x:864,y:712})
       },
       isDone : function(){
@@ -74,11 +94,11 @@
     
     3 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1000
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.Bus.emit('move-spawn-point', 0, {x:176,y:392})
       },
       isDone : function(){
@@ -97,14 +117,14 @@
     
     4 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1200
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.ZuckerGröße = 100
         Sim.Opts.EnergieProZucker = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.sugars.push(new Sim.Sugar({x:824,y:512}));
         Sim.bugs.push(new Sim.Bug({x:674,y:512}))
         Sim.bugs.push(new Sim.Bug({x:624,y:412}))
@@ -117,14 +137,14 @@
     
     5 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1200
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.AnfangsEnergie = 800
         Sim.Opts.EnergieProApfel = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.apples.push(new Sim.Apple({x:624,y:112}));
         Sim.bugs.push(new Sim.Bug({x:624,y:362}))
         Sim.bugs.push(new Sim.Bug({x:524,y:112}))
@@ -136,14 +156,14 @@
     
     6 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1500
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.ZuckerGröße = 100
         Sim.Opts.EnergieProZucker = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.sugars.push(new Sim.Sugar({x:455,y:712}))
         Sim.sugars.push(new Sim.Sugar({x:455,y:312}))
       },
@@ -154,14 +174,14 @@
     
     7 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 2000
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.ZuckerGröße = 100
         Sim.Opts.EnergieProZucker = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.sugars.push(new Sim.Sugar({x:924,y:712}));
         var bugs = [
           [-1,-2],
@@ -197,14 +217,14 @@
     
     8 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1500
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.ZuckerGröße = 100
         Sim.Opts.EnergieProZucker = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         var pos = [{x:524,y:712},{x:524,y:912},{x:724,y:912}]
         pos.forEach(function(pos, id){Sim.Bus.emit('move-spawn-point2', id, pos)})
         var angle = Sim.rng()*360
@@ -219,13 +239,13 @@
     
     9 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 650
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.EnergieProApfel = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.Bus.emit('move-spawn-point2', 0, {x:824,y:212})
         var angle = Sim.rng()*360
         Sim.apples.push(new Sim.Apple(Sim.Util.moveDir({x:824,y:212}, angle, Sim.rng()*35+10)))
@@ -237,13 +257,13 @@
     
     10 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 3000
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.EnergieProApfel = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.apples.push(new Sim.Apple({x:655,y:312}))
         Sim.apples.push(new Sim.Apple({x:655,y:712}))
         Sim.apples.push(new Sim.Apple({x:255,y:312}))
@@ -256,14 +276,14 @@
     
     11 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 3000
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.ZuckerGröße = 100
         Sim.Opts.EnergieProZucker = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         var mid = {x:924,y:512}
         var pos = []
         for (var dx = -1; dx <= 1; dx++) {
@@ -290,13 +310,13 @@
     
     12 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1500
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.AnfangsEnergie = 600
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.bugs.push(new Sim.Bug({x:1024,y:812}))
         Sim.bugs.push(new Sim.Bug({x:524,y:112}))
         Sim.bugs.push(new Sim.Bug({x:224,y:412}))
@@ -308,7 +328,7 @@
     
     13 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 10000
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.EnergieProZucker = 0
@@ -316,7 +336,7 @@
         Sim.Opts.AnfangsEnergie = 2000
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         var pos = [{x:755,y:512}, {x:755,y:812}, {x:455,y:812}]
         pos.forEach(function(p, id){
           Sim.Bus.emit('move-spawn-point2', id, p)
@@ -338,12 +358,12 @@
     
     14 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 3000
         Sim.Opts.AnfangsRichtung = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.Bus.emit('set-ring', {x:455,y:512}, 0x0000aa, {inner:190,outer:200})
         Sim.tmp = {}
         Sim.tmp.lost = false
@@ -377,13 +397,13 @@
     
     15 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 3000
         Sim.Opts.AnfangsRichtung = 0
         Sim.Opts.AnfangsEnergie = 800
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.bugs.push(new Sim.Bug({x:355,y:912}))
         Sim.bugs.push(new Sim.Bug({x:1224,y:112}))
         Sim.bugs.push(new Sim.Bug({x:1024,y:212}))
@@ -425,13 +445,13 @@
     
     16 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 3000
         Sim.Opts.SpawnWinkel = undefined
         Sim.Opts.SpawnRadius = undefined
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.apples.push(new Sim.Apple({x:755,y:512}))
         Sim.sugars.push(new Sim.Sugar({x:155,y:512}))
         Sim.sugars.push(new Sim.Sugar({x:455,y:212}))
@@ -451,14 +471,14 @@
  
     17 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1000
         Sim.Opts.SpawnWinkel = 0
         Sim.Opts.SpawnRadius = 300
         Sim.Opts.AnfangsRichtung = 0
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.Bus.emit('move-spawn-point', 0, {x:755,y:512})
       },
       onSpawn : function(ant){
@@ -489,14 +509,14 @@
  
     18 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1000
         Sim.Opts.SpawnWinkel = 0
         Sim.Opts.SpawnRadius = 100
         Sim.Opts.AnfangsRichtung = 90
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
       },
       onSpawn : function(ant){
         if (Sim.cycles >= 340) {
@@ -520,11 +540,11 @@
  
     19 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1000
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         Sim.Bus.emit('set-ring', {x:455,y:512}, 0x0000aa, {inner:190,outer:200})
       },
       onSpawn : function(ant){
@@ -556,11 +576,11 @@
  
     20 : {
       init : function() {
-        level1Init()
+        defaultLevelInit()
         Sim.Opts.Runden = 1000
       },
       create : function(){
-        level1create()
+        defaultLevelCreate()
         function diffx() { return Sim.rng()*40-20+855 }
         Sim.sugars.push(new Sim.Sugar({x:diffx(),y:780}))
         Sim.sugars.push(new Sim.Sugar({x:diffx(),y:500}))
