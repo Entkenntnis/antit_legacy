@@ -17,32 +17,38 @@ module.exports.exercises = {
   },
   
   2 : {
-    name : "Koordinaten",
+    name : "Himmelsrichtungen",
     description : `
-      <p>Mithilfe von Koordinaten können Punkte in einem Raum genau bestimmt werden. Das ist meist praktischer, als eine Abfolge von Bewegungen anzugeben wie in der Aufgabe zuvor.</p>
-      
-      <p>Wir legen also ein Koordinatensystem (kurz Kosy) auf das Spielfeld der Ameisen. Der Mittelpunkt liegt beim Geburtsort der Ameisen. Die Ameisen schauen der positiven x-Achse entlang. Die positive y-Achse verläuft von den Ameisen aus gesehen nach links. Hier ist ein Bild:</p>
-      
-      <p><img src="/images/01_koordinaten.jpg"></img></p>
-      
-      <p>Dein Ziel liegt bei der x-Koordinate 340 und bei der y-Koordinate -200, kurz (340|-200). Bewege alle Ameisen in diesen gelben Bereich hinein.
+      <p>Die Himmelsrichtung der Ameisen sind wie folgt festgelegt:
       </p>
+      
+      <p><img src="/images/01_koordinaten2.jpg"></img></p>
+      
+      <p>Um eine Himmelsrichtung anzugeben, verwenden wir Zahlen. Wir beginnen bei Osten und zählen dann die Winkel im Uhrzeigersinn. Für Osten verwenden wir die Zahl 0, für Süden die Zahl 90, für Westen die Zahl 180 und für Norden die Zahl 270. Um die Ameise zu eine bestimmte Himmelsrichtung zu drehen, verwende den Befehl <code>DreheZuRichtung</code>.
+      </p>
+      
+      <p>Auch diesmal sind drei Checkpoints angegeben, die abgelaufen werden müssen:</p>
+      
+      <p>Checkpoint 1 : (-300|0)<br>
+      Checkpoint 2: (-150|150)<br>
+      Checkpoint 3: (0|300)
+      </p>
+      
+      <p>Allerdings starten die Ameisen mit einer beliebigen Richtung.</p>
     `,
     level : 1,
   },
   
   3 : {
-    name : "Himmelsrichtungen",
+    name : "Die reisende Handelsmeise",
     description : `
-      <p>Zusätzlich zum Koordinatensystem ist es auch praktisch, Himmelsrichtungen festzulegen. Diese sind wie folgt festgelegt:
+      <p>Auf der Karte befinden sich eine Reihe von Checkpoints. Das Ziel ist es, in möglichst kurzer Zeit mit den Ameisen die Checkpoints abzulaufen und zum Bau zurückzukehren. Wähle die Reihenfolge mit Geschick. Das ist eine optionale Aufgabe.
       </p>
       
-      <p><img src="/images/01_koordinaten2.jpg"></img></p>
-      
-      <p>Um die Himmelsrichtung anzugeben, verwenden wir Zahlen. Wir beginnen bei Osten und zählen dann die Winkel im Uhrzeigersinn. Für Osten verwenden wir die Zahl 0, für Süden die Zahl 90, für Westen die Zahl 180 und für Norden die Zahl 270. Um die Ameise zu eine bestimmte Himmelsrichtung zu drehen, verwende den Befehl <code>DreheZuRichtung</code>.
+      <p>Mit der Taste G kannst du dir während der Simulation eine Koordinatengitter anzeigen lassen. Das Gitter hat einen Abstand von 50 Ameisenschritten. Damit kannst du die Koordinaten der Checkpoints bestimmen. Tipp: Die Diagonale eines Gitters ist 71 Ameisenschritte lang.
       </p>
       
-      <p>Dein Ziel liegt diesmal bei den Koordinaten (-348|120). Die Ameisen starten wieder im Ursprung des Kosy, aber werden mit einer zufälligen Blickrichtung geboren.
+      <p>In der Informatik in dieses Problem als "Traveling Salesman" berühmt geworden. Für viele Checkpoints wird es ziemlich schwer, eine optimale Route zu berechnen.
       </p>
     `,
     level : 1,

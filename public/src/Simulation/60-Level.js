@@ -71,19 +71,33 @@
     2 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 1000
-        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.Runden = 1500
       },
       create : function(){
         defaultLevelCreate()
-        Sim.Bus.emit('move-spawn-point', 0, {x:864,y:712})
+        Sim.l1_checkpoints = [
+          {x:hillx-300,y:hilly},
+          {x:hillx-150,y:hilly-150},
+          {x:hillx,y:hilly-300}
+        ];
+        [0,1,2].forEach(function(id){
+          Sim.Bus.emit('move-spawn-point', id, Sim.l1_checkpoints[id])
+        })
+      },
+      update : function(){
+        Sim.ants.forEach(function(a){
+          [0,1,2].forEach(function(id){
+            if (Sim.Util.dist(Sim.l1_checkpoints[id], a.getPos()) < 15) {
+              a["hasc" + (id+1)] = true
+            }
+          })
+        })
       },
       isDone : function(){
         if (Sim.ants.length == 20) {
           var ok = true
-          Sim.ants.forEach(function(f){
-            if (Sim.Util.dist({x:864,y:712}, f.getPos()) > 10)
-              ok = false
+          Sim.ants.forEach(function(a){
+            if (!(a.hasc1 && a.hasc2 && a.hasc3)) ok = false
           })
           if (ok)
             return true
@@ -95,17 +109,40 @@
     3 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 1000
+        Sim.Opts.Runden = 1100
       },
       create : function(){
         defaultLevelCreate()
-        Sim.Bus.emit('move-spawn-point', 0, {x:176,y:392})
+        Sim.l1_checkpoints = [
+          {x:hillx+100,y:hilly+100},
+          {x:hillx+150,y:hilly+50},
+          {x:hillx+150,y:hilly-50},
+          {x:hillx+100,y:hilly-100},
+          {x:hillx+0,y:hilly-200},
+          {x:hillx-150,y:hilly-50},
+          {x:hillx-100,y:hilly},
+          {x:hillx-200,y:hilly+100},
+          {x:hillx-150,y:hilly+200},
+          {x:hillx-50,y:hilly+100},
+        ];
+        [0,1,2,3,4,5,6,7,8,9].forEach(function(id){
+          Sim.Bus.emit('move-spawn-point', id, Sim.l1_checkpoints[id])
+        })
+      },
+      update : function(){
+        Sim.ants.forEach(function(a){
+          [0,1,2,3,4,5,6,7,8,9].forEach(function(id){
+            if (Sim.Util.dist(Sim.l1_checkpoints[id], a.getPos()) < 15) {
+              a["hasc" + (id+1)] = true
+            }
+          })
+        })
       },
       isDone : function(){
         if (Sim.ants.length == 20) {
           var ok = true
-          Sim.ants.forEach(function(f){
-            if (Sim.Util.dist({x:176,y:392}, f.getPos()) > 10)
+          Sim.ants.forEach(function(a){
+            if (!(a.hasc1 && a.hasc2 && a.hasc3 && Sim.Util.dist({x:hillx,y:hilly}, a.getPos()) < 15))
               ok = false
           })
           if (ok)
