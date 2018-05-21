@@ -105,7 +105,17 @@
   
   AntIT.NeueAmeise = function (name) {
     var bus = Minibus.create()
-    var newAnt = {Name:name,Bus:bus,wenn:bus.on};
+    var newAnt = {Name:name,Bus:bus,wenn:bus.on,
+      teams:undefined,
+      curTeamCount:0,
+      SetzeTeams:function(count){
+        if (!isNaN(count) && count === parseInt(count, 10) && count > 1) {
+          this.teams = count
+        } else {
+          alert('Setzen der Teams fehlgeschlagen')
+        }
+      },
+    };
     if (Sim.API.ants.length < Sim.Opts.MaximaleSpieler) {
       Sim.API.ants.push(newAnt);
     }

@@ -99,7 +99,7 @@
           'LadeZuckerAb', 'TrageApfel', 'GeheZuZiel', 'Warte', 'SetzeGift', 'OFFEN',
           'Reichweite', 'Runde', 'Distanz', 'Winkel', 'Bau', 'Position', 'DreheWegVonObjekt',
           'DreheZuObjekt', 'Gedächtnis', 'SendeNachricht', 'SendeSelber', 'Zufallszahl',
-          'Zufallsname', 'consolebku', 'Aktiv', 'InGift']
+          'Zufallsname', 'consolebku', 'Aktiv', 'InGift', 'InTeam']
         var consolebku = {log:console.log}
         
         eval('(function(' +  Object.keys(window).filter(function(x){return whitelist.indexOf(x)< 0}).join(",") + '){var console = consolebku;' + atob("<%-exportCode%>") + '})();');

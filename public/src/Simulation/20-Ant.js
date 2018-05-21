@@ -526,7 +526,17 @@
     
     // constructor
     setColor()
-    updateGO();
+    updateGO()
+    
+    // Teams setzen
+    var ki = myPlayer().getKI()
+    if (ki.teams !== undefined) {
+      this.teamValue = ki.curTeamCount
+      ki.curTeamCount++
+      if (ki.curTeamCount >= ki.teams) {
+        ki.curTeamCount = 0
+      }
+    }
   }
   
   Sim.Ant = Ant

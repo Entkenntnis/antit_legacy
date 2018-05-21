@@ -204,6 +204,10 @@
     }
     return Sim.Util.capitalize(name);
   });
+  
+  API.addFunc("InTeam", function(number) {
+    return API.curAnt.teamValue === number
+  })
 
   window.OFFEN = true
 

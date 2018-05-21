@@ -31,7 +31,7 @@
                       solvedcount++
                   })
                 %>
-                <div class="panel-heading" onclick="flip(<%=i%>)" style="cursor:pointer;">Stufe <%=i%> <span style="margin-left:50px">(<%=solvedcount%>/<%=count%>)</span></div>
+                <div class="panel-heading" onclick="flip(<%=i%>)" style="cursor:pointer;">Stufe <%=i%> <span class="badge" style="margin-left:30px"><%=solvedcount%>/<%=count%></span></div>
                 <%
                   var ok = (i != user.level)
                  
