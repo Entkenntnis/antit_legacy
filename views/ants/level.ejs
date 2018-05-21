@@ -23,13 +23,18 @@
 	        <div class="col-md-8">
 	          <% for (var i = 1; i <= user.level; i++) { %>
 	            <div class="panel panel-default">
-                <div class="panel-heading" onclick="flip(<%=i%>)" style="cursor:pointer;">Stufe <%=i%></div>
+                <%
+                  var count = exIndex[i].length
+                  var solvedcount = 0
+                  exIndex[i].forEach(id => {
+                    if (solved.indexOf(parseInt(id)) >= 0)
+                      solvedcount++
+                  })
+                %>
+                <div class="panel-heading" onclick="flip(<%=i%>)" style="cursor:pointer;">Stufe <%=i%> <span style="margin-left:50px">(<%=solvedcount%>/<%=count%>)</span></div>
                 <%
                   var ok = (i != user.level)
-                  exIndex[i].forEach(function(id){
-                    if (solved.indexOf(parseInt(id)) < 0)
-                      ok = false
-                  })
+                 
                 %>
                 <script>
                   function flip(id) {
@@ -67,6 +72,12 @@
 	        </div>
 	        <div class="col-md-2"></div>
 	      </div>
+        
+        <div style="height:250px"></div>
+        
+        <% if (user.level > 1) { %>
+          <p>Zu schnell hochgestuft? Du kannst dich hier wieder <a href="/downgrade">zurückstufen.</a></p>
+        <% } %>
         
       <% } else { %>
       
@@ -122,10 +133,11 @@
         </div>
         <p></p>
         
+        <div style="height:300px"></div>
+        
 	    
 	    <% } %>
 	    
-      <div style="height:300px"></div>
 	    
     </div>
   </body>

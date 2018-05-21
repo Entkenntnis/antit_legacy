@@ -153,6 +153,17 @@ module.exports = function(App) {
     res.redirect('/')
   }))
   
+  App.express.get('/downgrade', App.users.auth, co.wrap(function*(req, res) {
+    if (req.user.level>=2) {
+      yield App.colo.getCol(req.session.colony).update({_id:req.user._id},
+                                                       { $set : {
+                                                         level: --req.user.level}})
+      res.redirect('/level')
+    } else {
+      res.redirect('/')
+    }
+  }))
+  
   App.express.get('/levelsim', App.users.auth, co.wrap(function*(req, res) {
     // eine Ameise laden
     if (!req.user) return res.redirect('/')
