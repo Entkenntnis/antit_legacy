@@ -161,8 +161,6 @@
         defaultLevelInit()
         Sim.Opts.Runden = 2500
         Sim.Opts.ZuckerGröße = 100
-        Sim.Opts.EnergieProZucker = 0
-        Sim.Opts.EnergieProApfel = 0
       },
       create : function(){
         defaultLevelCreate()
@@ -183,19 +181,18 @@
     5 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 1200
-        Sim.Opts.AnfangsRichtung = 0
-        Sim.Opts.AnfangsEnergie = 800
-        Sim.Opts.EnergieProApfel = 0
+        Sim.Opts.Runden = 1500
+        Sim.Opts.ZuckerGröße = 50
       },
       create : function(){
         defaultLevelCreate()
-        Sim.apples.push(new Sim.Apple({x:624,y:112}));
-        Sim.bugs.push(new Sim.Bug({x:624,y:362}))
-        Sim.bugs.push(new Sim.Bug({x:524,y:112}))
+        Sim.sugars.push(new Sim.Sugar(locPos(300,300)))
+        Sim.sugars.push(new Sim.Sugar(locPos(-300,-300)))
+        Sim.apples.push(new Sim.Apple(locPos(300,-300)))
+        Sim.apples.push(new Sim.Apple(locPos(-300,300)))
       },
       isDone : function(){
-        return Sim.players[0].getApple() == 1
+        return Sim.players[0].getSugar() == 100 && Sim.players[0].getApple() == 2
       }
     },
     

@@ -1,0 +1,15 @@
+var Ameise = AntIT.NeueAmeise("Stufe 2 Aufgabe 2")
+
+Ameise.SetzeTeams(4)
+
+Ameise.wenn("IstGeboren", function(){
+    if (InTeam(0)) {
+        DreheZuRichtung(0)
+        Gehe(100)
+    }
+    if (InTeam(1)) {
+        DreheZuRichtung(90)
+        Gehe(200)
+    }
+    
+})

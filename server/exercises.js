@@ -68,7 +68,19 @@ module.exports.exercises = {
   5 : {
     name : "Schneller in Teams",
     description : `
-      <p>Schon vier Ameisen reichen aus, um diesen Apfel zum Bau zu tragen - wenn auch recht langsam. Der Apfel liegt bei den Koordinaten (100|400). Passe auch diesmal wieder auf die Wanzen auf!
+      <p>Auf dem Spielfeld befinden sich wieder vier Nahrungsmittel. Diese sollen eingesammelt werden. Wenn die Ameisen sich aufteilen, geht alles viel schnellern.
+      </p>
+      <p>Dazu können sich die Ameisen selber in Teams zuteilen. Nutze dafür folgende <a href="/images/teams.txt">Vorlage</a>:
+      </p>
+      
+      <p><img src="/images/l2_teams.png"></p>
+      
+      <p style="margin-bottom:0">Erklärung für den Code:<br>Zeile 1: Erzeuge eine Ameise mit dem Namen "Stufe 2 Aufgabe 2" und speichere sie in der Variablen "Ameise".<br>Zeile 3: Setze die Anzahl der Teams mit dem Befehl <code>SetzeTeams</code> auf 4.<br>Zeile 5: Wenn die Ameise geboren ist, dann soll sie folgende Anweisungen ausführen:<br>
+      </p>
+      
+      <p style="margin-left:30px;margin-top:0">Zeile 6: Wenn die Ameise zum Team mit der Nummer 0 gehört, dann dreht sie sich zur Richtung 0 und geht 100 Schritte. Die Abfrage funktioniert mit der Funktion <code>InTeam</code>.<br>Zeile 10: Wenn die Ameise zum Team mit der Nummer 1 gehört, dann dreht sie sich zur Richtung 90 und geht 200 Schritte.</p>
+      
+      <p>Ergänze die weiteren Abfragen für die restlichen Teams. Passe die Befehle so an, dass die Ameisen die Nahrungsmittel einsammeln.
       </p>
     `,
     level : 2,
