@@ -199,18 +199,63 @@
     6 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 1500
-        Sim.Opts.AnfangsRichtung = 0
-        Sim.Opts.ZuckerGröße = 100
-        Sim.Opts.EnergieProZucker = 0
+        Sim.Opts.Runden = 1300
+        Sim.Opts.ZuckerGröße = 50
       },
       create : function(){
         defaultLevelCreate()
-        Sim.sugars.push(new Sim.Sugar({x:455,y:712}))
-        Sim.sugars.push(new Sim.Sugar({x:455,y:312}))
+        var vwalls = [
+          [0,0,0,0,0,1,0],
+          [1,0,0,0,0,1,0],
+          [0,1,0,1,1,0,1],
+          [0,0,0,0,0,0,0],
+          [1,1,0,0,0,0,1],
+          [0,1,1,1,0,1,1],
+          [0,0,1,0,1,0,0],
+          [1,0,0,0,0,1,0],
+        ]
+        var hwalls = [
+          [0,1,0,1,0,1,0],
+          [1,0,1,0,0,1,0],
+          [1,1,0,0,0,0,1],
+          [1,1,1,0,1,0,0],
+          [0,1,0,1,1,1,1],
+          [1,0,1,1,1,0,0],
+          [0,1,1,1,0,1,1],
+          [1,0,0,1,0,0,0],
+        ]
+        for (var x = -3; x <= 5; x++) {
+          for (var y = -4; y <= 4; y++) {
+            if (!(x==0&&y==0))
+              Sim.bugs.push(new Sim.Bug(locPos(x*50,y*50)))
+          }
+        }
+        for (var i = 0; i < 8; i++) {
+          Sim.bugs.push(new Sim.Bug(locPos(i*50-125,200)))
+          Sim.bugs.push(new Sim.Bug(locPos(i*50-125,-200)))
+          Sim.bugs.push(new Sim.Bug(locPos(-150,i*50-175)))
+          Sim.bugs.push(new Sim.Bug(locPos(250,i*50-175)))
+        }
+        vwalls.forEach(function(arr, iy) {
+          arr.forEach(function(val, ix) {
+            if (val == 1) {
+              Sim.bugs.push(new Sim.Bug(locPos(-100+ix*50,175-iy*50)))
+            }
+          })
+        })
+        hwalls.forEach(function(arr, ix){
+          arr.forEach(function(val, iy) {
+            if (val === 1) {
+              Sim.bugs.push(new Sim.Bug(locPos(-125+ix*50,150-iy*50)))
+            }
+          })
+        })
+        console.log(Sim.bugs.length)
+        Sim.sugars.push(new Sim.Sugar(locPos(175,75)))
+        Sim.sugars.push(new Sim.Sugar(locPos(75,-75)))
       },
       isDone : function(){
-        return Sim.players[0].getSugar() == 200
+        return Sim.players[0].getSugar() == 100
       }
     },
     

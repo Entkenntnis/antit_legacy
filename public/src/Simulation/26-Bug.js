@@ -69,7 +69,8 @@
           }
         }
       }
-      updateGO();
+      if (Sim.Opts.WanzeGeschwindigkeit > 0)
+        updateGO()
     }
     
     this.die = function(){

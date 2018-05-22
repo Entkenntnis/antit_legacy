@@ -1,0 +1,31 @@
+var Ameise = AntIT.NeueAmeise("Stufe 2 Aufgabe 3")
+
+Ameise.SetzeTeams(2)
+
+function rechts() {
+    Drehe(90)
+    Gehe(50)
+}
+
+function links() {
+    Drehe(-90)
+    Gehe(50)
+}
+
+Ameise.wenn("IstGeboren", function(){
+    if (InTeam(0)) {
+        DreheZuRichtung(180)
+        Gehe(25)
+        Drehe(90)
+        Gehe(25)
+        Drehe(-90)
+        Gehe(100)
+        rechts()
+        rechts()
+        links()
+        
+    }
+    if (InTeam(1)) {
+        
+    }
+})

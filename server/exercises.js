@@ -89,7 +89,12 @@ module.exports.exercises = {
   6 : {
     name : "Labyrinth",
     description : `
-      <p>Zweihundert Schritte über dem Bau und zweihundert Schritte unter dem Bau befindet sich jeweils ein Zuckerhaufen. Baue beide vollständig ab.
+      <p>Zwei Zuckerhaufen sind in einem Labyrinth aus Wanzen versteckt. Bilde zwei Teams und sammle den Zucker ein, bevor die Zeit abläuft. Du kannst folgende <a href="/images/l2_labyrinth.txt">Vorlage</a> verwenden:
+      </p>
+      
+      <p><img src="/images/l2_labyrinth.png"></p>
+      
+      <p>In Zeile 5 bis 13 werden zwei Hilfsfunktionen definiert. Der neue Befehl <code>rechts</code> dreht die Ameise um 90 Grad nach rechts und geht 50 Schritte, der Befehl <code>links</code> tut das entsprechende nach links. Diese können wie vorgegebene Befehle verwendet werden, siehe Zeile 23 bis 25. Vergesse die Klammern nicht. Ergänze ab Zeile 26 den Code für das Team 0 und schreibe den Code für Team 1.
       </p>
     `,
     level : 2,
