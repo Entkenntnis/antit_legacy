@@ -434,7 +434,7 @@
     Bus.on('move-ant', function(key, pos, roty) {
       var antBody = antStore.get(key)
       antBody.position.copy(toViewPos(pos))
-      antBody.rotation.y = roty
+      antBody.rotation.y = roty + (Math.random()*0.3-0.15)
     })
     
     Bus.on('change-unit-color', function(key, type, color) {

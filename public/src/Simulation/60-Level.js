@@ -16,6 +16,10 @@
   var hillx = 455.3
   var hilly = 512.5
   
+  function locPos(x,y){
+    return {x:hillx+x,y:hilly-y}
+  }
+  
   function defaultLevelCreate() {
     Sim.hills.push(new Sim.Hill({x:Sim.playground.getWidth()/3,y:Sim.playground.getHeight()/2}, 0))
     Sim.players.push(new Sim.Player(0, Sim.API.ants[0]))
@@ -155,20 +159,24 @@
     4 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 1200
-        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.Runden = 2500
         Sim.Opts.ZuckerGröße = 100
         Sim.Opts.EnergieProZucker = 0
+        Sim.Opts.EnergieProApfel = 0
       },
       create : function(){
         defaultLevelCreate()
-        Sim.sugars.push(new Sim.Sugar({x:824,y:512}));
-        Sim.bugs.push(new Sim.Bug({x:674,y:512}))
-        Sim.bugs.push(new Sim.Bug({x:624,y:412}))
-        Sim.bugs.push(new Sim.Bug({x:614,y:612}))
+        Sim.sugars.push(new Sim.Sugar(locPos(100,200)))
+        Sim.sugars.push(new Sim.Sugar(locPos(-300,-300)))
+        Sim.bugs.push(new Sim.Bug(locPos(-150,-150)))
+        Sim.bugs.push(new Sim.Bug(locPos(-300,0)))
+        Sim.apples.push(new Sim.Apple(locPos(200,-200)))
+        Sim.apples.push(new Sim.Apple(locPos(-200,200)))
+        Sim.bugs.push(new Sim.Bug(locPos(-200,150)))
+        Sim.bugs.push(new Sim.Bug(locPos(-150,200)))
       },
       isDone : function(){
-        return Sim.players[0].getSugar() == 100
+        return Sim.players[0].getSugar() == 200 && Sim.players[0].getApple() == 2
       }
     },
     

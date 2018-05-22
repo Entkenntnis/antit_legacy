@@ -55,16 +55,18 @@ module.exports.exercises = {
   },
   
   4 : {
-    name : "Lecker, Zucker",
+    name : "Wir haben Hunger",
     description : `
-      <p>300 Schritte vor dir befindet sich ein Zuckerhaufen. Baue ihn ab, indem du jede Ameise einmal ein Zuckerstückchen tragen lässt. Aber Achtung: Komm den Wanzen nicht zu nahe!
+      <p>Die Ameisen bekommen langsam richtig Hunger. Zum Glück sind auf dem Spielfeld einige Nahrungsmittel verteilt. Sammle sie alle ein. Vermeide es, mit den Wanzen in Berühung zu kommen!
       </p>
+      <p>Hinweis: Lasse dir mit der Taste G wieder ein Gitter (Linienabstand 50 Ameisenschritte) anzeigen.
+      <p>
     `,
     level : 2,
   },
   
   5 : {
-    name : "Ein großer Apfel",
+    name : "Schneller in Teams",
     description : `
       <p>Schon vier Ameisen reichen aus, um diesen Apfel zum Bau zu tragen - wenn auch recht langsam. Der Apfel liegt bei den Koordinaten (100|400). Passe auch diesmal wieder auf die Wanzen auf!
       </p>
@@ -73,7 +75,7 @@ module.exports.exercises = {
   },
   
   6 : {
-    name : "Zweimal Zucker",
+    name : "Labyrinth",
     description : `
       <p>Zweihundert Schritte über dem Bau und zweihundert Schritte unter dem Bau befindet sich jeweils ein Zuckerhaufen. Baue beide vollständig ab.
       </p>
@@ -82,7 +84,7 @@ module.exports.exercises = {
   },
   
   7 : {
-    name : "Labyrinth",
+    name : "Versteckte Nachrichten",
     description : `
       <p>Oh je, der Zuckerhaufen ist ja von Wanzen eingezäunt! Findest du trotzdem einen Weg, diesen Zuckerhaufen abzubauen? Seien Koordinaten lauten (400|-200), die Wanzen stehen immer in einem Abstand von 50 Schritten.
       </p>
