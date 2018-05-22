@@ -262,43 +262,46 @@
     7 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 2000
-        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.Runden = 4000
         Sim.Opts.ZuckerGröße = 100
-        Sim.Opts.EnergieProZucker = 0
+        console.log("Sehr gut, dass du hierher gefunden hast...")
+        setTimeout(function(){
+          console.log("Unten an der Konsole findest du eine Befehlszeile.")
+          setTimeout(function(){
+            console.log("Tippe dort \"WeitereInfos()\" ein und drücke auf Enter. Die Anführungszeichen werden nicht mitgeschrieben.")
+          }, 3000)
+        }, 4000)
+        window.WeitereInfos = function(){
+          console.log("Super gemacht...")
+          setTimeout(function(){
+            console.log("Du bist ja schon ein richtiger Profi :)")
+            setTimeout(function(){
+              console.log("Tippe als nächstes \"InfoObjekt\" ein und drücke Enter.")
+              setTimeout(function(){
+                console.log("123")
+              }, 4000)
+            }, 3000)
+          }, 3000)
+        }
+        window.InfoObjekt = {
+          lalala:123,
+          lol:4543,
+          Anweisung:"Mit dem Befehl console.log() können Nachrichten an die Konsole ausgegeben werden. Erstelle eine Ameise, die nach ihrer Geburt den Text \"Hacker\" auf der Konsole ausgibt. Danach ist diese Aufgabe erledigt."
+        }
+        var backup = window.console.log
+        window.console.log = function(arg) {
+          backup(arg)
+          if (arg == "Hacker") {
+            Sim.l2_done = true
+          }
+        }
       },
       create : function(){
         defaultLevelCreate()
         Sim.sugars.push(new Sim.Sugar({x:924,y:712}));
-        var bugs = [
-          [-1,-2],
-          [0,-2],
-          [1,-2],
-          [1,-1],
-          [1,0],
-          [1,1],
-          [0,1],
-          [-1,1],
-          [-1,0],
-          [-2,0],
-          [-3,0],
-          [-3,-1],
-          [-3,-2],
-          [-1,-3],
-          [-1,-4],
-          [-2,-4],
-          [-3,-4],
-          [-4,-4],
-          [-5,-4],
-          [-5,-3],
-          [-5,-2],
-        ]
-        bugs.forEach(function(diff){
-          Sim.bugs.push(new Sim.Bug({x:924+50*diff[0],y:712-50*diff[1]}))
-        })
       },
       isDone : function(){
-        return Sim.players[0].getSugar() == 100
+        return Sim.l2_done
       }
     },
     

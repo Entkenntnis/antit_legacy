@@ -101,10 +101,13 @@ module.exports.exercises = {
   },
   
   7 : {
-    name : "Versteckte Nachrichten",
+    name : "Versteckte Botschaften",
     description : `
-      <p>Oh je, der Zuckerhaufen ist ja von Wanzen eingezäunt! Findest du trotzdem einen Weg, diesen Zuckerhaufen abzubauen? Seien Koordinaten lauten (400|-200), die Wanzen stehen immer in einem Abstand von 50 Schritten.
+      <p>Die Aufgabenstellung findet sich diesmal in der <a target="_blank" href="https://thytos.com/video/programmieren-lernen-mit-javascript/javascript-konsole-oeffnen">Konsole</a> deines Browsers zu dieser Seite.
       </p>
+      
+      <script>console.log("Aufgabenstellung: Starte eine Simulation mit einem beliebigen Ameisenvolk. Innerhalb der Simulation werden dir auf der Konsole weitere Anweisungen gegeben.")
+      </script>
     `,
     level : 2,
   },

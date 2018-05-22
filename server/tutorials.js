@@ -165,7 +165,7 @@ module.exports.tutorials = {
       
       <p><img src="/images/02_apfel.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></img></p>
       
-      <p>Auch in diesem Bild sieht man: Die Ameisen stehen so perfekt auf der gleichen Stelle, dass man nicht erkennt, dass es eigentlich vier Ameisen sind. Diese Ameisen unterscheiden sich in diesem Punkt doch sehr von ihren natürlichen Verwandten da draußen.
+      <p>Mit der eingesammelten Nahrung können neue Ameisen geboren werden. Das Volk vergrößert sich und die Ameisen können noch schneller Nahrung sammeln. 
       </p>
     
     `,
@@ -233,7 +233,7 @@ module.exports.tutorials = {
         </tbody>
       </table> 
       
-      Falls dir das Tippen schwerfällt (selbst mit Auto-Vervollständigung und Vorlage), kann du mit einem Tipptrainer (z.B. Tipp10) etwas üben. Tippen ist nichts weiter als Übungssache und wer das nicht kann ist einfach ... hm ... faul.
+      Falls dir das Tippen schwerfällt (selbst mit Auto-Vervollständigung und Vorlage), kann du mit einem Tipptrainer (z.B. Tipp10) etwas üben. Tippen ist hauptsächlich Übungssache und jeder kann sich darin verbessern - wenn er/sie es will.
       </p>
       
       <h4>Mit Tastenkürzel speichern</h4>
@@ -253,7 +253,7 @@ module.exports.tutorials = {
     questions : [
       "Taste 1 ist die normale Geschwindigkeit.",
       "Man kann mehrerer Tabs für AntIT! nutzen.",
-      "Die Seite kann mit F11 neugeladen werden.",
+      "Die Seite kann mit Alt + F4 neugeladen werden.",
       "Die öffnende geschweifte Klammer wird mit Alt Gr + 7 getippt.",
       "Mit Strg + S kann man im Editor speichern.",
       "Zwei Schrägstriche kommentieren eine Zeile im Code aus."
