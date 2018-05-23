@@ -350,7 +350,6 @@
           var angle = Sim.rng()*360
           var dist = Sim.rng()*200 + 200
           Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), angle, dist)))
-          
         }
       },
       isDone : function(){
@@ -424,19 +423,24 @@
     10 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 3000
-        Sim.Opts.AnfangsRichtung = 0
-        Sim.Opts.EnergieProApfel = 0
+        Sim.Opts.Runden = 5000
+        Sim.Opts.ZuckerGröße = 100
       },
       create : function(){
         defaultLevelCreate()
-        Sim.apples.push(new Sim.Apple({x:655,y:312}))
-        Sim.apples.push(new Sim.Apple({x:655,y:712}))
-        Sim.apples.push(new Sim.Apple({x:255,y:312}))
-        Sim.apples.push(new Sim.Apple({x:255,y:712}))
+        while (Sim.sugars.length < 6) {
+          var angle = Sim.rng()*360
+          var dist = Sim.rng()*150 + 300
+          Sim.sugars.push(new Sim.Sugar(Sim.Util.moveDir(locPos(0,0), angle, dist)))
+        }
+        while (Sim.apples.length < 2) {
+          var angle = Sim.rng()*360
+          var dist = Sim.rng()*150 + 300
+          Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), angle, dist)))
+        }
       },
       isDone : function(){
-        return Sim.players[0].getApple() == 4
+        return Sim.players[0].getSugar() >= 600 && Sim.players[0].getApple() >= 2
       }
     },
     

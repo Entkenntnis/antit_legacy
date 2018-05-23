@@ -124,16 +124,16 @@ module.exports.exercises = {
   9 : {
     name : "Wanzenstraße",
     description : `
-      <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, den ganzen Zuckerhaufen abzubauen. Die Ameisen dürfen dabei die x-Achse nicht verlassen.
+      <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, den ganzen (!) Zuckerhaufen abzubauen. Die Ameisen dürfen dabei die x-Achse nicht verlassen.
       </p>
     `,
     level : 3,
   },
   
   10 : {
-    name : "Apfelquadrat",
+    name : "Schlaraffenland 2",
     description : `
-      <p>Der Bau steht im Mittelpunkt eines Quadrats aus Äpfeln. Die Seitenlänge des Quadrats beträgt 400 Schritte. Sammle alle vier Äpfel ein. Diesmal darfst du dir Zeit lassen.
+      <p>Es sind nicht mehr so viele Nahrungsmittel. Also vorsichtiger mit dme Ameisen umgehen.
       </p>
     `,
     level : 3,

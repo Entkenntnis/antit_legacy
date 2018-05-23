@@ -290,6 +290,9 @@ module.exports.tutorials = {
       
       <p>Ergänze diese Vorlage mit dem Wissen, das du schon hast, damit die Ameise ihre Aufgabe vollständig erfüllen kann.
       </p>
+      
+      <p>Noch mal ein Hinweis zu Ereignissen: Diese werden nicht verschachtelt. Definitionen von Ereignissen exisitieren als eigener Block. Außerdem soll es pro Ereignistyp nur eine Definition geben. Eine Definition mehrfach anzugeben ist nicht sinnvoll.
+      </p>
     `,
     questions : [
       "IstUntätig wird während einer Simulation nur einmal aufgerufen.",
@@ -300,6 +303,41 @@ module.exports.tutorials = {
       "Dieses Tutorial hat 6 Unterpunkte."
     ],
     solution : [0,0,1,1,0,0],
+  },
+  12 : {
+    level : 3,
+    name : "Gefahren ausweichen [API]",
+    text : `
+      <p>Damit sich die Ameise schützen kann, gibt es außerdem eine Reihe von Funktionen, mit denen die Ameise ihre Feinde wahrnehmen und auf diese reagieren kann.
+      </p>
+      
+      <p>Wanzen auf dem Spielfeld in Sichtweite nimmt die Ameise mit dem Ereignistyp <code>SiehtWanze</code> wahr. Dieser Typ liefert einen Parameter mit, der die Wanze darstellt. Mit <code>DreheWegVonObjekt</code> kann sich die Ameise von der Wanze wegbewegen. Es gibt noch die spezielle Variante <code>SiehtWanzeVoraus</code>, die aufgerufen wird, wenn sich die Wanze im Winkel +-45 Grad vor der Ameise befindet. In diesem Fall wird SiehtWanze ebenfalls aufgerufen.
+      </p>
+      
+      <p>Ameisen aus gegnerischen Teams werden mit dem Ereignistyp <code>SiehtGegner</code> wahrgenommen. Der Vollständigkeit halber sei noch erwähnt, dass es zu DreheWegVonObjekt noch das Gegenstück <code>DreheZuObjekt</code> existiert. Dieser Befehl dreht die Ameise auf ein Objekt zu. 
+      </p>
+      
+      <p>Im Gefahrenfall kann man die Ameise auch einfach in Schockstarre versetzen. Mit dem Befehl <code>Warte</code> kann man die Ameise eine gewisse Zeit lang stehen lassen. Die Zeit wird dabei in Anzahl Ticks angegeben. Normalerweise vergehen 40 Ticks pro Sekunde. In dieser Zeit tut die Ameise nichts.
+      </p>
+      
+      <p>Der Rand stellt für die Ameisen zum Glück keine Lebensgefahr dar. Trotzdem ist es gut, wenn sie darauf reagieren kann. Der Ereignistyp <code>RandErreicht</code> wird aufgerufen, wenn die Ameise an den Rand angestoßen ist. Sie kann sich dann z.B. um einen bestimmten Winkel drehen oder zum Bau zurückkehren.
+      </p>
+      
+      <p>Nicht alle Funktionen sind immer sinnvoll. Hier ist mal ein Beispiel, das ziemlich willkürlich gewählt ist. Dafür zeigt es zumindest, wie die Ereignisse und Befehle verwendet werden:
+      </p>
+      
+      <p><img src="/images/l3_ausweichen.png" class="img-thumbnail">
+      </p>
+    `,
+    questions : [
+      "Eine Ameise kann auf Gegner und Wanzen reagieren.",
+      "Eine Ameise kann sich zu einem Objekt und weg von einem Objekt drehen.",
+      "Die Wartezeit für den Befehl Warte wird in Millisekunden angegeben.",
+      "DreheWegVonObjekt hat sechs Vokale.",
+      "Wenn die Ameise den Rand erreicht wird das Ereignis IstAmRand aufgerufen.",
+      "Wenn SiehtWanzeVoraus aufgerufen wird, dann wird SiehtWanze nicht aufgerufen."
+    ],
+    solution : [1,1,0,1,0,0],
   },
   7 : {
     level : 4,
