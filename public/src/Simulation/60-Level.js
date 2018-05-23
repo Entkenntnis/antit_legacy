@@ -262,39 +262,67 @@
     7 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 4000
+        Sim.Opts.Runden = 10000
         Sim.Opts.ZuckerGröße = 100
+        
+        var factor = 1
+        
         console.log("Sehr gut, dass du hierher gefunden hast...")
         setTimeout(function(){
           console.log("Unten an der Konsole findest du eine Befehlszeile.")
           setTimeout(function(){
             console.log("Tippe dort \"WeitereInfos()\" ein und drücke auf Enter. Die Anführungszeichen werden nicht mitgeschrieben.")
-          }, 3000)
-        }, 4000)
-        window.WeitereInfos = function(){
-          console.log("Super gemacht...")
-          setTimeout(function(){
-            console.log("Du bist ja schon ein richtiger Profi :)")
-            setTimeout(function(){
-              console.log("Tippe als nächstes \"InfoObjekt\" ein und drücke Enter.")
+            window.WeitereInfos = function(){
+              delete window.WeitereInfos
+              console.log("Super gemacht...")
               setTimeout(function(){
-                console.log("123")
-              }, 4000)
-            }, 3000)
-          }, 3000)
-        }
-        window.InfoObjekt = {
-          lalala:123,
-          lol:4543,
-          Anweisung:"Mit dem Befehl console.log() können Nachrichten an die Konsole ausgegeben werden. Erstelle eine Ameise, die nach ihrer Geburt den Text \"Hacker\" auf der Konsole ausgibt. Danach ist diese Aufgabe erledigt."
-        }
-        var backup = window.console.log
-        window.console.log = function(arg) {
-          backup(arg)
-          if (arg == "Hacker") {
-            Sim.l2_done = true
-          }
-        }
+                console.log("Du bist ja schon ein richtiger Profi :)")
+                setTimeout(function(){
+                  console.log("Tippe als nächstes \"InfoObjekt\" ein und drücke Enter.")
+                  window.InfoObjekt = {
+                    lalala:123,
+                    lol:4543,
+                    Hinweis:"Es kann bis zu 30 Sekunden dauern, bis die nächste Nachricht erscheint."
+                  }
+                  setTimeout(function(){
+                    delete window.InfoObjekt
+                    console.log("Wir sollten uns besser kennenlernen. Schreibe mir deinen Namen. Füge ihn dazu in den Befehl \"MeinNameIst()\" ein. Wenn du Max heißt, dann würdest du schreiben: \"MeinNameIst(\"Max\")\"")
+                    window.MeinNameIst = function(name) {
+                      if (name != undefined && typeof name == "string" &&  name.length > 1) {
+                        delete window.MeinNameIst
+                        console.log("Hallo " + name + ", wie alt bist du denn? Schreibe mir das im Befehl \"MeinAlterIst()\".")
+                        window.MeinAlterIst = function(alter) {
+                          delete window.MeinAlterIst
+                          if (typeof alter == "number" && alter > 5 && alter < 100) {
+                            console.log("Schön, du bist " + alter + " Jahre alt.")
+                            setTimeout(function(){
+                               console.log("Hier ist zum Schluss noch ein Rätsel:")
+                               setTimeout(function(){
+                                 console.log("Multipliziere dein Alter mit 3. Addiere dazu die Anzahl der Buchstaben deines Namens. Ziehe von dieser Zahl 10 ab und multipliziere das Ergebnis wieder mit drei. Sage mir die Antwort mit \"DieAntwortIst()\".")
+                                 window.DieAntwortIst = function(answer) {
+                                   if (answer === (((alter * 3) + name.length) - 10) * 3) {
+                                     console.log("yo")
+                                     Sim.l2_done = true
+                                   } else {
+                                     console.log("nö")
+                                   }
+                                 }
+                               }, 2000 * factor)
+                            }, 2000 * factor)
+                          } else {
+                            console.log("Ups, das hat nicht funktioniert")
+                          }
+                        }
+                      } else {
+                        console.log("Ups, da hat etwas nicht funktioniert")
+                      }
+                    }
+                  }, (20000 + 10000 * Math.random()) * factor)
+                }, 3000 * factor)
+              }, 3000 * factor)
+            }
+          }, 3000 * factor)
+        }, 4000 * factor)
       },
       create : function(){
         defaultLevelCreate()
