@@ -92,7 +92,7 @@ module.exports.exercises = {
       <p>Zwei Zuckerhaufen sind in einem Labyrinth aus Wanzen versteckt. Bilde zwei Teams und sammle den Zucker ein, bevor die Zeit abläuft. Du kannst folgende <a href="/images/l2_labyrinth.txt">Vorlage</a> verwenden:
       </p>
       
-      <p><img src="/images/l2_labyrinth.png"></p>
+      <p><img src="/images/l2_labyrinth.png" class="img-thumbnail"></p>
       
       <p>In Zeile 5 bis 13 werden zwei Hilfsfunktionen definiert. Der neue Befehl <code>rechts</code> dreht die Ameise um 90 Grad nach rechts und geht 50 Schritte, der Befehl <code>links</code> tut das entsprechende nach links. Diese können wie vorgegebene Befehle verwendet werden, siehe Zeile 23 bis 25. Vergesse die Klammern nicht. Ergänze ab Zeile 26 den Code für das Team 0 und schreibe den Code für Team 1.
       </p>
@@ -131,16 +131,24 @@ module.exports.exercises = {
   },
   
   10 : {
-    name : "Schlaraffenland 2",
+    name : "S-hla-a-fe-la-d",
     description : `
-      <p>Es sind nicht mehr so viele Nahrungsmittel. Also vorsichtiger mit dme Ameisen umgehen.
+      <p>Es ist immer die gleiche Geschichte: Sobald der Mensch anfängt, in die Natur einzugreifen, bringt er Zerstörung. Die Nahrungsmittel sind weniger geworden, der Hunger nicht. Sammle wieder 600 Zucker und 2 Äpfel - also alle Nahrungsmittel auf dem Spielfeld.
       </p>
+      
+      <p>Du musst jetzt darauf achten, dass die Ameisen nicht zu früh sterben. Jede Ameise hat nur eine Reichweite von 3000 Schritten. Danach stirbt sie. Die Reichweite kann im Heimatbau wiederhergestellt werden, wenn die Ameise mit dem Befehl GeheZuBau zum Bau zurückkehrt.
+      </p>
+      
+      <p>Die Ameise kann ihre Reichweite abfragen. Diese gibt an, wie viele Schritte die Ameise noch gehen kann. Die Reichweite wird also mit der Zeit immer kleiner bis sie null erreicht. Das kann in einer <a target="_blank" href="https://wiki.selfhtml.org/wiki/JavaScript/Verzweigung#Wenn-Dann-Bedingungen_mit_.22if.22">Abfrage</a> verwendet werden. Ein kleiner Hinweis als Code-Schnipsel:
+      </p>
+      
+      <p><img src="/images/l3_reichweite.png" class="img-thumbnail"></p>
     `,
     level : 3,
   },
   
   11 : {
-    name : "Zucker-TicTacToe",
+    name : "Escape the Room",
     description : `
       <p>Diesmal gibt es viel Zucker zu holen! In drei der neun Felder erscheinen Zuckerhaufen und diese wollen eingesammelt werden. Es bringt Glück, wenn die drei Felder genau eine Reihe oder eine Diagonale bilden :) Der Mittelpunkt des mittleren Felds liegt bei (400|0), die anderen Felder haben jeweils einen Abstand von 150 Schritten.
       </p>
