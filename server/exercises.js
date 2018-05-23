@@ -113,9 +113,9 @@ module.exports.exercises = {
   },
   
   8 : {
-    name : "Zuckersuche",
+    name : "Schlaraffenland",
     description : `
-      <p>Normalerweise wissen die Ameisen nicht genau, wo sich die Nahrungsmittel befinden. So auch bei diesen Aufgaben. Dein Ziel ist es, den Zuckerhaufen abzubauen. Dieser wird innerhalb einer der roten Ringe erscheinen. Die Mittelpunkt der Rings befinden sich bei (0|-200), (0|-400) und (200|-400). Jeder Ring hat einen Radius von 50 Schritten.
+      <p>Auf dem Spielfeld sind üppig Nahrungsmittel verteilt. Sammle insgesamt 600 Zucker und 2 Äpfel, um die Aufgabe zu lösen. Nutze die Vorlage aus dem neuen Tutorial.
       </p>
     `,
     level : 3,

@@ -504,6 +504,7 @@
       if(my.jobs.length == 0) {
         if (antWaitTout <= 0) {
           Sim.API.callUserFunc("Wartet")
+          Sim.API.callUserFunc("IstUntätig")
           antWaitTout = 9
         }
       }

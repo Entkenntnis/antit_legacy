@@ -26,7 +26,7 @@ module.exports.tutorials = {
         </li>
       </ul>
       
-      <img src="/images/ameiseapfel.png" class="img-thumbnail" title="Hey Jo!"></img>
+      <img src="/images/ameiseapfel.png" class="img-thumbnail" title="Hey Jo!">
     
       <br><br>
       <p>Ach, herrlich ... So, das ist jetzt genug an Informationen. Bearbeite zum Schluss noch dieses Quiz:
@@ -57,7 +57,7 @@ module.exports.tutorials = {
         <li><p>Öffne die Ameisen, in dem du auf "Bearbeiten" klickst.</p>
         </li>
         <li><p>Trage die fehlenden Teile in Zeile 3 und Zeile 4 ein:
-        <img src="/images/l1_schnipsel_hallowelt.png" class="img-thumbnail" title="Der Code wird automatisch gefärbt."></img></p>
+        <img src="/images/l1_schnipsel_hallowelt.png" class="img-thumbnail" title="Der Code wird automatisch gefärbt."></p>
         </li>
         <li><p>Gehe auf den Trainingsplatz.
         </p></li>
@@ -68,7 +68,7 @@ module.exports.tutorials = {
       </ol>
       
       <p>Fertig. Wenn alles gutgegangen ist sieht du folgenden Bildschirm:</p>
-      <p><img src="/images/l1_overview.png" class="img-thumbnail" title="Der gelbe Kreis hinten rechts ist Teil der ersten Aufgabe."></img>
+      <p><img src="/images/l1_overview.png" class="img-thumbnail" title="Der gelbe Kreis hinten rechts ist Teil der ersten Aufgabe.">
       </p>
       
       <p>Der Startpunkt der Ameisen ist der Ameisenbau. Ameisen werden dort in der Mitte geboren. Dein Programm hat bewirkt, dass sie sich aus dem Bau herausbewegen. Dein Ameisenvolk hat die Farbe rot. Die Körperteile der Ameise sind passend zur Farbe des Baus.
@@ -103,19 +103,19 @@ module.exports.tutorials = {
       <p>Im letzten Tutorial hast du bereits dein erstes Ameisenvolk programmiert. Im Grunde ist es für den Anfang ziemlich einfach. Erstelle ein neues Ameisenvolk und nenne es "Stufe 1 Aufgabe". Wenn du die Ameise bearbeitest, dann sieht der Code so aus:
       </p>
       
-      <p><img src="/images/l1_schnipsel_name_falsch.png" class="img-thumbnail" title="Sehr kreativer Name ..."></img></p>
+      <p><img src="/images/l1_schnipsel_name_falsch.png" class="img-thumbnail" title="Sehr kreativer Name ..."></p>
       
       <p>Aber ups! Es gibt ja in Stufe 1 mehrere Aufgaben und du möchtest gerne für jede Aufgabe eine eigene Ameise anlegen. Der Name der Ameise lässt sich zum Glück noch nachträglich ändern, indem die erste Zeile angepasst wird:
       </p>
       
-      <p><img src="/images/l1_schnipsel_name.png" class="img-thumbnail" title="Ordnung muss sein, nicht?"></img></p>
+      <p><img src="/images/l1_schnipsel_name.png" class="img-thumbnail" title="Ordnung muss sein, nicht?"></p>
       
       <p>So, passt. Die Zeilen 3 bis 5 definieren ein Ereignis. Später können noch weitere Ereignisse hinzukommen. Ereignisse werden nie verschachtelt! Innerhalb eines Ereignis kommt nur Code hinein. Weitere Ereignisse kommen in eigene Zeilen.</p>
       
       <p>Wir müssen außerdem bei jedem Ereignis angeben, von welchem Typ er ist. Innerhalb einer Ameise sollte es pro Typ nur eine Definition geben. Der einzige Typ, den wir aktuell kennen, ist <code>"IstGeboren"</code>. Dieses Ereignis wird genau einmal bei der Geburt der Ameise aufgerufen. Trage den Typ ein und füge schon mal ein paar Zeilen Code ein:
       </p>
       
-      <p><img src="/images/l1_schnipsel_event.png" class="img-thumbnail" title="Befehle innerhalb von Ereignisse werden eingerückt. Nutze die Tab-Taste."></img></p>
+      <p><img src="/images/l1_schnipsel_event.png" class="img-thumbnail" title="Befehle innerhalb von Ereignisse werden eingerückt. Nutze die Tab-Taste."></p>
       
       <p>Es gibt den Befehl <code>Gehe</code> und den Befehl <code>Drehe</code>. Wenn der Geh-Befehl ausgeführt wird, dann bewegt sich die Ameise geradeaus nach vorne um die angegebene Anzahl Schritte. Beim Dreh-Befehl dreht sich die Ameise um den angegebenen Winkel im Uhrzeigersinn. Positive Winkel entsprechen damit Rechtsdrehungen, der Befehl in Zeile 5 entspricht einer 90-Grad-Drehung nach links.
       </p>
@@ -138,7 +138,7 @@ module.exports.tutorials = {
   },
   4 : {
     level : 2,
-    name : "Nahrungsmittel",
+    name : "Nahrungsmittel [API]",
     text : `
       
       <p>In diesem Tutorial lernst du, wie deine Ameisen Zucker und Äpfel sammeln können. Im Grunde ist es kinderleicht und daher wird dieses Tutorial recht kurz sein.
@@ -147,7 +147,7 @@ module.exports.tutorials = {
       <p>Um Zucker zu sammeln, muss du deine Ameise zuerst ganz nah an den Zuckerhaufen hinbewegen. Wenn die Ameise am Zucker steht, führst du den Befehl <code>NimmZucker()</code> aus. Damit lädt sich die Ameise ein Stückchen Zucker auf.
       </p>
       
-      <p><img src="/images/02_ameisezucker.jpg" class="img-thumbnail" title="Ein richtig perfekter Zuckerwürfel auf ihrem Rücken!"></img></p>
+      <p><img src="/images/02_ameisezucker.jpg" class="img-thumbnail" title="Ein richtig perfekter Zuckerwürfel auf ihrem Rücken!"></p>
       
       <p>Jetzt muss die Ameise nach Hause. Dazu gibt es den Befehl <code>GeheZuBau()</code>, der die Ameise direkt in den Bau führt. Die Ameisen sind wie Geister - sie müssen nicht um Hindernisse herumgehen, sondern können einfach durch alles hindurchlaufen. Auch wenn das komisch aussieht: Es ist für dich als Entwickler ziemlich praktisch.
       </p>
@@ -155,7 +155,7 @@ module.exports.tutorials = {
       <p>Die zwei Befehle, die du gerade kennengelernt hast, brauchen keinen Parameter. Deshalb steht nichts in den runden Klammern. Die Klammern sind aber trotzdem wichtig! Wenn du sie vergisst, wird der Befehl einfach nicht ausgeführt.
       </p>
       
-      <p><img src="/images/ameisezucker.png" width="400px" class="img-thumbnail" title="Huch!"></img></p>
+      <p><img src="/images/ameisezucker.png" width="400px" class="img-thumbnail" title="Huch!"></p>
       
       <p>Am Ende, wenn die Ameise im Bau steht, kann sie mit dem Befehl <code>LadeZuckerAb()</code> den Zucker in den Bau geben. Dann erhält du deine Punkte dafür und die Menge wird in der Statistik angezeigt.
       </p>
@@ -163,7 +163,7 @@ module.exports.tutorials = {
       <p>Für Äpfel gibt es nur einen Befehl: <code>TrageApfel()</code>. Sobald die Ameise am Apfel steht, kann sie diesen Befehl ausführen. Dann fängt sie an, auf ihre Kollegen zu warten. Wenn vier Ameisen zusammenkommen, tragen sie den Apfel zurück zum Bau. Das alles steckt in diesem einen Befehl. Du musst dich nur darum kümmern, dass die Kollegen zum Apfel hinfinden.
       </p>
       
-      <p><img src="/images/02_apfel.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></img></p>
+      <p><img src="/images/02_apfel.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></p>
       
       <p>Mit der eingesammelten Nahrung können neue Ameisen geboren werden. Das Volk vergrößert sich und die Ameisen können noch schneller Nahrung sammeln. 
       </p>
@@ -196,7 +196,7 @@ module.exports.tutorials = {
       <p>Wenn man nur in einen Tab arbeitet, ist es oft sehr umständlich, die Ameise zu bearbeiten und sich dann bei den Aufgaben durchzuklicken, um das Level zu starten. Das Problem lässt sich geschickt lösen, in dem man zwei Tabs im Browser verwendet:
       </p>
       
-      <p><img src="/images/02_tabs.png" class="img-thumbnail" title="Firefox, Chrome, Edge - nutze den Browser, der dir gefällt."></img></p>
+      <p><img src="/images/02_tabs.png" class="img-thumbnail" title="Firefox, Chrome, Edge - nutze den Browser, der dir gefällt."></p>
       
       <p>In einem Tab kann man den Editor öffen, in anderem die Simulation laufen lassen. Wenn man die Ameise speichert, reicht es, die Simulation neu zu laden (mit einem Klick auf den runden Pfeil oder mit der Taste F5) - schon wird die neue Version der Ameise ausgeführt. Wer will kann auch den Bildschirm teilen und einen Tab links und den anderen Tab rechts anzeigen lassen.
       </p>
@@ -245,7 +245,7 @@ module.exports.tutorials = {
       <p>Oft möchte man etwas ausprobieren, aber nicht den ganzen Code löschen. In dieser Situation können einzelne Zeilen mit <code>//</code> auskommentiert werden:
       </p>
       
-      <p><img src="/images/02_kommentar.png" class="img-thumbnail" title="Da hat jemand den Ereignisnamen vergessen."></img></p>
+      <p><img src="/images/02_kommentar.png" class="img-thumbnail" title="Da hat jemand den Ereignisnamen vergessen."></p>
       
       <p>Zeile 7 und 8 sind auskommentiert und werden nicht ausgeführt.
       </p>
@@ -262,51 +262,42 @@ module.exports.tutorials = {
   },
   6 : {
     level : 3,
-    name : "Äpfel und Zucker finden",
+    name : "Suchen und Finden [API]",
     text : `
-      <p class="lead"><em>Gibt es noch mehr Ereignisse als nur "IstGeboren"?</em></p>
-      
-      <p>Ja. Und du wirst in diesem Tutorial zwei neue Ereignisse kennenlernen. Bereit? Dann lasst uns beginnen.
+      <p>Du bist jetzt bereit, ein paar neue Ereignisse kennenzulernen. Diese kümmern sich darum, dass dein Ameisenvolk ausschwärmen kann, um Nahrungsmittel zu suchen und diese dann auch zu finden.
       </p>
       
-      <p>Wenn du jetzt den Editor öffnest, dann kannst du mit eine Klick auf "Ereignis hinzufügen" ein neues Ereignis erstellen. Nehmen wir also an, du verwendest bereits "IstGeboren". Klicke jetzt auf "Ereignis hinzufügen". Dann sieht der Code so aus:
+      <p>Folge den Schritten dieser Anleitung. Diese bereiten die erste Aufgabe dieser Stufe vor.
       </p>
       
-      <p><img src="/images/03_ereignis.png" class="img-thumbnail" title="Lass zwischen den Ereignissen eine Zeile frei."></img></p>
+      <ol>
+        <li><p>Erstelle ein neues Ameisenvolk mit dem Namen "Stufe 3 Aufgabe 1".
+        </p>
+        </li>
+        <li><p>Trage für das erste Ereignis den Typ "IstUntätig" ein. <code>IstUntätig</code> wird immer wieder aufgerufen, wenn die Ameise gerade nichts zu tun hat.
+        </p>
+        </li>
+        <li><p>Klicke auf die neue Schaltfläche "Ereignis hinzufügen" im Editor. Diese erzeugt eine neue Vorlage für ein Ereignis. Trage für dieses Ereignis den Typ "SiehtZucker" ein. Der Code sollte dann so aussehen:<img src="/images/l3_tut1_1.png" class="img-thumbnail">
+        </p>
+        </li>
+        <li><p><code>SiehtZucker</code> wird aufgerufen, wenn eine Ameise in ihrer Sichtweite von 70 Ameisenschritten einen Zuckerhaufen sieht. Die Ameise kann dann zu diesem Zuckerhaufen hinlaufen. Füge in die runden Klammern den Paramter "zucker" hinzu und nutze ihn für den Befehl <code>GeheZuZiel</code>:<img src="/images/l3_tut1_2.png" class="img-thumbnail" title="Der Name des Parameters darf frei gewählt werden."><br>
+        </p>
+        </li>
+        <li><p>Entsprechend gibt es das Ereignis <code>SiehtApfel</code>. Füge ein weiteres Ereignis hinzu und trage als Typ "SiehtApfel" ein. Schreibe den Parameter dazu und lasse die Ameise auf diesen Apfel zulaufen.
+        </p>
+        </li>
+      </ol>
       
-      <p>In Zeile 7 bis 9 findest du den eingefügten Code. Das erste Ereignis, dass wir neu lernen werden, heißt "SiehtZucker". Dieses Ereignis wird aufgerufen, sobald die Ameise in Sichtweite einen Zuckerhaufen erkennt. Die Ameise kann 70 Schritte weit sehen. Schreibe den Namen des Ereignis zwischen die Anführungsstriche:
-      </p>
-      
-      <p><img src="/images/03_editor2.png" class="img-thumbnail" title="Groß-/Kleinschreibung beachten"></img></p>
-      
-      <p>Dieses Ereignis besitzt außerdem einen Parameter, der angibt, wo der Zuckerhaufen sich befindet. Gib diesem Parameter einen Namen, in dem du ihn zwischen die runden Klammern schreibst. Meist verwendet man ein kleingeschriebenes Wort, hier also konkret "zucker":
-      </p>
-      
-      <p><img src="/images/03_editor3.png" class="img-thumbnail" title="'zucker' kann nun innerhalb des Ereignis verwendet werden."></img></p>
-      
-      <p>Passend dazu gibt es einen neuen Befehl namens <code>GeheZuZiel(ort)</code>, mit denen du an solche Orte hingehen kannst. Dazu schreibt du den Namen des Orts zwischen die runden Klammern des Befehls. Wenn die Namen übereinstimmen, dann färbt sich der Code hellblau ein:
-      </p>
-      
-      <p><img src="/images/03_editor4.png" class="img-thumbnail" title="Einrücken nicht vergessen"></img></p>
-      
-      <p>Fertig. Wir haben jetzt der Ameise beigebracht, dass sie zum Zucker hinläuft, sobald sie welchen sieht. Jetzt müssen wir nicht mehr den genauen Standort des Zuckers kennen, um ihn abbauen zu können. Stattdessen können wir die Gegend ablaufen und nach einen Zuckerhaufen suchen. Wie bei IstGestorben können auch alle anderen bisherigen Befehle in SiehtZucker verwendet werden. Das kannst du in den folgenden Aufgaben üben.
-      </p>
-      
-      <p>Das ganze funktioniert genauso auch für Äpfel und sieht dann so aus:
-      </p>
-      
-      <p><img src="/images/03_editor5.png" class="img-thumbnail" title="Alle Zucker wurden mit Apfel ersetzt ..."></img></p>
-      
-      <p>Im nächsten Level wirst du dann noch zwei weitere Ereignisse kennenlernen!
+      <p>Ergänze diese Vorlage mit dem Wissen, das du schon hast, damit die Ameise ihre Aufgabe vollständig erfüllen kann.
       </p>
     `,
     questions : [
-      "Es gibt insgesamt nur ein Ereignis für die Ameisen.",
-      "Den Code für ein neues Ereignis muss man jedes komplett selber schreiben.",
-      "Die Ameise hat eine Sichtweite von 70 Schritten.",
-      "Den Parameter von SiehtZucker darf man nennen wie man will. 'zucker' war nur ein Beispiel.",
-      "GeheZuZiel nimmt keinen Paramter.",
-      "Innerhalb von SiehtApfel kann man nur einen Befehl schreiben."
+      "IstUntätig wird während einer Simulation nur einmal aufgerufen.",
+      "SiehtZucker besteht aus 10 Buchstaben.",
+      "Eine Ameise hat eine Sichtweite von 70 Ameisenschritten.",
+      "GeheZuZiel kann für Zucker und Äpfel verwendet werden.",
+      "Ameisen sind blind für Äpfel.",
+      "Dieses Tutorial hat 6 Unterpunkte."
     ],
     solution : [0,0,1,1,0,0],
   },
@@ -320,7 +311,7 @@ module.exports.tutorials = {
       <p>Die Giftwolke kann man mit dem Befehl <code>SetzeGift()</code> versprühen. Jede Ameise kann maximal eine Giftwolke auf einmal setzen. Danach muss sie zum Bau zurück und dort ihre Ladung wiederherstellen.
       </p>
       
-      <p><img src="/images/04_gift.png" class="img-thumbnail" title="Es kommt immer auf die Dosis an!"></img></p>
+      <p><img src="/images/04_gift.png" class="img-thumbnail" title="Es kommt immer auf die Dosis an!"></p>
       
       <p>Die einzelne Wolke im Bild oben ist noch harmlos. Wenn zwei weitere hinzukommen, dann wird es für die Gegner gefährlich. Hier ist also eine ordentliche Koordination der Ameisen gefragt.
       </p>
@@ -328,12 +319,12 @@ module.exports.tutorials = {
       <p>Um die Ladungen gezielt auf die Gegner setzen zu können gibt es dazu zwei neue Ereignisse: SiehtWanze und SiehtGegner. Beide werden aufgerufen, sobald ein feindliches Objekt in Sicht kommt. Als Parameter übergeben sie das gesichtete Objekt. Dieser Parameter wird bei den Aufgaben dieses Levels noch nicht gebraucht. Es ist aber gut zu wissen, dass es sie gibt. Ungenutzte Paramter können auch ganz weggelassen werden.
       </p>
       
-      <p><img src="/images/04_wanze.png" class="img-thumbnail" title="Bloß nicht zu nahe kommen!"></img></p>
+      <p><img src="/images/04_wanze.png" class="img-thumbnail" title="Bloß nicht zu nahe kommen!"></p>
       
       <p>Analog dazu das Ereignis mit dem Gegner:
       </p>
       
-      <p><img src="/images/04_gegner.png" class="img-thumbnail" title="Hau ab!"></img></p>
+      <p><img src="/images/04_gegner.png" class="img-thumbnail" title="Hau ab!"></p>
       
       <p>Damit sind die Ameisen nun in der Lage, Gegner und Wanzen zu erkennen und sich mit Gift zu verteidigen.
       </p>
@@ -355,7 +346,7 @@ module.exports.tutorials = {
       <p>Um das Ziel mancher Aufgaben zu erreichen braucht es viel Arbeit. Dabei soll keine Ameise untätig in der Gegend herumstehen. Um genau solche Ameisen anzusprechen, gibt es das Ereignis "Wartet". Es nimmt keinen Parameter und wird für die Ameisen aufgerufen, die ihre Befehle abgearbeitet haben und gerade nichts zu tun haben.
       </p>
       
-      <p><img src="/images/04_wartet.png" class="img-thumbnail" title="Hau ab!"></img></p>
+      <p><img src="/images/04_wartet.png" class="img-thumbnail" title="Hau ab!"></p>
       
       <p>Das ist ein guter Ort, um Befehle zu programmieren, die die Ameisen in Dauerschleife ausführen sollen. Denn sobald die Ameise fertig ist, wird sie ja mit diesem Ereignis von vorne beginnen. Somit kann man den Ameisen Wiederholungen beibringen, z.B. damit sie das Spielfeld absucht.
       </p>
@@ -418,27 +409,27 @@ module.exports.tutorials = {
       <p>Wir lernen jetzt, Befehle unter Bedingungen auszuführen. Dazu gibt es den if-Block. Im Kern besteht er aus dem Wort 'if', einer runden Klammer mit der Bedingung und einer geschweiften Klammer mit den Befehlen, die unter dieser Bedingungen stehen:
       </p>
       
-      <p><img src="/images/if_1.png" class="img-thumbnail" title="Beim Cursor kommen die Befehle hin. Einrücken nicht vergessen!"></img></p>
+      <p><img src="/images/if_1.png" class="img-thumbnail" title="Beim Cursor kommen die Befehle hin. Einrücken nicht vergessen!"></p>
       
       <p>Man kann als Bedingungen verschiedene Vergleiche verwenden. Am besten, wir schauen uns ein paar Beispiele an:
       </p>
       
-      <p><img src="/images/if_2.png" class="img-thumbnail" title=""></img></p>
+      <p><img src="/images/if_2.png" class="img-thumbnail" title=""></p>
       
       <p>Hier wird der Befehl ausgeführt, wenn die Reichweite der Ameise größer als 2000 beträgt. <code>Reichweite</code> ist eine vordefinierter Wert, den die Ameise jederzeit verwenden kann. Ein anderer solcher Wert ist <code>Runde</code>:
       </p>
       
-      <p><img src="/images/if_3.png" class="img-thumbnail" title=""></img></p>
+      <p><img src="/images/if_3.png" class="img-thumbnail" title=""></p>
       
       <p>Der Befehl wird genau in der Runde 200 ausgeführt. Man beachte die doppelten Ist-Gleich-Zeichen! Schauen wir uns noch ein weiteres Beispiel an:
       </p>
       
-      <p><img src="/images/if_4.png" class="img-thumbnail" title=""></img></p>
+      <p><img src="/images/if_4.png" class="img-thumbnail" title=""></p>
       
       <p>Hier verwenden wir als Vergleich ein kleiner gleich. Als neue Funktion gibt es den Befehl <code>Distanz</code>. Diese kann von zwei Objekten auf dem Spielfeld die Entfernung berechnen. Dazu schreibt man sie mit Komma getrennt in die runden Klammern. Vordefinierte Objekte sind <code>Bau</code> für den Heimatbau und <code>Position</code> für die aktuelle Position der Ameise. Zusätzlich können Objekte aus Sieht...-Ereignissen verwendet werden. Ein letztes Beispiel:
       </p>
       
-      <p><img src="/images/if_5.png" class="img-thumbnail" title=""></img></p>
+      <p><img src="/images/if_5.png" class="img-thumbnail" title=""></p>
       
       <p>Mit der Funktion <code>Winkel</code> kann der Blickwinkel bestimmt werden, aus dem das erste Objekt das zweite Objekt sieht. Die Zahl entspricht der Richtung, wie bei DreheZuRichtung. Ein anschauliches Beispiel: Wenn sich die Ameise genau über dem Bau befindet, dann ergibt die Berechnung oben 270.
       </p>

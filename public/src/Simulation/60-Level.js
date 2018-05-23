@@ -336,22 +336,25 @@
     8 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 1500
-        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.Runden = 3000
         Sim.Opts.ZuckerGröße = 100
-        Sim.Opts.EnergieProZucker = 0
       },
       create : function(){
         defaultLevelCreate()
-        var pos = [{x:524,y:712},{x:524,y:912},{x:724,y:912}]
-        pos.forEach(function(pos, id){Sim.Bus.emit('move-spawn-point2', id, pos)})
-        var angle = Sim.rng()*360
-        var num = Math.floor(Sim.rng()*3)
-        Sim.sugars.push(new Sim.Sugar(Sim.Util.moveDir(pos[num], angle, Sim.rng()*35+10)))
-        //Sim.sugars.push(new Sim.Sugar({x:455,y:312}))
+        while (Sim.sugars.length < 10) {
+          var angle = Sim.rng()*360
+          var dist = Sim.rng()*200 + 200
+          Sim.sugars.push(new Sim.Sugar(Sim.Util.moveDir(locPos(0,0), angle, dist)))
+        }
+        while (Sim.apples.length < 3) {
+          var angle = Sim.rng()*360
+          var dist = Sim.rng()*200 + 200
+          Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), angle, dist)))
+          
+        }
       },
       isDone : function(){
-        return Sim.players[0].getSugar() == 100
+        return Sim.players[0].getSugar() >= 600 && Sim.players[0].getApple() >= 2
       }
     },
     

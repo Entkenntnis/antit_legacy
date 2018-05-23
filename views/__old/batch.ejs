@@ -127,7 +127,7 @@ function start(){
     if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 30) {
         autoscroll = true
     }
-    AntIT.StarteSimulation(null, null, "<%-seed%>", hud)
+    AntIT.StarteSimulation(null, null, "<%-seed%>", hud, [1,1,1,1,1,1,1,1])
     if (autoscroll) window.scrollTo(0,document.body.scrollHeight);
   }
 }
