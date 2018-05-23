@@ -122,9 +122,9 @@ module.exports.exercises = {
   },
   
   9 : {
-    name : "Apfel unter Zeitdruck",
+    name : "Wanzenstraße",
     description : `
-      <p>Im Umkreis von (300|300) wird ein Apfel erscheinen. Du hast 20 Ameisen, aber nur wenig Zeit. Schaffst du es, den Apfel unter gemeinsamer Anstrengung rechtzeitig zum Bau zu bringen?
+      <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, den ganzen Zuckerhaufen abzubauen. Die Ameisen dürfen dabei die x-Achse nicht verlassen.
       </p>
     `,
     level : 3,

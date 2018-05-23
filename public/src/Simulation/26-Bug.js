@@ -27,6 +27,10 @@
       updateGO()
     }
     
+    this.getHeading = function(){
+      return heading
+    }
+    
     this.setPos = function(pos) {
       my.pos = pos
       updateGO()

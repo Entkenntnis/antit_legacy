@@ -28,6 +28,7 @@
       lap: 0,
       energy: Sim.Opts.AmeisenEnergie,
       previousBug: undefined,
+      previousBugAhead: undefined,
       previousAnt: undefined,
       memory:{},
       poison:true
@@ -471,12 +472,24 @@
     function senseBug() {
       var bug = Sim.Util.closest(my.pos, Sim.bugs, Sim.Opts.AmeiseSichtweite);
       if (bug) {
+        var delta = Math.abs(my.heading - Sim.Util.getDir(my.pos, bug.getPos()))
+        if (delta > 180) {
+          delta -= 360
+          delta = Math.abs(delta)
+        }
+        if (delta < Sim.Opts.WanzeVorausWinkel) {
+          if (bug != my.previousBugAhead) {
+            Sim.API.callUserFunc("SiehtWanzeVoraus", [bug])
+            my.previousBugAhead = bug
+          }
+        }
         if (bug != my.previousBug) {
           Sim.API.callUserFunc("SiehtWanze", [bug]);
           my.previousBug = bug;
         }
       } else {
-        my.previousBug = undefined;
+        my.previousBug = undefined
+        my.previousBugAhead = undefined
       }
     }
     

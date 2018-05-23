@@ -361,18 +361,63 @@
     9 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 650
-        Sim.Opts.AnfangsRichtung = 0
-        Sim.Opts.EnergieProApfel = 0
+        Sim.Opts.Runden = 4000
+        Sim.Opts.ZuckerGröße = 500
       },
       create : function(){
         defaultLevelCreate()
-        Sim.Bus.emit('move-spawn-point2', 0, {x:824,y:212})
-        var angle = Sim.rng()*360
-        Sim.apples.push(new Sim.Apple(Sim.Util.moveDir({x:824,y:212}, angle, Sim.rng()*35+10)))
+        function pushBug(x,y,h){
+          var bug = new Sim.Bug(locPos(x,y))
+          bug.setHeading(h)
+          Sim.bugs.push(bug)
+        }
+        pushBug(150,100,90)
+        pushBug(150,200,90)
+        pushBug(150,300,90)
+        pushBug(150,-200,90)
+        pushBug(150,-300,90)
+        pushBug(150,-400,90)
+        pushBug(350,0,270)
+        pushBug(350,50,270)
+        pushBug(350,350,270)
+        pushBug(350,400,270)
+        pushBug(350,-300,270)
+        pushBug(350,-350,270)
+        pushBug(550,-350,90)
+        pushBug(550,-300,90)
+        pushBug(550,-200,90)
+        pushBug(550,-150,90)
+        pushBug(550,150,90)
+        pushBug(550,350,90)
+        Sim.sugars.push(new Sim.Sugar(locPos(700,0)))
+        //Sim.Bus.emit('move-spawn-point2', 0, {x:824,y:212})
+        //var angle = Sim.rng()*360
+        //Sim.apples.push(new Sim.Apple(Sim.Util.moveDir({x:824,y:212}, angle, Sim.rng()*35+10)))
+      },
+      update : function(){
+        Sim.bugs.forEach(function(bug){
+          var pos = bug.getPos()
+          pos = Sim.Util.moveDir(pos, bug.getHeading(), 2)
+          if (pos.y < 0) {
+            pos.y = Sim.playground.getHeight()
+          } else if (pos.y > Sim.playground.getHeight()) {
+            pos.y = 0
+          }
+          bug.setPos(pos)
+        })
+      },
+      failed : function(){
+        var failed = false
+        Sim.ants.forEach(function(ant){
+          if (Math.abs(ant.getPos().y-hilly) > 5) {
+            failed = true
+            alert("Ameise hat die x-Achse verlassen.")
+          }
+        })
+        return failed
       },
       isDone : function(){
-        return Sim.players[0].getApple() == 1
+        return Sim.players[0].getSugar() >= 500
       }
     },
     

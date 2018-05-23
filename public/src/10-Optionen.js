@@ -78,6 +78,7 @@ var AntIT = {};
     , WanzeGeschwindigkeit : 3
     , WanzeSichtweite : 60
     , WanzenHügelAbstand : 250
+    , WanzeVorausWinkel : 45
     , ZufallRichtungsVerschiebung : 11
     , EntwicklerModus : false
     , Levelmodus : false
