@@ -204,6 +204,13 @@
       },
       create : function(){
         defaultLevelCreate()
+        var needAlert = true
+        window.SetzeGift = function(){
+          if (needAlert) {
+            needAlert = false
+            alert("Gift kann im Labyrinth nicht eingesetzt werden.")
+          }
+        }
         var vwalls = [
           [0,0,0,0,0,1,0],
           [1,0,0,0,0,1,0],
@@ -365,6 +372,13 @@
       },
       create : function(){
         defaultLevelCreate()
+        var needAlert = true
+        window.SetzeGift = function(){
+          if (needAlert) {
+            needAlert = false
+            alert("Gift kann nicht eingesetzt werden.")
+          }
+        }
         function pushBug(x,y,h){
           var bug = new Sim.Bug(locPos(x,y))
           bug.setHeading(h)
@@ -389,9 +403,6 @@
         pushBug(550,150,90)
         pushBug(550,350,90)
         Sim.sugars.push(new Sim.Sugar(locPos(700,0)))
-        //Sim.Bus.emit('move-spawn-point2', 0, {x:824,y:212})
-        //var angle = Sim.rng()*360
-        //Sim.apples.push(new Sim.Apple(Sim.Util.moveDir({x:824,y:212}, angle, Sim.rng()*35+10)))
       },
       update : function(){
         Sim.bugs.forEach(function(bug){
@@ -453,6 +464,13 @@
       },
       create : function(){
         defaultLevelCreate()
+        var needAlert = true
+        window.SetzeGift = function(){
+          if (needAlert) {
+            needAlert = false
+            alert("Gift kann bei dieser Flucht nicht eingesetzt werden.")
+          }
+        }
         var gap1 = Math.floor(Sim.rng()*36)*10
         for (var i = 0; i < 360; i += 10) {
           if (i < gap1-10 || i > gap1+10)

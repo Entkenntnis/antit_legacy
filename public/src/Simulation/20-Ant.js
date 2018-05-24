@@ -293,7 +293,7 @@
     }
     
     // jobs - communication
-    this.addSendMemoryJob = function(topic, arg1, arg2, arg3) {
+    this.addSendMemoryJob = function(topic, arg1, arg2, arg3, limit) {
       this.addJob("SEND", undefined, function() {
         //if (Sim.Util.dist(my.pos, myHill().getPos()) < Sim.Opts.HügelRadius) {
           myHill().addMarker(my.pos)
@@ -307,8 +307,11 @@
           curAnts.sort(function(a, b) {
             return Sim.Util.dist(a.getPos(), my.pos) > Sim.Util.dist(b.getPos(), my.pos) ? 1 : -1
           })
+          var count = 0
           curAnts.forEach(function (ant) {
             if (ant == Sim.API.curAnt || !ant.isSensing())
+              return
+            if (limit && count >= limit)
               return
             var bkup = Sim.API.curAnt;
             if (bkup !== undefined)
@@ -316,6 +319,7 @@
             Sim.API.setAnt(ant);
             Sim.API.callUserFunc("EmpfängtNachricht", [bkup.getMemory(), topic], true);
             Sim.API.callUserFunc(":" + topic, [arg1, arg2, arg3])
+            count++
             Sim.API.close();
             if (bkup !== undefined)
               Sim.API.setAnt(bkup);

@@ -63,6 +63,10 @@
       return Math.floor(Sim.rng() * (b - a) + a);
     }
   })
+  
+  API.addFunc("Zufall", function(a, b) {
+    return Math.floor(Sim.rng() * (b - a + 1) + a)
+  })
 
   // back compat
   API.addFunc("Stehe", function (runden) {
@@ -182,9 +186,18 @@
     }
     API.curAnt.addCustomJob(funktion);
   })
+  
+  API.addFunc("SetzeLimit", function(limit) {
+    if (typeof limit == "number")
+      API.curAnt.messageLimit = limit
+  })
+  
+  API.addFunc("SetzeLimitZurück", function(){
+    API.curAnt.messageLimit = undefined
+  })
 
   API.addFunc("SendeNachricht", function(betreff, arg1, arg2, arg3) {
-    return API.curAnt.addSendMemoryJob(betreff, arg1, arg2, arg3);
+    return API.curAnt.addSendMemoryJob(betreff, arg1, arg2, arg3, API.curAnt.messageLimit);
     // ok, jetzt wird gerockt!!!
   });
   
