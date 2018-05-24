@@ -447,34 +447,46 @@
     11 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 3000
-        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.Runden = 5000
         Sim.Opts.ZuckerGröße = 100
-        Sim.Opts.EnergieProZucker = 0
+        Sim.Opts.WanzenKampfweite = 20
       },
       create : function(){
         defaultLevelCreate()
-        var mid = {x:924,y:512}
-        var pos = []
-        for (var dx = -1; dx <= 1; dx++) {
-          for (var dy = -1; dy <= 1; dy++) {
-            pos.push({x:mid.x+dx*150,y:mid.y+dy*150})
+        var gap1 = Math.floor(Sim.rng()*36)*10
+        for (var i = 0; i < 360; i += 10) {
+          if (i < gap1-10 || i > gap1+10)
+            Sim.bugs.push(new Sim.Bug(Sim.Util.moveDir(locPos(0,0), i, 200)))
+        }
+        var gap2 = (gap1+180)%360
+        for (var i = 0; i < 360; i += 5) {
+          if (i < gap2-10 || i > gap2+10)
+            Sim.ants.push(new Sim.Ant(Sim.Util.moveDir(locPos(0,0), i, 400), 1, true))
+        }
+        Sim.Bus.emit('set-ring', locPos(0,0), 0xaa0000, {inner:430,outer:440})
+      },
+      update : function(){
+        Sim.ants.forEach(function(a){
+          if (a.getPlayerid() == 1) {
+            Sim.ants.forEach(function(b){
+              if (b.getPlayerid() == 0) {
+                if (Sim.Util.dist(a.getPos(), b.getPos()) < 20) {
+                  b.subEnergy(100)
+                }
+              }
+            })
           }
-        }
-        pos.forEach(function(pos, id){Sim.Bus.emit('move-spawn-point2', id, pos)})
-        var ids = []
-        while (ids.length < 3) {
-          var t = Math.floor(Sim.rng()*9)
-          if (ids.indexOf(t) < 0)
-            ids.push(t)
-        }
-        ids.forEach(function(id){
-          var angle = Sim.rng()*360
-          Sim.sugars.push(new Sim.Sugar(Sim.Util.moveDir(pos[id], angle, Sim.rng()*35+10)))
         })
       },
       isDone : function(){
-        return Sim.players[0].getSugar() == 300
+        var count = 0
+        Sim.ants.forEach(function(a){
+          if (a.getPlayerid() == 0) {
+            if (Sim.Util.dist(a.getPos(), locPos(0,0)) > 440)
+              count++
+          }
+        })
+        return count >= 15
       }
     },
     

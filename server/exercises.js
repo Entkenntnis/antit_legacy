@@ -148,12 +148,9 @@ module.exports.exercises = {
   },
   
   11 : {
-    name : "Escape the Room",
+    name : "Gefährliche Flucht",
     description : `
-      <p>Diesmal gibt es viel Zucker zu holen! In drei der neun Felder erscheinen Zuckerhaufen und diese wollen eingesammelt werden. Es bringt Glück, wenn die drei Felder genau eine Reihe oder eine Diagonale bilden :) Der Mittelpunkt des mittleren Felds liegt bei (400|0), die anderen Felder haben jeweils einen Abstand von 150 Schritten.
-      </p>
-      
-      <p>Für diese Aufgabe empfiehlt es sich, "Himmelsrichtungen" aus Level 1 bearbeitet zu haben. Außerdem befindet sich der Mittelpunkt des Baus bei den Koordinaten (-70|0)
+      <p>Verlasse mit mindestens 15 Ameisen den roten Bereich. Komm den Wanzen und den Gegner dabei nicht zu nahe!
       </p>
     `,
     level : 3,

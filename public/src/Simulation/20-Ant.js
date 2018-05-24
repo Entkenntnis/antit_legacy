@@ -86,6 +86,8 @@
     function setColor() {
       Sim.Bus.emit('change-ant-color', my.key, Sim.Opts.SpielerFarben[my.playerid])
       var level = Sim.levels[my.playerid]
+      if (!level)
+        level = 1
       Sim.Bus.emit('change-ant-level-color',
                    my.key,
                    Sim.Opts.FühlerFarben[level-1][0],
@@ -543,12 +545,14 @@
     updateGO()
     
     // Teams setzen
-    var ki = myPlayer().getKI()
-    if (ki.teams !== undefined) {
-      this.teamValue = ki.curTeamCount
-      ki.curTeamCount++
-      if (ki.curTeamCount >= ki.teams) {
-        ki.curTeamCount = 0
+    if (!dummy) {
+      var ki = myPlayer().getKI()
+      if (ki.teams !== undefined) {
+        this.teamValue = ki.curTeamCount
+        ki.curTeamCount++
+        if (ki.curTeamCount >= ki.teams) {
+          ki.curTeamCount = 0
+        }
       }
     }
   }
