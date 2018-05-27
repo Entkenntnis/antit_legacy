@@ -157,28 +157,16 @@ module.exports.exercises = {
   },
   
   12 : {
-    name : "Auf die Wanzen!",
+    name : "Kampf den Wanzen",
     description : `
-      <p>Endlich ist es an der Zeit, es den Wanzen mal richtig zu zeigen. Vergifte die Wanzen, die sich bei den Koordinaten (500|-300), (0|400) und (-300|100) befinden. Vergiss nicht zwischendurch, die Giftladung neu im Bau aufzuladen. Die Wanzen bleiben aber weiterhin gefräßig. Himmelsrichtungen können hilfreich sein.
+      <p>
       </p>
     `,
     level : 4,
   },
   
   13 : {
-    name : "Zucker in Dauerschleife",
-    description : `
-      <p>Du bist jetzt in der Lage, die Ameisen in Dauerschleife zu bewegen. Das wird in dieser Aufgabe ziemlich praktisch sein: In jeweils 300 Schritten Abstand zum Bau befinden sich drei Orte, an denen Zuckerhaufen erscheinen. Du wirst viel Zeit haben. Dein Ziel ist es, 250 Stück Zucker einzusammeln. Das entspricht 5 Zuckerhäufchen.
-      </p>
-      
-      <p>Verwende das Ereignis "Wartet". Je nach dem, wie du die Schleife anlegst, wirst du auch den Paramter "OFFEN" brauchen. Vergiss nicht, immer wieder zum Bau zurückzukehren um die Reichweite wiederherzustellen.
-      </p>
-    `,
-    level : 4,
-  },
-  
-  14 : {
-    name : "Verteidigung!",
+    name : "Verteidigung",
     description : `
       <p>Eine Horde gegnerischer Ameisen greift deinen Bau an! Verteidige dich mit Gift und stelle sicher, dass bis Ende der Simulation kein Gegner näher als 200 Schritte an den Bau herankommt.
       </p>
@@ -186,22 +174,31 @@ module.exports.exercises = {
     level : 4,
   },
   
-  15 : {
-    name : "Angriffs-Timing",
+  14 : { // zurückgestellt, weil ich nicht genau weiß, wie das zu managen ist.
+    name : "Apfelsaison",
     description : `
-      <p>Drei Wanzen laufen über das Spielfeld. Um sie zu treffen braucht es ein genaues Timing.
+      <p>Die leckeren Äpfe sind aus weiter Entfernung zu riechen... fahre die Ernte so schnell wie möglich ein.
       </p>
     `,
     level : 4,
   },
   
-  16 : {
+  15 : {
     name : "Befreiungsaktion",
     description : `
       <p>Zwei Zuckerhaufen und ein Apfel sind von Wanzen umzingelt. Schaffst du es, sie einzusammeln und von den Wanzen zu befreien?
       </p>
       
       <p>An manchen Stellen ist diese Aufgabe etwas knifflig. Die Nahrungsmittel sind 300 Schritte vom Bau entfernt, die Wanzen stehen in einem Umkreis von 40 Schritten außen herum. Ein Zuckerhaufen hat eine Größe von 250 Zuckerstückchen. Außerdem erscheinen durch das Sammeln von Nahrungsmitteln neue Ameisen.
+      </p>
+    `,
+    level : 4,
+  },
+  
+  16 : {
+    name : "Code-Knacker",
+    description : `
+      <p>Drei Wanzen laufen über das Spielfeld. Um sie zu treffen braucht es ein genaues Timing.
       </p>
     `,
     level : 4,

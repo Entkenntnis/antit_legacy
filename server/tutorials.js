@@ -341,7 +341,7 @@ module.exports.tutorials = {
   },
   7 : {
     level : 4,
-    name : "Mit Gift gegen Wanzen und Gegner",
+    name : "Gift, Zufall und Fühler [API]",
     text : `
       <p>In diesem Tutorial lernst du, wie sich die Ameisen verteidigen können. Dazu haben die Ameisen die Möglichkeit, eine Giftwolke mit einem Radius von 80 Schritten um sich herum zu sprühen. Sie hält 4 Sekunden lang. Solange nur eine Wolke da ist, passiert den Wanzen und den Ameisen aus dem gegnerischen Team nichts. Überlappen sich allerdings drei Wolken, dann werden die Gegner vergiftet und sterben.
       </p>
@@ -379,7 +379,7 @@ module.exports.tutorials = {
   },
   8 : {
     level : 4,
-    name : "Ameisen in Arbeitsschleife",
+    name : "In-Depth: Die Ameisenarbeitsschleife",
     text : `
       <p>Um das Ziel mancher Aufgaben zu erreichen braucht es viel Arbeit. Dabei soll keine Ameise untätig in der Gegend herumstehen. Um genau solche Ameisen anzusprechen, gibt es das Ereignis "Wartet". Es nimmt keinen Parameter und wird für die Ameisen aufgerufen, die ihre Befehle abgearbeitet haben und gerade nichts zu tun haben.
       </p>

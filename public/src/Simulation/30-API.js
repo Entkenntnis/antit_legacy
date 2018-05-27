@@ -43,6 +43,10 @@
   API.addFunc("GeheZuBau", function (sense) {
     API.curAnt.gotoHome(sense);
   })
+  
+  API.addFunc("GeheZuBauOffen", function(ziel) {
+    API.curAnt.gotoHome(true)
+  })
 
   API.addFunc("Zufallszahl", function (a, b) {
     if (b === undefined) {
@@ -117,6 +121,20 @@
     if (ziel.constructor.name == "Position" || ziel.getPos)
       return API.curAnt.addGotoJob(ziel, undefined, "Position", sense);
      API.message("Die Funktion 'GeheZuZiel(ziel)' konnte das unbekannte Ziel nicht anvisieren.");
+  });
+
+  API.addFunc("GeheZuZielOffen", function (ziel)  {
+    if (arguments.length < 1)
+      return API.message("Die Funktion 'GeheZuZielOffen(ziel)' wurde ohne Argument aufgerufen");
+    if (ziel.constructor.name == "Sugar")
+      return API.curAnt.addGotoJob(ziel, Sim.sugars, "Zucker", true);
+    if (ziel.constructor.name == "Hill")
+      return API.curAnt.gotoHome(true);
+    if (ziel.constructor.name == "Apple")
+      return API.curAnt.addGotoJob(ziel, Sim.apples, "Apfel", true);
+    if (ziel.constructor.name == "Position" || ziel.getPos)
+      return API.curAnt.addGotoJob(ziel, undefined, "Position", true);
+     API.message("Die Funktion 'GeheZuZielOffen(ziel)' konnte das unbekannte Ziel nicht anvisieren.");
   });
 
   // back compat
