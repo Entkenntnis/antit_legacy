@@ -159,7 +159,7 @@ module.exports.exercises = {
   12 : {
     name : "Kampf den Wanzen",
     description : `
-      <p>
+      <p>Eine Gruppe von Wanzen hat sich um den Bau herum niedergelassen. Dein Ameisenvolk hat sie als Gefahr erkannt und möchte sie gerne beseitigen. Vergifte innerhalb der Zeit alle Wanzen auf dem Spielfeld.
       </p>
     `,
     level : 4,
@@ -168,7 +168,7 @@ module.exports.exercises = {
   13 : {
     name : "Verteidigung",
     description : `
-      <p>Eine Horde gegnerischer Ameisen greift deinen Bau an! Verteidige dich mit Gift und stelle sicher, dass bis Ende der Simulation kein Gegner näher als 200 Schritte an den Bau herankommt.
+      <p>Eine Horde gegnerischer Ameisen greift deinen Bau an! Verteidige dich und stelle sicher, dass bis Ende der Simulation kein Gegner die gelbe Zone um den Bau betritt.
       </p>
     `,
     level : 4,
