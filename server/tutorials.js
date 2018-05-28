@@ -343,37 +343,60 @@ module.exports.tutorials = {
     level : 4,
     name : "Gift, Zufall und Fühler [API]",
     text : `
-      <p>In diesem Tutorial lernst du, wie sich die Ameisen verteidigen können. Dazu haben die Ameisen die Möglichkeit, eine Giftwolke mit einem Radius von 80 Schritten um sich herum zu sprühen. Sie hält 4 Sekunden lang. Solange nur eine Wolke da ist, passiert den Wanzen und den Ameisen aus dem gegnerischen Team nichts. Überlappen sich allerdings drei Wolken, dann werden die Gegner vergiftet und sterben.
+      <p>Bisher konntest du gegen die Wanzen nichts tun: Sie standen im Weg und du musstest ihnen ausweichen. Das ändert sich jetzt, denn du lernst, wie du die giftige Ladung deiner Ameisen dazu einsetzen kannst, Wanzen zu beseitigen.
       </p>
       
-      <p>Die Giftwolke kann man mit dem Befehl <code>SetzeGift()</code> versprühen. Jede Ameise kann maximal eine Giftwolke auf einmal setzen. Danach muss sie zum Bau zurück und dort ihre Ladung wiederherstellen.
+      <p>Dafür hast den den neuen Befehl <code>SetzeGift()</code> zur Verfügung. Diese lässt die Ameise eine Giftwolke versprühen, die sich wie ein Nebel um die Ameise legt:
       </p>
       
       <p><img src="/images/04_gift.png" class="img-thumbnail" title="Es kommt immer auf die Dosis an!"></p>
       
-      <p>Die einzelne Wolke im Bild oben ist noch harmlos. Wenn zwei weitere hinzukommen, dann wird es für die Gegner gefährlich. Hier ist also eine ordentliche Koordination der Ameisen gefragt.
+      <p>Für den optimalen Einsatz des Gifts sind ein paar Punkte zu beachten:
+      <ul>
+      <li>Eine Giftwolke hat einen Radius von 80 Ameisenschritten. (Zum Vergleich: Der Sichtradius beträgt 70 Ameisenschritte)
+      </li>
+      <li>Eine Giftwolke hält 160 Ticks (das entsprechen 4 Sekunden). Danach verstreut sie sich wieder.
+      </li>
+      <li>Giftwolken werden erst dann giftig, wenn mindestens 3 Wolken sich überlappen. In diesen Bereichen sterben Wanzen und gegnerische Ameisen sofort.
+      </li>
+      <li>Eine Ameise kann nur eine Ladung Gift setzen. Danach muss sie zum Bau zurückkehren (mit dem Befehl GeheZuBau()) und regeneriert dort ihre Ladung.
+      </li>
+      </ul>
       </p>
       
-      <p>Um die Ladungen gezielt auf die Gegner setzen zu können gibt es dazu zwei neue Ereignisse: SiehtWanze und SiehtGegner. Beide werden aufgerufen, sobald ein feindliches Objekt in Sicht kommt. Als Parameter übergeben sie das gesichtete Objekt. Dieser Parameter wird bei den Aufgaben dieses Levels noch nicht gebraucht. Es ist aber gut zu wissen, dass es sie gibt. Ungenutzte Paramter können auch ganz weggelassen werden.
+      <p>Viel Spaß also bei dem Kampf!
       </p>
       
-      <p><img src="/images/04_wanze.png" class="img-thumbnail" title="Bloß nicht zu nahe kommen!"></p>
-      
-      <p>Analog dazu das Ereignis mit dem Gegner:
+      <p>Die weiteren zwei Funktionen sind weniger aggressiv. So unscheinbar sie auch wirken, sind sie in einigen Situationen trotzdem unersetzlich.
       </p>
       
-      <p><img src="/images/04_gegner.png" class="img-thumbnail" title="Hau ab!"></p>
+      <p>Die erste Funktion gibt den Ameisen die Möglichkeit, Zufallszahlen zu erzeugen. Für eine Computerameise, die ein komplett vorherbestimmtes Leben hat, ist dies keine einfache Leistung. Ohne sich in die technischen Details zu verstricken ist es trotzdem möglich und es steht der Befehl <code>Zufall</code> zur Verfügung. Dieser Befehl nimmt zwei Parameter, die den Bereich angeben, innerhalb dessen eine Zahl erzeugt werden soll. Ein paar Beispiele:
+      </p>
       
-      <p>Damit sind die Ameisen nun in der Lage, Gegner und Wanzen zu erkennen und sich mit Gift zu verteidigen.
+      <p><img src="/images/l4_zufall.png" class="img-thumbnail" title="* = Multiplikation"></p>
+      
+      <p>Die Funktion Zufall kann dort verwendet werden, so sonst eine feste Zahl stehen würde. Diese Zahl wird nun zufällig bestimmt. In Zeile 5 geht die Ameise 100 bis 300 Schritte, in Zeile 6 dreht sich die Ameise zwischen -30 bis 30 Grad. In Zeile 7 dreht sich die Ameise in eine der Richtung 0, 90, 180 oder 270.
+      </p>
+      
+      <p>Zum Schluss verfügt die Ameise ab dieser Stufe über die zwei neuen Befehle <code>GeheZuBauOffen()</code> und <code>GeheZuZielOffen</code>. Das sind ganz klar Varianten von den bekannten Befehlen. Was ist da nun der Unterschied?
+      </p>
+      
+      <p>Diese Befehle haben mit den Fühlern der Ameise zu tun. Diese Fühler sind normalerweise geschlossen, wenn die Ameise zum Bau, zu einem Apfel oder zu einem Zucker geht (oder gehen wird). Erst wenn die Ameise das Ziel erreicht hat, schaut sie sich wieder um. Konkret heißt es, dass auf dem Weg zum Ziel die beiden Ereignisse "SiehtZucker" und "SiehtApfel" zeitweise deaktiviert werden. Das ist ein vernünftiges Verhalten, denn die Ameise hat ja bereits ein Ziel und soll nicht abgelenkt werden (und sich womöglich in eine Schleife festsetzen).
+      </p>
+      
+      <p>In speziellen Situationen möchte man aber dieses Verhalten nicht. In diesen Fällen kann man die Fühler offen lassen und die Ereignisse "SiehtZucker" und "SiehtApfel" weiter aufrufen lassen. Ein Beispiele wäre, wenn die Ameise zum Bau zurückkehrt, aber auf dem Weg dahin gerne nach Nahrungsmittel mitnehmen würde. Dann kann diese spezielle Variante verwendet werden. Sonst verhalten sich die Befehle genau gleich.
+      </p>
+      
+      <p>"SiehtWanze" und "SiehtGegner" sind davon ausgenommen. Diese werden immer aufgerufen, unabhängig von den Fühlern.
       </p>
     `,
     questions : [
-      "Die Ameisen können Gegner mit ihren Greifern zwicken.",
-      "Der Angriff hat eine Reichweite von 80 Schritten",
-      "Die Giftwolke bleibt für immer auf dem Spielfeld.",
-      "Nach jeder Giftwolke muss die Ameise zurück, um eine neue Ladung zu holen.",
-      "Erst ab drei überlappenden Giftwolken wird die Dosis tödlich.",
-      "SiehtWanze und SiehtGegner besitzen einen Parameter, der in diesem Level noch nicht gebraucht wird."
+      "Wanzen sind unsterblich.",
+      "Die Reichweite von Gift ist größer als die Sichtweite",
+      "Giftwolken bleiben für immer bestehen.",
+      "Zufallszahlen zu erzeugen ist nicht trivial.",
+      "Zufall(3,6) hat die möglichen Ergebnisse 3, 4, 5 und 6.",
+      "Wenn die Fühler geschlossen sind, werden trotzdem noch Wanzen gesehen."
     ],
     solution : [0,1,0,1,1,1],
   },
