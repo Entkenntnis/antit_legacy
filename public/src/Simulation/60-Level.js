@@ -634,6 +634,7 @@
         }
         Sim.l4_nexttime = 400
         Sim.l4_nextnoise = 100
+        Sim.Bus.emit('draw-plane', locPos(845,0), 90, 1000, 0x00aa00)
       },
       update : function(){
         if (Sim.apples.length < 7 && Sim.l4_nexttime-- <= 0) {
@@ -642,14 +643,12 @@
         }
         if (Sim.l4_nextnoise-- <= 0) {
           Sim.l4_nextnoise = Math.min(3, Math.ceil(60 / Sim.ants.length))
-          console.log(Sim.l4_nextnoise)
           var ant = Sim.ants[Math.floor(Sim.rng()*Sim.ants.length)]
           if (ant.isSensing()) {
             var pos = locPos(Sim.rng()*90+800,Sim.rng()*1000-500)
             Sim.API.setAnt(ant)
             Sim.API.callUserFunc("SiehtApfel", [{getPos:function(){return pos}}])
             Sim.API.close()
-            console.log("noise")
           }
         }
       },
@@ -661,74 +660,116 @@
     15 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 3000
-        Sim.Opts.AnfangsRichtung = 0
-        Sim.Opts.AnfangsEnergie = 800
+        Sim.Opts.Runden = 4200
+        Sim.Opts.ZuckerGröße = 100
       },
       create : function(){
         defaultLevelCreate()
-        Sim.bugs.push(new Sim.Bug({x:355,y:912}))
-        Sim.bugs.push(new Sim.Bug({x:1224,y:112}))
-        Sim.bugs.push(new Sim.Bug({x:1024,y:212}))
-        Sim.tmp = {}
-        Sim.tmp.b1 = Sim.bugs[0]
-        Sim.tmp.b2 = Sim.bugs[1]
-        Sim.tmp.b3 = Sim.bugs[2]
-        Sim.tmp.b1.setHeading(0)
-        Sim.tmp.b2.setHeading(90)
-        Sim.tmp.b3.setHeading(180)
-      },
-      update : function(){
-        var zyklus = Sim.cycles % 400
-        if (zyklus < 199) {
-          Sim.tmp.b1.setPos(Sim.Util.moveDir(Sim.tmp.b1.getPos(), 0, 3))
-          Sim.tmp.b2.setPos(Sim.Util.moveDir(Sim.tmp.b2.getPos(), 90, 3))
-          Sim.tmp.b3.setPos(Sim.Util.moveDir(Sim.tmp.b3.getPos(), 180, 3))
+        function bugify(pos) {
+          for (var i = 0; i < 360; i += 45) {
+            Sim.bugs.push(new Sim.Bug(Sim.Util.moveDir(pos, i, 30)))
+          }
         }
-        else if (zyklus == 199) {
-          Sim.tmp.b1.setHeading(180)
-          Sim.tmp.b2.setHeading(270)
-          Sim.tmp.b3.setHeading(0)
+        function getSpawnPos() {
+          for (;;) {
+            var angle = Sim.rng()*360
+            var dist = 200 + Sim.rng()*200
+            var pos = Sim.Util.moveDir(locPos(0,0), angle, dist)
+            var ok = true
+            Sim.sugars.forEach(function(s){
+              if (Sim.Util.dist(s.getPos(), pos) < 90)
+                ok = false
+            })
+            Sim.apples.forEach(function(a){
+              if (Sim.Util.dist(a.getPos(), pos) < 90)
+                ok = false
+            })
+            if (ok)
+              return pos
+          }
         }
-        else if (zyklus < 399) {
-          Sim.tmp.b1.setPos(Sim.Util.moveDir(Sim.tmp.b1.getPos(), 180, 3))
-          Sim.tmp.b2.setPos(Sim.Util.moveDir(Sim.tmp.b2.getPos(), 270, 3))
-          Sim.tmp.b3.setPos(Sim.Util.moveDir(Sim.tmp.b3.getPos(), 0, 3))
+        while (Sim.apples.length < 3) {
+          var pos = getSpawnPos()
+          Sim.apples.push(new Sim.Apple(pos))
+          bugify(pos)
         }
-        else if (zyklus == 399) {
-          Sim.tmp.b1.setHeading(0)
-          Sim.tmp.b2.setHeading(90)
-          Sim.tmp.b3.setHeading(180)
+        while (Sim.sugars.length < 7) {
+          var pos = getSpawnPos()
+          Sim.sugars.push(new Sim.Sugar(pos))
+          bugify(pos)
         }
       },
       isDone : function(){
-        return Sim.players[0].getPoison() == 3
+        return Sim.players[0].getSugar() >= 400 && Sim.players[0].getApple() >= 2
       },
     },
     
     16 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 3000
-        Sim.Opts.SpawnWinkel = undefined
-        Sim.Opts.SpawnRadius = undefined
+        Sim.Opts.Runden = 30000
       },
       create : function(){
         defaultLevelCreate()
-        Sim.apples.push(new Sim.Apple({x:755,y:512}))
-        Sim.sugars.push(new Sim.Sugar({x:155,y:512}))
-        Sim.sugars.push(new Sim.Sugar({x:455,y:212}))
-        function bugify(pos) {
-          for (var i = 0; i < 360; i += 45) {
-            Sim.bugs.push(new Sim.Bug(Sim.Util.moveDir(pos, i, 30)))
+        Sim.Bus.emit('move-spawn-point', 0, locPos(200,0))
+        Sim.Bus.emit('move-spawn-point', 1, locPos(-200,0))
+        Sim.Bus.emit('move-spawn-point', 2, locPos(0,-200))
+        Sim.Bus.emit('move-spawn-point', 3, locPos(0,200))
+        Sim.l4_key1 = Math.floor(Sim.rng()*4)+1
+        Sim.l4_key2 = Math.floor(Sim.rng()*4)+1
+        Sim.l4_key3 = Math.floor(Sim.rng()*4)+1
+        Sim.l4_key4 = Math.floor(Sim.rng()*4)+1
+        Sim.l4_done = false
+      },
+      update : function(){
+        function addToKey(ant, cpnum) {
+          if (!ant.l4_key)
+            ant.l4_key = []
+          ant.l4_key.push(cpnum)
+          console.log("Ameise " + ant.getKey() + " hat Code " + ant.l4_key.join(","))
+          if (ant.l4_key.length >= 4) {
+            var k = ant.l4_key
+            if (k[0] == Sim.l4_key1 && k[1] == Sim.l4_key2 && k[2] == Sim.l4_key3 && k[3] == Sim.l4_key4) {
+              alert("Eingabe " + k.join(",") + " ist richtig!")
+              Sim.l4_done = true
+            } else {
+              console.log(">>>>>>>Eingabe: " + ant.l4_key.join(",") + " ist falsch")
+            }
+            ant.l4_key = []
           }
         }
-        bugify({x:755,y:512})
-        bugify({x:155,y:512})
-        bugify({x:455,y:212})
+        Sim.ants.forEach(function(ant){
+          if (Sim.Util.dist(ant.getPos(), locPos(200,0)) < 40) {
+            if (ant.l4_lastcp != 1) {
+              //console.log("Ameise " + ant.getKey() + " an CP 1")
+              ant.l4_lastcp = 1
+              addToKey(ant, 1)
+            }
+          } else if (Sim.Util.dist(ant.getPos(), locPos(0,-200)) < 40) {
+            if (ant.l4_lastcp != 2) {
+              //console.log("Ameise " + ant.getKey() + " an CP 2")
+              ant.l4_lastcp = 2
+              addToKey(ant, 2)
+            }
+          } else if (Sim.Util.dist(ant.getPos(), locPos(-200,0)) < 40) {
+            if (ant.l4_lastcp != 3) {
+              //console.log("Ameise " + ant.getKey() + " an CP 3")
+              ant.l4_lastcp = 3
+              addToKey(ant, 3)
+            }
+          } else if (Sim.Util.dist(ant.getPos(), locPos(0,200)) < 40) {
+            if (ant.l4_lastcp != 4) {
+              //console.log("Ameise " + ant.getKey() + " an CP 4")
+              ant.l4_lastcp = 4
+              addToKey(ant, 4)
+            }
+          } else {
+            ant.l4_lastcp = undefined
+          }
+        })
       },
       isDone : function(){
-        return Sim.players[0].getSugar() == 500 && Sim.players[0].getApple() == 1
+        return Sim.l4_done
       },
     },
  

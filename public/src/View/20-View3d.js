@@ -610,6 +610,13 @@
       }
     })
     
+    Bus.on('draw-plane', function(topleft, width, height, color) {
+      var plane = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({color:color,side: THREE.DoubleSide}))
+      plane.rotation.x = Math.PI / 2
+      plane.position.copy(toViewPos(topleft, 2))
+      scene.add(plane)
+    })
+    
   };
   
   var vw = new ViewController();

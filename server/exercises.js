@@ -174,10 +174,12 @@ module.exports.exercises = {
     level : 4,
   },
   
-  14 : { // zurückgestellt, weil ich nicht genau weiß, wie das zu managen ist.
+  14 : {
     name : "Apfelsaison",
     description : `
-      <p>Die leckeren Äpfe sind aus weiter Entfernung zu riechen... fahre die Ernte so schnell wie möglich ein.
+      <p>Es ist Erntezeit und viele Äpfel liegen vor der Tür. Sammle mit deinem Ameisenvolk 25 Äpfel ein, um die Aufgabe zu erfüllen.
+      </p>
+      <p>Ein Problem gibt es aber: Die ganze Umgebung riecht nach Apfel und die meisten Ameisen denken fälschlicherweise, dass sich die Äpfel im grünen Bereich befinden.
       </p>
     `,
     level : 4,
@@ -186,10 +188,7 @@ module.exports.exercises = {
   15 : {
     name : "Befreiungsaktion",
     description : `
-      <p>Zwei Zuckerhaufen und ein Apfel sind von Wanzen umzingelt. Schaffst du es, sie einzusammeln und von den Wanzen zu befreien?
-      </p>
-      
-      <p>An manchen Stellen ist diese Aufgabe etwas knifflig. Die Nahrungsmittel sind 300 Schritte vom Bau entfernt, die Wanzen stehen in einem Umkreis von 40 Schritten außen herum. Ein Zuckerhaufen hat eine Größe von 250 Zuckerstückchen. Außerdem erscheinen durch das Sammeln von Nahrungsmitteln neue Ameisen.
+      <p>Die Wanzen haben die wertvollen Nahrungsmittel umzingelt. Befreie die Nahrungsmittel und sammle 400 Zucker und 2 Äpfel.
       </p>
     `,
     level : 4,
@@ -198,7 +197,11 @@ module.exports.exercises = {
   16 : {
     name : "Code-Knacker",
     description : `
-      <p>Drei Wanzen laufen über das Spielfeld. Um sie zu treffen braucht es ein genaues Timing.
+      <p>Um den Bau herum befinden sich vier Checkpoints mit folgender Belegung: Ost=1, Süd=2, West=3 und Nord=4. Das Ziel der Aufgabe ist es, den Code zu knacken. Der Code besteht aus vier Ziffern zwischen 1 und 4, die den Checkpoints entsprechen. Die Ameisen sollen entsprechend dem Code die Checkpoints ablaufen.
+      </p>
+      <p>Ein Beispiel: Wenn der Code 4,2,2,3 lautet, dann muss eine Ameise zuerst den Checkpoint im Norden besuchen, dann den Checkpoint im Süden, diesen wieder verlassen und wieder besuchen und zum Schluss den Checkpoint im Westen besuchen. Ist der Code richtig, wird die Aufgabe abgeschlossen. Ist der Code falsch, wird eine entsprechende Nachricht in der Konsole ausgegeben. Schaue dort nach, um weitere Ausgaben zu erhalten.
+      </p>
+      <p>Während jeder Simulation wird der Code neu generiert. Es gibt keine Möglichkeit, diesen Code auszulesen - er muss erraten werden.
       </p>
     `,
     level : 4,
