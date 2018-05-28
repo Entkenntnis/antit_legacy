@@ -402,38 +402,74 @@ module.exports.tutorials = {
   },
   8 : {
     level : 4,
-    name : "In-Depth: Die Ameisenarbeitsschleife",
+    name : "Hinter den Kulissen: Das Ameisenaufgabenverzeichnis",
     text : `
-      <p>Um das Ziel mancher Aufgaben zu erreichen braucht es viel Arbeit. Dabei soll keine Ameise untätig in der Gegend herumstehen. Um genau solche Ameisen anzusprechen, gibt es das Ereignis "Wartet". Es nimmt keinen Parameter und wird für die Ameisen aufgerufen, die ihre Befehle abgearbeitet haben und gerade nichts zu tun haben.
+      <p>Unter der Oberfläche einer Programmiersprache passieren eine Menge an Sachen. Im Idealfall funktionieren diese so wie erwartet und man muss seine Aufmerksamkeit nicht darauf richten. Als Programmierer möchte man den Befehl "Gehe" schreiben und man erwartet, dass die Simulation die Position entsprechend aktualisieren, die Interaktionen mit dem Spielfeld korrekt passieren und schließlich die 3D-Ansicht sich neu zeichnet. Wenn es gut läuft braucht man sich nicht mit den Details zu beschäftigen.
       </p>
       
-      <p><img src="/images/04_wartet.png" class="img-thumbnail" title="Hau ab!"></p>
-      
-      <p>Das ist ein guter Ort, um Befehle zu programmieren, die die Ameisen in Dauerschleife ausführen sollen. Denn sobald die Ameise fertig ist, wird sie ja mit diesem Ereignis von vorne beginnen. Somit kann man den Ameisen Wiederholungen beibringen, z.B. damit sie das Spielfeld absucht.
+      <p>Glücklicherweise hat AntIT! mittlerweile eine Stabilität erreicht, wo man sich darüber tatsächlich keine Sorgen machen muss. Alle Sprachelemente sind schon in vielen Kombinationen getestet worden und Fehler korrigiert. In den ersten Workshops kam es z.B. noch regelmäßig vor, dass Befehle nicht ausgeführt wurden oder Ereignisse nicht oder falsch aufgerufen wurden.
       </p>
       
-      <p>Umgekehrt ist es manchmal auch nützlich, die Ameise eine gewisse Zeitspanne warten zu lassen. Hier müssen wir noch kurz ansprechen, wie die Zeit für die Ameisen vergeht: Für die Ameise läuft die Simulation in Runden ab. Pro Sekunde werden 40 Runden simuliert. Mit dem Befehl <code>Warte(zeit)</code> kann die Ameise eine bestimmte Anzahl von Runden warten. Um zwei Sekunden zu warten, schreibt man den Befehl <code>Warte(80)</code>
+      <p>Trotzdem <em>kann</em> es den einen oder anderen Interessieren, wie die Abläufe hinter den Kulissen genau ablaufen. Insbesondere wenn jemand AntIT! weiterentwickeln möchte, muss diese Person sich mit den Details beschäftigen. Das gilt auch für mich als Entwickler. Dieses Tutorial ist auch für mich geschrieben, damit ich an in ein paar Jahren noch weiß, wie die Ameisen hier funktionieren.
       </p>
       
-      <h4>Kleine technische Ergänzung:
-      </h4>
-      
-      <p>Wenn die Ameise ständig in Bewegung ist, dann kommt sie irgendwann an ihre Reichweitengrenze von 3000 Schritten. In diesem Fall soll sie zum Bau zurückkehren. Nun ist es so, dass die Ameise in zwei verschiedenen Zuständen sein kann: offen oder geschlossen. Solange sie kein Ziel anvisiert, ist sie offen (z.B. durch Befehle wie Gehe oder Drehe). Sobald sie aber ein Ziel anvisiert oder anvisieren wird (wenn der Befehl also erteilt ist, nur noch nicht ausgeführt), dann wird die Ameise geschlossen. Konkret geschieht das durch die Befehle GeheZuBau() und GeheZuZiel().
+      <p>Wir wollen uns jetzt also das <strong>Ameisenaufgabenverzeichnis</strong> anschauen. Dieser Teil kümmert sich darum, dass Befehle entgegen genommen werden und später zum richtigen Zeitpunkt ausgeführt werden. Dieser Teil ist die erste Schnittstelle, die man als Programmierer mit dem System hat. Daher habe ich mich dazu entschieden, meine Erklärungen mit dem Ameisenaufgabenverzeichnis zu beginnen (und nicht mit der Simulation oder der 3D-Ansicht, was sicherlich auch manche interessieren würde).
       </p>
       
-      <p>Wenn die Ameise geschlossen ist, dann ignoriert sie alle Nahrungsmittel auf ihrem Weg. Auf dem Rückweg zum Bau ist das normalerweise auch erwünscht. Möchte man nun, dass die Ameise auf dem Weg zum Bau trotzdem Nahrungsmittel wahrnimmt, dann gibt es den Befehl <code>GeheZuBau(OFFEN)</code>. Dieser Befehl lässt die Ameise zum Bau gehen, ohne dass die Ameise geschlossen wird. Damit lassen sich nun Suchpfade programmieren, auf denen die Ameise nach einer gewissen Zeit zurückkehrt und trotzdem Nahrungsmittel findet.
+      <p>Um die Situation ein wenig zu illustrieren beginne ich mit einer kleinen Geschichte. Diese möchte zeigen, dass es zu Problemen kommen kann, wenn mehrere Personen an einer Sache gleichzeitig arbeiten:
       </p>
       
-      <p>Umgehen lässt sich das Problem auch, wenn man die Reihenfolge der Befehle abändert. Das ist dann wieder stark von der konkreten Situation abhängig. Als Faustregel: Wenn die Ameise Nahrungsmittel ignoriert, obwohl die Ereignisse dafür angelegt sind, dann mal den Parameter <code>OFFEN</code> ausprobieren.
+      <p><em>Die Firma ABC bietet ein teures Gerät tageweise zum Verleih an. Leider ist diese Firma noch schlecht vernetzt und verwaltet die Verfügbarkeit des Geräts über eine schriftliche Liste im Zimmer 102. Die Mitarbeiter, die mit den Kunden kommunizieren, müssen bei Anfragen in das Zimmer 102 kommen, die Liste überprüfen und sich dann dort eintragen. Es ist geplant, das System möglichst bald umzustellen, aber noch ist das nicht geschehen.</em>
+      </p>
+      
+      <p><em>So passiert es also, dass eines Tages der Kunde X anruft und den Mitarbeiter Y fragt, ob er das Gerät für den 2. Dezember ausleihen könnte. Der Mitarbeiter Y freut sich über die Anfrage und geht sofort los in das Zimmer 102, um die Verfügbarkeit zu überprüfen. In diesem Moment ruft der Kunde &alpha; an. Dieser hat den Mitarbeiter &beta; am Apparat und möchte ebenfalls das Gerät für den 2. Dezember ausleihen. Also geht er auch dieser los zum Zimmer 102. Auf dem Weg treffen sich die beiden Mitarbeiter nicht. Beide sehen, dass der 2. Dezember noch verfügbar ist.</em>
+      </p>
+      
+      <p><em>Das teilen sie ihren Kunden mit und versprechen, das Gerät für diesen Tag unverzüglich in der Liste zu reservieren. Die Kunden verabschieden sich und gehen davon aus, dass alles geklappt hat. Nun gehen Mitarbeiter Y und Mitarbeiter &beta; wieder in das Zimmer 102, um die Reservierung durchzuführen. Als &beta; ankommt, sieht dieser, wie sich Y gerade für den 2. Dezember eingetragen hat. Sein Gesichtsausdruck war sicherlich sehr verdutzt. Hatte er nicht extra überprüft, dass die Liste frei war? Wie konnte es dann zu dieser Situation kommen?</em>
+      </p>
+      
+      <p>Innerhalb der Simulation laufen viele Sachen gleichzeitig ab. Wenn die Simulation so schlecht verwaltet wird wie die Firma ABC, dann kann es passieren, dass Ameisen einen Apfel tragen sollen, der schon von einem anderen Team weggeschnappt worden ist oder sich ein Zuckerstück von einem leeren Zuckerhaufen nehmen. Das sind Fehlerzustände, die unbedingt verhindert werden sollten.
+      </p>
+      
+      <p>Die Programmiersprache, in der die Ameisen entwickelt sind, hat für dieses Problem ein einfaches wie radikales Mittel: Sie hat nur einen einzigen Mitarbeiter und dieser kümmert sich um alle Geschäfte. Mit nur einem Mitarbeiter wäre der Firma ABC dieser Fehler nicht passiert: Der Mitarbeiter arbeitet zuerst den Kunden X ab und kümmert sich dann um den Kunden &alpha;, dem er dann absagen wird.
+      </p>
+      
+      <p>Diese Lösung hat natürlich auch ihren Preis. Die Telefonwarteschlange der Firma ABC ist nun öfters in Gebrauch. Für AntIT! heißt es, dass wir nun das Ameisenaufgabenverzeichnis einführen müssen. So läuft das genau ab:
+      </p>
+      
+      <p>Die Firma AntIT! führt Ameisensimulationen durch. Dazu haben sie einen Raum, in dem die ganze Simulation nachgebaut ist. Ein Mitarbeiter verwaltet die Simulation und verschiebt die Ameisenfiguren entsprechend den Anweisungen der Programmierer. Um Probleme mit der Synchronität zu vermeiden hat die Firma AntIT! nur einen einzigen Mitarbeiter angestellt.
+      </p>
+      
+      <p>Der Mitarbeiter berechnet die Simulation Tick für Tick. Für jede Ameise auf dem Spielfeld führt er einen Eintrag im Ameisenaufgabenverzeichnis, kurz AAV. Dort steht drin, welchen Befehl die Ameise gerade ausführt, z.B., dass die Ameise 200 Schritte gehen soll. Der Mitarbeiter verschiebt die Ameise pro Tick immer nur um ein kleines Stückchen, aber irgendwann hat er die 200 Schritte geschafft und hakt die Aufgabe im AAV als erledigt ab. Um das AAV zu füllen, ruft der Mitarbeiter immer wieder die Programmierer an.
+      </p>
+      
+      <p>Beispielsweise wird eine neue Ameise geboren. Der Mitarbeiter stellt die Ameise auf das Spielfeld, erstellt für diese Ameise einen Eintrag im AAV und ruft den Programmierer an: "Hey, eine neue Ameise ist geboren. Was soll sie tun?". Der Programmierer antwortet: "Die Ameise soll bitte 300 Schritte gehen und sich dann um 90 Grad drehen." Der Mitarbeiter trägt diese beiden Befehle im AAV ein. Tick für Tick arbeitet er diese ab. Sobald der Mitarbeiter sieht, dass die Ameise mit beiden Befehlen fertig ist, ruft er wieder die Programmierer an: "Hey, die Ameise hat nichts mehr zu tun. Soll sie was machen?" Der Programmierer antwortet: "Gehe jetzt 500 Schritte". Der Mitarbeiter trägt das wieder ins AAV ein. Wenn der Mitarbeiter feststellt, dass die Ameise einen Zucker sieht, ruft er wieder den Programmierer an: "Hey, deine Ameise hat gerade einen Zucker gesehen. Was soll sie machen?" ... So geht das Spiel immer weiter.
+      </p>
+      
+      <p>Die Anrufe des Mitarbeiters entsprechen den Ereignissen der Simulation wie "IstGeboren", "IstUntätig" oder "SiehtZucker". Als Programmierer schreibt man rein, welche Befehle die Ameise dann ausführen soll. Diese werden vom Mitarbeiter nicht sofort ausgeführt, sondern erstmal in das AAV eingetragen. Davon merkt man als Programmierer eigentlich nichts. Es wirkt so, als ob die einzelnen Befehle direkt danach ausgeführt werden.
+      </p>
+      
+      <p>Naja, fast. An zwei Punkten muss man sich doch mit den Feinheiten des AAV beschäftigen. Diese möchte hier noch zum Schluss darstellen.
+      </p>
+      
+      <ol>
+      <li><p>Was ist nämlich, wenn der Programmierer Anweisungen gibt und es noch unfertige Befehle im AAV gibt, typischerweise dann, wenn die Ameise etwas sieht. Wie soll der Mitarbeiter mit den Befehlen im AAV umgehen? Dafür wurde folgende Regelung gesetzt, die sich im praktischen Alltag bewährt hat: Falls die neuen Anweisungen den Befehl "GeheZuBau" oder "GeheZuZiel" enthalten, dann werden die alten Befehle im AAV gelöscht. Es wird davon ausgegangen, dass diese keine Bedeutung mehr haben. Das ist der Normalfall. Falls die neuen Anweisungen diese Befehle aber nicht enthalten, dann wird davon ausgegangen, dass die alten Anweisungen noch gebraucht werden und die neuen Anweisungen werden <em>vor</em> den alten Anweisungen ausgeführt. Das passiert meist, wenn man z.B einer Wanze ausweicht.
+      </p></li>
+      
+      <li><p>Eine Abfrage, wie z.B. Reichweite, kann nur den Wert zum aktuellen Zeitpunkt liefern, nicht den zu einen späteren Zeitpunkt. Eine konkrete Situation:<br><img src="/images/l4_aav.png" class="img-thumbnail"><br>Die Abfrage in Zeile 9 prüft den Wert der Abfrage, bevor die 1000 Schritte gegangen wurden - obwohl die Abfrage nach dem Befehl steht! Mit dem AAV wird das klarer: Die 1000 Schritte wurden notiert, die Abfrage wird aber sofort vom Mitarbeiter ausgeführt. Das ist ein subtiler Punkt, der dann doch ziemlich unintutiv wird. Die Lösung dafür ist, nach den 1000 Schritten ein neues Ereignis zu aktivieren und in diesem Ereignis dann die Abfrage zu setzen. Das geht mit dem Befehl SendeSelber, den wir noch kennenlernen werden:<br><img src="/images/l4_aav2.png" class="img-thumbnail"><br>Jetzt wird nach den 1000 Schritten das Ereignis "prüfeReichweite" aufgerufen. Der Mitarbeiter ruft den Programmierer erneut an und jetzt kann die Abfrage im richtigen Zeitpunkt ausgeführt werden.
+      </p></li>
+      </ol>
+      
+      <p>Geschafft! Wenn du diese zwei Punkte verstanden hast, dann hast du auch die AAV verstanden. Sowas wie eine AAV wird in vielen Anwendungen verwendet, um Probleme mit der Parallelität zu vermeiden, z.B. auch hier im Browser oder bei graphischen Oberflächen wie Visual C# oder JavaFx. Dort heißt sie Event Queue und kümmert sich noch um weitere Aufgaben. Die grundlegende Idee aber bleibt gleich: Es gibt nur einen Mitarbeiter (der für die Oberfläche zuständig ist) und dieser kümmert sich nacheinander um alle Aufgaben.
       </p>
     `,
     questions : [
-      "Das Ereignis Wartet wird aufgerufen, wenn die Ameise nichts mehr zu tun hat.",
-      "Das Ereignis besitzt einen Parameter.",
-      "Mit 'Wartet' können Wiederholungen programmiert werden.",
-      "In einer Sekunde vergehen 60 Runden.",
-      "Warte(3) wartet 3 Sekunden.",
-      "Wenn die Ameise ein Ziel anvisiert, dann ist sie offen."
+      "Solange die Dinge wie erwartet funktionieren benötigt man kein Wissen über die Details.",
+      "AntIT! enthält viele Bugs.",
+      "AntIT! ist die beste Ameisensimulation der Welt.",
+      "Bei mehreren Mitarbeitern kommt es nie zu Problemen.",
+      "Die Programmiersprache der Ameisen enthält genau zwei Mitarbeiter.",
+      "Dieser Satz enhält sechs Wörter."
     ],
     solution : [1,0,1,0,0,0],
   },
