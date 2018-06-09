@@ -28,9 +28,6 @@
     // the floor lies in the xz-plane, don't worry about aspect here, will be done on resize 
     camera = new THREE.PerspectiveCamera(60, 1 /*aspect*/, 0.1, 200000);
     camera.position.set(0, 600, 1400)
-    if (View.Opts.Kampfmodus) {
-      camera.position.set(0, 600, 330)
-    }
     
     // the worker in the shadow
     renderer = new THREE.WebGLRenderer();
@@ -157,25 +154,6 @@
     var poisonCloud = undefined
     this.needRedraw = true
     
-    var riesenmeise0 = undefined
-    var kampfmeise0 = undefined
-    var giftmeise0 = undefined
-    var albinomeise0 = undefined
-    var räubermeise0 = undefined
-    
-    var kampfStore = undefined
-    var riesenStore = undefined
-    var giftStore = undefined
-    var albinoStore = undefined
-    var räuberStore = undefined
-    var storeMap = undefined
-    
-    var ball0 = undefined
-    var ballStore = undefined
-    
-    var hb0 = undefined
-    var hbStore = undefined
-    
     this.load = function(){
       
       var objectLoader = new THREE.ObjectLoader(manager);
@@ -226,31 +204,6 @@
         obj.scale.set(s, s, s);
         ant0 = obj
         
-        kampfmeise0 = ant0.clone()
-        kampfmeise0.scale.set(3.3, 3.3, 3.3)
-        kampfmeise0.children[0].children[10].material =
-          new THREE.MeshPhongMaterial({color:0x999999})
-        
-        riesenmeise0 = ant0.clone()
-        riesenmeise0.scale.set(5, 5, 5)
-        riesenmeise0.children[0].children[10].material =
-          new THREE.MeshLambertMaterial({color:0xff5900})
-        
-        giftmeise0 = ant0.clone()
-        giftmeise0.scale.set(4, 4, 4)
-        giftmeise0.children[0].children[10].material =
-          new THREE.MeshPhongMaterial({color:0xc300ff})
-        
-        albinomeise0 = ant0.clone()
-        albinomeise0.children[0].children[10].material =
-          new THREE.MeshPhongMaterial({color:0xffffff})
-        
-        räubermeise0 = ant0.clone()
-        räubermeise0.scale.set(3.7, 3.7, 3.7)
-        räubermeise0.children[0].children[10].material =
-          new THREE.MeshPhongMaterial({color:0xe5ff00})
-        kampfmeise0.scale.set(s*1.3, s*1.3, s*1.3)
-        
       }.bind(this));
       objectLoader.load("/models/anthill.json", function ( obj ) {
         var earthTexture = textureLoader.load( "/assets/earth.jpg" );
@@ -296,16 +249,6 @@
       var material1 = new THREE.MeshLambertMaterial();
       var sphere1 = new THREE.Mesh(geometry1, material1);
       marker0 = sphere1;
-      
-      // ball
-      var ballgeo = new THREE.IcosahedronGeometry( 2, 1 )
-			var ballmat = new THREE.MeshPhongMaterial({color:0x000000})
-			ball0 = new THREE.Mesh(ballgeo, ballmat)
-			
-			// health bar ?
-			var hbgeo = new THREE.BoxBufferGeometry( 3, 14, 3 );
-      var hbmat = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
-      hb0 = new THREE.Mesh( hbgeo, hbmat )  
       
       // (poison) ring
       var ring = new THREE.RingBufferGeometry( 10, 20, 8 );
@@ -360,23 +303,6 @@
       markerStore = new UnitStore(marker0);
       poisonStore = new UnitStore(poison0);
       poisonStore2 = new UnitStore(poison20)
-      
-      kampfStore = new UnitStore(kampfmeise0)
-      riesenStore = new UnitStore(riesenmeise0)
-      giftStore = new UnitStore(giftmeise0)
-      albinoStore = new UnitStore(albinomeise0)
-      räuberStore = new UnitStore(räubermeise0)
-      storeMap = {
-        "Arbeitermeise" : antStore,
-        "Kampfmeise" : kampfStore,
-        "Riesenmeise" : riesenStore,
-        "Giftmeise" : giftStore,
-        "Albinomeise" : albinoStore,
-        "Räubermeise" : räuberStore
-      }
-      
-      ballStore = new UnitStore(ball0)
-      hbStore = new UnitStore(hb0)
     }
     
     function setAntBodyColor(ant, c){
@@ -437,27 +363,6 @@
       antBody.rotation.y = roty + (Math.random()*0.3-0.15)
     })
     
-    Bus.on('change-unit-color', function(key, type, color) {
-      setAntBodyColor(storeMap[type].get(key), color)
-    })
-    
-    Bus.on('move-unit', function(key, type, pos, roty) {
-      var antBody = storeMap[type].get(key)
-      antBody.position.copy(toViewPos(pos))
-      antBody.rotation.y = roty
-    })
-    
-    Bus.on('move-hb', function(key, pos, rat) {
-      hbStore.get(key).position.copy(toViewPos(pos, 15))
-      hbStore.get(key).scale.y = rat
-      hbStore.get(key).material = new THREE.MeshBasicMaterial({color:new THREE.Color(1.3-rat, rat, 0)});
-    })
-    
-    Bus.on('remove-unit', function(key, type) {
-      if (storeMap[type].has(key)) storeMap[type].remove(key)
-      if (hbStore.has(key)) hbStore.remove(key)
-    })
-    
     Bus.on('move-sugarbox', function(key, pos) {
       var sugarBox = sugarBoxStore.get(key)
       sugarBox.position.copy(toViewPos(pos, Optionen.ZuckerStückchenHöhe))
@@ -502,19 +407,6 @@
     
     Bus.on('remove-marker', function(key) {
       markerStore.remove(key)
-    })
-    
-    Bus.on('set-missile-color', function(key, color) {
-      ballStore.get(key).material = new THREE.MeshPhongMaterial({color:color})
-    })   
-    
-    Bus.on('move-missile', function(key, pos) {
-      ballStore.get(key).position.copy(toViewPos(pos, 3))
-    })
-    
-    Bus.on('remove-missile', function(key) {
-      if (ballStore.has(key))
-        ballStore.remove(key)
     })
     
     Bus.on('update-marker', function(key) {

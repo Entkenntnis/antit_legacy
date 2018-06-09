@@ -25,7 +25,6 @@
   })
   
   function keypresshandler(e){
-    if (View.Opts.Kampfmodus) return
     var newFps = undefined;
     if (e.charCode == 49)
       newFps = 4

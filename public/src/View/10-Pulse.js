@@ -33,18 +33,7 @@
     Sim.Update()
     bus.emit('post-tick')
     var runState = Math.round((Sim.getCycles()-1) / Optionen.Runden * 100);
-    if (View.Opts.Kampfmodus) {
-      var time = 180 - Math.round(Sim.getCycles() / 30)
-      if (time == 0 && running) {
-        alert("Unentschieden!")
-        end()
-      }
-      var min = Math.floor(time/60)
-      var sec = time % 60
-      if (sec < 10) sec = "0" + sec.toString()
-      bus.emit('update-status', "Restzeit: " + min + ":" + sec)
-    } else
-      bus.emit('update-status', "Fortschritt: " + runState + "%")
+    bus.emit('update-status', "Fortschritt: " + runState + "%")
   }
   
   Pulse.Tick = function() {

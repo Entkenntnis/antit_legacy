@@ -13,7 +13,6 @@
       energy: Sim.Opts.AnfangsEnergie,
       feedIndex: 0,
       timeToNextAnt: Sim.Opts.AmeiseWartezeit,
-      lp : Sim.Opts.Kampf.Bau.Trefferpunkte,
     })
     
     var key = Hill.counter++
@@ -82,42 +81,12 @@
       my.energy = Math.max(0, my.energy - amount)
     }
     
-    this.hit = function(impact){
-      my.lp -= impact
-      if (my.lp <= 0) {
-        my.lp = 0
-        Sim.players[my.playerid].addPoints(-Infinity)
-        if (Sim.cycles != Infinity)
-          alert("Spieler " + (my.playerid + 1) + " hat verloren!")
-        Sim.cycles = Infinity
-      }
-      Sim.players[my.playerid].updateDetails()
-    }
-    
-    var cooldown = 0
-    
-    function fightUpdate(){
-      if (cooldown > 0) cooldown--
-      var nextEnemy = Sim.Util.closest(my.pos, Sim.units[(my.playerid+1)%2],
-        Sim.Opts.Kampf.Bau.Sichtweite)
-      if (nextEnemy && cooldown == 0) {
-        Sim.Missile.fire(my.pos, nextEnemy, Sim.Opts.Kampf.Bau.Schaden,
-          Sim.Opts.Kampf.Bau.GGeschw)
-        cooldown = Sim.Opts.Kampf.Bau.Trefferrate
-      }
-      if (Sim.cycles % 40 == 39) {
-        my.energy += Sim.Opts.GrundEnergie
-        Sim.players[my.playerid].updateDetails()
-      }
-    }
-    
     this.update = function() {
-      if (Sim.Opts.Kampfmodus) fightUpdate()
       if (my.timeToNextAnt-- <= 0
         && Sim.players[my.playerid].getAnts() < Sim.Opts.AmeisenMaximum
         && my.energy >= Sim.Opts.EnergieFürAmeise) {
         my.timeToNextAnt = Sim.Opts.AmeiseWartezeit;
-        if(!Sim.Opts.Kampfmodus) spawnAnt()
+        spawnAnt()
       }
       Sim.Util.removeIf(markers, function(m){
         m.cycle++

@@ -80,7 +80,6 @@
     }
     
     this.update = function() {
-      if (Sim.Opts.Kampfmodus) return
       if (timeToNextFeed-- <= 0) {
         timeToNextFeed = Sim.Opts.NahrungsWartezeit;
         var feedHills = [];

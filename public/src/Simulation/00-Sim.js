@@ -18,8 +18,6 @@
       Sim.bugs = []
       Sim.poisons = []
       Sim.memories = {}
-      
-      if (Sim.Opts.Kampfmodus) Sim.Fight.init()
       if (Sim.Opts.Levelmodus) Sim.Level.init()
       
       if (seed) {
@@ -34,9 +32,7 @@
       var height = Math.round(Math.sqrt(area / Optionen.SpielfeldVerhältnis));
       Sim.playground = new Sim.Playground(width, height);
     
-      if (Sim.Opts.Kampfmodus) {
-        Sim.Fight.createPlayers()
-      } else if (Sim.Opts.Levelmodus) {
+      if (Sim.Opts.Levelmodus) {
         Sim.Level.createPlayers()
       } else {
         for(var i = 0; i < Sim.API.ants.length; i++) {
@@ -58,8 +54,6 @@
       Sim.ants.forEach(function(ant) {
         ant.update();
       });
-      
-      if (Sim.Opts.Kampfmodus) Sim.Fight.update()
       
       if (Sim.Opts.Levelmodus) Sim.Level.update()
       
