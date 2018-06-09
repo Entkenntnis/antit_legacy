@@ -150,6 +150,7 @@ module.exports = function(App) {
         description: desc,
         active: active?true:false,
         created: d,
+        competitionDone : true,
       }, {upsert: true})
       yield readinColonies()
       req.flash('/root', "OK: Eintrag gespeichert")

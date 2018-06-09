@@ -48,6 +48,7 @@ module.exports = function(App) {
         highlightElement: 0,
         newtuts: App.getNewTuts(req.user),
         colonyInfo : App.colo.get(req.session.colony).description,
+        competitionDone : App.colo.get(req.session.colony).competitionDone,
       })
     } else
       res.render('landing/main', {

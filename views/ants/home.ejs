@@ -19,6 +19,11 @@
           <li role="presentation"><a href="/users">Benutzerverwaltung</a></li>
           <li role="presentation"><a href="/stats">Statistik</a></li>
           <li role="presentation"><a href="/overview">Fortschritt</a></li>
+          <% if (competitionDone) { %>
+            <li role="presentation"><a href="/competitionUndone">Wettbewerb zurückschalten (aktuell frei)</a></li>
+          <% } else { %>
+            <li role="presentation"><a href="/competitionDone">Wettbewerb fertigschalten (aktuell gesperrt)</a></li>
+          <% } %>
         </ul>
 	    <% } // endif superuser %>
 	    

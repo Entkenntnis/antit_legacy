@@ -33,21 +33,23 @@ function checkInt(val) {
   return i
 }
 
-function canUpgrade(user) {
-  if (user.level < 9 && exIndex[user.level]) {
-    var count = 0
-    exIndex[user.level].forEach(function(l){
-      if (user.solved.indexOf(parseInt(l)) >= 0) count++
-    })
-    if (count * 2 >= exIndex[user.level].length) return true
-  }
-  return false
-}
-
 const co = require('co')
 
 module.exports = function(App) {
   initExercises()
+
+  function canUpgrade(user, col) {
+    if (user.level < 9 && exIndex[user.level]) {
+      if (App.colo.get(col).competitionDone === false && user.level == 5)
+        return false
+      var count = 0
+      exIndex[user.level].forEach(function(l){
+        if (user.solved.indexOf(parseInt(l)) >= 0) count++
+      })
+      if (count * 2 >= exIndex[user.level].length) return true
+    }
+    return false
+  }
   
   App.getNewTuts = function(user) {
     let count = 0
@@ -134,13 +136,13 @@ module.exports = function(App) {
       exercises: exercises,
       exIndex:exIndex,
       previous:previous,
-      upgrade:canUpgrade(req.user),
+      upgrade:canUpgrade(req.user, req.session.colony),
       solved:req.user.solved,
     })
   }))
   
   App.express.get('/upgrade', App.users.auth, co.wrap(function*(req, res, next) {
-    if (canUpgrade(req.user)) {
+    if (canUpgrade(req.user, req.session.colony)) {
       yield App.colo.getCol(req.session.colony).update({_id:req.user._id},
         { $set: {
           level: ++req.user.level}})
@@ -206,6 +208,24 @@ module.exports = function(App) {
       return res.send("ok")
     }
     res.send("bad")
+  }))
+  
+  App.express.get('/competitionDone', App.users.auth, co.wrap(function*(req, res) {
+    if (req.user.superuser) {
+      yield App.db.get('info').update({colonyName:req.session.colony},
+                                      {$set : {competitionDone : true}})
+      App.colo.refresh()
+    }
+    res.redirect('/')
+  }))
+  
+  App.express.get('/competitionUndone', App.users.auth, co.wrap(function*(req, res) {
+    if (req.user.superuser) {
+      yield App.db.get('info').update({colonyName:req.session.colony},
+                                      {$set : {competitionDone : false}})
+      App.colo.refresh()
+    }
+    res.redirect('/')
   }))
 }
 
