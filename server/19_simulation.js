@@ -105,7 +105,7 @@ module.exports = function(App) {
     var seed = req.query.seedon == 1 ? JSON.stringify(req.query.seed).slice(1, -1) : undefined
     var repeat = req.query.batchon == 1 ? parseInt(req.query.repeat) : undefined
     if (repeat == NaN) repeat = undefined
-    res.render(repeat ? 'ants/batch' : 'ants/simulation', {
+    res.render('ants/simulation', {
       code:ants,
       hash:hash,
       seed:seed,
