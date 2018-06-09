@@ -1,12 +1,15 @@
 
 function flattenQuery(query) {
   var antIds = []
+  var antColors = []
   for (var i = 1; i <= 8; i++) {
     var val = query['team' + i]
-    if (val && val != "none")
+    if (val && val != "none") {
       antIds.push(val)
+      antColors.push(i-1)
+    }
   }
-  return antIds
+  return {antIds,antColors}
 }
 
 function findAnts(users, userid, ids) {
@@ -107,7 +110,8 @@ module.exports = function(App) {
     }
     if (req.user)
       req.session.cachedQuery = req.query
-    var antIds = flattenQuery(req.query)
+    var query = flattenQuery(req.query)
+    var antIds = query.antIds
     var users = yield App.colo.getCol(req.session.colony).find({"ants.antid" : {$in:antIds}})
     var ants = findAnts(users, req.user?req.user._id.toString():"", antIds)
     var hash = yield setSimulation(req, ants)
@@ -124,6 +128,7 @@ module.exports = function(App) {
       fightMode:false,
       level:NaN,
       title:"Wettbewerb",
+      colors:query.antColors,
     })
   }))
   

@@ -84,7 +84,7 @@
     
     // visuals
     function setColor() {
-      Sim.Bus.emit('change-ant-color', my.key, Sim.Opts.SpielerFarben[my.playerid])
+      Sim.Bus.emit('change-ant-color', my.key, Sim.Opts.SpielerFarben[Sim.colors[my.playerid]])
       var level = Sim.levels[my.playerid]
       if (!level)
         level = 1

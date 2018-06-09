@@ -194,11 +194,12 @@
       
       Sim.Util.removeIf(Sim.ants, function(ant) {
         var reason = undefined
+        var level = Sim.levels[ant.getPlayerid()]
         if (ant.getLap() > Sim.Opts.AmeisenReichweite) {
           reason = "Müdigkeit"
         } else if (ant.getEnergy() <= 0) {
           reason = "Wanze"
-        } else {
+        } else if (!level || level <= 5) {
           // check poison
           var poisonNear = Sim.Util.inRange(ant.getPos(),
             Sim.poisons, 80, function(p){

@@ -24,14 +24,14 @@
     }
     
     function setFlagColor() {
-      Sim.Bus.emit('change-hill-color', key, Sim.Opts.SpielerFarben[my.playerid])
+      Sim.Bus.emit('change-hill-color', key, Sim.Opts.SpielerFarben[Sim.colors[my.playerid]])
     }
     
     this.addMarker = function(pos) {
       var key = Hill.markerCounter++
       Sim.Bus.emit('add-marker', key,
         pos,
-        Sim.Opts.SpielerFarben[my.playerid])
+        Sim.Opts.SpielerFarben[Sim.colors[my.playerid]])
       markers.push({
         key: key,
         cycle: 0,

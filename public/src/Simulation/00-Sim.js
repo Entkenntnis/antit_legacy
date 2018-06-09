@@ -105,6 +105,9 @@
     setLevels : function(l) {
       Sim.levels = l
     },
+    setColors : function(c) {
+      Sim.colors = c
+    },
   }
 
 })(AntIT._optionen)

@@ -194,6 +194,7 @@ module.exports = function(App) {
           fightMode:false,
           level:levelnum,
           title:exercises[levelnum].name,
+          colors:[0,1,2,3,4,5,6,7],
         })
       }
     } else

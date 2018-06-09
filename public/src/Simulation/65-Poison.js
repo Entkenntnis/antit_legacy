@@ -12,7 +12,7 @@
       pos: pos,
     })
     
-    Sim.Bus.emit('spawn-poison', my.id, pos, Sim.Opts.SpielerFarben[playerid])
+    Sim.Bus.emit('spawn-poison', my.id, pos, Sim.Opts.SpielerFarben[Sim.colors[playerid]])
     
     this.update = function(){
       my.ttl--

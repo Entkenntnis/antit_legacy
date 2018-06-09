@@ -117,7 +117,8 @@
 
 %>
 var levels = [<%-code.map(function(a){return a.level}).join(',')%>]
-AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", "<%-seed%>", null, levels);
+var colors = <%-JSON.stringify(colors)%>
+AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", "<%-seed%>", null, levels, colors);
 
 </script>
     </body>

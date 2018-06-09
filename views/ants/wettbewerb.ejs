@@ -26,8 +26,12 @@
 	      }
 	    </script>
 	    <form method="GET" action="/simulation"><div>
+	    <%
+        var colors = ['#ff0000', '#0000ff', '#00ff00', '#00ffff',
+                      '#ffff00', '#ff00ff', '#ffffff', '#000000'];
+	    %>
 	    <% for(var t = 1; t <= 8; t++) { %>
-	        <div style="float:left;padding-left:10px;"> Team <%=t%>:
+	        <div style="float:left;padding-left:10px;"> <span style="color:<%-colors[t-1]%>;<%-t==7||t==5?'background-color:lightgrey;':''%>"><strong>Team <%=t%>:</strong></span>
 	        <select name="team<%=t%>" id="team<%=t%>">
             <option value="none">-----</option>
             <% if (ants !== undefined) {

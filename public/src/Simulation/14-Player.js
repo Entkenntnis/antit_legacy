@@ -19,7 +19,8 @@
     var poison = 0
     
     function initHTML() {
-      Sim.Bus.emit('add-player-status', id, my.KI.Name, Sim.Opts.SpielerFarben[my.id])
+      Sim.Bus.emit('add-player-status', id, my.KI.Name, 
+                   Sim.Opts.SpielerFarben[Sim.colors[my.id]])
     }
     
     function updateDetails(){
