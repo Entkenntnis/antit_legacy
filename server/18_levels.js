@@ -138,6 +138,7 @@ module.exports = function(App) {
       previous:previous,
       upgrade:canUpgrade(req.user, req.session.colony),
       solved:req.user.solved,
+      competitionDone : App.colo.get(req.session.colony).competitionDone,
     })
   }))
   

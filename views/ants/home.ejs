@@ -62,7 +62,7 @@
 	                <a href="/edit?id=<%=ants[i]._id%>" class="btn btn-xs btn-primary">Bearbeiten</a>
 	                <% if (user.level >= 5) { %>
 	                  <%if(ants[i].published){%>
-	                  <a href="/unpublish?id=<%=ants[i]._id%>" class="btn btn-xs btn-warning">Freigabe löschen</a>
+	                  <a href="/unpublish?id=<%=ants[i]._id%>" class="btn btn-xs btn-warning">Freigabe entfernen</a>
 	                  <%} else {%>
 	                  <a href="/publish?id=<%=ants[i]._id%>" class="btn btn-xs btn-info">Freigeben</a>
 	                  <%}%>

@@ -799,67 +799,62 @@
     18 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 1000
-        Sim.Opts.SpawnWinkel = 0
-        Sim.Opts.SpawnRadius = 100
-        Sim.Opts.AnfangsRichtung = 90
+        Sim.Opts.Runden = 2000
       },
       create : function(){
         defaultLevelCreate()
+        for (var i = 0; i < 360; i += 30) {
+          Sim.sugars.push(new Sim.Sugar(Sim.Util.moveDir(locPos(0,0), i, 100)))
+        }
       },
-      onSpawn : function(ant){
-        if (Sim.cycles >= 340) {
-          ant.LEVELMARKED = true
+      failed : function(){
+        if (Sim.cycles < 1500) {
+          if (Sim.players[0].getSugar() > 0) {
+            return true
+          }
         }
       },
       isDone : function(){
-        if (Sim.ants.length == 20) {
-          var ok = true
-          Sim.ants.forEach(function(ant){
-            if (ant.LEVELMARKED && ant.getHeading() != 270)
-              ok = false
-            if (!ant.LEVELMARKED && ant.getHeading() != 90)
-              ok = false
-          })
-          return ok
-        }
-        return false
+        return Sim.players[0].getSugar() >= 600
       },
     },
  
     19 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 1000
+        Sim.Opts.Runden = 1500
       },
       create : function(){
         defaultLevelCreate()
-        Sim.Bus.emit('set-ring', {x:455,y:512}, 0x0000aa, {inner:190,outer:200})
+        Sim.Bus.emit('set-ring', locPos(0,0), 0x0000aa, {inner:245,outer:247})
+        var targetAngle = Math.floor(Sim.rng()*12)*30
+        for (var i = 0; i < 360; i += 30) {
+          var dist = Sim.rng()*100 + 200
+          if (targetAngle == i)
+            dist = 245
+          else {
+            if (dist > 225 && dist < 265)
+              dist = 225
+          }
+          var apple = new Sim.Apple(Sim.Util.moveDir(locPos(0,0), i, dist))
+          if (dist == 245)
+            apple.l5_ok = true
+          Sim.apples.push(apple)
+        }
       },
-      onSpawn : function(ant){
-        var angle = Sim.rng()*360
-        var dist = Sim.rng()*300 + 70
-        if (dist < 210 && dist > 180)
-          dist = 180
-        var x = {x:455,y:512}
-        var y = Sim.Util.moveDir(x, angle, dist)
-        ant.setPos(y)
-        ant.reachedHome()
-        if (dist <= 200)
-          ant.LEVELMARKED = true
+      failed : function() {
+        var failed = false
+        Sim.ants.forEach(function(ant){
+          Sim.apples.forEach(function(apple){
+            if (!apple.l5_ok && Sim.Util.dist(ant.getPos(), apple.getPos()) < 10) {
+              failed = true
+            }
+          })
+        })
+        return failed
       },
       isDone : function(){
-        if (Sim.ants.length == 20) {
-          var ok = true
-          Sim.ants.forEach(function(ant){
-            if (ant.LEVELMARKED && (ant.getLap() > 0 || Sim.Util.dist(ant.getPos(), Sim.hills[0])<60))
-              ok = false
-            if (!ant.LEVELMARKED && Sim.Util.dist(ant.getPos(), Sim.hills[0]) > 200)
-              ok = false
-          })
-          return ok
-        }
-        return false
+        return Sim.players[0].getApple() == 1;
       },
     },
  

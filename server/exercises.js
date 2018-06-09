@@ -217,17 +217,39 @@ module.exports.exercises = {
   },
   
   18 : {
-    name : "Blick nach Norden",
+    name : "Geduld",
     description : `
-      <p>Alle Ameisen, die in der Runde 340 oder danach geboren werden, sollen sich in Richtung Norden drehen. Die anderen bleiben so, wie sie sind.</p>
+      <p>Verlockend viel Zucker liegt vor dem Bau, doch dein Ameisenvolk muss bis zur Runde 1500 warten, bis es den Zucker abbauen darf. Insgesamt hast du 2000 Runden Zeit, 600 Zucker einzusammeln.</p>
+      
+      <p>Ähnlich wie bei der Reichweite kannst du über die Eigenschaft <code>Runde</code> die aktuelle Rundennummer abfragen. Die beginnt bei 1 und zählt für jeden Tick der Simulation eins hoch. Ein kleiner Hinweis:
+      </p>
+      
+      <p><img src="/images/l5_runde.png" class="img-thumbnail"></p>
     `,
     level : 5,
   },
   
   19 : {
-    name : "Nicht zu weit weg",
+    name : "Der richtige Abstand",
     description : `
-      <p>Die Ameisen werden rings um den Bau geboren. Sollten sie sich außerhalb der blauen Zone mit Radius 200 befinden, dann kehren sie zum Bau zurück. Ansonsten bewegen sie sich nicht von der Stelle.
+      <p>Diese Aufgabe ist für Teilnehmer geeignet, die bereits Erfahrungen mit einer Programmiersprache wie Java oder C/C++/C# haben. 
+      </p>
+      
+      <p>Die Ameisen unserer kleine Welt hier sind in der Lage, Entfernungen und Richtungen auf dem Spielfeld präzise zu berechnen. Dazu stellen sie die Funktionen <code>Distanz</code> und <code>Winkel</code> zur Verfügung. Diese Funktionen nehmen zwei Parameter. Diese entsprechen den zu vermessenden Objekten. Diese können folgende sein:
+      <ul>
+      <li>Ein Sichtungsobjekt aus SiehtZucker, SiehtApfel, SiehtWanze oder SiehtGegner.</li>
+      <li>Der Wert <code>Bau</code> für den Heimatbau der Ameise.</li>
+      <li>Der Wert <code>Position</code> für die aktuelle Position der Ameise</li>
+      </ul>
+      </p>
+      
+      <p>Distanz gibt den Abstand in Ameisenschritten zurück. Der Aufruf <pre>Distanz(Bau, Position)</pre>berechnet z.B. den aktuellen Abstand der Ameise zum Bau. Die Reihenfolge der Parameter ist egal.
+      </p>
+      
+      <p>Winkel berechnet die Himmelsrichtung, aus der der erste Parameter den zweiten Parameter sieht. Der Aufruf<pre>Winkel(Position, Bau)</pre>gibt z.B. die Himmelsrichtung an, in die sich die Ameise drehen muss, damit sie den Bau anschaut. Hierbei macht die Reihenfolge natürlich einen Unterschied. Kombiniert man diese zwei Funktionen mit Abfragen, dann lässt sich folgende Aufgabe lösen:
+      </p>
+      
+      <p>Von den Äpfel auf dem Spielfeld befindet sich einer genau 245 Schritte vom Bau entfernt. Trage diesen Apfel zum Bau. Berühre die anderen Äpfel nicht.
       </p>
     `,
     level : 5,

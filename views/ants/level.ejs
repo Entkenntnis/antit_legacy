@@ -65,7 +65,7 @@
 	              <% if (!upgrade) { %>
 	                <br><p>Voraussetzungen für die nächste Stufe:<br>Bearbeite <%=Math.ceil(exIndex[user.level].length/2)%> Aufgaben von Stufe <%=user.level%>.
 	                
-	                <% if (user.level == 5) { %>
+	                <% if (user.level == 5 && !competitionDone) { %>
                     <br>Nimm am Wettbewerb teil.
 	                <% } %>
 	                
