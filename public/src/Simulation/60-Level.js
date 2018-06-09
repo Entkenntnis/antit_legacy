@@ -776,38 +776,23 @@
     17 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 1000
-        Sim.Opts.SpawnWinkel = 0
-        Sim.Opts.SpawnRadius = 300
-        Sim.Opts.AnfangsRichtung = 0
+        Sim.Opts.Runden = 5500
       },
       create : function(){
         defaultLevelCreate()
-        Sim.Bus.emit('move-spawn-point', 0, {x:755,y:512})
-      },
-      onSpawn : function(ant){
-        if (Math.random() < 0.5) {
-          var x = ant.getPos()
-          var y = {x:x.x, y:x.y + 1000}
-          ant.setPos(y)
-          ant.setPos(x)
-          ant.LEVELMARKED = true
+        Sim.l5_spawn = function(){
+          var dist = 400
+          var angle = Sim.rng()*360
+          Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), angle, dist)))
         }
+        Sim.l5_spawn()
+      },
+      update : function() {
+        if (Sim.apples.length == 0)
+          Sim.l5_spawn()
       },
       isDone : function(){
-        if (Sim.ants.length == 20) {
-          var ok = true
-          Sim.ants.forEach(function(ant){
-            if (Sim.Util.dist({x:755,y:512}, ant.getPos()) > 10)
-              ok = false
-            if (!ant.LEVELMARKED && ant.getLap() != 0)
-              ok = false
-            if (ant.getLap() >= 1000)
-              ok = false
-          })
-          return ok
-        }
-        return false
+        return Sim.players[0].getApple() >= 10;
       },
     },
  
@@ -878,7 +863,7 @@
       },
     },
  
-    20 : {
+    /*20 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1000
@@ -905,7 +890,7 @@
         }
         return false
       },
-    },
+    },*/
   }
   
   var l = levels[Sim.Opts.Level]

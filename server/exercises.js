@@ -208,12 +208,10 @@ module.exports.exercises = {
   },
   
   17 : {
-    name : "Alles fit?",
+    name : "Der Ruf des Apfels",
     description : `
-      <p>Bei dieser Aufgabe werden die Ameisen bereits am Ziel geboren. Allerdings sind etwa 50% der Ameisen noch nicht fit - sie haben eine Reichweite kleiner als 2000. Diese Ameisen sollen zum Bau zurücklaufen, ihre Reichweite auf 3000 aufladen (passiert dort automatisch) und zum Sammelpunkt zurückkehren, der 300 Schritte vor dem Bau liegt.
+      <p>Nutze die Macht der Kommunikation und sammle 10 Äpfel ein.
       </p>
-      
-      <p>Wichtig: Hat die Ameise genug Reichweite, dann soll sie sich nicht bewegen!</p>
     `,
     level : 5,
   },
@@ -230,33 +228,6 @@ module.exports.exercises = {
     name : "Nicht zu weit weg",
     description : `
       <p>Die Ameisen werden rings um den Bau geboren. Sollten sie sich außerhalb der blauen Zone mit Radius 200 befinden, dann kehren sie zum Bau zurück. Ansonsten bewegen sie sich nicht von der Stelle.
-      </p>
-    `,
-    level : 5,
-  },
-  
-  20 : {
-    name : "Der richtige Zuckerhaufen",
-    description : `
-      <p>Vom Geburtsort der Ameisen aus liegen im Norden drei Zuckerhaufen. Die Ameisen sollen sich bei dem südlichsten Zuckerhaufen versammeln, dessen Richtung vom Bau aus gesehen größer als 180 Grad ist. Schaffst du es, die Ameisen richtig zu navigieren?
-      </p>
-    `,
-    level : 5,
-  },
-  
-  21 : {
-    name : "-- Platzhalter --",
-    description : `
-      <p>Hinweis: Es gibt auch die Befehle DreheZuObjekt und DreheWegVonObjekt
-      </p>
-    `,
-    level : 5,
-  },
-  
-  22 : {
-    name : "-- Platzhalter --",
-    description : `
-      <p>...
       </p>
     `,
     level : 5,
