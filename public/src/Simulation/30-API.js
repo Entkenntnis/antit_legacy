@@ -208,6 +208,8 @@
   API.addFunc("SetzeLimit", function(limit) {
     if (typeof limit == "number")
       API.curAnt.messageLimit = limit
+    else
+      API.curAnt.messageLimit = undefined
   })
   
   API.addFunc("SetzeLimitZurück", function(){

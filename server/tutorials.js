@@ -475,6 +475,53 @@ module.exports.tutorials = {
   },
   9 : {
     level : 5,
+    name : "Kommunikation [API]",
+    text : `
+      <p>Die Ameisen sind in der jetzigen Form ziemliche Eigenbrötler: Sie arbeiten ihre Aufgaben ab und kümmern sich eigentlich nicht darum, was ihre Kollegen machen.
+      </p>
+      
+      <p>Und bisher ging das auch ziemlich gut. Bisher. Die erste Aufgabe dieser Stufe bietet in dieser Hinsicht eine Herausforderung: Auf dem Spielfeld befindet sich zu jeder Zeit nur ein Apfel. Diesen müssen die Ameisen aber gemeinsam zum Bau tragen. Es wäre doch praktisch, wenn die Ameise, die als erstes beim Apfel ist, an ihre Kollegen eine Nachricht schicken könnte?
+      </p>
+      
+      <p>In diesem Tutorial wird es genau darum gehen, wie man kommuniziert. Dazu können die Ameisen Nachrichten senden. Eine Nachricht kann mit dem Befehl <code>SendeNachricht</code> verschickt werden. Eine Nachricht besteht aus einem Betreff und einem (optionalen) Inhalt. Der Betreff ist ein frei wählbarer Text, der verwendet wird, um verschiedene Nachrichtentypen zu unterscheiden. Wenn also die Ameise einen Apfel sieht, kann man der Nachricht den Betreff "ApfelGesehen" geben.
+      </p>
+      
+      <p>Die Ameise möchte nicht nur mitteilen, dass ein Apfel gesehen wurde, sondern möchte auch das Apfelobjekt mit übertragen. Dieser Inhalt kann als zweiter Parameter an die Nachricht angehängt werden. So sieht der Code dazu aus:
+      </p>
+      
+      <p><img src="/images/l5_sende.png" class="img-thumbnail">
+      </p>
+      
+      <p>Um eine Nachricht zu empfangen, fügt man ein Ereignis hinzu mit dem Namen des Betreffs und einem Doppelpunkt davor. Damit die Ameise nach Erhalt einer "ApfelGesehen"-Nachricht zum Apfel geht, schreibt man:
+      </p>
+      
+      <p><img src="/images/l5_empfange.png" class="img-thumbnail">
+      </p>
+      
+      <p>Auf diese Art lassen sich verschiedene Nachrichtentypen festlegen und die Ameisen können aufeinander reagieren.
+      </p>
+      
+      <p>Je näher eine Ameise ist, umso früher bekommt sie die Nachricht. Wenn man die Nachricht nur an eine begrenzte Menge an Ameisen senden möchte, kann man unmittelbar vor dem Aufruf von SendeNachricht die Funktion <code>SetzeLimit</code> mit der Anzahl aufrufen. Die erste Nachricht geht an maximal 5 Ameisen, die zweite Nachricht geht wieder an alle (indem man den Parameter weglässt):
+      </p>
+      
+      <p><img src="/images/l5_limit.png" class="img-thumbnail">
+      </p>
+      
+      <p>Dadurch kann feiner gesteuert werden, an welche Ameisen die Nachrichten gehen.
+      </p>
+    `,
+    questions : [
+      "Ameisen können nicht miteinander reden.",
+      "Beim Nahrungssammeln kann Kommunikation sehr nützlich sein.",
+      "Nachrichten werden mit dem Befehl 'Rufe' verschickt.",
+      "Über SetzeLimit kann die Anzahl der Empfänger eingeschränkt werden.",
+      "KOMMUNIKATION enthält einen Konsonant mehr als Vokale.",
+      "Nachrichten bestehen nur aus einem Betreff."
+    ],
+    solution : [0,1,0,1,1,0],
+  },
+  10 : {
+    level : 5,
     name : "Der Ameisenwettbewerb",
     text : `
       <p>Ab Level 5 kann man am Ameisenwettbewerb teilnehmen.<br>
@@ -498,48 +545,6 @@ module.exports.tutorials = {
       "wahr"
     ],
     solution : [1,0,0,1,1,1],
-  },
-  10 : {
-    level : 5,
-    name : "Programmieren mit Bedingungen",
-    text : `
-      <p>Wir lernen jetzt, Befehle unter Bedingungen auszuführen. Dazu gibt es den if-Block. Im Kern besteht er aus dem Wort 'if', einer runden Klammer mit der Bedingung und einer geschweiften Klammer mit den Befehlen, die unter dieser Bedingungen stehen:
-      </p>
-      
-      <p><img src="/images/if_1.png" class="img-thumbnail" title="Beim Cursor kommen die Befehle hin. Einrücken nicht vergessen!"></p>
-      
-      <p>Man kann als Bedingungen verschiedene Vergleiche verwenden. Am besten, wir schauen uns ein paar Beispiele an:
-      </p>
-      
-      <p><img src="/images/if_2.png" class="img-thumbnail" title=""></p>
-      
-      <p>Hier wird der Befehl ausgeführt, wenn die Reichweite der Ameise größer als 2000 beträgt. <code>Reichweite</code> ist eine vordefinierter Wert, den die Ameise jederzeit verwenden kann. Ein anderer solcher Wert ist <code>Runde</code>:
-      </p>
-      
-      <p><img src="/images/if_3.png" class="img-thumbnail" title=""></p>
-      
-      <p>Der Befehl wird genau in der Runde 200 ausgeführt. Man beachte die doppelten Ist-Gleich-Zeichen! Schauen wir uns noch ein weiteres Beispiel an:
-      </p>
-      
-      <p><img src="/images/if_4.png" class="img-thumbnail" title=""></p>
-      
-      <p>Hier verwenden wir als Vergleich ein kleiner gleich. Als neue Funktion gibt es den Befehl <code>Distanz</code>. Diese kann von zwei Objekten auf dem Spielfeld die Entfernung berechnen. Dazu schreibt man sie mit Komma getrennt in die runden Klammern. Vordefinierte Objekte sind <code>Bau</code> für den Heimatbau und <code>Position</code> für die aktuelle Position der Ameise. Zusätzlich können Objekte aus Sieht...-Ereignissen verwendet werden. Ein letztes Beispiel:
-      </p>
-      
-      <p><img src="/images/if_5.png" class="img-thumbnail" title=""></p>
-      
-      <p>Mit der Funktion <code>Winkel</code> kann der Blickwinkel bestimmt werden, aus dem das erste Objekt das zweite Objekt sieht. Die Zahl entspricht der Richtung, wie bei DreheZuRichtung. Ein anschauliches Beispiel: Wenn sich die Ameise genau über dem Bau befindet, dann ergibt die Berechnung oben 270.
-      </p>
-    `,
-    questions : [
-      "Eine Bedingung besteht aus 'if' und dahinter geschweiften Klammern.",
-      "Innerhalb der geschweiften Klammer können mehrere Befehle stehen.",
-      "Gleichheit wird mit = überprüft.",
-      "Es können die Operatoren >= und <= verwendet werden.",
-      "Mithilfe von Distanz kann die Entfernung von zwei Objekten bestimmt werden.",
-      "Sichtungsobjekte können wir Vermessungen nicht verwendet werden."
-    ],
-    solution : [0,1,0,1,1,0],
   },
   11 : {
     level : 6,
