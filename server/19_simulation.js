@@ -95,19 +95,6 @@ module.exports = function(App) {
   }
   
   App.express.get('/simulation', App.users.auth, co.wrap(function*(req, res) {
-    if (req.query.fight == 1) {
-      res.render('__old/simulation', {
-        code:["", ""],
-        hash:"",
-        seed:undefined,
-        repeat:undefined,
-        prefix:req.curHome,
-        devMode:false,
-        fightMode:true,
-        level:NaN
-      })
-      return
-    }
     if (req.user)
       req.session.cachedQuery = req.query
     var query = flattenQuery(req.query)
@@ -118,7 +105,7 @@ module.exports = function(App) {
     var seed = req.query.seedon == 1 ? JSON.stringify(req.query.seed).slice(1, -1) : undefined
     var repeat = req.query.batchon == 1 ? parseInt(req.query.repeat) : undefined
     if (repeat == NaN) repeat = undefined
-    res.render(repeat ? '__old/batch' : 'ants/simulation', {
+    res.render(repeat ? 'ants/batch' : 'ants/simulation', {
       code:ants,
       hash:hash,
       seed:seed,
@@ -141,7 +128,7 @@ module.exports = function(App) {
   App.express.get('/stats', App.users.auth, co.wrap(function*(req, res) {
     var data = yield simDB.find({})
     if (req.user.superuser)
-      res.render('__old/stats', {data:data, prefix:"", col: req.session.colony})
+      res.render('admin/stats', {data:data, prefix:"", col: req.session.colony})
     else
       res.redirect('/')
   }))

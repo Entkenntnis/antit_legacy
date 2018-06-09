@@ -77,22 +77,6 @@ module.exports = function(App) {
     })
   }))
   
-  App.express.get('/doku', function(req, res) {
-    res.render('__old/doku', {
-      user: undefined,
-      highlightElement:-1,
-      newtuts: 0,
-      prefix: '/' })
-  })
-  
-  App.express.get('/guide', function(req, res) {
-    res.render('__old/guide', {
-      user: undefined,
-      highlightElement:-1,
-      newtuts: 0,
-      prefix: '/' })
-  })
-  
   App.express.get('/overview', App.users.auth, co.wrap(function*(req, res) {
     if (req.user.superuser) {
       let users = yield App.colo.getCol(req.session.colony).find({}, {"ants" : false})
