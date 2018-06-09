@@ -26,7 +26,7 @@ module.exports.tutorials = {
         </li>
       </ul>
       
-      <img src="/images/ameiseapfel.png" class="img-thumbnail" title="Hey Jo!">
+      <img src="/images/l1_ameiseapfel.png" class="img-thumbnail" title="Hey Jo!">
     
       <br><br>
       <p>Ach, herrlich ... So, das ist jetzt genug an Informationen. Bearbeite zum Schluss noch dieses Quiz:
@@ -147,7 +147,7 @@ module.exports.tutorials = {
       <p>Um Zucker zu sammeln, muss du deine Ameise zuerst ganz nah an den Zuckerhaufen hinbewegen. Wenn die Ameise am Zucker steht, führst du den Befehl <code>NimmZucker()</code> aus. Damit lädt sich die Ameise ein Stückchen Zucker auf.
       </p>
       
-      <p><img src="/images/02_ameisezucker.jpg" class="img-thumbnail" title="Ein richtig perfekter Zuckerwürfel auf ihrem Rücken!"></p>
+      <p><img src="/images/l2_ameisezucker.jpg" class="img-thumbnail" title="Ein richtig perfekter Zuckerwürfel auf ihrem Rücken!"></p>
       
       <p>Jetzt muss die Ameise nach Hause. Dazu gibt es den Befehl <code>GeheZuBau()</code>, der die Ameise direkt in den Bau führt. Die Ameisen sind wie Geister - sie müssen nicht um Hindernisse herumgehen, sondern können einfach durch alles hindurchlaufen. Auch wenn das komisch aussieht: Es ist für dich als Entwickler ziemlich praktisch.
       </p>
@@ -155,7 +155,7 @@ module.exports.tutorials = {
       <p>Die zwei Befehle, die du gerade kennengelernt hast, brauchen keinen Parameter. Deshalb steht nichts in den runden Klammern. Die Klammern sind aber trotzdem wichtig! Wenn du sie vergisst, wird der Befehl einfach nicht ausgeführt.
       </p>
       
-      <p><img src="/images/ameisezucker.png" width="400px" class="img-thumbnail" title="Huch!"></p>
+      <p><img src="/images/l2_ameisezucker2.png" width="400px" class="img-thumbnail" title="Huch!"></p>
       
       <p>Am Ende, wenn die Ameise im Bau steht, kann sie mit dem Befehl <code>LadeZuckerAb()</code> den Zucker in den Bau geben. Dann erhält du deine Punkte dafür und die Menge wird in der Statistik angezeigt.
       </p>
@@ -163,7 +163,7 @@ module.exports.tutorials = {
       <p>Für Äpfel gibt es nur einen Befehl: <code>TrageApfel()</code>. Sobald die Ameise am Apfel steht, kann sie diesen Befehl ausführen. Dann fängt sie an, auf ihre Kollegen zu warten. Wenn vier Ameisen zusammenkommen, tragen sie den Apfel zurück zum Bau. Das alles steckt in diesem einen Befehl. Du musst dich nur darum kümmern, dass die Kollegen zum Apfel hinfinden.
       </p>
       
-      <p><img src="/images/02_apfel.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></p>
+      <p><img src="/images/l2_apfel.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></p>
       
       <p>Mit der eingesammelten Nahrung können neue Ameisen geboren werden. Das Volk vergrößert sich und die Ameisen können noch schneller Nahrung sammeln. 
       </p>
@@ -196,7 +196,7 @@ module.exports.tutorials = {
       <p>Wenn man nur in einen Tab arbeitet, ist es oft sehr umständlich, die Ameise zu bearbeiten und sich dann bei den Aufgaben durchzuklicken, um das Level zu starten. Das Problem lässt sich geschickt lösen, in dem man zwei Tabs im Browser verwendet:
       </p>
       
-      <p><img src="/images/02_tabs.png" class="img-thumbnail" title="Firefox, Chrome, Edge - nutze den Browser, der dir gefällt."></p>
+      <p><img src="/images/l2_tabs.png" class="img-thumbnail" title="Firefox, Chrome, Edge - nutze den Browser, der dir gefällt."></p>
       
       <p>In einem Tab kann man den Editor öffen, in anderem die Simulation laufen lassen. Wenn man die Ameise speichert, reicht es, die Simulation neu zu laden (mit einem Klick auf den runden Pfeil oder mit der Taste F5) - schon wird die neue Version der Ameise ausgeführt. Wer will kann auch den Bildschirm teilen und einen Tab links und den anderen Tab rechts anzeigen lassen.
       </p>
@@ -245,7 +245,7 @@ module.exports.tutorials = {
       <p>Oft möchte man etwas ausprobieren, aber nicht den ganzen Code löschen. In dieser Situation können einzelne Zeilen mit <code>//</code> auskommentiert werden:
       </p>
       
-      <p><img src="/images/02_kommentar.png" class="img-thumbnail" title="Da hat jemand den Ereignisnamen vergessen."></p>
+      <p><img src="/images/l2_kommentar.png" class="img-thumbnail" title="Da hat jemand den Ereignisnamen vergessen."></p>
       
       <p>Zeile 7 und 8 sind auskommentiert und werden nicht ausgeführt.
       </p>
@@ -349,7 +349,7 @@ module.exports.tutorials = {
       <p>Dafür hast den den neuen Befehl <code>SetzeGift()</code> zur Verfügung. Diese lässt die Ameise eine Giftwolke versprühen, die sich wie ein Nebel um die Ameise legt:
       </p>
       
-      <p><img src="/images/04_gift.png" class="img-thumbnail" title="Es kommt immer auf die Dosis an!"></p>
+      <p><img src="/images/l4_gift.png" class="img-thumbnail" title="Es kommt immer auf die Dosis an!"></p>
       
       <p>Für den optimalen Einsatz des Gifts sind ein paar Punkte zu beachten:
       <ul>

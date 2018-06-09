@@ -22,7 +22,7 @@ module.exports.exercises = {
       <p>Die Himmelsrichtung der Ameisen sind wie folgt festgelegt:
       </p>
       
-      <p><img src="/images/01_koordinaten2.jpg"></img></p>
+      <p><img src="/images/l1_koordinaten2.jpg"></img></p>
       
       <p>Um eine Himmelsrichtung anzugeben, verwenden wir Zahlen. Wir beginnen bei Osten und zählen dann die Winkel im Uhrzeigersinn. Für Osten verwenden wir die Zahl 0, für Süden die Zahl 90, für Westen die Zahl 180 und für Norden die Zahl 270. Um die Ameise zu eine bestimmte Himmelsrichtung zu drehen, verwende den Befehl <code>DreheZuRichtung</code>.
       </p>
@@ -70,7 +70,7 @@ module.exports.exercises = {
     description : `
       <p>Auf dem Spielfeld befinden sich wieder vier Nahrungsmittel. Diese sollen eingesammelt werden. Wenn die Ameisen sich aufteilen, geht alles viel schnellern.
       </p>
-      <p>Dazu können sich die Ameisen selber in Teams zuteilen. Nutze dafür folgende <a href="/images/teams.txt">Vorlage</a>:
+      <p>Dazu können sich die Ameisen selber in Teams zuteilen. Nutze dafür folgende <a href="/txt/l2_teams.txt">Vorlage</a>:
       </p>
       
       <p><img src="/images/l2_teams.png"></p>
@@ -89,7 +89,7 @@ module.exports.exercises = {
   6 : {
     name : "Labyrinth",
     description : `
-      <p>Zwei Zuckerhaufen sind in einem Labyrinth aus Wanzen versteckt. Bilde zwei Teams und sammle den Zucker ein, bevor die Zeit abläuft. Du kannst folgende <a href="/images/l2_labyrinth.txt">Vorlage</a> verwenden:
+      <p>Zwei Zuckerhaufen sind in einem Labyrinth aus Wanzen versteckt. Bilde zwei Teams und sammle den Zucker ein, bevor die Zeit abläuft. Du kannst folgende <a href="/txt/l2_labyrinth.txt">Vorlage</a> verwenden:
       </p>
       
       <p><img src="/images/l2_labyrinth.png" class="img-thumbnail"></p>

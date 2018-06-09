@@ -25,7 +25,6 @@ require('./server/16_users')(App)
 require('./server/17_ants')(App)
 require('./server/18_levels')(App)
 require('./server/19_simulation')(App)
-//require('./server/20_antit')(App)
 require('./server/30_routes')(App)
 
 process.on('unhandledRejection', function(reason, p){
