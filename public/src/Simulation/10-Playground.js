@@ -220,6 +220,10 @@
         }
         if (reason) {
           if (Sim.players[ant.getPlayerid()]) { // for dummy ants
+            // Ab Level 6 gibt es Punktabzug für tote Ameisen
+            if (level && level >= 6) {
+              Sim.players[ant.getPlayerid()].addPoints(-300)
+            }
             Sim.API.setAnt(ant)
             Sim.API.callUserFunc("IstGestorben", [reason])
             Sim.API.close()

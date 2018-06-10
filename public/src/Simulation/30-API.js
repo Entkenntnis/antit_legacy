@@ -219,6 +219,8 @@
   API.addFunc("SendeNachricht", function(betreff, arg1, arg2, arg3) {
     return API.curAnt.addSendMemoryJob(betreff, arg1, arg2, arg3, API.curAnt.messageLimit);
     // ok, jetzt wird gerockt!!!
+    // Setze Limit nach jedem Aufruf zurück
+    API.curAnt.messageLimit = undefined
   });
   
   API.addFunc("SendeSelber", function(betreff, arg1) {

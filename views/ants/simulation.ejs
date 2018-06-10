@@ -3,12 +3,14 @@
   <head>
     <% include ../include/commonHead %>
       <style>
-        body, html { margin: 0; overflow: hidden; overflow-y:hidden}
-        canvas { width:100%; height:100% }
+        <% let use3d = repeat == undefined %>
+        <% if (use3d) { %>
+          body, html { margin: 0; overflow: hidden; overflow-y:hidden}
+          canvas { width:100%; height:100% }
+        <% } %>
       </style>
   </head>
     <body>
-      <% let use3d = repeat == undefined %>
     
       <% if (use3d) { %>
         <script src="/js/three.min.js"></script>
