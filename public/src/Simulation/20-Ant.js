@@ -485,12 +485,12 @@
         }
         if (delta < Sim.Opts.WanzeVorausWinkel) {
           if (bug != my.previousBugAhead) {
-            Sim.API.callUserFunc("SiehtWanzeVoraus", [bug])
+            Sim.API.callUserFunc("SiehtWanzeVoraus", [bug, bug.getKey()])
             my.previousBugAhead = bug
           }
         }
         if (bug != my.previousBug) {
-          Sim.API.callUserFunc("SiehtWanze", [bug]);
+          Sim.API.callUserFunc("SiehtWanze", [bug, bug.getKey()]);
           my.previousBug = bug;
         }
       } else {

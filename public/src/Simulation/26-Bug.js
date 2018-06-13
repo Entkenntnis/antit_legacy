@@ -36,6 +36,10 @@
       updateGO()
     }
     
+    this.getKey() {
+      return key
+    }
+    
     this.update = function() {
       var ant = Sim.Util.closest(my.pos, Sim.ants, Sim.Opts.WanzenKampfweite);
       if (ant !== undefined) {
