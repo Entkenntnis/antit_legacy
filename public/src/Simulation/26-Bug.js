@@ -36,7 +36,7 @@
       updateGO()
     }
     
-    this.getKey() {
+    this.getKey = function() {
       return key
     }
     
