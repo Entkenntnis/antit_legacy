@@ -213,7 +213,7 @@
             if (pCounter[pid] >= 3) {
               reason = "Gift"
               Sim.players[pid].addPoison()
-              Sim.players[pid].addPoints(500)
+              Sim.players[pid].addPoints(300)
               pCounter = undefined
             }
           })  
