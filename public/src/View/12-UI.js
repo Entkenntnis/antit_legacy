@@ -50,7 +50,7 @@
     if (info.prefix == null)
       return
     var request = new XMLHttpRequest();
-    request.open("GET", info.prefix + "/submit?hash=" + info.hash + "&points=" + points);
+    request.open("GET", "/submit?hash=" + info.hash + "&points=" + points);
     request.addEventListener('load', function(event) {
        if (request.status >= 200 && request.status < 300) {
           if (request.responseText == "ok") {

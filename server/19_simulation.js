@@ -60,7 +60,7 @@ module.exports = function(App) {
         antsName:ants.map(function(a){return a.name}),
         userNames:ants.map(a => a.username),
         userid:userid,
-        countable: allpub && ants.length >= 2 && ants.length <= 4 && alldifferent,
+        countable: /*allpub &&*/ ants.length >= 2 && /*ants.length <= 8 &&*/ alldifferent,
         toCount: false,
         username:req.user?req.user.displayName : undefined,
         start:date,
