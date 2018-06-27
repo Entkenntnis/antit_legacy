@@ -524,25 +524,42 @@ module.exports.tutorials = {
     level : 5,
     name : "Der Ameisenwettbewerb",
     text : `
-      <p>Ab Level 5 kann man am Ameisenwettbewerb teilnehmen.<br>
-      Spielregeln: 20 Ameisen werden um den Bau herum geboren. Äpfel, Zucker und Wanzen erscheinen auf dem Spielfeld. Ziel ist es, möglichst viele Punkte zu sammeln. Es gibt Punkte für eingesammelte Äpfel (1000), Zucker (25 pro Stückchen, 1250 pro Haufen) und getötete Wanzen und Gegner (je 500 Punkte).<br>
-      Ameisen können durch Wanzen und Müdigkeit sterben. Nahrungsmittel lassen neue Ameisen entstehen. Bevölkerungslimit sind 100 Ameisen.<br>
-      Eine Simulation dauert 7500 Runden (~ 3 Minuten), danach wird ausgewertet.<br><br>
-      Simlationen können mit beliebigen Ameisen ausgeführt werden. Um in der Ergebnisliste aufgenommen zu werden gibt es ein paar Bedingungen:<br>
-      1. Das Ameisenvolk muss freigegeben sein. Anderen Spielern soll damit die Möglichkeit gegeben werden, gegen deine Ameise zu spielen<br>
-      2. Pro Simulationen müssen 2 bis 4 Ameisen teilnhemen aus jeweils verschiedenen Teams. Alle Ameisen pro Simulation müssen auch freigegeben sein.<br>
-      3. Die Simulation zählt dann, wenn sie bis zum Ende durchgeführt wurde. Die Statusleiste zeigt dann "Simulation abgeschlossen" an.<br><br>
-      Die durchschnittliche Punktzahl entscheidet dann darüber, auf welcher Platzierung man sich befindet.<br><br>
-      Viel Erfolg!
+      <p>Ein Höhepunkt jedes Workshops ist der Ameisenwettbewerb, der bald stattfinden wird. Auf der Stufe 5 hast du nun Zugriff auf die Kampfarena. Dort kannst du deine Ameisen nochmal ausgiebig optimieren und schließlich gegeneinander antreten lassen.
+      </p>
+      
+      <p>Für den Wettkampf dürfen und sollen alle Teile der API verwendet werden, die bisher vorgestellt wurden. Dazu gehören die Befehle und Ereignisse, Teamarbeit, Kommunikation und Gift. Gegnerische Ameisen zu vergiften kann empfindlichen Schaden verursachen und bringt für diesen Wettbewerb große Vorteile.
+      </p>
+      
+      <p>Die Regeln einer Wettkampfrunde sind wie folgt:
+      </p>
+      
+      <ul>
+      <li>Es können zwei bis acht Ameisen an einer Runde teilnehmen.
+      </li>
+      <li>Der Sieger wird anhand von Punkten bestimmt. Es gibt Punkte für gesammelte Nahrung, 1000 Punkte für einen Apfel und 25 Punkte für ein Zuckerstücken (1250 Punkte für einen ganzen Zuckerhaufen). Pro vergiftete Wanze gibt es 500 Punkte, pro vergiftete Gegnerameise gibt es 300 Punkte.
+      </li>
+      <li>Zu Beginn starten 20 Ameisen nacheinander um den Bau. Gesammelte Nahrung vergrößert das Ameisenvolk auf bis zu 100 Ameisen.
+      </li>
+      <li>Eine Runde dauert 7500 Ticks (etwa 3 Minuten). Danach wird der Punktstand abgeschickt. Die Statusleiste zeigt dann "Simulation abgeschlossen" an.
+      </li>
+      </ul>
+      
+      <p>Der Wettbewerb erstreckt sich über mehrere Runden und die Sieger wird noch Turnierregeln, die an die Anzahl der Teilnehmer angepasst ist, bestimmt.
+      </p>
+      
+      <p>Vor dem Wettbewerb können vorab Testrunden gespielt werden. Wenn man seine Ameise freischaltet, kann diese von anderen Teams gespielt werden. Die Ergebnisse dieser Spiele kann in der Ergebnisübersicht gesehen werden. Um in der Übersicht angezeigt zu werden müssen alle Ameisen aus verschiedenen Teams stammen und es müssen mindestens zwei Ameisen an der Runde teilnehmen.
+      </p>
+      
+      <p>Die Stufe 6 wird nach dem Wettbewerb freigeschalten.
       </p>
     `,
     questions : [
-      "wahr",
-      "falsch",
-      "falsch",
-      "wahr",
-      "wahr",
-      "wahr"
+      "Ab Stufe 5 kann man auf die Kampfarena zugreifen.",
+      "Ein Zuckerhaufen besteht aus 15 Zuckerstücken.",
+      "Vergiftete Gegner bringen mehr Punkte als vergiftete Wanzen.",
+      "Eine Runde dauert etwa 3 Minuten.",
+      "4 * 1250 == 5 * 1000",
+      "Nach dem Wettbewerb geht es mit Stufe 6 weiter."
     ],
     solution : [1,0,0,1,1,1],
   },

@@ -182,7 +182,7 @@
           pCounter[pid]++
           if (pCounter[pid] >= 3) {
             Sim.players[pid].addPoison()
-            Sim.players[pid].addPoints(1000)
+            Sim.players[pid].addPoints(500)
             bug.die()
             pCounter = undefined
           }
