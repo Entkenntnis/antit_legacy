@@ -110,7 +110,7 @@
   })
 
   API.addFunc("GeheZuZiel", function (ziel, sense)  {
-    if (arguments.length < 1)
+    if (!ziel)
       return API.message("Die Funktion 'GeheZuZiel(ziel)' wurde ohne Argument aufgerufen");
     if (ziel.constructor.name == "Sugar")
       return API.curAnt.addGotoJob(ziel, Sim.sugars, "Zucker", sense);
@@ -124,7 +124,7 @@
   });
 
   API.addFunc("GeheZuZielOffen", function (ziel)  {
-    if (arguments.length < 1)
+    if (!ziel)
       return API.message("Die Funktion 'GeheZuZielOffen(ziel)' wurde ohne Argument aufgerufen");
     if (ziel.constructor.name == "Sugar")
       return API.curAnt.addGotoJob(ziel, Sim.sugars, "Zucker", true);
