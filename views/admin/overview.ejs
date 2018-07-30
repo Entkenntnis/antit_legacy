@@ -7,60 +7,101 @@
       <div class="container">
         <div class="jumbotron"><h1>Fortschrittsübersicht</h1></div>
         
-        <% var tutorials = 10 %>
+        <%
+          let tutids = []
+          let tutnames = []
+          for (let i = 1; i <= 9; i++) {
+            tutIndex[i].forEach((id, index) => {
+              tutids.push(id)
+              tutnames.push(i + "." + (index + 1))
+            })
+          }
+        %>
         
         <h3>Übersicht Tutorials</h3>
         
         <table class="table table-hover">
-          <thead><tr><th>User</th><% for (var i = 1; i <= tutorials; i++) { %><th><%=i%></th><%}%></tr></thead>
+          <thead><tr>
+            <th>Benutzer</th>
+            <% tutnames.forEach((entry, id) => { %>
+              <th title="<%=tutorials[tutids[id]].name%>"><%=entry%></th>
+            <% })%>
+          </tr></thead>
           <tbody>
           <% for (var i = 0; i < users.length; i++) { %>
           
             <tr>
               <td><%=users[i].username%></td>
-              <% for (var j = 1; j <= tutorials; j++) { %>
-                <td><%=users[i].done.indexOf(j)>=0?'X':''%></td>
-              <% } %>
+              <% tutids.forEach(entry => { %>
+                <td><%=users[i].done.indexOf(parseInt(entry))>=0?'X':''%></td>
+              <% }) %>
             </tr>
           
           <% } %>
           </tbody>
         </table>
         
-        <% var chals = 16 %>
+        <% 
+          let ex1to4ids = []
+          let ex1to4names = []
+          for (let i = 1; i <= 4; i++) {
+            exIndex[i].forEach((id, index) => {
+              ex1to4ids.push(id)
+              ex1to4names.push(i + "." + (index+1))
+            })
+          }
+          let ex5to9ids = []
+          let ex5to9names = []
+          for (let i = 5; i <= 9; i++) {
+            exIndex[i].forEach((id, index) => {
+              ex5to9ids.push(id)
+              ex5to9names.push(i + "." + (index+1))
+            })
+          }
+        %>
         
-        <h3>Übersicht Aufgaben Level 1 bis 4</h3>
+        <h3>Übersicht Aufgaben Stufe 1 bis Stufe 4</h3>
         
         <table class="table table-hover">
-          <thead><tr><th>User</th><% for (var i = 1; i <= chals; i++) { %><th><%=i%></th><%}%></tr></thead>
+          <thead><tr>
+            <th>Benutzer</th>
+            <% ex1to4names.forEach((entry, id) => { %>
+              <th title="<%=exercises[ex1to4ids[id]].name%>"><%=entry%></th>
+            <% }) %>
+          </tr></thead>
+          
           <tbody>
           <% for (var i = 0; i < users.length; i++) { %>
           
             <tr>
               <td><%=users[i].username%><%=users[i].level < 5?'('+users[i].level+')':''%></td>
-              <% for (var j = 1; j <= chals; j++) { %>
-                <td><%=users[i].solved.indexOf(j)>=0?'X':''%></td>
-              <% } %>
+              <% ex1to4ids.forEach(entry => { %>
+                <td><%=users[i].solved.indexOf(parseInt(entry))>=0?'X':''%></td>
+              <% }) %>
             </tr>
           
           <% } %>
           </tbody>
         </table>
         
-        <% var chals2 = 1 %>
-        
-        <h3>Übersicht Aufgaben Level 5+</h3>
+        <h3>Übersicht Aufgaben Stufe 5 bis Stufe 9</h3>
         
         <table class="table table-hover">
-          <thead><tr><th>User</th><% for (var i = 1; i <= chals; i++) { %><th><%=i+chals%></th><%}%></tr></thead>
+          <thead><tr>
+            <th>Benutzer</th>
+            <% ex5to9names.forEach((entry, id) => { %>
+              <th title="<%=exercises[ex5to9ids[id]].name%>"><%=entry%></th>
+            <% }) %>
+          </tr></thead>
+          
           <tbody>
           <% for (var i = 0; i < users.length; i++) { %>
             <% if (users[i].level < 5) continue %>
             <tr>
               <td><%=users[i].username%> (<%=users[i].level%>)</td>
-              <% for (var j = 1; j <= chals; j++) { %>
-                <td><%=users[i].solved.indexOf(j+chals)>=0?'X':''%></td>
-              <% } %>
+              <% ex5to9ids.forEach(entry => { %>
+                <td><%=users[i].solved.indexOf(parseInt(entry))>=0?'X':''%></td>
+              <% }) %>
             </tr>
           
           <% } %>

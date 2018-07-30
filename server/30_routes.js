@@ -76,17 +76,6 @@ module.exports = function(App) {
       newtuts: App.getNewTuts(req.user),
     })
   }))
-  
-  App.express.get('/overview', App.users.auth, co.wrap(function*(req, res) {
-    if (req.user.superuser) {
-      let users = yield App.colo.getCol(req.session.colony).find({}, {"ants" : false})
-      // remove deprecated users
-      users = users.filter(u => u.level)
-      users.sort((a, b) => a.username.toLowerCase() > b.username.toLowerCase() ? 1 : -1 )
-      res.render('admin/overview', {users: users})
-    } else
-      res.redirect('/')
-  }))
 
 
 
