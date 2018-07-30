@@ -10,7 +10,7 @@ module.exports.exercises = {
       Checkpoint 3: (0|400)
       </p>
       
-      <p>Die Ameisen werden mit Blick in Richtung x-Achse geboren.
+      <p>Die Ameisen werden alle mit Blick nach Osten geboren.
       </p>
     `,
     level : 1,
@@ -19,22 +19,14 @@ module.exports.exercises = {
   2 : {
     name : "Himmelsrichtungen",
     description : `
-      <p>Die Himmelsrichtung der Ameisen sind wie folgt festgelegt:
-      </p>
-      
-      <p><img src="/images/l1_koordinaten2.jpg"></img></p>
-      
-      <p>Um eine Himmelsrichtung anzugeben, verwenden wir Zahlen. Wir beginnen bei Osten und zählen dann die Winkel im Uhrzeigersinn. Für Osten verwenden wir die Zahl 0, für Süden die Zahl 90, für Westen die Zahl 180 und für Norden die Zahl 270. Um die Ameise zu eine bestimmte Himmelsrichtung zu drehen, verwende den Befehl <code>DreheZuRichtung</code>.
-      </p>
-      
-      <p>Auch diesmal sind drei Checkpoints angegeben, die abgelaufen werden müssen:</p>
+      <p>Es sind wieder drei Checkpoints angegeben, die abgelaufen werden müssen:</p>
       
       <p>Checkpoint 1 : (-300|0)<br>
       Checkpoint 2: (-150|150)<br>
       Checkpoint 3: (0|300)
       </p>
       
-      <p>Allerdings starten die Ameisen mit einer beliebigen Richtung.</p>
+      <p>Allerdings starten die Ameisen diesmal mit einer beliebigen Richtung. Richte sie zu Beginn richtig aus.</p>
     `,
     level : 1,
   },
