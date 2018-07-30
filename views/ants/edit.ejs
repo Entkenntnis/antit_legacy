@@ -21,7 +21,7 @@
           <script>
             function checkSyntax() {
               var result = JSHINT(editor.getValue(), {asi:true})
-              var output = result ? "Keine Fehler gefunden." : JSHINT.errors.map(function(err){
+              var output = result ? "Syntax ist in Ordnung." : JSHINT.errors.map(function(err){
                 return "Fehler in Zeile " + err.line + ": " + err.reason
               }).join('<br>')
               document.getElementById('errors').innerHTML = output

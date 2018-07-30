@@ -6,17 +6,17 @@ module.exports.tutorials = {
       <p>Während du diese Zeilen liest, bist du höchst wahrscheinlich Teil einer Schülergruppe, die gerade an einem Ameisen-Workshop teilnimmt. Vielleicht freust du dich schon auf den Tag/die nächsten Tage. Du bist neugierig darauf, was man mit diesen Ameisen alles machen kann. Schön, dass du da bist! Vielleicht aber denkst du dir auch nur: Was soll das schon wieder?
       </p>
       
-      <p>Die Wenigsten kommen hier an und haben eine Vorstellung, was sie erwarten wird. Genausowenig haben die meisten Menschen eine Vorstellung davon, was es heißt zu programmieren. In einer Zeit, in der wir tagtäglich mit IT in Verbindung stehen, ist das ziemlich schade. Denn dadurch entgeht uns die Chance, unsere Lebenswelt besser zu verstehen. Und es entgeht und die Chance, diese Welt mitzugestalten.
+      <p>Die Wenigsten kommen hier an und haben eine Vorstellung, was sie erwartet. Genausowenig haben die meisten Menschen eine Vorstellung davon, was es heißt zu programmieren. In einer Zeit, in der wir tagtäglich mit IT in Verbindung stehen, ist das ziemlich schade. Denn dadurch entgeht uns die Chance, unsere Lebenswelt besser zu verstehen. Und es entgeht uns die Chance, diese Welt mitzugestalten.
       </p>
       
-      <p>AntIT! ist mit dem Wunsch entstanden, dir das Programmieren beizubringen. Selbst wenn man am Ende des Workshops kein fertiger Programmierer ist - sollte AntIT! doch einen Einblick geben, was Programmieren bedeutet. Beim Programmieren erlebt man, wie der eigene Code das Verhalten des Computers steuert und verändert. Gleichzeitig ist man auch gezwungen, sich mit der Funktionsweise des Computer selber auseinanderzusetzen. Je besser man den Computer und seine Software versteht, umso besser kann man selber Code schreiben. Du lernst hier nicht nur, wie man Ameisen steuert, sondern gleichzeitig auch, wie dein Code vom Computer ausgeführt wird. Beide Teile gehören zum Programmieren dazu. Und du wirst das nicht nur theoretisch lernen, sondern du wirst das auch ganz praktisch ausprobieren können.
+      <p>AntIT! ist mit dem Wunsch entstanden, dir das Programmieren beizubringen. Selbst wenn man am Ende des Workshops kein fertiger Programmierer ist - sollte AntIT! doch einen Einblick geben, was Programmieren bedeutet. Beim Programmieren erlebt man, wie der eigene Code das Verhalten des Computers steuert und verändert. Gleichzeitig ist man auch gezwungen, sich mit der Funktionsweise des Computer selber auseinanderzusetzen. Je besser man den Computer und seine Software versteht, umso besser kann man selber Code schreiben. Du lernst hier nicht nur, wie man Ameisen steuert, sondern gleichzeitig auch, wie dein Code vom Computer ausgeführt wird. Und du wirst das nicht nur theoretisch lernen, sondern du wirst das ganz praktisch ausprobieren können.
       </p>
       
       <p>Das wird dich hier erwarten. Und das wird eine Herausforderung sein. Etwas Neues zu lernen ist anstrengend und verbraucht Energie und Aufmerksamkeit. Auf diesem Weg wollen wir dich so gut wie möglich begleiten:
       </p>
       
       <ul>
-        <li>Alle Inhalte des Workshops können vollständig über Tutorials gelernt werden. Du kannst ganz nach deinem Tempo arbeiten. Wenn dich Themen besonders interessieren kannst du dir da mehr Zeit nehmen. Solltest du etwas wieder vergessen haben kannst du jederzeit auf die vorherigen Tutorials zurückgreifen. Damit liegt die Kontrolle ganz bei dir.
+        <li>Alle Inhalte des Workshops können vollständig über Tutorials gelernt werden. Du kannst ganz nach deinem Tempo arbeiten. Wenn dich Themen besonders interessieren kannst du dir da mehr Zeit nehmen. Solltest du etwas wieder vergessen haben, kannst du jederzeit auf die vorherigen Tutorials zurückgreifen. Damit liegt die Kontrolle ganz bei dir.
         </li>
         <li>Unmittelbar nach dem Tutorial findest du ein kleines Quiz, mit dem du dich abfragen kannst. Ein Quiz enthält sechs Antwortmöglichkeiten, von denen keine bis alle richtig sein können. Kreuze die richtigen Antworten an. Das Quiz ist weniger als Prüfung gedacht, sondern vielmehr als kleiner "Energizer" zwischendurch. Nach dem Quiz wird auch das Tutorial als fertig markiert.
         </li>
@@ -52,7 +52,7 @@ module.exports.tutorials = {
       <ol>
         <li><p>Gehe ins Dorfzentrum und klicke auf "Neues Ameisenvolk".</p>
         </li>
-        <li><p>Gib den Ameisen den Namen "Hallo Welt".</p>
+        <li><p>Gib dem Ameisenvolk den Namen "Hallo Welt".</p>
         </li>
         <li><p>Öffne die Ameisen, in dem du auf "Bearbeiten" klickst.</p>
         </li>
@@ -63,7 +63,7 @@ module.exports.tutorials = {
         </p></li>
         <li><p>Klicke auf die Aufgabe "Erste Schritte" von Stufe 1.
         </p></li>
-        <li><p>Wähle bei "Lösung einreichen" deine neue Ameise "Hallo Welt" und klicke auf "Level starten".
+        <li><p>Wähle bei "Lösung einreichen" deine neue Ameise "Hallo Welt" aus und klicke auf "Level starten".
         </p></li>
       </ol>
       
@@ -100,41 +100,59 @@ module.exports.tutorials = {
     level : 1,
     name : "Grundlagen der Programmierung [API]",
     text : `
-      <p>Im letzten Tutorial hast du bereits dein erstes Ameisenvolk programmiert. Im Grunde ist es für den Anfang ziemlich einfach. Erstelle ein neues Ameisenvolk und nenne es "Stufe 1 Aufgabe". Wenn du die Ameise bearbeitest, dann sieht der Code so aus:
+      <p>Im letzten Tutorial hast du bereits dein erstes Ameisenvolk programmiert. Jetzt werden wir den Ameisen ein nützliches Verhalten geben. Erstelle dazu ein neues Ameisenvolk und nenne es "Stufe 1 Aufgabe". Wenn du die Ameise bearbeitest, dann siehst du folgenden Code:
       </p>
       
       <p><img src="/images/l1_schnipsel_name_falsch.png" class="img-thumbnail" title="Sehr kreativer Name ..."></p>
       
-      <p>Aber ups! Es gibt ja in Stufe 1 mehrere Aufgaben und du möchtest gerne für jede Aufgabe eine eigene Ameise anlegen. Der Name der Ameise lässt sich zum Glück noch nachträglich ändern, indem die erste Zeile angepasst wird:
+      <p>Aber ups! Es gibt in Stufe 1 mehrere Aufgaben und du würdest gerne für jede Aufgabe eine eigene Ameise anlegen. Der Name der Ameise lässt sich zum Glück noch nachträglich ändern. Passe dazu den Namen in der <em>Ameisendefinition</em> an:
       </p>
       
       <p><img src="/images/l1_schnipsel_name.png" class="img-thumbnail" title="Ordnung muss sein, nicht?"></p>
       
-      <p>So, passt. Die Zeilen 3 bis 5 definieren ein Ereignis. Später können noch weitere Ereignisse hinzukommen. Ereignisse werden nie verschachtelt! Innerhalb eines Ereignis kommt nur Code hinein. Weitere Ereignisse kommen in eigene Zeilen.</p>
+      <p>Die erste Zeile eines Ameisenvolks ist immer die Ameisendefinition. Diese legt den Namen des Ameisenvolks fest und ermöglichst die Definition von Ereignissen. Schauen wir uns nun Zeile 3 bis Zeile 5 an. Das ist eine <em>Ereignisdefinition</em>. Naja, zumindest die Vorlage davon. Sie ist so noch nicht vollständig, aber das werden wir gleich ändern.
       
-      <p>Wir müssen außerdem bei jedem Ereignis angeben, von welchem Typ er ist. Innerhalb einer Ameise sollte es pro Typ nur eine Definition geben. Der einzige Typ, den wir aktuell kennen, ist <code>"IstGeboren"</code>. Dieses Ereignis wird genau einmal bei der Geburt der Ameise aufgerufen. Trage den Typ ein und füge schon mal ein paar Zeilen Code ein:
+      <p>Das Verhalten der Ameisen wird über Ereignisse gesteuert. Ereignisse sind ein ziemlich mächtiges Mittel, um Software zu bauen. Gleichzeitig braucht es etwas Zeit, bis man sich daran gewöhnt hat. Für den Anfang werden wir uns daher nur mit einem einzigen Ereignis namens <code>"IstGeboren"</code> beschäftigen. Wie der Name schon sagt, definieren wir damit das Verhalten der Ameise, nachdem sie geboren wurde. Eine Ereignisdefinition besteht aus einer <em>Kopfzeile</em> (Zeile 3) mit dem Namen des Ereignis, die eine geschweifte und eine runde Klammer öffnet und einer <em>Schlusszeile</em> (Zeile 5), die diese zwei Klammern wieder schließt. Dazwischen befinden sich die <em>Anweisungen</em>. Jedes Ereignis hat einen <em>Ereignisnamen</em> und dieser wird in die Kopfzeile eingetragen:
+      </p>
+      
+      <p><img src="/images/l1_schnipsel_ereignisdefinition.png" class="img-thumbnail" title=""></p>
+      
+      <p>Trage also in diese Ameise den Ereignisnamen ein und füge folgende Anweisungen ein:
       </p>
       
       <p><img src="/images/l1_schnipsel_event.png" class="img-thumbnail" title="Befehle innerhalb von Ereignisse werden eingerückt. Nutze die Tab-Taste."></p>
       
-      <p>Es gibt den Befehl <code>Gehe</code> und den Befehl <code>Drehe</code>. Wenn der Geh-Befehl ausgeführt wird, dann bewegt sich die Ameise geradeaus nach vorne um die angegebene Anzahl Schritte. Beim Dreh-Befehl dreht sich die Ameise um den angegebenen Winkel im Uhrzeigersinn. Positive Winkel entsprechen damit Rechtsdrehungen, der Befehl in Zeile 5 entspricht einer 90-Grad-Drehung nach links.
+      <p>Achte darauf, dass die Anweisungen innerhalb einer Ereignisdefinition eingerückt sind. Das funktioniert meist automatisch. Falls nicht, kannst du eine Zeile einrücken, indem du an den Anfang der Zeile klickst und dann die TAB-Taste auf der Tastatur drückst (die große Taste links neben dem Q mit den zwei Pfeilen). Das Einrücken macht den Code leserlicher und bei größeren Ameisen mit vielen Definitionen hilft es, den Überblick zu bewahren.
       </p>
       
-      <p>Jeder Befehl wird mit runden Klammern abgeschlossen, selbst wenn mal in den Klammern nichts steht. Fehlen die Klammern, dann wird der Befehl auch nicht ausgeführt. Basta.
+      <p>Soweit zu den Ereignissen. Schauen wir uns jetzt noch die Anweisungen an. Die Anweisungen bestehen aus einzelnen <em>Befehlen</em>. In diesem Tutorial werden wir die drei grundlegendsten Befehle kennenlernen:
       </p>
       
-      <p>Du kannst jetzt mit dieser Ameise weiterarbeiten für die erste Aufgabe von Stufe 1. Ein letzter Hinweis zum Schluss: Tutorials mit dem Zusatz [API] stellen neue Befehle vor. Diese werden rot im Text hervorgehoben und erleichtern damit die Suche nach bestimmten Funktionen.
+      <p><img src="/images/l1_schnipsel_event2.png" class="img-thumbnail" title=""></p>
+      
+      <p>Der erste Befehl heißt <code>Gehe</code>. Dieser Befehl lässt die Ameise eine bestimmte Anzahl an Schritten geradeaus gehen. Ein Befehl besteht aus seinem Namen und runden Klammern, die den <em>Parameter</em> des Befehls enthalten. Beim Gehe-Befehl ist der Parameter die Anzahl der Schritte.
+      </p>
+      
+      <p>Der zweite Befehl heißt <code>Drehe</code>. Dessen Parameter gibt an, um wie viel Grad sich die Ameisen im Uhrzeigersinn um die eigene Achse drehen soll. Ein positiver Parameter bestimmt einer Rechtsdrehung. Ein negativer Parameter wie in Zeile 5 gibt eine Linksdrehung an.
+      </p>
+      
+      <p>Schließlich gibt es noch den Befehl <code>DreheZuRichtung</code>. Dieser nimmt als Parameter eine Himmelsrichtung. Dabei beginnt man im Osten und zählt die Grad im Uhrzeigersinn weiter. Es gilt damit Osten = 0, Süden = 90, Westen = 180 und Norden = 270. Mit DreheZuRichtung kann man die Ameise also in eine bestimmte Richtung des Spielsfelds ausrichten:
+      </p>
+      
+      <p><img src="/images/l1_koordinaten2.jpg" class="img-thumbnail" title=""></p>
+      
+      <p>Mit diesem Wissen kannst du nun die Aufgaben dieser Stufe bearbeiten. Ein letzter Hinweis zum Schluss: Tutorials mit dem Zusatz [API] stellen neue Befehle oder Ereignisse vor. Diese werden im Text rot hervorgehoben und erleichtern damit die Suche nach bestimmten Funktionen.
       </p>
     `,
     questions : [
-      "Der Name eines Ameisenvolks lässt sich nach dem Erstellen nicht mehr ändern.",
-      "Pro Ereignistyp soll es in einer Ameise nur eine Definition geben.",
-      "Wir haben bisher nur das Ereignis \"IstGeboren\" kennengelernt.",
-      "Jeder Befehl braucht runde Klammern.",
-      "Jeder Befehl kommt auf eine eigene Zeile.",
-      "Wir kennen bisher die Befehle Geh und Dreh."
+      "Der Name der Ameise lässt sich in der Ameisendefinition anpassen.",
+      "Der Ereignisname wird in der Schlusszeile einer Ereignisdefinition eingetragen.",
+      "Wir nutzen bisher nur das Ereignis \"IstGeboren\".",
+      "Der Parameter eines Befehls steht in runden Klammern.",
+      "'Geh!' ist die umgangssprachliche Form von 'Gehe!'",
+      "Südwest = 45."
     ],
-    solution : [0,1,1,1,1,0],
+    solution : [1,0,1,1,1,0],
   },
   4 : {
     level : 2,
