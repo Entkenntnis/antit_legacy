@@ -4,161 +4,180 @@
     <% include ../include/commonHead %>
   </head>
   <body>
+    <div class="container">
 
-
-  <div class="container">
-
-  <div class="jumbotron"><h1>Ameisen-Editor</h1>
-	    <p>Bearbeite den Code deines Volks und bestimme das Verhalten deiner Ameisen.</p></div>
+      <div class="jumbotron">
+        <h1>Ameisen-Editor</h1>
+        <p>Bearbeite den Code deines Volks und bestimme das Verhalten deiner Ameisen.</p>
+      </div>
    
-  <form method="POST" action="/save?id=<%=id%>" id="editform">
-    <input type="submit" value="Speichern" class="btn btn-success btn-sm">
-    <input type="hidden" name="_csrf" value="<%=csrf%>"/>
-    <input type="hidden" name="antid" value="<%=id%>"/> 
-    <a class="btn btn-danger btn-sm" href="/">Abbrechen</a>
-      <% if (user.level >= 7) { %>
-        <input style="margin-left:30px" type="checkbox" name="duplicate" value="1"> eine Kopie anlegen
-      <% } %><br><br><br>
-    <textarea rows="50" id="editor" name="data"><%-data;%></textarea><br>
-  </form>
-  <link rel="stylesheet" href="/css/codemirror.css">
-  <link rel="stylesheet" href="/css/show-hint.css">
-  <script src="/js/codemirror.js"></script>
-  <script>
-
-
-      function startsWith(str, searchString, position){
-          position = position || 0;
-          return str.substr(position, searchString.length) === searchString;
-      }
-
-      var editor = CodeMirror.fromTextArea(
-        document.getElementById("editor"),
-        {
-          mode: {name:"javascript",globalVars:true},
-          lineNumbers:true,
-          smartIndent:true,
-          indentUnit:4,
-          matchBrackets:true,
-          autoCloseBrackets:true,
-      <% if (user.level >= 2) { %>  extraKeys:{"Ctrl-S":function(){document.getElementById('editform').submit()}}
-      <% } %>
-        });
-        CodeMirror.keyMap.default["Shift-Tab"] = "indentLess";
-        CodeMirror.keyMap.default["Tab"] = "indentMore";
+      <form method="POST" action="/save?id=<%=id%>" id="editform">
+        <input type="hidden" name="_csrf" value="<%=csrf%>"/>
+        <input type="hidden" name="antid" value="<%=id%>"/> 
+        <input type="submit" value="Speichern" class="btn btn-success btn-sm">
+        <a class="btn btn-danger btn-sm" href="/">Abbrechen</a>
+        <% if (user.level >= 5) { %>
+          <script src="/js/jshint.min.js"></script>
+          <script>
+            function checkSyntax() {
+              var result = JSHINT(editor.getValue(), {asi:true})
+              var output = result ? "Keine Fehler gefunden." : JSHINT.errors.map(function(err){
+                return "Fehler in Zeile " + err.line + ": " + err.reason
+              }).join('<br>')
+              document.getElementById('errors').innerHTML = output
+            }
+          </script>
+          <button onclick="checkSyntax()" style="margin-left:60px" class="btn btn-info btn-sm" type="button">Syntax überprüfen</button>
+          <br><br><div id="errors"></div><br>
+        <% } else { %>
+          <br><br><br>
+        <% } %>
+        <textarea rows="50" id="editor" name="data"><%-data;%></textarea><br>
+      </form>
+      <link rel="stylesheet" href="/css/codemirror.css">
+      <link rel="stylesheet" href="/css/show-hint.css">
+      <script src="/js/codemirror.js"></script>
       
-      var x = function(cm) {
-        var cur = cm.getCursor();
-        var token = cm.getTokenAt(cur);
-        var vars = [
-        
-        // Level 1
-            "Gehe"
-          , "Drehe"
-          , "DreheZuRichtung"
-          
-        // Level 2
-          
-          <% if (user.level >= 2) { %>
-          
-          , "GeheZuBau"
-          , "NimmZucker"
-          , "LadeZuckerAb"
-          , "TrageApfel"
-          , "InTeam"
-          
-          <% } %>
-          
-        // Level 3
-          
-          <% if (user.level >= 3) { %>
-          
-          , "GeheZuZiel"
-          , "Warte"
-          , "DreheWegVonObjekt"
-          , "DreheZuObjekt"
-          , "Reichweite"
-          
-          <% } %>
-          
-        // Level 4
-          
-          <% if (user.level >= 4) { %>
-          
-          , "SetzeGift"
-          , "GeheZuBauOffen"
-          , "GeheZuZielOffen"
-          , "Zufall"
-          
-          <% } %>
-          
-        // Level 5
-          
-          <% if (user.level >= 5) { %>
-          
-          , "Runde"
-          , "Distanz"
-          , "Winkel"
-          , "Bau"
-          , "Position"
-          , "SendeNachricht"
-          , "SetzeLimit"
-          
-          <% } %>
-          
-          
-       // Level 9
-          
-          <% if (user.level >= 6 ) { %>
-          
-          , "Gedächtnis"
-          , "SendeSelber"
-          , "Zufallszahl"
-          , "Zufallsname"
-          , "Blickrichtung"
-          //, "Stopp"
-          //, "FühreAus"
-           // "AktuelleLast"
-          //, "TrägtApfel"
-          //, "AktuellesZiel"
-          //, "Umgebung"
-          //, "Untätig"
-          //, "IstOffen"
-          //, "function"
-          , "console.log"
-          //, "undefined"
-          //, "delete"
-          <% } %>
-        ];
-        var completions = [];
-        if (token.type == "variable") {
-          vars.forEach(function(f) {
-            if (startsWith(f, token.string))
-            completions.push(f);
-          });
+      
+      <script>
+      
+        function startsWith(str, searchString, position){
+            position = position || 0;
+            return str.substr(position, searchString.length) === searchString;
         }
-        return {list: completions,
-          from: CodeMirror.Pos(cur.line, token.start),
-          to: CodeMirror.Pos(cur.line, token.end)};
-      };
-      
-      editor.on("inputRead", function(cm) {
-      	var filter = new RegExp('[\.a-zA-ZäüöÄÜÖ]','i');
-      	if(cm.display.input.textarea.value.slice(-1).match(filter)){
-      		CodeMirror.showHint(cm, x, {completeSingle:false});
-      	}
-      });
-      
-      function append(){
-        editor.replaceRange('\n\nAmeise.wenn("", function(){\n    \n})', CodeMirror.Pos(editor.lastLine()))
-      }
 
-  </script>
-  <% if (user.level >= 3) { %>
-    <button onclick="append()" class="btn btn-primary btn-sm">Ereignis hinzufügen</button>
+        var editor = CodeMirror.fromTextArea(
+          document.getElementById("editor"),
+            {
+              mode: {name:"javascript",globalVars:true},
+              lineNumbers:true,
+              smartIndent:true,
+              indentUnit:4,
+              matchBrackets:true,
+              autoCloseBrackets:true,
+              <% if (user.level >= 2) { %> 
+                extraKeys:{"Ctrl-S":function(){document.getElementById('editform').submit()}}
+              <% } %>
+        })
+          
+        CodeMirror.keyMap.default["Shift-Tab"] = "indentLess"
+        CodeMirror.keyMap.default["Tab"] = "indentMore"
+      
+        var x = function(cm) {
+          var cur = cm.getCursor();
+          var token = cm.getTokenAt(cur);
+          var vars = [
+          
+          // Level 1
+              "Gehe"
+            , "Drehe"
+            , "DreheZuRichtung"
+            
+          // Level 2
+            
+            <% if (user.level >= 2) { %>
+            
+            , "GeheZuBau"
+            , "NimmZucker"
+            , "LadeZuckerAb"
+            , "TrageApfel"
+            , "InTeam"
+            
+            <% } %>
+            
+          // Level 3
+            
+            <% if (user.level >= 3) { %>
+            
+            , "GeheZuZiel"
+            , "Warte"
+            , "DreheWegVonObjekt"
+            , "DreheZuObjekt"
+            , "Reichweite"
+            
+            <% } %>
+            
+          // Level 4
+            
+            <% if (user.level >= 4) { %>
+            
+            , "SetzeGift"
+            , "GeheZuBauOffen"
+            , "GeheZuZielOffen"
+            , "Zufall"
+            
+            <% } %>
+            
+          // Level 5
+            
+            <% if (user.level >= 5) { %>
+            
+            , "Runde"
+            // , "Distanz"
+            // , "Winkel"
+            // , "Bau"
+            , "Position"
+            , "SendeNachricht"
+            , "SetzeLimit"
+            
+            <% } %>
+            
+            
+          // Level 9
+            
+            <% if (user.level >= 6 ) { %>
+            
+            , "Gedächtnis"
+            , "SendeSelber"
+            , "Zufallszahl"
+            , "Zufallsname"
+            , "Blickrichtung"
+            //, "Stopp"
+            //, "FühreAus"
+            // "AktuelleLast"
+            //, "TrägtApfel"
+            //, "AktuellesZiel"
+            //, "Umgebung"
+            //, "Untätig"
+            //, "IstOffen"
+            //, "function"
+            , "console.log"
+            //, "undefined"
+            //, "delete"
+            
+            <% } %>
+          ];
+          var completions = []
+          if (token.type == "variable") {
+            vars.forEach(function(f) {
+              if (startsWith(f, token.string))
+              completions.push(f)
+            })
+          }
+          return {list: completions,
+            from: CodeMirror.Pos(cur.line, token.start),
+            to: CodeMirror.Pos(cur.line, token.end)}
+        }
+      
+        editor.on("inputRead", function(cm) {
+          var filter = new RegExp('[\.a-zA-ZäüöÄÜÖß]','i');
+            if(cm.display.input.textarea.value.slice(-1).match(filter)){
+              CodeMirror.showHint(cm, x, {completeSingle:false})
+          }
+        })
+      
+        function append(){
+          editor.replaceRange('\n\nAmeise.wenn("", function(){\n    \n})', CodeMirror.Pos(editor.lastLine()))
+        }
+
+      </script>
+    
+      <% if (user.level >= 3) { %>
+        <button onclick="append()" class="btn btn-primary btn-sm">Ereignis hinzufügen</button>
+      <% } %>
+
+      <div style="height:300px"></div>
+  
     </div>
-  <% } %>
-
-  <div style="height:300px"></div>
   </body>
 </html>
