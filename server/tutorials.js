@@ -641,14 +641,33 @@ module.exports.tutorials = {
     ],
     solution : [0,1,0,1,1,0],
   },
-  10 : {
+  53 : {
+    level : 5,
+    name : "Reichweite und Runde abfragen [API]",
+    text : `
+      <p>Grundidee: bedingte Anweisungen, bisher nur Einteilung nach Teams, jetzt auch Einteilung nach Systemzustand. Zwei Eigenschaften werden wir uns anschauen: Reichweite und Runde. Idee ist es, einzelne Blöcke an Code unter eine gewisse Bedingung zu stellen.
+      
+      
+      </p>
+    `,
+    questions : [
+    "Frage 1",
+    "Frage 2",
+    "Frage 3",
+    "Frage 4",
+    "Frage 5",
+    "Frage 6"
+    ],
+    solution : [0,0,0,1,1,1],
+  },
+  55 : {
     level : 5,
     name : "Der Ameisenwettbewerb",
     text : `
       <p>Ein Höhepunkt jedes Workshops ist der Ameisenwettbewerb, der bald stattfinden wird. Auf der Stufe 5 hast du nun Zugriff auf die Kampfarena. Dort kannst du deine Ameisen nochmal ausgiebig optimieren und schließlich gegeneinander antreten lassen.
       </p>
       
-      <p>Für den Wettkampf dürfen und sollen alle Teile der API verwendet werden, die bisher vorgestellt wurden. Dazu gehören die Befehle und Ereignisse, Teamarbeit, Kommunikation und Gift. Gegnerische Ameisen zu vergiften kann empfindlichen Schaden verursachen und bringt für diesen Wettbewerb große Vorteile.
+      <p>Für den Wettkampf dürfen und sollen alle Teile der API verwendet werden, die bisher vorgestellt wurden. Dazu gehören die Befehle und Ereignisse, Teamarbeit, Reichweite, Kommunikation und Gift. Gegnerische Ameisen zu vergiften kann empfindlichen Schaden verursachen und bringt für diesen Wettbewerb große Vorteile.
       </p>
       
       <p>Die Regeln einer Wettkampfrunde sind wie folgt:
@@ -684,27 +703,11 @@ module.exports.tutorials = {
     ],
     solution : [1,0,0,1,1,1],
   },
-  55 : {
-    level : 5,
-    name : "Reichweite abfragen [API]",
-    text : `
-      <p>Hallo</p>
-    `,
-    questions : [
-    "Frage 1",
-    "Frage 2",
-    "Frage 3",
-    "Frage 4",
-    "Frage 5",
-    "Frage 6"
-    ],
-    solution : [0,0,0,1,1,1],
-  },
   61 : {
     level : 6,
     name : "Weitere Inhalte",
     text : `
-      <p>Für weitere Inhalte besuche folgende Datei: <a href="/script.pdf">AntIT für Fortgeschrittene</a>
+      <p>Für weitere Inhalte besuche folgende Datei: <a href="/doc/script.pdf">AntIT für Fortgeschrittene</a>
       </p>
     `,
     noq : true,

@@ -94,6 +94,10 @@
       return collectedApples
     }
     
+    this.getDeadAnts = function() {
+      return deadants
+    }
+    
     this.addPoints = function(amount) {
       my.points = Math.max(0, my.points + amount)
       Sim.Bus.emit('update-player-points', id, my.points)

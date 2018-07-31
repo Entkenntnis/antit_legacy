@@ -798,51 +798,23 @@
  
     53 : {
       init : function() {
-        defaultLevelInit()
+        //defaultLevelInit()
+        Sim.Opts.WanzenProSpieler = 0
         Sim.Opts.Runden = 5500
+        Sim.Opts.SpielfeldGrundGröße = 1500000
       },
       create : function(){
         defaultLevelCreate()
-        Sim.l5_spawn = function(){
-          var dist = 400
-          var angle = Sim.rng()*360
-          Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), angle, dist)))
-        }
-        Sim.l5_spawn()
       },
-      update : function() {
-        if (Sim.apples.length == 0)
-          Sim.l5_spawn()
+      failed : function(){
+        return Sim.players[0].getDeadAnts() > 0
       },
       isDone : function(){
-        return Sim.players[0].getApple() >= 10;
+        return Sim.players[0].getPoints() >= 4000 && Sim.players[0].getDeadAnts() == 0
       },
     },
  
     55 : {
-      init : function() {
-        defaultLevelInit()
-        Sim.Opts.Runden = 5500
-      },
-      create : function(){
-        defaultLevelCreate()
-        Sim.l5_spawn = function(){
-          var dist = 400
-          var angle = Sim.rng()*360
-          Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), angle, dist)))
-        }
-        Sim.l5_spawn()
-      },
-      update : function() {
-        if (Sim.apples.length == 0)
-          Sim.l5_spawn()
-      },
-      isDone : function(){
-        return Sim.players[0].getApple() >= 10;
-      },
-    },
- 
-    61 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 2000
@@ -865,7 +837,7 @@
       },
     },
  
-    63 : {
+    61 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1500

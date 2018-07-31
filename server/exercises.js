@@ -204,37 +204,28 @@ module.exports.exercises = {
   },
   
   53 : {
-    name : "Es sollen keine Sterben, einfache Bedingungen",
+    name : "Vorsichtige Suche",
     description : `
-    <p>Nutze die Macht der Kommunikation und sammle 10 Äpfel ein.
+    <p>Erreiche innerhalb der Simulation 4000 Punkte. Achte darauf, dass keine Ameise stirbt.
     </p>
     `,
     level : 5,
   },
   
   55 : {
-    name : "Es soll keiner Sterben, verschärfte Bedingungen",
+    name : "Geduld",
     description : `
-    <p>Nutze die Macht der Kommunikation und sammle 10 Äpfel ein.
-    </p>
+      <p>Verlockend viel Zucker liegt vor dem Bau, doch dein Ameisenvolk muss bis zur Runde 1500 warten, bis es den Zucker abbauen darf. Insgesamt hast du 2000 Runden Zeit, 600 Zucker einzusammeln.</p>
+      
+      <!--<p>Ähnlich wie bei der Reichweite kannst du über die Eigenschaft <code>Runde</code> die aktuelle Rundennummer abfragen. Die beginnt bei 1 und zählt für jeden Tick der Simulation eins hoch. Ein kleiner Hinweis:
+      </p>
+      
+      <p><img src="/images/l5_runde.png" class="img-thumbnail"></p>-->
     `,
     level : 5,
   },
   
   61 : {
-    name : "Geduld",
-    description : `
-      <p>Verlockend viel Zucker liegt vor dem Bau, doch dein Ameisenvolk muss bis zur Runde 1500 warten, bis es den Zucker abbauen darf. Insgesamt hast du 2000 Runden Zeit, 600 Zucker einzusammeln.</p>
-      
-      <p>Ähnlich wie bei der Reichweite kannst du über die Eigenschaft <code>Runde</code> die aktuelle Rundennummer abfragen. Die beginnt bei 1 und zählt für jeden Tick der Simulation eins hoch. Ein kleiner Hinweis:
-      </p>
-      
-      <p><img src="/images/l5_runde.png" class="img-thumbnail"></p>
-    `,
-    level : 6,
-  },
-  
-  63 : {
     name : "Der richtige Abstand",
     description : `
       <p>Diese Aufgabe ist für Teilnehmer geeignet, die bereits Erfahrungen mit einer Programmiersprache wie Java oder C/C++/C# haben. 
