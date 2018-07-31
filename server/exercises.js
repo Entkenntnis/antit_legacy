@@ -111,7 +111,7 @@ module.exports.exercises = {
   8 : {
     name : "Schlaraffenland",
     description : `
-      <p>Auf dem Spielfeld sind üppig Nahrungsmittel verteilt. Sammle insgesamt 600 Zucker und 2 Äpfel, um die Aufgabe zu lösen. Nutze die Vorlage aus dem neuen Tutorial.
+      <p>Auf dem Spielfeld sind üppig Nahrungsmittel verteilt. Sammle insgesamt 600 Zucker und 2 Äpfel, um die Aufgabe zu lösen. Folge den Schritte aus dem Tutorial "Suchen und Finden".
       </p>
     `,
     level : 3,
@@ -120,25 +120,16 @@ module.exports.exercises = {
   9 : {
     name : "Wanzenstraße",
     description : `
-      <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, den ganzen (!) Zuckerhaufen abzubauen. Die Ameisen dürfen dabei die x-Achse nicht verlassen.
+      <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, den ganzen Zuckerhaufen abzubauen. Die Ameisen dürfen dabei die x-Achse nicht verlassen.
       </p>
     `,
     level : 3,
   },
   
   10 : {
-    name : "S-hla-a-fe-la-d",
+    name : "Alles oder nichts",
     description : `
-      <p>Es ist immer die gleiche Geschichte: Sobald der Mensch anfängt, in die Natur einzugreifen, bringt er Zerstörung. Die Nahrungsmittel sind weniger geworden, der Hunger nicht. Sammle wieder 600 Zucker und 2 Äpfel - also alle Nahrungsmittel auf dem Spielfeld.
-      </p>
-      
-      <p>Du musst jetzt darauf achten, dass die Ameisen nicht zu früh sterben. Jede Ameise hat nur eine Reichweite von 3000 Schritten. Danach stirbt sie. Die Reichweite kann im Heimatbau wiederhergestellt werden, wenn die Ameise mit dem Befehl GeheZuBau zum Bau zurückkehrt.
-      </p>
-      
-      <p>Die Ameise kann ihre Reichweite abfragen. Diese gibt an, wie viele Schritte die Ameise noch gehen kann. Die Reichweite wird also mit der Zeit immer kleiner bis sie null erreicht. Das kann in einer <a target="_blank" href="https://wiki.selfhtml.org/wiki/JavaScript/Verzweigung#Wenn-Dann-Bedingungen_mit_.22if.22">Abfrage</a> verwendet werden. Ein kleiner Hinweis als Code-Schnipsel:
-      </p>
-      
-      <p><img src="/images/l3_reichweite.png" class="img-thumbnail"></p>
+      <p>Sammle alle Nahrungsmittel auf dem Spielfeld ein. Es sind genau 600 Zucker und 2 Äpfel.</p>
     `,
     level : 3,
   },
