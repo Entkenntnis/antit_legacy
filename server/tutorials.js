@@ -475,7 +475,7 @@ module.exports.tutorials = {
       </ul>
       </p>
       
-      <p>Viel Spaß also bei dem Kampf!
+      <p>Viel Spaß beim Kämpfen!
       </p>
       
       <p>Die weiteren zwei Funktionen sind weniger aggressiv. So unscheinbar sie auch wirken, sind sie in einigen Situationen trotzdem unersetzlich.
@@ -594,32 +594,42 @@ module.exports.tutorials = {
       <p>Und bisher ging das auch ziemlich gut. Bisher. Die erste Aufgabe dieser Stufe bietet in dieser Hinsicht eine Herausforderung: Auf dem Spielfeld befindet sich zu jeder Zeit nur ein Apfel. Diesen müssen die Ameisen aber gemeinsam zum Bau tragen. Es wäre doch praktisch, wenn die Ameise, die als erstes beim Apfel ist, an ihre Kollegen eine Nachricht schicken könnte?
       </p>
       
-      <p>In diesem Tutorial wird es genau darum gehen, wie man kommuniziert. Dazu können die Ameisen Nachrichten senden. Eine Nachricht kann mit dem Befehl <code>SendeNachricht</code> verschickt werden. Eine Nachricht besteht aus einem Betreff und einem (optionalen) Inhalt. Der Betreff ist ein frei wählbarer Text, der verwendet wird, um verschiedene Nachrichtentypen zu unterscheiden. Wenn also die Ameise einen Apfel sieht, kann man der Nachricht den Betreff "ApfelGesehen" geben.
+      <p>In diesem Tutorial wird es genau darum gehen, wie man kommuniziert. Dazu können die Ameisen Nachrichten senden. Eine Nachricht kann mit dem Befehl <code>SendeNachricht</code> verschickt werden. Eine Nachricht besteht aus einem Betreff und einem (optionalen) Inhalt. Der Betreff ist ein frei wählbarer Text, der verwendet wird, um verschiedene Nachrichtentypen zu unterscheiden. Sehen wir uns dazu mal ein erstes Beispiel an:
       </p>
       
-      <p>Die Ameise möchte nicht nur mitteilen, dass ein Apfel gesehen wurde, sondern möchte auch das Apfelobjekt mit übertragen. Dieser Inhalt kann als zweiter Parameter an die Nachricht angehängt werden. So sieht der Code dazu aus:
+      <p><img src="/images/l5_sendetanzt.png" class="img-thumbnail"></p>
+      
+      <p>Die Ameise geht 1000 Schritte. Dann sendet sie eine Nachricht mit dem Betreff "Tanzt!". Danach geht sie zum Bau. Der Nachrichtenbefehl kann jederzeit wie ein normaler Befehl eingesetzt werden. Um auf diese Nachricht zu reagieren, fügen wir dem Code eine weitere Ereignisdefinition hinzu:
       </p>
       
-      <p><img src="/images/l5_sende.png" class="img-thumbnail">
+      <p><img src="/images/l5_empfangetanzt.png" class="img-thumbnail"></p>
+      
+      <p>Der Ereignisname entspricht dem Betreff mit einem Doppelpunkt vorangestellt. Dieser Doppelpunkt bedeutet: Das hier ist eine Nachricht. Jede Ameise empfängt diese Nachricht und führt dann die Anweisungen aus, in diesem Fall dreht sie sich einmal um 360 Grad.
       </p>
       
-      <p>Um eine Nachricht zu empfangen, fügt man ein Ereignis hinzu mit dem Namen des Betreffs und einem Doppelpunkt davor. Damit die Ameise nach Erhalt einer "ApfelGesehen"-Nachricht zum Apfel geht, schreibt man:
+      <p>Je näher eine Ameise am Sender, umso früher bekommt sie die Nachricht. Man kann festlegen, dass nur eine bestimmte Anzahl an Ameisen eine Nachricht bekommt. Wenn eine feste Anzahl an Ameisen um den Sender herum die Nachricht erhalten haben, dann wird sie nicht mehr weitergegeben. Dafür schreibt man unmittelbar vor dem Nachrichtenbefehl den Befehl <code>SetzeLimit</code> und gibt als Parameter an, wie viele Ameisen die Nachricht erhalten sollen:
       </p>
       
-      <p><img src="/images/l5_empfange.png" class="img-thumbnail">
+      <p><img src="/images/l5_sendetanztlimit.png" class="img-thumbnail"></p>
+      
+      <hr>
+      
+      <p>Die Nachrichten haben eine weitere coole Funktion: Mit ihnen kann man auch zusätzliche Informationen übertragen. Deine Ameise hat zum Beispiel einen Apfel gesehen und du möchtest den anderen Ameisen sagen, wo dieser Apfel ist.  Dann kannst du das Apfelobjekt als Parameter zum Nachrichtenbefehl hinzufügen:
       </p>
       
-      <p>Auf diese Art lassen sich verschiedene Nachrichtentypen festlegen und die Ameisen können aufeinander reagieren.
+      <p><img src="/images/l5_sende.png" class="img-thumbnail"></p>
+      
+      <p>In diesem Beispiel sieht die Ameise einen Apfel und sendet eine Nachricht mit dem Betreff "ApfelGesehen" und dem Apfelobjekt als Inhalt. Auf entsprechende Weise kann man der Ereignisdefinition einen Parameter hinzufügen und beispielsweise auf diesen Apfel zulaufen:
       </p>
       
-      <p>Je näher eine Ameise ist, umso früher bekommt sie die Nachricht. Wenn man die Nachricht nur an eine begrenzte Menge an Ameisen senden möchte, kann man unmittelbar vor dem Aufruf von SendeNachricht die Funktion <code>SetzeLimit</code> mit der Anzahl aufrufen. Die erste Nachricht geht an maximal 5 Ameisen, die zweite Nachricht geht wieder an alle (indem man den Parameter weglässt):
+      <p><img src="/images/l5_empfange.png" class="img-thumbnail"></p>
+      
+      <hr>
+      
+      <p>Der Inhalt ist nicht auf Objekte beschränkt. Es spricht nichts dagegen, auch Zahlen oder andere Daten zu übertragen. Wenn wir nochmal kurz zu unserem Anfangsbeispiel zurückkehren. Hier können wir angeben, wie viele Runden die Ameisen tanzen sollen:
       </p>
       
-      <p><img src="/images/l5_limit.png" class="img-thumbnail">
-      </p>
-      
-      <p>Dadurch kann feiner gesteuert werden, an welche Ameisen die Nachrichten gehen.
-      </p>
+      <p><img src="/images/l5_tanztparameter.png" class="img-thumbnail"></p>
     `,
     questions : [
       "Ameisen können nicht miteinander reden.",
@@ -661,7 +671,7 @@ module.exports.tutorials = {
       <p>Vor dem Wettbewerb können vorab Testrunden gespielt werden. Wenn man seine Ameise freischaltet, kann diese von anderen Teams gespielt werden. Die Ergebnisse dieser Spiele kann in der Ergebnisübersicht gesehen werden. Um in der Übersicht angezeigt zu werden müssen alle Ameisen aus verschiedenen Teams stammen und es müssen mindestens zwei Ameisen an der Runde teilnehmen.
       </p>
       
-      <p>Die Stufe 6 wird nach dem Wettbewerb freigeschalten.
+      <p>Die Stufe 6 wird nach dem Wettbewerb freigeschaltet.
       </p>
     `,
     questions : [
@@ -674,7 +684,23 @@ module.exports.tutorials = {
     ],
     solution : [1,0,0,1,1,1],
   },
-  11 : {
+  55 : {
+    level : 5,
+    name : "Reichweite abfragen [API]",
+    text : `
+      <p>Hallo</p>
+    `,
+    questions : [
+    "Frage 1",
+    "Frage 2",
+    "Frage 3",
+    "Frage 4",
+    "Frage 5",
+    "Frage 6"
+    ],
+    solution : [0,0,0,1,1,1],
+  },
+  61 : {
     level : 6,
     name : "Weitere Inhalte",
     text : `

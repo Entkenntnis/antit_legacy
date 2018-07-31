@@ -796,7 +796,53 @@
       },
     },
  
-    18 : {
+    53 : {
+      init : function() {
+        defaultLevelInit()
+        Sim.Opts.Runden = 5500
+      },
+      create : function(){
+        defaultLevelCreate()
+        Sim.l5_spawn = function(){
+          var dist = 400
+          var angle = Sim.rng()*360
+          Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), angle, dist)))
+        }
+        Sim.l5_spawn()
+      },
+      update : function() {
+        if (Sim.apples.length == 0)
+          Sim.l5_spawn()
+      },
+      isDone : function(){
+        return Sim.players[0].getApple() >= 10;
+      },
+    },
+ 
+    55 : {
+      init : function() {
+        defaultLevelInit()
+        Sim.Opts.Runden = 5500
+      },
+      create : function(){
+        defaultLevelCreate()
+        Sim.l5_spawn = function(){
+          var dist = 400
+          var angle = Sim.rng()*360
+          Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), angle, dist)))
+        }
+        Sim.l5_spawn()
+      },
+      update : function() {
+        if (Sim.apples.length == 0)
+          Sim.l5_spawn()
+      },
+      isDone : function(){
+        return Sim.players[0].getApple() >= 10;
+      },
+    },
+ 
+    61 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 2000
@@ -819,7 +865,7 @@
       },
     },
  
-    19 : {
+    63 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1500

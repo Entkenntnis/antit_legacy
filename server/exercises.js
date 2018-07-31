@@ -203,7 +203,25 @@ module.exports.exercises = {
     level : 5,
   },
   
-  18 : {
+  53 : {
+    name : "Es sollen keine Sterben, einfache Bedingungen",
+    description : `
+    <p>Nutze die Macht der Kommunikation und sammle 10 Äpfel ein.
+    </p>
+    `,
+    level : 5,
+  },
+  
+  55 : {
+    name : "Es soll keiner Sterben, verschärfte Bedingungen",
+    description : `
+    <p>Nutze die Macht der Kommunikation und sammle 10 Äpfel ein.
+    </p>
+    `,
+    level : 5,
+  },
+  
+  61 : {
     name : "Geduld",
     description : `
       <p>Verlockend viel Zucker liegt vor dem Bau, doch dein Ameisenvolk muss bis zur Runde 1500 warten, bis es den Zucker abbauen darf. Insgesamt hast du 2000 Runden Zeit, 600 Zucker einzusammeln.</p>
@@ -213,10 +231,10 @@ module.exports.exercises = {
       
       <p><img src="/images/l5_runde.png" class="img-thumbnail"></p>
     `,
-    level : 5,
+    level : 6,
   },
   
-  19 : {
+  63 : {
     name : "Der richtige Abstand",
     description : `
       <p>Diese Aufgabe ist für Teilnehmer geeignet, die bereits Erfahrungen mit einer Programmiersprache wie Java oder C/C++/C# haben. 
@@ -239,7 +257,7 @@ module.exports.exercises = {
       <p>Von den Äpfel auf dem Spielfeld befindet sich einer genau 245 Schritte vom Bau entfernt. Trage diesen Apfel zum Bau. Berühre die anderen Äpfel nicht.
       </p>
     `,
-    level : 5,
+    level : 6,
   },
   
   23 : {
