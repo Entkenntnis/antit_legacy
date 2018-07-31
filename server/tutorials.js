@@ -170,7 +170,7 @@ module.exports.tutorials = {
       <p>Jetzt muss die Ameise nach Hause. Dazu gibt es den Befehl <code>GeheZuBau()</code>, der die Ameise direkt in den Bau führt. Die Ameisen sind wie Geister - sie müssen nicht um Hindernisse herumgehen, sondern können einfach durch alles hindurchlaufen. Auch wenn das komisch aussieht: Es ist für dich als Entwickler ziemlich praktisch.
       </p>
       
-      <p>Die zwei Befehle, die du gerade kennengelernt hast, brauchen keinen Parameter. Deshalb steht nichts in den runden Klammern. Die Klammern sind aber trotzdem wichtig! Wenn du sie vergisst, wird der Befehl einfach nicht ausgeführt.
+      <p>Die zwei Befehle, die du gerade kennengelernt hast, brauchen keinen Parameter. Deshalb steht nichts in den runden Klammern. Die Klammern sind aber trotzdem wichtig! Wenn du sie vergisst, wird der Befehl nicht ausgeführt.
       </p>
       
       <p><img src="/images/l2_ameisezucker2.png" width="400px" class="img-thumbnail" title="Huch!"></p>
@@ -201,7 +201,7 @@ module.exports.tutorials = {
     level : 2,
     name : "Effektives Arbeiten",
     text : `
-      <p>Du hast jetzt bereits ein wenig Erfahrung mit dem Programmieren von Ameisen. Dieses Tutorial möchte dir noch ein paar kleine Tricks zeigen, mit denen du schon fast wie ein "Profi" arbeiten kann.
+      <p>Du hast jetzt bereits ein wenig Erfahrung mit dem Programmieren von Ameisen. Dieses Tutorial möchte dir noch ein paar kleine Tricks zeigen, mit denen du schon quasi wie ein "Profi" arbeiten kann.
       </p>
       
       <h4>Simulationsgeschwindigkeit einstellen</h4>
@@ -217,6 +217,11 @@ module.exports.tutorials = {
       <p><img src="/images/l2_tabs.png" class="img-thumbnail" title="Firefox, Chrome, Edge - nutze den Browser, der dir gefällt."></p>
       
       <p>In einem Tab kann man den Editor öffen, in anderem die Simulation laufen lassen. Wenn man die Ameise speichert, reicht es, die Simulation neu zu laden (mit einem Klick auf den runden Pfeil oder mit der Taste F5) - schon wird die neue Version der Ameise ausgeführt. Wer will kann auch den Bildschirm teilen und einen Tab links und den anderen Tab rechts anzeigen lassen.
+      </p>
+      
+      <h4>Koordinatengitter verwenden</h4>
+      
+      <p>Mit der Taste G kann innerhalb Simulation ein Koordinatengitter um den Bau angezeigt werden. Damit kann man die Positionen von Objekten auf dem Spielfeld genau bestimmen. Das Koordinatengitter hat einen Abstand von 50 Ameisenschritten. ProTipp: Eine Diagonale hat eine Länge von 71 Ameisenschritten.
       </p>
       
       <h4>Sonderzeichen tippen</h4>
@@ -256,7 +261,7 @@ module.exports.tutorials = {
       
       <h4>Mit Tastenkürzel speichern</h4>
       
-      <p>ProTip: Anstatt auf "Speichern" zu klicken, kann man den Editor auch mit Strg-S schließen. Praktisch, wenn man nach dem Tippen nicht gleich zur Maus greifen möchte.</p>
+      <p>ProTipp: Anstatt auf "Speichern" zu klicken, kann man den Editor auch mit Strg-S schließen. Praktisch, wenn man nach dem Tippen nicht gleich zur Maus greifen möchte.</p>
       
       <h4>Kommentare nutzen</h4>
       
@@ -277,6 +282,42 @@ module.exports.tutorials = {
       "Zwei Schrägstriche kommentieren eine Zeile im Code aus."
     ],
     solution : [0,1,0,1,1,1],
+  },
+  13 : {
+    level : 2,
+    name : "Teamwork [API]",
+    text : `
+      <p>Bei so vielen Ameisen ergibt es sich ganz natürlich, dass man das Ameisenvolk aufteilen  möchte. Jedes Team soll dann eine eigene Aufgabe bekommen. Wir werden in diesem Tutorial sehen, wie das geht und lernen dabei auch bedinge Anweisungen kennen.
+      </p>
+      
+      <p>Über eine <em>Teamdefinition</em> kannst du festlegen, in wie viele Teams das Volk unterteilt wird. Der wesentliche Parameter ist dabei die Anzahl der Teams. Diese übergibt man an eine Funktion namens "SetzeTeams" (die aber kein normaler Befehl ist!). Die Teamdefinition kommt direkt nach der Ameisendefinition und vor allen Ereignisdefinitionen:
+      </p>
+      
+      <p><img src="/images/l2_teamdef.png" class="img-thumbnail" title=""></p>
+      
+      <p>Sind Teams definiert, dann werden die Ameisen der Reihenfolge ihrer Geburt nach abwechselnd in die Teams eingeteilt. Die Teams haben jeweils eine Nummer, die Informatiker-typisch mit 0 beginnend durchnummeriert sind. Hier konkret: Sind 3 Teams gesetzt, dann wird die erste Ameise in das Team 0 eingeteilt, die zweite Ameise in das Team 1 und die dritte Ameise in das Team 2. Die vierte Ameise kommt dann in das Team 0, die fünfte in das Team 1 und so weiter ... Damit sind alle Teams von der Größe her ausgeglichen.
+      </p>
+      
+      <p>Innerhalb der Anweisungen können die Befehle dann für die einzelnen Teams festgelegt werden. Dabei wird der normale Anweisungsblock nochmal in einzelne <em>bedingte Anweisungsblöcke</em> unterteilt: 
+      </p>
+      
+      <p><img src="/images/l2_inteam.png" class="img-thumbnail" title=""></p>
+      
+      <p>Alle Befehle finden sich hier also innerhalb von bedingten Anweisungen. Die erste Zeile einer bedingten Anweisung ist eine Kopfzeile, die die <em>Bedingung</em> festlegt. Die Funktion <code>InTeam</code> nimmt als Parameter die Nummer des Teams und sagt, ob eine Ameise innerhalb dieses Teams ist oder nicht. Trifft diese Bedingung ein, dann werden die Anweisungen ausgeführt, sonst nicht. Die Kopfzeile öffnet eine geschweifte Klammer, die in der Schlusszeile wieder geschlossen wird. Die Befehle innerhalb einer bedingten Anweisungen werden nochmal eingerückt, also insgesamt zweimal eingerückt.
+      </p>
+      
+      <p>Bedingte Anweisungen werden uns noch in vielen anderen Situationen begegnen. Tatsächlich machen Bedingungen einen großen Anteil am Code aus. Hier werden wir uns ganz langsam an sie herantasten. Um das obige Beispiel nochmal zu veranschaulichen: Wird die erste Ameise geboren, wird diese in das Team 0 eingeteilt. Dann wird für diese Ameise das Ereignis "IstGeboren" aufgerufen. Die (normalen) Anweisungen werden ausgeführt. Diese bestehen aus bedingten Anweisungen, also werden diese nacheinander geprüft. Die erste Bedingung ist erfüllt und die Ameise bekommt den Befehl, sich nach Osten zu drehen und 200 Schritte zu gehen. Die zweite und die dritte Bedingung sind nicht erfüllt und werden daher nicht ausgeführt. Bei der zweiten Ameise ist die erste Bedingung nicht erfüllt, dafür aber die zweite Bedingung und die Anweisungen dort werden ausgeführt ...
+      </p>
+    `,
+    questions : [
+      "Die Teamdefinition legt die Anzahl der Teams fest.",
+      "Die erste Ameise kommt in das Team 1.",
+      "Bedingte Anweisungen kommen innerhalb von Ereignissen vor.",
+      "\"InTeam(2)\" prüft, ob die Ameise im dritten Team ist.",
+      "Das zweite Codebeispiel enthält 10 geschweifte Klammern.",
+      "Bedingte Anweisungen werden nochmals eingerückt.",
+    ],
+    solution : [1,0,1,1,0,1]
   },
   6 : {
     level : 3,

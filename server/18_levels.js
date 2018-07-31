@@ -54,9 +54,12 @@ module.exports = function(App) {
   App.getNewTuts = function(user) {
     let count = 0
     for (var i = 1; i <= user.level; i++) {
-      count += tutIndex[i].length
+      tutIndex[i].forEach(id => {
+        if (user.done.indexOf(parseInt(id)) < 0)
+          count++
+      })
     }
-    return count - user.done.length
+    return count
   }
   
   App.express.get('/tutorial', App.users.auth, function(req, res) {

@@ -51,7 +51,7 @@ module.exports.exercises = {
     description : `
       <p>Die Ameisen bekommen langsam richtig Hunger. Zum Glück sind auf dem Spielfeld einige Nahrungsmittel verteilt. Sammle sie alle ein. Vermeide es, mit den Wanzen in Berühung zu kommen!
       </p>
-      <p>Hinweis: Lasse dir mit der Taste G wieder ein Gitter (Linienabstand 50 Ameisenschritte) anzeigen.
+      <p>Hinweis: Nutze das Koordinatengitter, um die Positionen zu bestimmen. Teams sind noch nicht nötig.
       <p>
     `,
     level : 2,
@@ -60,19 +60,12 @@ module.exports.exercises = {
   5 : {
     name : "Schneller in Teams",
     description : `
-      <p>Auf dem Spielfeld befinden sich wieder vier Nahrungsmittel. Diese sollen eingesammelt werden. Wenn die Ameisen sich aufteilen, geht alles viel schnellern.
-      </p>
-      <p>Dazu können sich die Ameisen selber in Teams zuteilen. Nutze dafür folgende <a href="/txt/l2_teams.txt">Vorlage</a>:
+      <p>Auf dem Spielfeld befinden sich wieder vier Nahrungsmittel. Diese sollen eingesammelt werden. Wenn die Ameisen sich aufteilen, geht alles viel schnellern. Nutze dafür folgende <a href="/txt/l2_teams.txt">Vorlage</a>:
       </p>
       
       <p><img src="/images/l2_teams.png"></p>
       
-      <p style="margin-bottom:0">Erklärung für den Code:<br>Zeile 1: Erzeuge eine Ameise mit dem Namen "Stufe 2 Aufgabe 2" und speichere sie in der Variablen "Ameise".<br>Zeile 3: Setze die Anzahl der Teams mit dem Befehl <code>SetzeTeams</code> auf 4.<br>Zeile 5: Wenn die Ameise geboren ist, dann soll sie folgende Anweisungen ausführen:<br>
-      </p>
-      
-      <p style="margin-left:30px;margin-top:0">Zeile 6: Wenn die Ameise zum Team mit der Nummer 0 gehört, dann dreht sie sich zur Richtung 0 und geht 100 Schritte. Die Abfrage funktioniert mit der Funktion <code>InTeam</code>.<br>Zeile 10: Wenn die Ameise zum Team mit der Nummer 1 gehört, dann dreht sie sich zur Richtung 90 und geht 200 Schritte.</p>
-      
-      <p>Ergänze die weiteren Abfragen für die restlichen Teams. Passe die Befehle so an, dass die Ameisen die Nahrungsmittel einsammeln.
+      <p>Klicke auf den obigen Link, um die Vorlage zu kopieren. Ergänze die weiteren bedingten Anweisungen für die Teams. Passe die Befehle so an, dass die Ameisen die Nahrungsmittel einsammeln.
       </p>
     `,
     level : 2,
@@ -95,7 +88,18 @@ module.exports.exercises = {
   7 : {
     name : "Versteckte Botschaften",
     description : `
-      <p>Die Aufgabenstellung findet sich diesmal in der <a target="_blank" href="https://thytos.com/video/programmieren-lernen-mit-javascript/javascript-konsole-oeffnen">Konsole</a> deines Browsers zu dieser Seite.
+      <p>Unter der Oberfläche dieser Website befindet sich eine versteckte Welt, die nur für Programmierer zugänglich ist. Die Aufgabenstellung ist dort zu finden.
+      </p>
+      
+      <p>Diese Welt ist besonders, denn dort kannst du auf ganz andere Art mit deinem Programm und der Website interagieren. Aber diese Art ist auch viel geheimnisvoller ...</p>
+      
+      <p>Hier sei dir verraten, wie du diese Welt betrittst:
+        <ul>
+          <li>Im Firefox: Strg + Shift + K</li>
+          <li>Im Chrome: Strg + Shift + J</li>
+          <li>Im IExplorer/Edge: F12</li>
+          <li>Im Safari: Cmd + Alt + C</li>
+        </ul>
       </p>
       
       <script>console.log("Aufgabenstellung: Starte eine Simulation mit einem beliebigen Ameisenvolk. Innerhalb der Simulation werden dir auf der Konsole weitere Anweisungen gegeben.")

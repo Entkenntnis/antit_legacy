@@ -62,7 +62,7 @@ var AntIT = {};
     , MaximumAmeisenFürApfel : 20
     , ApfelMinGeschwindigkeit : 0.2
     , ApfelMaxGeschwindigkeit : 2.0
-    , ApfelRadius : 20
+    , ApfelRadius : 15
     , PunkteProApfel : 1000
     , AnfangsEnergie : 4000
     , EnergieFürAmeise : 200

@@ -297,7 +297,7 @@
                     window.MeinNameIst = function(name) {
                       if (name != undefined && typeof name == "string" &&  name.length > 1) {
                         delete window.MeinNameIst
-                        console.log("Hallo " + name + ", wie alt bist du denn? Schreibe mir das im Befehl \"MeinAlterIst()\".")
+                        console.log("Hallo " + name + ", wie alt bist du denn? Schreibe mir das im Befehl \"MeinAlterIst()\". Wenn du 12 Jahre alt bist, dann würdest du schreiben: \"MeinAlterIst(12)\" (Zahlen werden ohne Anführungszeichen geschrieben).")
                         window.MeinAlterIst = function(alter) {
                           delete window.MeinAlterIst
                           if (typeof alter == "number" && alter > 5 && alter < 100) {
