@@ -102,11 +102,15 @@ function updateName(code) {
   }))
 
   App.express.post('/save', App.users.auth, App.csurf, co.wrap(function*(req, res) {
-  if (req.body.duplicate) {
-    yield insertAnt(updateName(req.body.data), req)
-  }
+    if (req.body.duplicate) {
+      yield insertAnt(updateName(req.body.data), req)
+    }
     yield saveCode(req.query.id, req.body.data, req)
-  res.redirect('/')
+    if (req.query.close) {
+      res.redirect('/')
+    } else {
+      res.redirect('/edit?id=' + req.query.id)
+    }
   }))
 
   

@@ -15,7 +15,14 @@
         <input type="hidden" name="_csrf" value="<%=csrf%>"/>
         <input type="hidden" name="antid" value="<%=id%>"/> 
         <input type="submit" value="Speichern" class="btn btn-success btn-sm">
-        <a class="btn btn-danger btn-sm" href="/">Abbrechen</a>
+        <script>
+          function myclose() {
+            if (editor.getValue() == originalCode || confirm("Schließen ohne zu speichern? Änderungen werden verworfen.")) {
+              window.location.href = '/'
+            }
+          }
+        </script>
+        <button type="button" class="btn btn-danger btn-sm" onclick="myclose()">Schließen</button>
         <% if (user.level >= 5) { %>
           <script src="/js/jshint.min.js"></script>
           <script>
@@ -56,9 +63,13 @@
               matchBrackets:true,
               autoCloseBrackets:true,
               <% if (user.level >= 2) { %> 
-                extraKeys:{"Ctrl-S":function(){document.getElementById('editform').submit()}}
+                extraKeys:{"Ctrl-S":function(){
+                  document.getElementById('editform').submit()
+                }},
               <% } %>
         })
+      
+        var originalCode = editor.getValue()
           
         CodeMirror.keyMap.default["Shift-Tab"] = "indentLess"
         CodeMirror.keyMap.default["Tab"] = "indentMore"
