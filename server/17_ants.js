@@ -32,8 +32,10 @@ function maximumAnts(level) {
   var maximum = 10
   if (level >= 3) { maximum = 20 }
   if (level >= 5) { maximum = 30 }
-  if (level >= 7) { maximum = 40 }
-  if (level >= 9) { maximum = 50 }
+  if (level >= 6) { maximum = 40 }
+  if (level >= 7) { maximum = 50 }
+  if (level >= 8) { maximum = 60 }
+  if (level >= 9) { maximum = 100 }
   return maximum
 }
 

@@ -645,20 +645,78 @@ module.exports.tutorials = {
     level : 5,
     name : "Reichweite und Runde abfragen [API]",
     text : `
-      <p>Grundidee: bedingte Anweisungen, bisher nur Einteilung nach Teams, jetzt auch Einteilung nach Systemzustand. Zwei Eigenschaften werden wir uns anschauen: Reichweite und Runde. Idee ist es, einzelne Blöcke an Code unter eine gewisse Bedingung zu stellen.
+      <p>Bedingte Anweisungen sind uns schon beim Teamwork begegnet. Jetzt lernst du eine Reihe von neuen Bedingungen kennen, mit denen du deine Ameisen steuern kannst.
+      </p>
       
+      <p>Wir erinnern uns zurück: Die Anweisungen innerhalb einer Ereignisdefinition können nochmals verschachtelt werden zu bedingten Anweisungen. Die bedingten Anweisungen haben ebenfalls eine Kopfzeile und eine Schlusszeile. Die Kopfzeile besteht aus dem Schlüsselwort "if", einem runden Paar Klammern mit der Bedingung und einer öffnenden geschweiften Klammer, die in der Schlusszeile wieder geschlossen wird:
+      </p>
       
+      <p><img src="/images/l5_bedingteleer.png" class="img-thumbnail"></p>
+      
+      <p>Dazwischen liegen die bedingten Anweisungen. In diesem Fall sind es die zwei Befehle Drehe(360) und Gehe(100). Diese Befehle werden ausgeführt, wenn zusätzlich zum Ereignis auch eine bestimmte Bedingung erfüllt ist. Jetzt geht es also um die Frage, was für Bedingungen uns zur Verfügung stehen.
+      </p>
+      
+      <p>Eine Bedingung kann entweder den Wert true (wahr) oder false (falsch) haben. Der Computer schaut sich die Bedingung an und entscheidet dann, ob sie in der aktuellen Situation wahr oder falsch ist. Die Reichweite und die aktuellen Runde sind beides Zahlen. Für diese gibt es einige Vergleichsoperatoren.
+      </p>
+      
+      <p>
+      <script>
+        function checkcond() {
+          var cond = document.getElementById('cond').value
+          var result 
+          try {
+            result = eval(cond)
+          } catch (e) { }
+          if (result === true || result === false) {
+            document.getElementById('output').innerHTML = result
+          } else {
+            document.getElementById('output').innerHTML = "Keine Bedingung"
+          }
+        }
+      </script>
+      <input id="cond"><button onclick="checkcond()">Prüfen</button></p>
+      <p><span style="margin-left:30px" id="output">...</span>
+      </p>
+      
+      <p>Dieses Tool nimmt eine Bedingung und sagt dir, welchen Wert sie ergibt. Schreibe die folgenden Zeilen in das Tool und beobachte, welcher Wert herauskommt:
+      </p>
+      
+      <p><pre>100 < 200
+400 > 1000
+10 >= 10
+123
+lalala</pre></p>
+
+      <p>Die ersten drei Zeilen sind verschiedene Möglichkeiten, Zahlen miteinander zu vergleichen. Die entsprechen den Bedeutungen, die man aus dem Mathe-Unterricht kennt. 123 und lalala sind keine Bedingungen. Diese geben einen Fehler. Zusätzlich zu den Vergleichsoperatoren stehen uns die Variablen <code>Reichweite</code> und <code>Runde</code> zur Verfügung. Diese können innerhalb einer Bedingung verwendet werden:
+      </p>
+      
+      <p><img src="/images/l5_bedingt2.png" class="img-thumbnail"></p>
+      
+      <p>In diesem Fall werden die bedingten Anweisungen nur ausgeführt, wenn die Rundenzahl kleiner als 500 ist. Die Rundenzahl startet bei 1 und zählt mit jedem Tick um eins hoch. In einer Sekunde vergehen bei normaler Geschwindigkeit 40 Ticks. Die Bedingung prüft, ob das Ereignis noch innerhalb der ersten 12,5 Sekunden der Simulation ist.
+      </p>
+      
+      <p><img src="/images/l5_bedingt3.png" class="img-thumbnail"></p>
+      
+      <p>Diesmal werden die Anweisungen ausgeführt, wenn die Reichweite der Ameise größer als 2000 ist. Die Reichweite gibt an, wie viele Schritte die Ameise noch laufen kann. Sie ist zu Beginn bei 3000 und wird mit jedem Schritt runtergezählt. Bei 0 stirbt die Ameise an Müdigkeit.
+      </p>
+      
+      <p>Es spricht nichts dagegen, auch hier wieder mehrere bedingte Anweisungen zu schreiben. Hier ändert die Ameise ihr Verhalten, je nach dem, ob die 1000. Runde vorbei ist oder nicht:
+      </p>
+      
+      <p><img src="/images/l5_bedingt4.png" class="img-thumbnail"></p>
+      
+      <p>Bedingte Anweisungen können in jeder Ereignisdefinition verwendet werden. Sie empfehlen sich aber vor allem für "IstUntätig", um die Tätigkeit der Schleife zu steuern. Zum Beispiel kann die Ameise bei genügend großer Reichweite die Gegend erkunden und bei kleiner Reichweite zum Bau zurückkehren.
       </p>
     `,
     questions : [
-    "Frage 1",
-    "Frage 2",
-    "Frage 3",
-    "Frage 4",
-    "Frage 5",
-    "Frage 6"
+    "Die Kopfzeile einer bedingten Anweisung beginnt mit 'if'",
+    "Die bedingten Anweisungen sind in geschweiften Klammern eingeschlossen.",
+    "Die Reichweite ist keine Zahl.",
+    "42 == 42 ergibt true.",
+    "1 = 1 ergibt true.",
+    "42 ergibt true."
     ],
-    solution : [0,0,0,1,1,1],
+    solution : [1,1,0,1,0,0],
   },
   55 : {
     level : 5,
