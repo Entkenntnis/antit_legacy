@@ -844,6 +844,7 @@
       },
       create : function(){
         defaultLevelCreate()
+        Sim.Bus.emit('draw-text', {text:"Hallo"})
         Sim.Bus.emit('set-ring', locPos(0,0), 0x0000aa, {inner:245,outer:247})
         var targetAngle = Math.floor(Sim.rng()*12)*30
         for (var i = 0; i < 360; i += 30) {

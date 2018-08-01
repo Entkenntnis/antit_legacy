@@ -8,6 +8,9 @@
     
     var timeToNextFeed = 30;
     var timeToNextBug = Sim.Opts.WanzenWartezeit;
+    var debugTexts = []
+    var debugTextCounter = 1
+    var debugDeads = false
     
     function getFoodInRange(h, range) {
       var appleCount = 0;
@@ -229,10 +232,49 @@
             Sim.API.close()
           }
           ant.die()
+          
+          // draw debug symbol
+          if (debugDeads) {
+            var text = "x"
+            if (reason == "Gift")
+              text = "G"
+            if (reason == "Müdigkeit")
+              text ="R"
+            if (reason == "Wanze")
+              text = "W"
+            var key = debugTextCounter++
+            Sim.Bus.emit('draw-text', {
+              pos:ant.getPos(),
+              text: text,
+              color:Sim.Opts.SpielerFarben[Sim.colors[ant.getPlayerid()]],
+              key: key
+            })
+            debugTexts.push(key)
+          }
+          
           return true
         }
         return false;
       })
+    }
+  
+    this.disableDebugDeads = function() {
+      if (confirm("Todesursache ausblenden?")) {
+        debugTexts.forEach(function(key){
+          Sim.Bus.emit('remove-text', key)
+        })
+        debugTexts = []
+        debugDeads = false
+      }
+    }
+    
+    this.enableDebugDeads = function() {
+      debugDeads = true
+      alert("Todesursache wird jetzt angezeigt:\nR = Reichweite\nW = Wanze\nG = Gift")
+    }
+    
+    this.getDebugDeads = function() {
+      return debugDeads
     }
     
     // constructor

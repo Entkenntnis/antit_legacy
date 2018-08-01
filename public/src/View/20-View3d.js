@@ -152,12 +152,14 @@
     var poisonStore =undefined
     var poisonStore2 = undefined
     var poisonCloud = undefined
+    var font = undefined
     this.needRedraw = true
     
     this.load = function(){
       
       var objectLoader = new THREE.ObjectLoader(manager);
       var textureLoader = new THREE.TextureLoader(manager);
+      var fontLoader = new THREE.FontLoader(manager)
       
       // floor
       var floorTexture = textureLoader.load( "/assets/sand.jpg" );
@@ -269,6 +271,14 @@
       // poisonCloud
       poisonCloud = textureLoader.load('/assets/particle.jpg')
       
+      // font
+      // Character set:
+      // ! "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ
+      // [\]^_`abcdefghijklmnopqrstuvwxyz{|}~äöüÄÖÜß
+      fontLoader.load('/assets/font.json', function(f) {
+        font = f
+      })
+      
       /*// magic activation
       var pyramid = new THREE.TetrahedronGeometry(2)
       var pyramidMat = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
@@ -349,7 +359,6 @@
     })
     
     Bus.on('change-ant-level-color', function(key, color1, color2) {
-      // TODO set color to ant
       var ant = antStore.get(key)
       ant.children[0].children[2].material = new THREE.MeshPhongMaterial({color:color1})
       ant.children[0].children[9].material = new THREE.MeshPhongMaterial({color:color1})
@@ -507,6 +516,56 @@
       plane.rotation.x = Math.PI / 2
       plane.position.copy(toViewPos(topleft, 2))
       scene.add(plane)
+    })
+    
+    var texts = {}
+    
+    Bus.on('draw-text', function(params) {
+      // Wir nehmen folgende Parameter:
+      // text, pos, size, height, key, color
+      
+      if (!params.color)
+        params.color = 0x006900
+      if (!params.text)
+        return
+      if (!params.size)
+        params.size = 16
+      if (!params.height)
+        params.height = 2
+      if (!params.pos)
+        params.pos = {x:0,y:0}
+      if (!params.opacity)
+        params.opacity = 0.8
+      
+      var fontMat = new THREE.MeshBasicMaterial({
+        color: params.color,
+        transparent: true,
+        opacity: params.opacity,
+        side: THREE.DoubleSide,
+      })
+      var shapes = font.generateShapes(params.text, params.size)
+      var geometry = new THREE.ShapeBufferGeometry(shapes)
+      geometry.computeBoundingBox()
+        
+      if (!params.nocenter) {
+        var xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x )
+        var yMid = - 0.5 * (geometry.boundingBox.max.y - geometry.boundingBox.min.y)
+        geometry.translate( xMid, yMid, 0 )
+      }
+        
+      var text = new THREE.Mesh( geometry, fontMat )
+      text.rotation.x = -Math.PI / 2
+      text.position.copy(toViewPos(params.pos, params.height))
+      scene.add( text )
+      
+      if (params.key) {
+        texts[params.key] = text
+      }
+    })
+    
+    Bus.on('remove-text', function(key) {
+      if (texts[key])
+        scene.remove(texts[key])
     })
     
   };

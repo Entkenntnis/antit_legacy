@@ -41,6 +41,9 @@
       View.Sim.placeGrid()
       View.Pulse.getBus().emit('redraw')
     }
+    if (e.charCode == 84 || e.charCode == 116) { // T
+      View.Sim.toggleDebugDeads()
+    }
   }
  
   View.Pulse.getBus().on('submit', View.Opts.Levelmodus ? onSubmitLevel : onSubmit)

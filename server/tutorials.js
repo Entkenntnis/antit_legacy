@@ -745,6 +745,9 @@ lalala</pre></p>
       <p>Der Wettbewerb erstreckt sich über mehrere Runden und die Sieger wird noch Turnierregeln, die an die Anzahl der Teilnehmer angepasst ist, bestimmt.
       </p>
       
+      <p>Zur Vorbereitung auf den Wettbewerb stehen dir ab sofort zwei neue Werkzeuge zur Verfügung: Einerseits gibt es im Editor die neue Schaltfläche "Syntax überprüfen". Dieser checkt den Code auf gängige Fehler und stellt sicher, dass alle Klammern richtig gesetzt sind. Andererseits kannst du dir in der Simulation anzeigen lassen, wo die Ameisen sterben und wie sie sterben. Drücke in der Simulation die Taste T, um diese Funktion zu aktivieren.
+      </p>
+      
       <p>Vor dem Wettbewerb können vorab Testrunden gespielt werden. Wenn man seine Ameise freischaltet, kann diese von anderen Teams gespielt werden. Die Ergebnisse dieser Spiele kann in der Ergebnisübersicht gesehen werden. Um in der Übersicht angezeigt zu werden müssen alle Ameisen aus verschiedenen Teams stammen und es müssen mindestens zwei Ameisen an der Runde teilnehmen.
       </p>
       

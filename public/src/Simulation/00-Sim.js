@@ -102,6 +102,13 @@
     setColors : function(c) {
       Sim.colors = c
     },
+    toggleDebugDeads : function() {
+      if (!Sim.playground.getDebugDeads()) {
+        Sim.playground.enableDebugDeads()
+      } else {
+        Sim.playground.disableDebugDeads()
+      }
+    }
   }
 
 })(AntIT._optionen)
