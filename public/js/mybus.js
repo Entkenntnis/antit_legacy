@@ -27,7 +27,26 @@ Minibus.create = function(){
       if (!(route in router))
         return
       router[route].forEach(function(f){
-        f(arg1, arg2, arg3, arg4)
+        var result = f(arg1, arg2, arg3, arg4)
+        if (result && typeof result.next == 'function') {
+          // Wir haben einen Generator erhalten. Diesen führen wir aus.
+          // Das hier ist kompett rückwärtskompatibel.
+          
+          function runnext() {
+            nextresult = result.next()
+            if (nextresult.done === false) {
+              if (nextresult.value && typeof nextresult.value.then == 'function') {
+                // Haben eine Promise
+                nextresult.value.then(runnext)
+              } else {
+                // einfach weitermachen
+                runnext()
+              }
+            }
+          }
+          
+          runnext()
+        }
       })
     }
   }

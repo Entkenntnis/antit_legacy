@@ -11,7 +11,7 @@
     }
     schritte = Math.round(schritte);
     if (schritte > 0)
-      API.curAnt.addGoJob(schritte);
+      return API.curAnt.addGoJob(schritte);
   })
 
   API.addFunc("Stopp", function(){
@@ -25,7 +25,7 @@
     }
     winkel = Math.round(winkel);
     if (winkel != 0) {
-      API.curAnt.addTurnJob(winkel);
+      return API.curAnt.addTurnJob(winkel);
     }
   });
 
@@ -37,15 +37,15 @@
     var richtung = Math.round(richtung) % 360;
     while (richtung < 0)
       richtung += 360;
-    API.curAnt.addTurnToJob(richtung);
+    return API.curAnt.addTurnToJob(richtung);
   });
 
   API.addFunc("GeheZuBau", function (sense) {
-    API.curAnt.gotoHome(sense);
+    return API.curAnt.gotoHome(sense);
   })
   
   API.addFunc("GeheZuBauOffen", function(ziel) {
-    API.curAnt.gotoHome(true)
+    return API.curAnt.gotoHome(true)
   })
 
   API.addFunc("Zufallszahl", function (a, b) {
@@ -89,8 +89,9 @@
       return;
     }
     runden = Math.round(runden);
-    if (runden > 0)
-      API.curAnt.addWaitJob(runden);
+    if (runden > 0) {
+      return API.curAnt.addWaitJob(runden)
+    }
   });
 
   API.addFunc("DreheZuObjekt", function (objekt) {
@@ -98,7 +99,7 @@
       API.message("Die Funktion 'DreheZuObjekt(objekt)' konnte für das übergebene Objekt keine Position bestimmen.");
       return;
     }
-    API.curAnt.addTurnToObj(objekt)
+    return API.curAnt.addTurnToObj(objekt)
   })
 
   API.addFunc("DreheWegVonObjekt", function (objekt) {
@@ -106,7 +107,7 @@
       API.message("Die Funktion 'DreheWegVonObjekt(objekt)' konnte für das übergebene Objekt keine Position bestimmen.");
       return;
     }
-    API.curAnt.addTurnAway(objekt)
+    return API.curAnt.addTurnAway(objekt)
   })
 
   API.addFunc("GeheZuZiel", function (ziel, sense)  {
@@ -182,19 +183,19 @@
   });
 
   API.addFunc("NimmZucker", function (zucker) {
-    API.curAnt.addTakeJob(zucker);
+    return API.curAnt.addTakeJob(zucker);
   })
 
   API.addFunc("LadeZuckerAb", function() {
-    API.curAnt.addDropJob();
+    return API.curAnt.addDropJob();
   });
 
   API.addFunc("TrageApfel", function () {
-    API.curAnt.addAppleSetupJob();
+    return API.curAnt.addAppleSetupJob();
   });
   
   API.addFunc("SetzeGift", function() {
-    API.curAnt.addPoisonJob()
+    return API.curAnt.addPoisonJob()
   })
 
   API.addFunc("FühreAus", function (funktion) {
@@ -217,10 +218,11 @@
   })
 
   API.addFunc("SendeNachricht", function(betreff, arg1, arg2, arg3) {
-    API.curAnt.addSendMemoryJob(betreff, arg1, arg2, arg3, API.curAnt.messageLimit);
+    var p = API.curAnt.addSendMemoryJob(betreff, arg1, arg2, arg3, API.curAnt.messageLimit);
     // ok, jetzt wird gerockt!!!
     // Setze Limit nach jedem Aufruf zurück
     API.curAnt.messageLimit = undefined
+    return p
   });
   
   API.addFunc("SendeSelber", function(betreff, arg1) {

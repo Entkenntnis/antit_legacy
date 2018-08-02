@@ -133,7 +133,7 @@
               })();
             <% } else {
               var exportCode = btoa('(function(){' + c.code + '}).call(42);') %>
-              var whitelist = ['AntIT', 'Gehe', 'Drehe', 'DreheZuRichtung', 'GeheZuBau', 'NimmZucker', 'LadeZuckerAb', 'TrageApfel', 'GeheZuZiel', 'Warte', 'SetzeGift', 'OFFEN', 'Reichweite', 'Runde', 'Distanz', 'Winkel', 'Bau', 'Position', 'DreheWegVonObjekt', 'DreheZuObjekt', 'Gedächtnis', 'SendeNachricht', 'SendeSelber', 'Zufallszahl', 'Zufallsname', 'consolebku', 'Aktiv', 'InGift', 'InTeam', 'SetzeLimit', 'SetzeLimitZurück', "Zufall", 'GeheZuBauOffen', 'GeheZuZielOffen', 'FühreAus']
+              var whitelist = ['AntIT', 'Gehe', 'Drehe', 'DreheZuRichtung', 'GeheZuBau', 'NimmZucker', 'LadeZuckerAb', 'TrageApfel', 'GeheZuZiel', 'Warte', 'SetzeGift', 'OFFEN', 'Reichweite', 'Runde', 'Distanz', 'Winkel', 'Bau', 'Position', 'DreheWegVonObjekt', 'DreheZuObjekt', 'Gedächtnis', 'SendeNachricht', 'SendeSelber', 'Zufallszahl', 'Zufallsname', 'consolebku', 'Aktiv', 'InGift', 'InTeam', 'SetzeLimit', 'SetzeLimitZurück', "Zufall", 'GeheZuBauOffen', 'GeheZuZielOffen', 'FühreAus', 'setTimeout']
               var consolebku = {log:console.log}
         
               eval('(function(' +  Object.keys(window).filter(function(x){return whitelist.indexOf(x)< 0}).join(",") + '){var console = consolebku;' + atob("<%-exportCode%>") + '})();');
