@@ -39,6 +39,7 @@
           Sim.hills.push(new Sim.Hill(Sim.playground.getHillPos(), i));
           Sim.players.push(new Sim.Player(i, Sim.API.ants[i]));
         }
+        Sim.API.ants = []
       }
     }
     

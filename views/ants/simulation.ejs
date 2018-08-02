@@ -124,22 +124,24 @@
         }
 
         var atLeastOnFile = false;
-        if (code) {
-          code.forEach(function(c){
+        if (code) { %>
+          function injectCode() {
+          <% code.forEach(function(c){
             atLeastOnFile = true;
             if (devMode) { %>
               (function(){
                 <%-c.code%>
               })();
-            <% } else {
-              var exportCode = btoa('(function(){' + c.code + '}).call(42);') %>
-              var whitelist = ['AntIT', 'Gehe', 'Drehe', 'DreheZuRichtung', 'GeheZuBau', 'NimmZucker', 'LadeZuckerAb', 'TrageApfel', 'GeheZuZiel', 'Warte', 'SetzeGift', 'OFFEN', 'Reichweite', 'Runde', 'Distanz', 'Winkel', 'Bau', 'Position', 'DreheWegVonObjekt', 'DreheZuObjekt', 'Gedächtnis', 'SendeNachricht', 'SendeSelber', 'Zufallszahl', 'Zufallsname', 'consolebku', 'Aktiv', 'InGift', 'InTeam', 'SetzeLimit', 'SetzeLimitZurück', "Zufall", 'GeheZuBauOffen', 'GeheZuZielOffen', 'FühreAus', 'setTimeout']
+            <% } else { %>
+              <% var exportCode = btoa('(function(){' + c.code + '}).call(42);') %>
+              var whitelist = ['AntIT', 'Gehe', 'Drehe', 'DreheZuRichtung', 'GeheZuBau', 'NimmZucker', 'LadeZuckerAb', 'TrageApfel', 'GeheZuZiel', 'Warte', 'SetzeGift', 'OFFEN', 'Reichweite', 'Runde', 'Distanz', 'Winkel', 'Bau', 'Position', 'DreheWegVonObjekt', 'DreheZuObjekt', 'Gedächtnis', 'SendeNachricht', 'SendeSelber', 'Zufallszahl', 'Zufallsname', 'consolebku', 'Aktiv', 'InGift', 'InTeam', 'SetzeLimit', 'SetzeLimitZurück', "Zufall", 'GeheZuBauOffen', 'GeheZuZielOffen', 'FühreAus', 'setTimeout', 'Object', 'alert']
               var consolebku = {log:console.log}
         
               eval('(function(' +  Object.keys(window).filter(function(x){return whitelist.indexOf(x)< 0}).join(",") + '){var console = consolebku;' + atob("<%-exportCode%>") + '})();');
             <% }
-          })
-        } %>
+          }) %>
+          }
+        <% } %>
     
       document.getElementById("intro-text").innerHTML = "Dateien werden geladen ...";
 
@@ -151,6 +153,7 @@
       <% if (use3d) { %>
         var levels = [<%-code.map(function(a){return a.level}).join(',')%>]
         var colors = <%-JSON.stringify(colors)%>
+        injectCode()
         AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", "<%-seed%>", null, levels, colors)
       <% } else { %>
         function start(){
@@ -164,6 +167,7 @@
             }
             var levels = [<%-code.map(function(a){return a.level}).join(',')%>]
             var colors = <%-JSON.stringify(colors)%>
+            injectCode()
             AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", "<%-seed%>", hud, levels, colors)
             if (autoscroll) window.scrollTo(0,document.body.scrollHeight);
           }

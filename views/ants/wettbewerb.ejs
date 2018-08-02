@@ -57,12 +57,16 @@
       </select></div>
       <% } %></div>
       <div style="clear:both;"><br>
-      <% if (user.level >= 9) { %>
+      <% if (user.level >= 6) { %>
         <% if (user.previous) { %>
-      <input type="checkbox" id="seedon" name="seedon" value="1"<%=user.previous.seedon==1?'checked':''%>> Seed: <input type="text" name="seed" value="<%=user.previous.seed%>"><br>
+          <% if (user.level >= 9) { %>
+            <input type="checkbox" id="seedon" name="seedon" value="1"<%=user.previous.seedon==1?'checked':''%>> Seed: <input type="text" name="seed" value="<%=user.previous.seed%>"><br>
+          <% } %>
       <input type="checkbox" id="batchon" name="batchon" value="1"<%=user.previous.batchon==1?'checked':''%>> Wiederhole: <input type="text" name="repeat" value="<%=user.previous.repeat%>">
         <% } else { %>
-      <input type="checkbox" id="seedon" name="seedon" value="1"> Seed: <input type="text" name="seed" value="hello."><br>
+          <% if (user.leel >= 9) { %>
+            <input type="checkbox" id="seedon" name="seedon" value="1"> Seed: <input type="text" name="seed" value="hello."><br>
+          <% } %>
       <input type="checkbox" id="batchon" name="batchon" value="1"> Wiederhole: <input type="text" name="repeat" value="10">
         <% } %>
       <br>
