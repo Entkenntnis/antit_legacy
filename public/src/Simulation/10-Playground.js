@@ -201,7 +201,10 @@
           reason = "Müdigkeit"
         } else if (ant.getEnergy() <= 0) {
           reason = "Wanze"
-        } else if (!level || level <= 5) {
+        } else /*if (!level || level <= 5)*/ {
+          
+          // TODO Mach /\--- das über einen separaten Flag!
+          
           // check poison
           var poisonNear = Sim.Util.inRange(ant.getPos(),
             Sim.poisons, 80, function(p){
@@ -223,10 +226,16 @@
         }
         if (reason) {
           if (Sim.players[ant.getPlayerid()]) { // for dummy ants
+            
+            
+            // TODO Mache das über einen separaten Flag!
             // Ab Level 6 gibt es Punktabzug für tote Ameisen
-            if (level && level >= 6) {
+            /*if (level && level >= 6) {
               Sim.players[ant.getPlayerid()].addPoints(-300)
-            }
+            }*/
+            
+            
+            
             Sim.API.setAnt(ant)
             Sim.API.callUserFunc("IstGestorben", [reason])
             Sim.API.close()

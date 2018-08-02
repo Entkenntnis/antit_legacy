@@ -560,19 +560,15 @@ module.exports.tutorials = {
       <p>Die Anrufe des Mitarbeiters entsprechen den Ereignissen der Simulation wie "IstGeboren", "IstUntätig" oder "SiehtZucker". Als Programmierer schreibt man rein, welche Befehle die Ameise dann ausführen soll. Diese werden vom Mitarbeiter nicht sofort ausgeführt, sondern erstmal in das AAV eingetragen. Davon merkt man als Programmierer eigentlich nichts. Es wirkt so, als ob die einzelnen Befehle direkt danach ausgeführt werden.
       </p>
       
-      <p>Naja, fast. An zwei Punkten muss man sich doch mit den Feinheiten des AAV beschäftigen. Diese möchte hier noch zum Schluss darstellen.
+      <p>An zwei Punkten muss man sich aber doch mit den Feinheiten des AAV beschäftigen. Diese möchte ich hier zum Schluss noch erwähnen:
       </p>
       
       <ol>
-      <li><p>Was ist nämlich, wenn der Programmierer Anweisungen gibt und es noch unfertige Befehle im AAV gibt, typischerweise dann, wenn die Ameise etwas sieht. Wie soll der Mitarbeiter mit den Befehlen im AAV umgehen? Dafür wurde folgende Regelung gesetzt, die sich im praktischen Alltag bewährt hat: Falls die neuen Anweisungen den Befehl "GeheZuBau" oder "GeheZuZiel" enthalten, dann werden die alten Befehle im AAV gelöscht. Es wird davon ausgegangen, dass diese keine Bedeutung mehr haben. Das ist der Normalfall. Falls die neuen Anweisungen diese Befehle aber nicht enthalten, dann wird davon ausgegangen, dass die alten Anweisungen noch gebraucht werden und die neuen Anweisungen werden <em>vor</em> den alten Anweisungen ausgeführt. Das passiert meist, wenn man z.B einer Wanze ausweicht.
+      <li><p>Was ist nämlich, wenn der Programmierer Anweisungen gibt und es noch unfertige Befehle im AAV gibt, typischerweise dann, wenn die Ameise etwas sieht. Wie soll der Mitarbeiter mit den Befehlen im AAV umgehen? Dafür wurde folgende Regelung gesetzt, die sich im praktischen Alltag bewährt hat: Falls die neuen Anweisungen den Befehl "GeheZuBau" oder "GeheZuZiel" enthalten, dann werden die alten Befehle im AAV gelöscht. Es wird davon ausgegangen, dass diese keine Bedeutung mehr haben. Das ist der Normalfall. Falls die neuen Anweisungen diese Befehle aber nicht enthalten, dann wird davon ausgegangen, dass die alten Anweisungen noch gebraucht werden und die neuen Anweisungen werden <em>vor</em> den alten Anweisungen ausgeführt. Der wesentliche Anwendungsfall ist, wenn man einer Wanze ausweicht.
       </p></li>
-      
-      <li><p>Eine Abfrage, wie z.B. Reichweite, kann nur den Wert zum aktuellen Zeitpunkt liefern, nicht den zu einen späteren Zeitpunkt. Eine konkrete Situation:<br><img src="/images/l4_aav.png" class="img-thumbnail"><br>Die Abfrage in Zeile 9 prüft den Wert der Abfrage, bevor die 1000 Schritte gegangen wurden - obwohl die Abfrage nach dem Befehl steht! Mit dem AAV wird das klarer: Die 1000 Schritte wurden notiert, die Abfrage wird aber sofort vom Mitarbeiter ausgeführt. Das ist ein subtiler Punkt, der dann doch ziemlich unintutiv wird. Die Lösung dafür ist, nach den 1000 Schritten ein neues Ereignis zu aktivieren und in diesem Ereignis dann die Abfrage zu setzen. Das geht mit dem Befehl SendeSelber, den wir noch kennenlernen werden:<br><img src="/images/l4_aav2.png" class="img-thumbnail"><br>Jetzt wird nach den 1000 Schritten das Ereignis "prüfeReichweite" aufgerufen. Der Mitarbeiter ruft den Programmierer erneut an und jetzt kann die Abfrage im richtigen Zeitpunkt ausgeführt werden.
+      <li><p>Auf der nächsten Stufe wirst du bedingte Anweisungen kennenlernen, um beispielsweise mit der Reichweite oder der Runde umzugehen. Diese Anweisungen passen erstmal nicht in das Schema des AAV. Solange die Abfragen einfach sind und nicht mit anderen Befehlen verschachtelt werden, kommt es auch noch nicht zu Problemen. Zu diesem Punkt wird es an gegebener Stelle nochmal ein Tutorial geben.
       </p></li>
       </ol>
-      
-      <p>Geschafft! Wenn du diese zwei Punkte verstanden hast, dann hast du auch die AAV verstanden. Sowas wie eine AAV wird in vielen Anwendungen verwendet, um Probleme mit der Parallelität zu vermeiden, z.B. auch hier im Browser oder bei graphischen Oberflächen wie Visual C# oder JavaFx. Dort heißt sie Event Queue und kümmert sich noch um weitere Aufgaben. Die grundlegende Idee aber bleibt gleich: Es gibt nur einen Mitarbeiter (der für die Oberfläche zuständig ist) und dieser kümmert sich nacheinander um alle Aufgaben.
-      </p>
     `,
     questions : [
       "Solange die Dinge wie erwartet funktionieren benötigt man kein Wissen über die Details.",
