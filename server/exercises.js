@@ -228,7 +228,7 @@ module.exports.exercises = {
   61 : {
     name : "Durchschnitt [JS]",
     description : `
-      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      <p>Berechne den Durchschnitt der zwei Zahlen.
       </p>
     `,
     level : 6,
@@ -237,7 +237,7 @@ module.exports.exercises = {
   63 : {
     name : "Abstandsberechnung [JS]",
     description : `
-      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      <p>Berechne den Abstand vom Ursprung zum Punkt.
       </p>
     `,
     level : 6,
@@ -246,7 +246,7 @@ module.exports.exercises = {
   65 : {
     name : "Prozente [JS]",
     description : `
-      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      <p>Ist die Reichweite mindestens 10% größer als die Reichweite?
       </p>
     `,
     level : 6,

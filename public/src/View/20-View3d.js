@@ -524,7 +524,7 @@
       // Wir nehmen folgende Parameter:
       // text, pos, size, height, key, color
       
-      if (!params.color)
+      if (params.color === undefined)
         params.color = 0x006900
       if (!params.text)
         return
@@ -564,8 +564,9 @@
     })
     
     Bus.on('remove-text', function(key) {
-      if (texts[key])
+      if (texts[key]) {
         scene.remove(texts[key])
+      }
     })
     
   };

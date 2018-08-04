@@ -30,6 +30,115 @@
     var angle = Sim.rng()*360
     return Sim.Util.moveDir(pos, angle, Sim.rng()*35+10)
   }
+  
+  function AntTest(pos) {
+    var ypos = pos.y
+    function println(text, color) {
+      Sim.Bus.emit('draw-text', {text:text, pos: {x:pos.x,y:ypos}, nocenter:true, color:color})
+      ypos += 30
+    }
+    
+    var nextTick = 0
+    var nextF = undefined
+    
+    this.update = function() {
+      if (nextF) {
+        if (nextTick <= Sim.cycles) {
+          nextTick = 0
+          var t= nextF
+          nextF = undefined
+          t()
+        }
+      }
+    }
+    
+    function delay(f, ticks) {
+      nextTick = Sim.cycles + ticks
+      nextF = f
+    }
+    
+    var tests = []
+    
+    this.addTest = function(test) {
+      tests.push(test)
+    }
+    
+    var done = false
+    var started = false
+    
+    this.isDone = function() {
+      return done
+    }
+    
+    function doTests(){
+      var cur = tests.pop()
+      if (cur) {
+        var result
+        if (typeof cur.userFunc != "function") {
+          result = "Keine Antwort abgegeben."
+        } else {
+          try {
+            result = cur.userFunc.apply(null, cur.params)
+          } catch (e) {
+            result = e + " [Fehler]"
+          }
+        }
+        if (result === cur.expected) {
+          println(cur.title + " bestanden", 0x00ff00)
+          delay(doTests, 40)
+        } else {
+          println(cur.title + " gescheitert:", 0xff0000)
+          println(cur.description, 0x111111)
+          println("Lösung: " + cur.expected, 0x111111)
+          println("Deine Antwort: " + result, 0x111111)
+          println("")
+          println("gescheitert", 0xff0000)
+        }
+      } else {
+        println("")
+        println("Alles bestanden!", 0x00ff00)
+        done = true
+      }
+    }
+    
+    this.start = function() {
+      if (started) return
+      started = true
+      tests.reverse()
+      delay(doTests, 40)
+    }
+  }
+  
+  function makeTestLevel(cb){
+    return {
+      init : function() {
+        defaultLevelInit()
+        Sim.Opts.Runden = 10000
+        Sim.Opts.AnfangsEnergie = 200
+      },
+      create : function() {
+        defaultLevelCreate()
+        Sim.Bus.emit('set-ring', locPos(200,100), 0xae00ff, {inner:10, outer:20})
+        Sim.Bus.emit('draw-text', {text:"Aufgaben gibt es hier", pos: locPos(230,100), nocenter:true, color:0x000000, key:1})
+        
+        Sim.lx_test = new AntTest(locPos(230,50))
+        cb(Sim.lx_test)
+        
+      },
+      update : function() {
+        if (Sim.ants[0] && Sim.Util.dist(Sim.ants[0].getPos(), locPos(200,100)) < 10) {
+          Sim.lx_test.start()
+        }
+        if (Sim.lx_test) {
+          Sim.lx_test.update()
+        }
+      },
+      isDone : function() {
+        if (Sim.lx_test)
+          return Sim.lx_test.isDone()
+      },
+    }
+  }
 
   var levels = {
     1 : {
@@ -836,6 +945,69 @@
         return Sim.players[0].getSugar() >= 600
       },
     },
+ 
+    61 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Durchschnitt")[0]
+      function addTest(title, a, b) {
+        test.addTest({
+          title:title,
+          description:"Berechne den Durchschnitt von " + a + " und " + b,
+          expected:(a+b)/2,
+          userFunc:userFunc,
+          params:[a,b]
+        })
+      }
+      addTest("Beispiel 1", 3, 7)
+      addTest("Beispiel 2", -400, 700)
+      addTest("Beispiel 3", 1457, 938)
+      for (var i = 1; i <= 3; i++) {
+        addTest("Zufallsbeispiel " + i,
+                Math.floor(Math.random()*30000) - 15000,
+                Math.floor(Math.random()*30000) - 15000)
+      }
+    }),
+ 
+    63 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Abstand")[0]
+      function addTest(title, x, y) {
+        test.addTest({
+          title:title + " [" + x + ", " + y + "]",
+          description:"Berechne den Abstand von (" + x + "|" + y + ") zum Ursprung",
+          expected:Math.sqrt(x*x+y*y),
+          userFunc:userFunc,
+          params:[x,y]
+        })
+      }
+      addTest("Beispiel 1", 3, 4)
+      addTest("Beispiel 2", 100, -100)
+      addTest("Beispiel 3, Randfall", 0, 0)
+      for (var i = 1; i <= 3; i++) {
+        addTest("Zufallsbeispiel " + i,
+                Math.floor(Math.random()*30000) - 15000,
+                Math.floor(Math.random()*30000) - 15000)
+      }
+    }),
+ 
+    65 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Prozente")[0]
+      function addTest(title, rw, dist) {
+        test.addTest({
+          title:title + " [" + rw + ", " + dist + "]",
+          description:"Reichweite: " + rw + ", Distanz: " + dist,
+          expected:rw >= dist * 1.1,
+          userFunc:userFunc,
+          params:[rw, dist]
+        })
+      }
+      addTest("Beispiel 1", 100, 200)
+      addTest("Beispiel 2", 120, 100)
+      addTest("Beispiel 3", 110, 100)
+      for (var i = 1; i <= 3; i++) {
+        addTest("Zufallsbeispiel " + i,
+                Math.floor(Math.random()*300),
+                Math.floor(Math.random()*200))
+      }
+    }),
  
     71 : {
       init : function() {

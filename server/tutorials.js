@@ -764,7 +764,7 @@ lalala</pre></p>
     level : 6,
     name : "Programmieren in JS",
     text : `
-      <p>Für weitere Inhalte besuche folgende Datei: <a href="/doc/script.pdf">AntIT für Fortgeschrittene</a>
+      <p>[Vorstellung, wie man mit den Aufgaben umgeht.]
       </p>
     `,
     js: true,

@@ -23,6 +23,12 @@ Minibus.create = function(){
       return router[route] !== undefined
     }
     
+    this.getHandler = function(route) {
+      if (route in router)
+        return router[route]
+      return []
+    }
+    
     this.emit = function(route, arg1, arg2, arg3, arg4) { // Achtung hier!
       if (!(route in router))
         return
