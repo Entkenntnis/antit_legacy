@@ -58,21 +58,19 @@
       <% } %></div>
       <div style="clear:both;"><br>
       <% if (user.level >= 6) { %>
-        <% if (user.previous) { %>
-          <% if (user.level >= 9) { %>
-            <input type="checkbox" id="seedon" name="seedon" value="1"<%=user.previous.seedon==1?'checked':''%>> Seed: <input type="text" name="seed" value="<%=user.previous.seed%>"><br>
-          <% } %>
-      <input type="checkbox" id="batchon" name="batchon" value="1"<%=user.previous.batchon==1?'checked':''%>> Wiederhole: <input type="text" name="repeat" value="<%=user.previous.repeat%>">
-        <% } else { %>
-          <% if (user.leel >= 9) { %>
-            <input type="checkbox" id="seedon" name="seedon" value="1"> Seed: <input type="text" name="seed" value="hello."><br>
-          <% } %>
-      <input type="checkbox" id="batchon" name="batchon" value="1"> Wiederhole: <input type="text" name="repeat" value="10">
+        <input type="checkbox" id="batchon" name="batchon" value="1" <%=user.previous&&user.previous.batchon==1?'checked':''%>>
+          <span title="Mehrere Simulationen werden hintereinander ausgeführt, keine 3D-Ansicht">Wiederhole:</span>
+        <input type="text" name="repeat" value="<%=user.previous?user.previous.repeat:''%>">
+        <input style="margin-left:50px" type="checkbox" id="harmony" name="harmony" value="1" <%=user.previous&&user.previous.harmony==1?'checked':''%>>
+          <span title="Gift greift keine gegnerische Ameisen an, Punkte nur für Nahrungsmitel">Nur-Sammel-Modus</span>
+        <% if (user.level >= 9) { %>
+          <br><input type="checkbox" id="seedon" name="seedon" value="1" <%=user.previous&&user.previous.seedon==1?'checked':''%>>
+            Seed: <input type="text" name="seed" value="<%=user.previous?user.previous.seed:''%>">
         <% } %>
       <br>
       <br>
-      
       <% } %>
+      
       <input type="submit" value="Wettkampf starten" class="btn btn-success btn-sm">
 	    </div>
       </form>

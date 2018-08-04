@@ -104,12 +104,14 @@ module.exports = function(App) {
     var hash = yield setSimulation(req, ants)
     var seed = req.query.seedon == 1 ? JSON.stringify(req.query.seed).slice(1, -1) : undefined
     var repeat = req.query.batchon == 1 ? parseInt(req.query.repeat) : undefined
+    var harmony = req.query.harmony == 1
     if (repeat == NaN) repeat = undefined
     res.render('ants/simulation', {
       code:ants,
       hash:hash,
       seed:seed,
       repeat:repeat,
+      harmony: harmony,
       prefix:'/wettbewerb',
       devMode:req.user.level == 10,
       fightMode:false,

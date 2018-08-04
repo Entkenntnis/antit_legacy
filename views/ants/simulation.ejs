@@ -31,6 +31,12 @@
           AntIT._optionen.Level = <%=level%>
         </script>
       <% } %>
+      
+      <% if (harmony) { %>
+        <script>
+          AntIT._optionen.Harmonie = true
+        </script>
+      <% } %>
           
       <% include ../include/simRessources %>
       <script src="/src/View/00-View.js"></script>
