@@ -762,6 +762,25 @@ lalala</pre></p>
   },
   61 : {
     level : 6,
+    name : "Programmieren in JS",
+    text : `
+      <p>Für weitere Inhalte besuche folgende Datei: <a href="/doc/script.pdf">AntIT für Fortgeschrittene</a>
+      </p>
+    `,
+    js: true,
+    noq : true,
+    questions : [
+      "Frage 1",
+      "Frage 2",
+      "Frage 3",
+      "Frage 4",
+      "Frage 5",
+      "Frage 6"
+    ],
+    solution : [0,0,0,1,1,1],
+  },
+  91 : {
+    level : 9,
     name : "Weitere Inhalte",
     text : `
       <p>Für weitere Inhalte besuche folgende Datei: <a href="/doc/script.pdf">AntIT für Fortgeschrittene</a>

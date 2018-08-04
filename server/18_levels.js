@@ -192,6 +192,7 @@ module.exports = function(App) {
           hash:hash,
           seed:undefined,
           repeat:undefined,
+          harmony:false,
           prefix: "/level?id=" + levelnum,
           devMode:false,
           fightMode:false,

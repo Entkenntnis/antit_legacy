@@ -837,7 +837,7 @@
       },
     },
  
-    61 : {
+    71 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1500

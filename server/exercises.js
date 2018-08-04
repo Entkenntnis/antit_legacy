@@ -226,6 +226,33 @@ module.exports.exercises = {
   },
   
   61 : {
+    name : "Durchschnitt [JS]",
+    description : `
+      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      </p>
+    `,
+    level : 6,
+  },
+  
+  63 : {
+    name : "Abstandsberechnung [JS]",
+    description : `
+      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      </p>
+    `,
+    level : 6,
+  },
+  
+  65 : {
+    name : "Prozente [JS]",
+    description : `
+      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
+      </p>
+    `,
+    level : 6,
+  },
+  
+  71 : {
     name : "Der richtige Abstand",
     description : `
       <p>Diese Aufgabe ist für Teilnehmer geeignet, die bereits Erfahrungen mit einer Programmiersprache wie Java oder C/C++/C# haben. 
@@ -248,16 +275,7 @@ module.exports.exercises = {
       <p>Von den Äpfel auf dem Spielfeld befindet sich einer genau 245 Schritte vom Bau entfernt. Trage diesen Apfel zum Bau. Berühre die anderen Äpfel nicht.
       </p>
     `,
-    level : 6,
-  },
-  
-  23 : {
-    name : "Demnächst verfügbar",
-    description : `
-      <p>Vier spannende Level warten darauf, entwickelt zu werden. Noch ist bisschen Geduld gefragt.
-      </p>
-    `,
-    level : 6,
+    level : 1,
   },
   
   /*2 : {
