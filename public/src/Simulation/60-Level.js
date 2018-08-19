@@ -947,66 +947,107 @@
     },
  
     61 : makeTestLevel(function(test){
-      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Durchschnitt")[0]
-      function addTest(title, a, b) {
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Zahlentest")[0]
+      function addTest(title, zahl) {
         test.addTest({
           title:title,
-          description:"Berechne den Durchschnitt von " + a + " und " + b,
-          expected:(a+b)/2,
+          description:"Teste die Zahl " + zahl,
+          expected:zahl==0?"Zahl ist null":(zahl>0?"Zahl ist positiv":"Zahl ist negativ"),
           userFunc:userFunc,
-          params:[a,b]
+          params:[zahl]
         })
       }
-      addTest("Beispiel 1", 3, 7)
-      addTest("Beispiel 2", -400, 700)
-      addTest("Beispiel 3", 1457, 938)
-      for (var i = 1; i <= 3; i++) {
-        addTest("Zufallsbeispiel " + i,
-                Math.floor(Math.random()*30000) - 15000,
-                Math.floor(Math.random()*30000) - 15000)
+      addTest("Null-Test", 0)
+      addTest("Positiv-Test", 1)
+      addTest("Negativ-Test", -1)
+      for (var i = 1; i <= 4; i++) {
+        var number = Math.floor(Math.random()*30000) - 15000
+        addTest("Zufallstest " + i + " mit Zahl " + number, number)
       }
     }),
  
     63 : makeTestLevel(function(test){
-      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Abstand")[0]
-      function addTest(title, x, y) {
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Rechner")[0]
+      function solution(art, a, b) {
+        if (art == "plus")
+          return a + b
+        if (art == "mal")
+          return a * b
+        if (art == "geteilt")
+          return a / b
+        if (art == "minus")
+          return a - b
+      }
+      function addTest(title, art, a, b) {
         test.addTest({
-          title:title + " [" + x + ", " + y + "]",
-          description:"Berechne den Abstand von (" + x + "|" + y + ") zum Ursprung",
-          expected:Math.sqrt(x*x+y*y),
+          title:title + " (" + art + ", " + a + ", " + b + ")",
+          description:"Führe die Rechenart '" + art + "' auf den Zahlen " + a + " und " + b + " aus",
+          expected:solution(art, a, b),
           userFunc:userFunc,
-          params:[x,y]
+          params:[art, a, b]
         })
       }
-      addTest("Beispiel 1", 3, 4)
-      addTest("Beispiel 2", 100, -100)
-      addTest("Beispiel 3, Randfall", 0, 0)
+      addTest("Addition", "plus", 3, 4)
+      addTest("Subtraktion", "minus", 10, 6)
+      addTest("Multiplikation", "mal", 4, 10)
+      addTest("Division", "geteilt", 20, 5)
       for (var i = 1; i <= 3; i++) {
-        addTest("Zufallsbeispiel " + i,
+        addTest("Zufallsbeispiel Addition " + i,
+                "plus",
                 Math.floor(Math.random()*30000) - 15000,
                 Math.floor(Math.random()*30000) - 15000)
+      }
+      for (var i = 1; i <= 3; i++) {
+        addTest("Zufallsbeispiel Subtraktion " + i,
+                "minus",
+                Math.floor(Math.random()*30000) - 15000,
+                Math.floor(Math.random()*30000) - 15000)
+      }
+      for (var i = 1; i <= 3; i++) {
+        addTest("Zufallsbeispiel Multiplikation " + i,
+                "mal",
+                Math.floor(Math.random()*30000) - 15000,
+                Math.floor(Math.random()*30000) - 15000)
+      }
+      for (var i = 1; i <= 3; i++) {
+        var a = Math.floor(Math.random()*300) - 150
+        var b = Math.floor(Math.random()*300) - 150
+        addTest("Zufallsbeispiel Division " + i,
+                "geteilt",
+                a * b, b)
       }
     }),
  
     65 : makeTestLevel(function(test){
-      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Prozente")[0]
-      function addTest(title, rw, dist) {
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Spiel")[0]
+      function solution(a, b) {
+        if (a == b)
+          return "Unentschieden"
+        if ((a == "Stein" && b == "Schere") ||
+            (a == "Schere" && b == "Papier") ||
+            (a == "Papier" && b == "Stein"))
+          return "Spieler A gewinnt"
+        else
+          return "Spieler B gewinnt"
+      }
+      function addTest(title, a, b) {
         test.addTest({
-          title:title + " [" + rw + ", " + dist + "]",
-          description:"Reichweite: " + rw + ", Distanz: " + dist,
-          expected:rw >= dist * 1.1,
+          title:title + " [" + a + " vs " + b + "]",
+          description:"Spieler A zeigt " + a + " und Spieler B zeigt " + b,
+          expected:solution(a, b),
           userFunc:userFunc,
-          params:[rw, dist]
+          params:[a, b]
         })
       }
-      addTest("Beispiel 1", 100, 200)
-      addTest("Beispiel 2", 120, 100)
-      addTest("Beispiel 3", 110, 100)
-      for (var i = 1; i <= 3; i++) {
-        addTest("Zufallsbeispiel " + i,
-                Math.floor(Math.random()*300),
-                Math.floor(Math.random()*200))
-      }
+      addTest("Gleichstand 1", "Schere", "Schere")
+      addTest("Gleichstand 2", "Stein", "Stein")
+      addTest("Gleichstand 3", "Papier", "Papier")
+      addTest("A gewinnt 1", "Schere", "Papier")
+      addTest("A gewinnt 2", "Stein", "Schere")
+      addTest("A gewinnt 3", "Papier", "Stein")
+      addTest("B gewinnt 1", "Papier", "Schere")
+      addTest("B gewinnt 2", "Schere", "Stein")
+      addTest("B gewinnt 3", "Stein", "Papier")
     }),
  
     71 : {

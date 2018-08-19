@@ -226,27 +226,60 @@ module.exports.exercises = {
   },
   
   61 : {
-    name : "Durchschnitt [JS]",
+    name : "Zahlentester [JS]",
     description : `
-      <p>Berechne den Durchschnitt der zwei Zahlen.
+      <p>Deine Aufgabe ist es, eine Zahl auf ihre grundlegende Eigenschaft zu überprüfen.
+      </p>
+      
+      <p>Deine Ameise soll eine Ereignisdefinition <code>#Zahlentest</code> mit dem Parameter <code>zahl</code> enthalten. Dieser Zahlentester unterscheidet zwischen drei Fällen:
+      </p>
+      
+      <p>1. Wird dem Zahlentester die Zahl 0 gegeben, dann gibt er als Antwort <code>Zahl ist null</code> zurück.
+      </p>
+      
+      <p>2. Wird dem Zahlentester eine positive Zahl gegeben, dann gibt er als Antwort <code>Zahl ist positiv</code> zurück.
+      </p>
+      
+      <p>3. Wird dem Zahlentester eine negative Zahl gegeben, dann gibt er als Antwort <code>Zahl ist negativ</code> zurück.
+      </p>
+      
+      <p>Der Zahlentester soll mit den Zahlen 0, 1 und -1 funktionieren, sowie vier Zufallsbeispiele richtig beantworten.
       </p>
     `,
     level : 6,
   },
   
   63 : {
-    name : "Abstandsberechnung [JS]",
+    name : "Rechenmaschine [JS]",
     description : `
-      <p>Berechne den Abstand vom Ursprung zum Punkt.
+      <p>Deine Ameise soll die vier Grundrechenarten verstehen. Dazu soll sie eine Ereignisdefinition <code>#Rechner</code> mit den drei Parametern <code>rechenart, a, b</code> enthalten.
+      </p>
+      
+      <p>Wenn als Rechenart der Wert <code>plus</code> übergeben wird, dann soll diese Funktion die Summe der Zahlen a und b zurückgeben.
+      </p>
+      
+      <p>Wenn als Rechenart der Wert <code>minus</code> übergeben wird, dann soll diese Funktion die Differenz a minus b zurückgeben.
+      </p>
+      
+      <p>Entsprechend gibt diese Funktion bei der Rechenart <code>mal</code> das Produkt a mal b, bei <code>geteilt</code> den Quotienten a geteilt durch b zurück.
       </p>
     `,
     level : 6,
   },
   
   65 : {
-    name : "Prozente [JS]",
+    name : "Schere, Stein, Papier [JS]",
     description : `
-      <p>Ist die Reichweite mindestens 10% größer als die Reichweite?
+      <p>Zwei Spieler spielen Schere, Stein, Papier. Deine Ameise soll entscheiden, wer gewonnen hat.
+      </p>
+      
+      <p>Erstelle dazu die Ereignisdefinition <code>#Spiel</code> mit den Parametern <code>a, b</code>. Dabei ist a die Auswahl vom Spieler A und b die Auswahl vom Spieler B.
+      </p>
+      
+      <p>Wenn beide Spieler das gleiche Zeichen spielen, dann soll die Funktion den Wert "Unentschieden" zurückgeben. Ansonsten soll die Funktion entweder "Spieler A gewinnt" oder "Spieler B gewinnt" zurückgeben.
+      </p>
+      
+      <p>Die Parameter können die Werte "Schere", "Stein" und "Papier" annehmen.
       </p>
     `,
     level : 6,
@@ -275,7 +308,7 @@ module.exports.exercises = {
       <p>Von den Äpfel auf dem Spielfeld befindet sich einer genau 245 Schritte vom Bau entfernt. Trage diesen Apfel zum Bau. Berühre die anderen Äpfel nicht.
       </p>
     `,
-    level : 1,
+    level : 7,
   },
   
   /*2 : {
