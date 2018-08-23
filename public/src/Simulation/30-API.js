@@ -140,19 +140,6 @@
     return Math.floor(Sim.rng() * (b - a + 1) + a)
   })
   
-  API.addFunc("Zufallsname", function() {
-    var parts = "bcdfghjklmnpqrstvwxyz";
-    var consonants = parts.split("")
-    var vocals = ['a', 'e', 'i', 'o', 'u', 'ei', 'au']
-    var name = '';
-    var length = Sim.rng()*3 + 1;
-    for (var i = 0; i < length; i++) {
-      name += consonants[Math.floor(Sim.rng()*consonants.length)]
-      name += vocals[Math.floor(Sim.rng()*vocals.length)]
-    }
-    return Sim.Util.capitalize(name)
-  })
-  
   // API Zusatz: Vermessung
   API.addFunc("Distanz", function (a, b) {
     if (!(typeof a == "object") || !("getPos" in a) || !(typeof b == "object") || !("getPos" in b)) {
@@ -214,14 +201,5 @@
   API.antProp('Blickrichtung', function(){
     return API.curAnt.getHeading()
   })
-  
-  /*// API Zusatz: Giftsensor
-  API.antProp('AnzahlGift', function(){
-    var poisonNear = Sim.Util.inRange(API.curAnt.getPos(),
-      Sim.poisons, 80, function(p){
-      return p.getPlayerid() == API.curAnt.getPlayerid()
-    })
-    return poisonNear.length
-  })*/
 
 })(AntIT._rawsim)
