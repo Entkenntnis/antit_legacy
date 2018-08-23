@@ -122,7 +122,7 @@
       API.curAnt.messageLimit = undefined
   })
   
-  API.addFunc("BehalteAlteBefehle", function(){
+  API.addFunc("FühreAlteBefehleAus", function(){
     API.curAnt.insertOldJobs()
   })
   

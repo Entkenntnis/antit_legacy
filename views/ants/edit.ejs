@@ -22,6 +22,14 @@
             }
           }
         </script>
+        <button type="button" class="btn btn-warning btn-sm" onclick="mysaveandclose()">Speichern &amp; Schließen</button>
+        <script>
+          function mysaveandclose() {
+            var form = document.getElementById('editform')
+            form.action += '&close=1'
+            form.submit()
+          }
+        </script>
         <button type="button" class="btn btn-danger btn-sm" onclick="myclose()">Schließen</button>
         <% if (user.level >= 5) { %>
           <script src="/js/jshint.min.js"></script>

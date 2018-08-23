@@ -1,5 +1,5 @@
 module.exports.exercises = {
-  1 : {
+  11 : {
     name : "Erste Schritte",
     description : `
       <p>Auf dem Spielfeld befinden sich drei Checkpoints. Laufe mit allen Ameisen diese Checkpoints in einer beliebigen Reihenfolge ab. Die Orte der Checkpoints werden in einem Koordinatensystem angegeben. Der Ursprung befindet sich im Mittelpunkt des Baus. Die x-Achse zeigt aus der Anfangsansicht nach rechts, die y-Achse nach oben, wie aus der Schule gewohnt.
@@ -16,7 +16,7 @@ module.exports.exercises = {
     level : 1,
   },
   
-  2 : {
+  13 : {
     name : "Himmelsrichtungen",
     description : `
       <p>Es sind wieder drei Checkpoints angegeben, die abgelaufen werden müssen:</p>
@@ -31,7 +31,7 @@ module.exports.exercises = {
     level : 1,
   },
   
-  3 : {
+  15 : {
     name : "Die reisende Handelsmeise",
     description : `
       <p>Auf der Karte befinden sich eine Reihe von Checkpoints. Das Ziel ist es, in möglichst kurzer Zeit mit den Ameisen die Checkpoints abzulaufen und zum Bau zurückzukehren. Wähle die Reihenfolge mit Geschick. Das ist eine optionale Aufgabe.
@@ -46,7 +46,7 @@ module.exports.exercises = {
     level : 1,
   },
   
-  4 : {
+  21 : {
     name : "Wir haben Hunger",
     description : `
       <p>Die Ameisen bekommen langsam richtig Hunger. Zum Glück sind auf dem Spielfeld einige Nahrungsmittel verteilt. Sammle sie alle ein. Vermeide es, mit den Wanzen in Berühung zu kommen!
@@ -57,7 +57,7 @@ module.exports.exercises = {
     level : 2,
   },
   
-  5 : {
+  23 : {
     name : "Schneller in Teams",
     description : `
       <p>Auf dem Spielfeld befinden sich wieder vier Nahrungsmittel. Diese sollen eingesammelt werden. Wenn die Ameisen sich aufteilen, geht alles viel schnellern. Nutze dafür folgende <a href="/txt/l2_teams.txt">Vorlage</a>:
@@ -71,7 +71,7 @@ module.exports.exercises = {
     level : 2,
   },
   
-  6 : {
+  25 : {
     name : "Labyrinth",
     description : `
       <p>Zwei Zuckerhaufen sind in einem Labyrinth aus Wanzen versteckt. Bilde zwei Teams und sammle den Zucker ein, bevor die Zeit abläuft. Du kannst folgende <a href="/txt/l2_labyrinth.txt">Vorlage</a> verwenden:
@@ -85,7 +85,7 @@ module.exports.exercises = {
     level : 2,
   },
   
-  7 : {
+  27 : {
     name : "Versteckte Botschaften",
     description : `
       <p>Unter der Oberfläche dieser Website befindet sich eine versteckte Welt, die nur für Programmierer zugänglich ist. Die Aufgabenstellung ist dort zu finden.
@@ -108,7 +108,7 @@ module.exports.exercises = {
     level : 2,
   },
   
-  8 : {
+  31 : {
     name : "Schlaraffenland",
     description : `
       <p>Auf dem Spielfeld sind üppig Nahrungsmittel verteilt. Sammle insgesamt 600 Zucker und 2 Äpfel, um die Aufgabe zu lösen. Folge den Schritte aus dem Tutorial "Suchen und Finden".
@@ -117,7 +117,7 @@ module.exports.exercises = {
     level : 3,
   },
   
-  9 : {
+  33 : {
     name : "Wanzenstraße",
     description : `
       <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, den ganzen Zuckerhaufen abzubauen. Die Ameisen dürfen dabei die x-Achse nicht verlassen.
@@ -126,7 +126,7 @@ module.exports.exercises = {
     level : 3,
   },
   
-  10 : {
+  35 : {
     name : "Alles oder nichts",
     description : `
       <p>Sammle alle Nahrungsmittel auf dem Spielfeld ein. Es sind genau 600 Zucker und 2 Äpfel.</p>
@@ -134,7 +134,7 @@ module.exports.exercises = {
     level : 3,
   },
   
-  11 : {
+  37 : {
     name : "Gefährliche Flucht",
     description : `
       <p>Verlasse mit mindestens 15 Ameisen den roten Bereich. Komm den Wanzen und den Gegner dabei nicht zu nahe!
@@ -143,7 +143,7 @@ module.exports.exercises = {
     level : 3,
   },
   
-  12 : {
+  41 : {
     name : "Kampf den Wanzen",
     description : `
       <p>Eine Gruppe von Wanzen hat sich um den Bau herum niedergelassen. Dein Ameisenvolk hat sie als Gefahr erkannt und möchte sie gerne beseitigen. Vergifte innerhalb der Zeit alle Wanzen auf dem Spielfeld.
@@ -152,7 +152,7 @@ module.exports.exercises = {
     level : 4,
   },
   
-  13 : {
+  43 : {
     name : "Verteidigung",
     description : `
       <p>Eine Horde gegnerischer Ameisen greift deinen Bau an! Verteidige dich und stelle sicher, dass bis Ende der Simulation kein Gegner die gelbe Zone um den Bau betritt.
@@ -161,7 +161,7 @@ module.exports.exercises = {
     level : 4,
   },
   
-  14 : {
+  45 : {
     name : "Apfelsaison",
     description : `
       <p>Es ist Erntezeit und viele Äpfel liegen vor der Tür. Sammle mit deinem Ameisenvolk 25 Äpfel ein, um die Aufgabe zu erfüllen.
@@ -172,7 +172,7 @@ module.exports.exercises = {
     level : 4,
   },
   
-  15 : {
+  47 : {
     name : "Befreiungsaktion",
     description : `
       <p>Die Wanzen haben die wertvollen Nahrungsmittel umzingelt. Befreie die Nahrungsmittel und sammle 400 Zucker und 2 Äpfel.
@@ -181,7 +181,7 @@ module.exports.exercises = {
     level : 4,
   },
   
-  16 : {
+  49 : {
     name : "Code-Knacker",
     description : `
       <p>Um den Bau herum befinden sich vier Checkpoints mit folgender Belegung: Ost=1, Süd=2, West=3 und Nord=4. Das Ziel der Aufgabe ist es, den Code zu knacken. Der Code besteht aus vier Ziffern zwischen 1 und 4, die den Checkpoints entsprechen. Die Ameisen sollen entsprechend dem Code die Checkpoints ablaufen.
@@ -194,7 +194,7 @@ module.exports.exercises = {
     level : 4,
   },
   
-  17 : {
+  51 : {
     name : "Der Ruf des Apfels",
     description : `
       <p>Nutze die Macht der Kommunikation und sammle 10 Äpfel ein.

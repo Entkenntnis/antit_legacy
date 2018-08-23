@@ -141,7 +141,7 @@
   }
 
   var levels = {
-    1 : {
+    11 : {
       init : function(){
         defaultLevelInit()
         Sim.Opts.Runden = 2000
@@ -181,7 +181,7 @@
         return false
       }
     },
-    2 : {
+    13 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1500
@@ -219,7 +219,7 @@
       }
     },
     
-    3 : {
+    15 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1100
@@ -265,7 +265,7 @@
       }
     },
     
-    4 : {
+    21 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 2500
@@ -287,7 +287,7 @@
       }
     },
     
-    5 : {
+    23 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1500
@@ -305,7 +305,7 @@
       }
     },
     
-    6 : {
+    25 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1300
@@ -375,7 +375,7 @@
       }
     },
     
-    7 : {
+    27 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 10000
@@ -449,7 +449,7 @@
       }
     },
     
-    8 : {
+    31 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 3000
@@ -473,7 +473,7 @@
       }
     },
     
-    9 : {
+    33 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 4000
@@ -540,7 +540,7 @@
       }
     },
     
-    10 : {
+    35 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 5000
@@ -564,7 +564,7 @@
       }
     },
     
-    11 : {
+    37 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 5000
@@ -617,7 +617,7 @@
       }
     },
     
-    12 : {
+    41 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1600
@@ -669,7 +669,7 @@
       }
     },
     
-    13 : {
+    43 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 4300
@@ -714,7 +714,7 @@
       }
     },
     
-    14 : {
+    45 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 6000
@@ -766,7 +766,7 @@
       }
     },
     
-    15 : {
+    47 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 4200
@@ -813,7 +813,7 @@
       },
     },
     
-    16 : {
+    49 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 30000
@@ -882,7 +882,7 @@
       },
     },
  
-    17 : {
+    51 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 5500

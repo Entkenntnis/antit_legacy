@@ -124,11 +124,10 @@
       var callback
       var newjob = new Job(type, opts, function(){
         return cb.call(this, function(){
-          var flagbkup = execmode
-          execmode = false
-          if (callback)
-            callback()
-          execmode = flagbkup
+          runNoExec(function(){
+            if (callback)
+              callback()
+          })
         })
       })
       if (execmode)
@@ -142,13 +141,20 @@
       opts.direct = true
       return addJob(type, opts, function(callback){
         var result = f.call(this)
-        if (result.then) {
+        if (result && result.then) {
           result.then(callback)
         } else {
           callback()
         }
         return true
       })
+    }
+    
+    function runNoExec(f) {
+      var flagbkup = execmode
+      execmode = false
+      f()
+      execmode = flagbkup
     }
     
     this.markJobsAsOutOfDate = function(){
@@ -185,8 +191,10 @@
         if (Sim.playground.isInBound(newpos, Sim.Opts.Toleranz)) {
           this.setPos(newpos);
         } else {
-          finished = true;
-          Sim.API.callUserFunc("RandErreicht");
+          finished = true
+          runNoExec(function(){
+            Sim.API.callUserFunc("RandErreicht")
+          })
         }
         if (finished) callback()
         return finished;
@@ -262,9 +270,10 @@
           var rotation = Sim.Util.getRotation(my.heading, angle)
           var v = Sim.Opts.ZufallRichtungsVerschiebung
           rotation += Math.floor(Sim.rng()*v*2-v)
+          // prepend-mode, so take care of order
+          this.addGoJob(Math.min(50, d), true)
           if (rotation != 0)
             this.addTurnJob(rotation, true)
-          this.addGoJob(Math.min(50, d), true)
           return false
         }
       })
@@ -315,7 +324,7 @@
     }
     
     this.addAppleJob = function(apple) {
-      return addJob("APPLE", {apple:apple}, function(callback){
+      return addJob("APPLE", {apple:apple, direct:true}, function(callback){
         var finished = false
         if (Sim.apples.indexOf(apple) < 0)
           finished = true
@@ -334,7 +343,7 @@
     this.isCarryingApple = function() {
       if (jobs.length > 0) {
         var curJob = jobs[jobs.length - 1];
-        if (curJob.type == "APPLE" && Sim.apples.indexOf(curJob.value) >= 0) {
+        if (curJob.type == "APPLE" && Sim.apples.indexOf(curJob.opts.apple) >= 0) {
           return true
         }
       }
@@ -384,7 +393,9 @@
           if (bkup !== undefined)
             Sim.API.close()
           Sim.API.setAnt(ant)
-          Sim.API.callUserFunc(":" + topic, [arg1, arg2, arg3])
+          runNoExec(function(){
+            Sim.API.callUserFunc(":" + topic, [arg1, arg2, arg3])
+          })
           count++
           Sim.API.close()
           if (bkup !== undefined)
@@ -395,6 +406,8 @@
     
     // event loop
     function execJob() {
+      //if (my.key == "0:1")
+      //  console.log(JSON.stringify(jobs))
       if (jobs.length > 0) {
         var curJob = jobs[jobs.length - 1];
         execmode = true
