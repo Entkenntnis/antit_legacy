@@ -160,7 +160,7 @@ module.exports = function(App) {
         password: pwd,
         superuser: superuser,
         ants:[],
-        level:1,
+        level:ulevel,
         done:[],
         solved:[],
       })

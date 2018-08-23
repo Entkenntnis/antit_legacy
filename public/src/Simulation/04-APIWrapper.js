@@ -27,31 +27,18 @@
       if (API.staticPlayerId === undefined)
         return;
       
-      ///
-        var bus = Sim.players[API.curAnt.getPlayerid()].getKI().Bus
-        if (bus.has(name)) {
-          API.ctxt = "Ameise." + name // + " = " + func;
-          API.curAnt.refreshInsertionPoint()
-          var args = arg.map(function (obj) {
-            if (!pure && typeof obj == "object")
-              return API.pushObj(obj);
-            return obj;
-          })
-          args.unshift(name)
-          bus.emit.apply(null, args)
-        }
-      
-      ///
-      
-      if (func == undefined)
-        return;
-      API.ctxt = "Ameise." + name // + " = " + func;
-      API.curAnt.refreshInsertionPoint()
-      func.apply(API.pushObj(API.curAnt), arg.map(function (obj) {
-        if (!pure && typeof obj == "object")
-          return API.pushObj(obj);
-        return obj;
-      }));
+      var bus = Sim.players[API.curAnt.getPlayerid()].getKI().Bus
+      if (bus.has(name)) {
+        API.ctxt = "Ameise." + name // + " = " + func;
+        API.curAnt.markJobsAsOutOfDate()
+        var args = arg.map(function (obj) {
+          if (!pure && typeof obj == "object")
+            return API.pushObj(obj);
+          return obj;
+        })
+        args.unshift(name)
+        bus.emit.apply(null, args)
+      }
     }
     
     this.pushObj = function(obj, timeless) {
@@ -110,11 +97,27 @@
       curTeamCount:0,
       SetzeTeams:function(count){
         if (!isNaN(count) && count === parseInt(count, 10) && count > 1) {
-          this.teams = count
+          var t = []
+          for (var i = 0; i < count; i++) {
+            t.push(i)
+          }
+          this.teams = t
         } else {
           alert('Setzen der Teams fehlgeschlagen')
         }
       },
+      SetzeTeamFolge:function() {
+        var arr = [].slice.call(arguments)
+        var ok = arr.length > 0
+        arr.forEach(function(entry) {
+          if (isNaN(entry) || entry !== parseInt(entry, 10))
+            ok = false
+        })
+        if (ok)
+          this.teams = arr
+        else
+          alert('Setzen der Teams fehlgeschlagen')
+      }
     };
     if (Sim.API.ants.length < Sim.Opts.MaximaleSpieler) {
       Sim.API.ants.push(newAnt);

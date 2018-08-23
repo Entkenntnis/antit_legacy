@@ -69,13 +69,7 @@
           return true;
         if (Sim.Util.dist(my.pos, ant.getPos()) > Sim.Opts.ApfelRadius)
           return true
-        var jobs = ant.getJobs();
-        if (jobs !== undefined) {
-          var curJob = jobs[jobs.length - 1];
-          if (curJob.type == "APPLE")
-            return false;
-        }
-        return true;
+        return !ant.isCarryingApple()
       });
     }
     

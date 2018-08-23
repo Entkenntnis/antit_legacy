@@ -2,9 +2,9 @@
 
   // JOB
 
-  function Job(type, value, cb) {
+  function Job(type, opts, cb) {
     this.type = type;
-    this.value = value;
+    this.opts = opts;
     this.callback = cb;
   }
 
@@ -23,15 +23,11 @@
                 Sim.Opts.AnfangsRichtung :
                 Math.floor(Sim.rng()*360),
       load: 0,
-      jobs: [],
-      insertionPoint: 0,
       lap: 0,
       energy: Sim.Opts.AmeisenEnergie,
-      previousBug: undefined,
-      previousBugAhead: undefined,
-      previousAnt: undefined,
       memory:{},
-      poison:true
+      poison:true,
+      team:undefined,
     })
     
     // helper
@@ -111,33 +107,66 @@
     }
     
     // jobs - general
-    this.addJob = function(name, val, cb) {
-      if (my.jobs.length > Sim.Opts.JobLimit) {
-        Sim.API.message("Warteschlange der Ameise ist vollgelaufen!")
+    var jobs = []
+    var oldjobs = []
+    var jobsoutofdate = false
+    var execmode = false
+    
+    function addJob(type, opts, cb) {
+      if (jobs.length > Sim.Opts.JobLimit) {
+        Sim.API.message("Warteschlange der Ameise ist vollgelaufen!") 
       }
-      my.jobs.splice(my.insertionPoint, 0, new Job(name, val, cb));
+      if (jobsoutofdate && !execmode) {
+        jobsoutofdate = false
+        oldjobs = jobs
+        jobs = []
+      }
+      var callback
+      var newjob = new Job(type, opts, function(){
+        return cb.call(this, function(){
+          var flagbkup = execmode
+          execmode = false
+          if (callback)
+            callback()
+          execmode = flagbkup
+        })
+      })
+      if (execmode)
+        jobs.push(newjob)
+      else
+        jobs.unshift(newjob)
+      return {then: function(cb){ callback = cb}}
     }
     
-    this.addSimpleJob = function(f, val) {
-      this.addJob("SIMPLE", val, function(){
-        f.apply(this)
+    function addSimpleJob(type, opts, f) {
+      opts.direct = true
+      return addJob(type, opts, function(callback){
+        var result = f.call(this)
+        if (result.then) {
+          result.then(callback)
+        } else {
+          callback()
+        }
         return true
       })
     }
     
-    function removeOldJobs() {
-      my.jobs.splice(0, my.insertionPoint);
-      my.insertionPoint = 0;
+    this.markJobsAsOutOfDate = function(){
+      jobsoutofdate = true
     }
     
-    this.refreshInsertionPoint = function() {
-      my.insertionPoint = my.jobs.length;
+    this.insertOldJobs = function(){
+      if (jobsoutofdate) {
+        jobsoutofdate = false
+      } else {
+        jobs = oldjobs.concat(jobs)
+        oldjobs = []
+      }
     }
     
     // jobs - basic movement
     this.addGoJob = function(steps, auto) {
-      var callback
-      this.addJob("GO", auto, function(){
+      return addJob("GO", {auto: auto}, function(callback){
         var toMove = 0;
         var finished = false;
         var curSpeed = Sim.Opts.AmeiseGeschwindigkeit;
@@ -159,15 +188,13 @@
           finished = true;
           Sim.API.callUserFunc("RandErreicht");
         }
-        if (finished && callback) callback()
+        if (finished) callback()
         return finished;
       })
-      return {then: function(cb){ callback = cb}}
     }
     
     this.addTurnJob = function(degree, auto) {
-      var callback
-      this.addJob("TURN", auto, function(){
+      return addJob("TURN", {auto: auto}, function(callback){
         var toTurn = 0;
         var finished = false;
         if (Math.abs(degree) < Sim.Opts.AmeiseDrehgeschwindigkeit) {
@@ -178,92 +205,81 @@
           degree -= Sim.Opts.AmeiseDrehgeschwindigkeit * Math.sign(degree);
         }
         this.turn(toTurn);
-        if (finished && callback) callback()
+        if (finished) callback()
         return finished;
       })
-      return {then: function(cb) { callback = cb}}
     }
     
-    // jobs - utils
+    // jobs - composite movement
     this.addTurnToJob = function(angle) {
-      var callback
-      this.addSimpleJob(function(){
+      return addSimpleJob("TURNTO", {}, function(){
         var rotation = Sim.Util.getRotation(my.heading, angle)
         if (rotation != 0)
-          this.addTurnJob(rotation).then(callback)
-        else if (callback)
-          callback()
+          return this.addTurnJob(rotation)
       })
-      return {then: function(cb) { callback = cb }}
     }
     
     this.addTurnToObj = function(obj) {
-      var callback
-      this.addSimpleJob(function(){
+      return addSimpleJob("TURNTOOBJ", {}, function(){
         var angle = Sim.Util.getDir(Sim.API.curAnt.getPos(), obj.getPos());
-        Sim.API.curAnt.addTurnToJob(angle).then(callback)
+        return Sim.API.curAnt.addTurnToJob(angle)
       })
-      return {then: function(cb) { callback = cb }}
     }
     
     this.addTurnAway = function(obj) {
-      var callback
-      this.addSimpleJob(function(){
+      return addSimpleJob("TURNAWAY", {}, function(){
         var angle = (Sim.Util.getDir(Sim.API.curAnt.getPos(), obj.getPos()) + 180) % 360;
-        Sim.API.curAnt.addTurnToJob(angle).then(callback)
+        return Sim.API.curAnt.addTurnToJob(angle)
       })
-      return {then: function(cb) { callback = cb }}
     }
     
-    this.addWaitJob = function(rounds) {
-      var callback
-      this.addJob("WAIT", undefined, function(){
-        var result = rounds-- <= 0
-        if (result == true) {
-          if (callback) callback()
+    // jobs - aiming movement
+    this.addGotoJob = function(dest, col, type, direct) {
+      return addJob("DEST", {direct:direct}, function(callback){
+        if (col !== undefined) {
+          if (col.indexOf(dest) < 0) {
+            callback()
+            return true
+          }
         }
-        return result
-      })
-      return {then: function(cb){ callback = cb}}
-    }
-    
-    this.addStopJob = function() {
-      this.addSimpleJob(function(){
-        my.jobs = [];
-        my.insertionPoint = 0;
-      })
-    }
-    
-    this.addPoisonJob = function() {
-      var callback
-      this.addSimpleJob(function(){
-        if (my.poison) {
-          my.poison = false
-          Sim.poisons.push(new Sim.Poison(my.playerid, {x:my.pos.x, y:my.pos.y}))
+        var snap = Sim.Opts.Toleranz
+        if (type == "Apfel") {
+          snap = Sim.Opts.ApfelRadius / 3
+          if (!dest.needHelp(Sim.API.curAnt)) {
+            callback()
+            return true
+          }
         }
-        if (callback) callback()
+        var des = dest.getPos()
+        var d = Sim.Util.dist(my.pos, des)
+        if (d <= snap){
+          if (type == "Bau")
+            reachedHome()
+          callback()
+          return true
+        } else {
+          var angle = Sim.Util.getDir(my.pos, des)
+          var rotation = Sim.Util.getRotation(my.heading, angle)
+          var v = Sim.Opts.ZufallRichtungsVerschiebung
+          rotation += Math.floor(Sim.rng()*v*2-v)
+          if (rotation != 0)
+            this.addTurnJob(rotation, true)
+          this.addGoJob(Math.min(50, d), true)
+          return false
+        }
       })
-      return {then: function(cb){ callback = cb}}
     }
     
-    this.addCustomJob = function(f) {
-      this.addJob("CUSTOM", undefined, function(){
-        this.refreshInsertionPoint()
-        var ret = f.apply(Sim.API.pushObj(Sim.API.curAnt));
-        if (ret !== undefined)
-          return ret;
-        return true;
-      })
+    this.gotoHome = function(direct){
+      return this.addGotoJob(myHill(), Sim.hills, "Bau", direct)
     }
     
     // jobs - food
     this.addTakeJob = function() {
-      var callback
-      this.addSimpleJob(function(){
+      return addSimpleJob("TAKESUGAR", {}, function(){
         var sugar = Sim.Util.closest(my.pos, Sim.sugars, Sim.Opts.ZuckerRadius)
         if (!sugar) {
-          if (callback) callback()
-          return true
+          return
         }
         while(my.load < Sim.Opts.AmeiseTragkraft) {
           var t = sugar.unload1Sugar();
@@ -274,42 +290,32 @@
           }
         }
         updateGO()
-        if (callback) callback()
       })
-      return {then : function(cb) { callback = cb }}
     }
     
     this.addDropJob = function() {
-      var callback
-      this.addSimpleJob(function(){
+      return addSimpleJob("DROPSUGAR", {}, function(){
         var d = Sim.Util.dist(my.pos, myHill().getPos())
         if (d <= Sim.Opts.HügelRadius) {
           addSugar(my.load)
         }
         my.load = 0;
         updateGO()
-        if (callback) callback()
-      }, "DROPSUGAR")
-      return {then: function(cb) { callback = cb }}
+      })
     }
     
     this.addAppleSetupJob = function() {
-      var callback
-      this.addSimpleJob(function(){
+      return addSimpleJob("APPLESETUP", {}, function(){
         var apple = Sim.Util.closest(my.pos, Sim.apples, Sim.Opts.ApfelRadius)
         if (apple && apple.needHelp(Sim.API.curAnt)) {
           apple.addAnt(Sim.API.curAnt)
-          this.addAppleJob(apple).then(callback)
-        } else if (callback) {
-          callback()
+          return this.addAppleJob(apple)
         }
-      }, "APPLESETUP")
-      return {then: function(cb) { callback = cb }}
+      })
     }
     
     this.addAppleJob = function(apple) {
-      var callback
-      this.addJob("APPLE", apple, function(){
+      return addJob("APPLE", {apple:apple}, function(callback){
         var finished = false
         if (Sim.apples.indexOf(apple) < 0)
           finished = true
@@ -320,211 +326,133 @@
             my.heading = apple.heading
           this.setPos({x:my.pos.x + apple.dx, y:my.pos.y + apple.dy});
         }
-        if (finished && callback) callback()
+        if (finished) callback()
         return finished;
       })
-      return {then: function(cb) { callback = cb }}
     }
     
-    this.addSendSelf = function(betreff, arg1) {
-      this.addJob("SENDSELF", undefined, function() {
-        Sim.API.callUserFunc(betreff, [arg1])
-        return true
+    this.isCarryingApple = function() {
+      if (jobs.length > 0) {
+        var curJob = jobs[jobs.length - 1];
+        if (curJob.type == "APPLE" && Sim.apples.indexOf(curJob.value) >= 0) {
+          return true
+        }
+      }
+      return false
+    }
+    
+    // jobs - misc
+    this.addWaitJob = function(rounds) {
+      return addJob("WAIT", {}, function(callback){
+        var result = rounds-- <= 0
+        if (result == true) {
+          callback()
+        }
+        return result
+      })
+    }
+    
+    this.addPoisonJob = function() {
+      return addSimpleJob("POISON", {}, function(){
+        if (my.poison) {
+          my.poison = false
+          Sim.poisons.push(new Sim.Poison(my.playerid, {x:my.pos.x, y:my.pos.y}))
+        }
       })
     }
     
     // jobs - communication
-    this.addSendMemoryJob = function(topic, arg1, arg2, arg3, limit) {
-      var callback
-      this.addJob("SEND", undefined, function() {
-        //if (Sim.Util.dist(my.pos, myHill().getPos()) < Sim.Opts.HügelRadius) {
-          myHill().addMarker(my.pos)
-          var curAnts = [];
-          Sim.ants.forEach(function (ant) {
-            if (ant.getPlayerid() != my.playerid)
-              return;
-            //if (Sim.Util.dist(ant.getPos(), my.pos) < Sim.Opts.AmeiseSichtweite * 2)
-              curAnts.push(ant);
-          });
-          curAnts.sort(function(a, b) {
-            return Sim.Util.dist(a.getPos(), my.pos) > Sim.Util.dist(b.getPos(), my.pos) ? 1 : -1
-          })
-          var count = 0
-          curAnts.forEach(function (ant) {
-            if (ant == Sim.API.curAnt || !ant.isSensing())
-              return
-            if (limit && count >= limit)
-              return
-            var bkup = Sim.API.curAnt;
-            if (bkup !== undefined)
-              Sim.API.close();
-            Sim.API.setAnt(ant);
-            Sim.API.callUserFunc("EmpfängtNachricht", [bkup.getMemory(), topic], true);
-            Sim.API.callUserFunc(":" + topic, [arg1, arg2, arg3])
-            count++
-            Sim.API.close();
-            if (bkup !== undefined)
-              Sim.API.setAnt(bkup);
-          })
-        //}
-        if (callback) callback()
-        return true;
+    this.addSendMessageJob = function(topic, arg1, arg2, arg3, limit) {
+      return addSimpleJob("SEND", {}, function() {
+        myHill().addMarker(my.pos)
+        var curAnts = []
+        Sim.ants.forEach(function (ant) {
+          if (ant.getPlayerid() != my.playerid)
+            return
+          curAnts.push(ant);
+        })
+        curAnts.sort(function(a, b) {
+          return Sim.Util.dist(a.getPos(), my.pos) > Sim.Util.dist(b.getPos(), my.pos) ? 1 : -1
+        })
+        var count = 0
+        curAnts.forEach(function (ant) {
+          if (ant == Sim.API.curAnt || !ant.isSensing())
+            return
+          if (limit && count >= limit)
+            return
+          var bkup = Sim.API.curAnt
+          if (bkup !== undefined)
+            Sim.API.close()
+          Sim.API.setAnt(ant)
+          Sim.API.callUserFunc(":" + topic, [arg1, arg2, arg3])
+          count++
+          Sim.API.close()
+          if (bkup !== undefined)
+            Sim.API.setAnt(bkup)
+        })
       })
-      return {then: function(cb) { callback = cb }}
-    }
-    
-    // jobs - aiming
-    this.addGotoJob = function(destination, col, type, senses) {
-      removeOldJobs()
-      var callback
-      this.addJob("DEST", [destination, senses], function(){
-        if (col !== undefined) {
-          if (col.indexOf(destination) < 0) {
-            if (callback) callback()
-            return true
-          }
-        }
-        var snap = Sim.Opts.Toleranz
-        if (type == "Apfel") {
-          snap = Sim.Opts.ApfelRadius / 3
-          if (!destination.needHelp(Sim.API.curAnt)) {
-            if (callback) callback()
-            return true
-          }
-        }
-        var des = destination.getPos()
-        var d = Sim.Util.dist(my.pos, des)
-        if (d <= snap){
-          Sim.API.callUserFunc(type + "Erreicht");
-          if (type == "Bau")
-            reachedHome()
-          if (callback) callback()
-          return true
-        } else {
-          var angle = Sim.Util.getDir(my.pos, des);
-          var rotation = Sim.Util.getRotation(my.heading, angle);
-          var v = Sim.Opts.ZufallRichtungsVerschiebung;
-          rotation += Math.floor(Sim.rng()*v*2-v);
-          if (rotation != 0)
-            this.addTurnJob(rotation, true);
-          this.addGoJob(Math.min(50, d), true);
-          return false;
-        }
-      })
-      return {then: function(cb) { callback = cb }}
-    }
-    
-    this.gotoHome = function(sense){
-      return this.addGotoJob(myHill(), Sim.hills, "Bau", sense)
-    }
-    
-    // jobs - sensing
-    this.isSensing = function() {
-      var sensing = true
-      for (var i = my.jobs.length - 1; i >= 0; i--) {
-        var curCmd = my.jobs[i]
-        if (curCmd.type == "DEST") {
-          if (curCmd.value[1] !== true)
-            sensing = false
-          break
-        }
-        if (curCmd.type == "APPLE" || curCmd.value == "APPLESETUP") {
-          sensing = false
-          break
-        }
-      }
-      if (my.jobs.length > 0 && my.jobs[my.jobs.length-1].value == "DROPSUGAR")
-        sensing = false
-      return sensing
-    }
-    
-    this.getDestination = function() {
-      var destination = undefined;
-      var jobs = Sim.API.curAnt.getJobs();
-      if (jobs.length > 0) {
-        var index = jobs.length - 1;
-        var curCmd = jobs[index];
-        while(index > 0 && curCmd.type != "DEST") {
-          curCmd = jobs[--index];
-        }
-        if (curCmd.type == "DEST") {
-          if (curCmd.value[0].constructor.name == "Sugar") {
-            destination = SUGAR;
-          } else if (curCmd.value[0].constructor.name == "Hill") {
-            destination = HILL;
-          } else if (curCmd.value[0].constructor.name == "Apple") {
-            destination = APPLE;
-          } else if (curCmd.value[0].constructor.name == "Position") {
-            destination = POSITION;
-          }
-        }
-      }
-      return destination;
     }
     
     // event loop
     function execJob() {
-      this.refreshInsertionPoint()
-      if (my.jobs.length > 0) {
-        var curJob = my.jobs[my.jobs.length - 1];
+      if (jobs.length > 0) {
+        var curJob = jobs[jobs.length - 1];
+        execmode = true
         var finished = curJob.callback.bind(this)();
+        execmode = false
         if (finished) {
-          var index = my.jobs.indexOf(curJob);
+          var index = jobs.indexOf(curJob);
           if (index >= 0) {
-            my.jobs.splice(index, 1);
-            if (my.insertionPoint > index) {
-              my.insertionPoint--
-            }
+            jobs.splice(index, 1)
           }
         }
       }
     }
     
-    function validateMemory() {
-      for (var property in my.memory) {
-        if (my.memory.hasOwnProperty(property)) {
-          var cur = my.memory[property]
-          if (typeof cur == "object" && cur.get) {
-            var obj = cur.get(Sim);
-            if (obj !== undefined) {
-              if (obj.constructor.name == "Apple" || obj.constructor.name == "Sugar" ||
-                  obj.constructor.name == "Bug" || obj.constructor.name == "Hill") {
-                //Sim.API.message("Das Gedächtnis kann als Wert kein Sichtungsobjekt speichern.");
-                my.memory[property] = Sim.API.pushObj(new Sim.Position(obj.getPos()), true)
-              }
-            }
-          }
-        }
-      }
+    // sensing
+    this.isSensing = function() {
+      if (jobs.length == 0)
+        return true
+
+      var i = jobs.length - 1
+      while (i > 0 && jobs[i].opts.auto)
+        i--
+      var curjob = jobs[i]
+      return curjob.opts.direct ? false : true
     }
     
-    var antWaitSugarTout = 0
+    var lastsugar
     
     function senseSugar() {
-      antWaitSugarTout--
       if (!this.isSensing()) return
       var sugar = Sim.Util.closest(my.pos, Sim.sugars, Sim.Opts.AmeiseSichtweite);
       if (sugar != undefined) {
-        if (antWaitSugarTout <= 0) {
-          Sim.API.callUserFunc("SiehtZucker", [sugar, sugar.getKey()])
-          antWaitSugarTout = 9
+        if (lastsugar != sugar) {
+          lastsugar = sugar
+          Sim.API.callUserFunc("SiehtZucker", [sugar])
         }
+      } else {
+        lastsugar = undefined
       }
     }
     
-    var antWaitAppleTout = 0
+    var lastapple
     
     function senseApple() {
-      antWaitAppleTout--
       if (!this.isSensing()) return
       var apple = Sim.Util.closest(my.pos, Sim.apples, Sim.Opts.AmeiseSichtweite);
       if (apple != undefined && apple.needHelp(Sim.API.curAnt)) {
-        if (antWaitAppleTout <= 0) {
-          Sim.API.callUserFunc("SiehtApfel", [apple, apple.getKey()])
-          antWaitAppleTout = 9
+        if (lastapple != apple) {
+          lastapple = apple
+          Sim.API.callUserFunc("SiehtApfel", [apple])
         }
+      } else {
+        lastapple = undefined
       }
     }
+    
+    var previousBug
+    var previousBugAhead
     
     function senseBug() {
       var bug = Sim.Util.closest(my.pos, Sim.bugs, Sim.Opts.AmeiseSichtweite);
@@ -535,20 +463,22 @@
           delta = Math.abs(delta)
         }
         if (delta < Sim.Opts.WanzeVorausWinkel) {
-          if (bug != my.previousBugAhead) {
-            Sim.API.callUserFunc("SiehtWanzeVoraus", [bug, bug.getKey()])
-            my.previousBugAhead = bug
+          if (bug != previousBugAhead) {
+            Sim.API.callUserFunc("SiehtWanzeVoraus", [bug])
+            previousBugAhead = bug
           }
         }
-        if (bug != my.previousBug) {
-          Sim.API.callUserFunc("SiehtWanze", [bug, bug.getKey()]);
-          my.previousBug = bug;
+        if (bug != previousBug) {
+          Sim.API.callUserFunc("SiehtWanze", [bug]);
+          previousBug = bug;
         }
       } else {
-        my.previousBug = undefined
-        my.previousBugAhead = undefined
+        previousBug = undefined
+        previousBugAhead = undefined
       }
     }
+    
+    var previousAnt
     
     function senseOtherTeam() {
       if (!Sim.players[my.playerid].getKI().Bus.has("SiehtGegner"))
@@ -558,22 +488,22 @@
           return a.getPlayerid() == my.playerid
         });
       if (ant) {
-        if (ant != my.previousAnt) {
+        if (ant != previousAnt) {
           Sim.API.callUserFunc("SiehtGegner", [ant]);
-          my.previousAnt = ant;
+          previousAnt = ant;
         }
       } else {
-        my.previousAnt = undefined;
+        previousAnt = undefined;
       }
     }
     
+    // all jobs done ?
     var antWaitTout = 0
     
     function wait() {
       antWaitTout--
-      if(my.jobs.length == 0) {
+      if(jobs.length == 0) {
         if (antWaitTout <= 0) {
-          Sim.API.callUserFunc("Wartet")
           Sim.API.callUserFunc("IstUntätig")
           antWaitTout = 9
         }
@@ -590,8 +520,7 @@
       senseBug()
       senseOtherTeam.bind(this)()
       wait()
-      Sim.API.callUserFunc("Tick");
-      //validateMemory()
+      Sim.API.callUserFunc("Tick")
       Sim.API.close();
     }  
     
@@ -603,9 +532,9 @@
     if (!dummy) {
       var ki = myPlayer().getKI()
       if (ki.teams !== undefined) {
-        this.teamValue = ki.curTeamCount
+        my.team = ki.teams[ki.curTeamCount]
         ki.curTeamCount++
-        if (ki.curTeamCount >= ki.teams) {
+        if (ki.curTeamCount >= ki.teams.length) {
           ki.curTeamCount = 0
         }
       }
