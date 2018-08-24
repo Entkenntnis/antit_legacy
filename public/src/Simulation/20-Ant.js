@@ -510,16 +510,9 @@
       }
     }
     
-    // all jobs done ?
-    var antWaitTout = 0
-    
     function wait() {
-      antWaitTout--
       if(jobs.length == 0) {
-        if (antWaitTout <= 0) {
-          Sim.API.callUserFunc("IstUntätig")
-          antWaitTout = 9
-        }
+        Sim.API.callUserFunc("IstUntätig")
       }
     }
     

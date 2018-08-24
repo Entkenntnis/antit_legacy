@@ -110,7 +110,7 @@
   })
 
   API.addFunc("SendeNachricht", function(betreff, arg1, arg2, arg3) {
-    var p = API.curAnt.addSendMemoryJob(betreff, arg1, arg2, arg3, API.curAnt.messageLimit)
+    var p = API.curAnt.addSendMessageJob(betreff, arg1, arg2, arg3, API.curAnt.messageLimit)
     API.curAnt.messageLimit = undefined
     return p
   })
