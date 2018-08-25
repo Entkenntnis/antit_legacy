@@ -78,7 +78,7 @@ module.exports = function(App) {
       tuts : tutorials,
       index : tutIndex,
       done : req.user.done,
-      highlightElement:tutid > 0? -1 : 5,
+      highlightElement:5,
       newtuts: App.getNewTuts(req.user),
     })
   })
@@ -133,7 +133,7 @@ module.exports = function(App) {
     res.render('ants/level', {
       user: req.user,
       ants: result ? result.ants : [],
-      highlightElement:result ? -1 : 3,
+      highlightElement:3,
       newtuts: App.getNewTuts(req.user),
       id:levelid,
       exercises: exercises,
@@ -222,7 +222,7 @@ module.exports = function(App) {
                                       {$set : {competitionDone : true}})
       App.colo.refresh()
     }
-    res.redirect('/')
+    res.redirect('/home')
   }))
   
   App.express.get('/competitionUndone', App.users.auth, co.wrap(function*(req, res) {
@@ -231,7 +231,7 @@ module.exports = function(App) {
                                       {$set : {competitionDone : false}})
       App.colo.refresh()
     }
-    res.redirect('/')
+    res.redirect('/home')
   }))
   
   App.express.get('/overview', App.users.auth, co.wrap(function*(req, res) {

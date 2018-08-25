@@ -1,103 +1,102 @@
 <% if (user.level == 1) { %>
-	    
-  <br><br>
-  <h3>Willkommen <%=user.displayName%>!</h3>
-
-  <div style="margin-bottom:120px;">
-    <p>Du befindest dich gerade im Dorfzentrum. Hier wirst du neue Ameisenvölker erstellen und diese programmieren.
-    </p>
-    <p>In der Bibliothek findest du Anleitungen, die dir alle Einzelheiten der Programmierung erklären. Der blaue Kreis zeigt an, wie viele neue Tutorials noch zu bearbeiten sind.
-    </p>
-    <p>Auf dem Trainigsplatz kannst du deine Fähigkeiten unter Beweis stellen. Löse Aufgaben und steige in den Stufen auf. Dann werden dir neue Funktionen freigeschalten.
-    </p>
-    <p>Beginne in der Bibliothek mit dem ersten Tutorial. Viel Spaß!
-    </p>
+    
+  <div class="card border-primary bg-light mb-3">
+    <div class="card-body">
+      <h2>Willkommen <%=user.displayName%>!</h2><br>
+      <p>Du befindest dich gerade im Dorfzentrum. Hier wirst du neue Ameisenvölker erstellen und diese programmieren.
+      </p>
+      <p>In der Bibliothek findest du Anleitungen, die dir alle Einzelheiten der Programmierung erklären. Der blaue Kreis zeigt an, wie viele neue Tutorials noch zu bearbeiten sind.
+      </p>
+      <p>Auf dem Trainigsplatz kannst du deine Fähigkeiten unter Beweis stellen. Löse Aufgaben und steige in den Stufen auf. Dann werden dir neue Funktionen freigeschalten.
+      </p>
+      <p>Beginne in der Bibliothek mit dem ersten Tutorial. Viel Spaß!
+      </p>
+    </div>
   </div>
 
 <% } %> 
 
 <% if (user.level == 2) { %>
-	    
-  <br><br>
-  <h3>Guter Einstieg, <%=user.displayName%>.</h3>
-
-  <div style="margin-bottom:120px;">
-    <p>Auf der Stufe 2 geht es mit ein paar neuen Befehlen und Techniken weiter. Die passenden Tutorials findest du in der Bibliothek.
-    </p>
-    <p>Auf dieser Stufe gibt es vier Aufgaben. Davon sind zwei zu bearbeiten, die anderen zwei sind freiwillig. Übersprungene Aufgaben kannst du später immer noch bearbeiten. Klicke dazu im Trainingsplatz auf die frühere Stufe und die Aufgaben klappen auf.
-    </p>
-    <p>Noch ein Hinweis zu den Ameisenvölker: Du hast aktuell 10 Plätze zur Verfügung, und mit jeder Stufe steigt diese Anzahl. Du musst dir also keine Sorgen machen, dass die Plätze nicht reichen.
-    </p>
-    <p>Die ersten Schritte sind getan. Wir wünschen dir auch weiterhin viel Motivation und Neugier!
-    </p>
+    
+  <div class="card border-secondary bg-light mb-3">
+    <div class="card-body">
+      <h2>Guter Einstieg, <%=user.displayName%>.</h2><br>
+      <p>Auf der Stufe 2 geht es mit ein paar neuen Befehlen und Techniken weiter. Die passenden Tutorials findest du in der Bibliothek.
+      </p>
+      <p>Auf dieser Stufe gibt es vier Aufgaben. Davon sind zwei zu bearbeiten, die anderen zwei sind freiwillig. Übersprungene Aufgaben kannst du später immer noch bearbeiten. Klicke dazu im Trainingsplatz auf die frühere Stufe und die Aufgaben klappen auf.
+      </p>
+      <p>Noch ein Hinweis zu den Ameisenvölker: Du hast aktuell 10 Plätze zur Verfügung, und mit jeder Stufe steigt diese Anzahl. Du musst dir also keine Sorgen machen, dass die Plätze nicht reichen.
+      </p>
+      <p>Die ersten Schritte sind getan. Wir wünschen dir auch weiterhin viel Motivation und Neugier!
+      </p>
+    </div>
   </div>
 
 <% } %> 
 
 <% if (user.level == 3) { %>
-	    
-  <br><br>
-  <h3>Weiter so, <%=user.displayName%>!</h3>
-
-  <div style="margin-bottom:50px;">
-    <p>Auf der Stufe 3 wirst du lernen, wie man mit Ereignissen arbeitet. Das ist ein schönes Thema und es gibt dazu ein ausführliches und anschauliches Tutorial. Außerdem wirst du den Ameisen Verkehrsregeln beibringen und kannst sie zur Fluch verhelfen. Es warten wieder vier Aufgaben auf dich, von denen zwei zu bearbeiten sind.
-    </p>
-    <p>Schau dir die neuen Farben deiner Fühler an: Sind sie nicht wunderbar feurig?
-    </p>
     
-    <p><img class="img-thumbnail" src="/images/l3_fuehler.png">
-    </p>
+  <div class="card border-warning bg-light mb-3">
+    <div class="card-body">
+      <h2>Weiter so, <%=user.displayName%>!</h2><br>
+      <p>Auf der Stufe 3 wirst du lernen, wie man mit Ereignissen arbeitet. Das ist ein schönes Thema und es gibt dazu ein ausführliches und anschauliches Tutorial. Außerdem wirst du den Ameisen Verkehrsregeln beibringen und kannst sie zur Fluch verhelfen. Es warten wieder vier Aufgaben auf dich, von denen zwei zu bearbeiten sind.
+      </p>
+      <p>Schau dir die neuen Farben deiner Fühler an: Sind sie nicht wunderbar feurig?
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l3_fuehler.png">
+    </div>
   </div>
 
 <% } %> 
 
 <% if (user.level == 4) { %>
-	    
-  <br><br>
-  <h3><%=user.displayName%>: Noch Noob oder schon Profi?</h3>
-
-  <div style="margin-bottom:120px;">
-    <p>Die ersten drei Stufen hast du geschafft. Du bist kein blutiger Anfänger mehr. Die Grundlagen hast du jetzt verstanden.
-    </p>
-    <p>Nun geht es an fortgeschrittenere Themen. Deine Ameisen werden mit Gift ausgerüstet, du wirst den Zufall für dich nutzen lernen und du wirst das Suchverhalten der Ameisen genauer steuern können.
-    </p>
-    <p>Von den fünf Aufgaben sind diesmal drei zu bearbeiten. Es geht darum, die vorhanden Mittel gezielt einzusetzen und für die Probleme die passende Lösung zu finden.
-    </p>
-    <p>Bist du bereit, ein Ameisen-Profi zu werden?
-    </p>
+    
+  <div class="card border-info bg-light mb-3">
+    <div class="card-body">
+      <h2><%=user.displayName%>: Noch Noob oder schon Profi?</h2><br>
+      <p>Die ersten drei Stufen hast du geschafft. Du bist kein blutiger Anfänger mehr. Die Grundlagen hast du jetzt verstanden.
+      </p>
+      <p>Nun geht es an fortgeschrittenere Themen. Deine Ameisen werden mit Gift ausgerüstet, du wirst den Zufall für dich nutzen lernen und du wirst das Suchverhalten der Ameisen genauer steuern können.
+      </p>
+      <p>Von den fünf Aufgaben sind diesmal drei zu bearbeiten. Es geht darum, die vorhanden Mittel gezielt einzusetzen und für die Probleme die passende Lösung zu finden.
+      </p>
+      <p>Bist du bereit, ein Ameisen-Profi zu werden?
+      </p>
+    </div>
   </div>
 
 <% } %>
 
 <% if (user.level == 5) { %>
-	    
-  <br><br>
-  <h3><%=user.displayName%>, auf in den Kampf!</h3>
-
-  <div style="margin-bottom:120px;">
-    <p>Auf dieser Stufe lernst du, wie die Ameisen miteinander kommunizieren können. Damit ausgerüstet bist du nun bereit für die Kampfarena.
-    </p>
     
-    <p>Dort kannst du gegen die anderen Ameisenvölker dieser Kolonie spielen. Ruhm und Ehre warten auf dich. Sei bereit für die große Ameisenschlacht!
-    </p>
+  <div class="card border-danger bg-light mb-3">
+    <div class="card-body">
+      <h2><%=user.displayName%>, auf in den Kampf!</h2><br>
+      <p>Auf dieser Stufe lernst du, wie die Ameisen miteinander kommunizieren können. Damit ausgerüstet bist du nun bereit für die Kampfarena.
+      </p>
+      
+      <p>Dort kannst du gegen die anderen Ameisenvölker dieser Kolonie spielen. Ruhm und Ehre warten auf dich. Sei bereit für die große Ameisenschlacht!
+      </p>
+    </div>
   </div>
 
 <% } %> 
 
-<% if (user.level == 6) { %>
-	    
-  <br><br>
-  <h3>Lernen! <%=user.displayName%>: yeah ...</h3>
-
-  <div style="margin-bottom:120px;">
-    <p>Die Schlachten sind geschlagen. Du kennst jetzt die wesentlichen Bestandteile der Ameisen-API. Um noch bessere Ameisen zu programmieren, brauchst du jetzt noch die Grundlagen in unserer Programmiersprache: JavaScript.
-    </p>
+<% if (user.level >= 6) { %>
     
-    <p>Auf dieser Stufe wirst du dich im Programmieren mit JavaScript trainieren. Du wirst Rechnen und Schreiben lernen. Das sind Dinge, mit denen du später noch stärkere Ameisen bauen kannst.
-    </p>
-    
-    <p>In der Kampfarena gibt es zwei neue Möglichkeiten: Du kannst nun mehrere Wettkämpfe hintereinander ausführen und es gibt einen neuen Modus, in dem "Frieden" herrscht: Gift wirkt nur gegen Wanzen und es gibt Punkte ausschließlich für Nahrungsmittel.
-    </p>
+  <div class="card border-success bg-light mb-3">
+    <div class="card-body">
+      <h2>Es gibt viel zu lernen, <%=user.displayName%>!</h2><br>
+      <p>Die Schlachten sind geschlagen. Du kennst jetzt die wesentlichen Bestandteile der Ameisen-API. Um noch bessere Ameisen zu programmieren, brauchst du jetzt noch die Grundlagen in unserer Programmiersprache: JavaScript.
+      </p>
+      
+      <p>Auf dieser Stufe wirst du dich im Programmieren mit JavaScript trainieren. Du wirst Rechnen und Schreiben lernen. Das sind Dinge, mit denen du später noch stärkere Ameisen bauen kannst.
+      </p>
+      
+      <p>In der Kampfarena gibt es zwei neue Möglichkeiten: Du kannst nun mehrere Wettkämpfe hintereinander ausführen und es gibt einen neuen Modus, in dem "Frieden" herrscht: Gift wirkt nur gegen Wanzen und es gibt Punkte ausschließlich für Nahrungsmittel.
+      </p>
+    </div>
   </div>
 
 <% } %> 

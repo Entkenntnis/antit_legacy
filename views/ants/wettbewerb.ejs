@@ -14,8 +14,7 @@
         <div class="col-sm-12" style="max-width:850px">
     
           <br>
-          <h2>Freie Simulation</h2>
-          <hr style="margin-top:1.5rem">
+          <hr>
           <script>
             function clear() {
               for (i = 1; i <= 8; i++) {
@@ -35,8 +34,8 @@
               <% for (var t = x; t <= x + 1; t++) { %>
                 <div class="col-md-6">
                   <label><span class=""><strong>Team <%=t%>:</strong></span>
-                  <select name="team<%=t%>" id="team<%=t%>" style="max-width:360px;border-color:<%-colors[t-1]%> !important;" class="custom-select border rounded p-0">
-                    <option value="none">-----</option>
+                  <select name="team<%=t%>" id="team<%=t%>" style="max-width:360px;border-color:<%-colors[t-1]%> !important;color:black;" class="custom-select border rounded p-0">
+                    <option value="none">-------</option>
                     <% if (ants !== undefined) {
                       for (var i = 0; i < ants.length; i++) { %>
                       <option value="<%=ants[i]._id%>" <%

@@ -10,11 +10,32 @@
 	
 	    <% include menu %>
 	    
-	    <% include greetings %>
 	    
-	    <hr>
-      
-      <p>Hallo <strong><%=user.displayName%></strong> auf der Kolonie "<%=colonyInfo%>"</p>
+	    <div class = "row justify-content-center">
+        <div class="col-sm-12" style="max-width:850px">
+        
+          <br>
+        
+          <% include greetings %>
+          
+          <hr>
+          Benutzer: <%=user.displayName%> | Stufe: <%=user.level%> | Kolonie: <%=colonyInfo%><br>
+  
+          <%if (user.superuser) {%>
+            <br><p>[Administrator]</p>
+            
+            <a href="/users" class="btn btn-sm btn-outline-success">Benutzerverwaltung</a>
+            <a href="/stats" class="btn btn-sm btn-outline-primary">Statistik</a>
+            <a href="/overview" class="btn btn-sm btn-outline-primary">Fortschritt</a>
+            <% if (competitionDone) { %>
+              <a href="/competitionUndone"  class="btn btn-sm btn-outline-warning">Wettbewerb zurückschalten (aktuell frei)</a>
+            <% } else { %>
+              <a href="/competitionDone"  class="btn btn-sm btn-outline-warning">Wettbewerb fertigschalten (aktuell gesperrt)</a>
+            <% } %>
+          <% } // endif superuser %>
+        </div>
+      </div>
+	    
       
       <div style="height:300px"></div>
     </div>

@@ -17,8 +17,6 @@
         <div class = "row justify-content-center">
           <div class="col-sm-12" style="max-width:850px">
             <br>
-            <h2>Deine aktuellen Aufgaben</h2>
-            <br>
 	          <% for (var i = 1; i <= user.level; i++) { %>
 	            <div class="card bg-light py-0">
                 <%
@@ -76,7 +74,7 @@
                     
                     </p>
                   <% } %>
-                  <a href="/upgrade" class="btn btn-warning btn-sm <%=upgrade?'':'disabled'%>">Stufe aufsteigen</a>
+                  <a href="/upgrade" class="btn btn-sm  btn-warning <%=upgrade?'':'disabled'%>">Stufe aufsteigen</a>
                 </div>
               </div>
 	          <% } %>

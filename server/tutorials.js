@@ -56,7 +56,7 @@ module.exports.tutorials = {
         </li>
         <li><p>Öffne die Ameisen, in dem du auf "Bearbeiten" klickst.</p>
         </li>
-        <li><p>Trage die fehlenden Teile in Zeile 3 und Zeile 4 ein:
+        <li><p>Trage die fehlenden Teile in Zeile 3 und Zeile 4 ein:<br>
         <img src="/images/l1_schnipsel_hallowelt.png" class="img-thumbnail" title="Der Code wird automatisch gefärbt."></p>
         </li>
         <li><p>Gehe auf den Trainingsplatz.

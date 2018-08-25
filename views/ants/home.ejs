@@ -9,49 +9,20 @@
       </div>
 	
 	    <% include menu %>
-  
-      <%if (false && user.superuser) {%>
-        <br><br>
-        <p>Admin-Tools:</p>
-        <ul class="nav nav-pills" role="tablist">
-          <li role="presentation"><a href="/users">Benutzerverwaltung</a></li>
-          <li role="presentation"><a href="/stats">Statistik</a></li>
-          <li role="presentation"><a href="/overview">Fortschritt</a></li>
-          <% if (competitionDone) { %>
-            <li role="presentation"><a href="/competitionUndone">Wettbewerb zurückschalten (aktuell frei)</a></li>
-          <% } else { %>
-            <li role="presentation"><a href="/competitionDone">Wettbewerb fertigschalten (aktuell gesperrt)</a></li>
-          <% } %>
-        </ul>
-	    <% } // endif superuser %>
 	    
 	    <div class = "row justify-content-center">
         <div class="col-sm-12" style="max-width:850px">
-            <br>
-            <div class="d-flex">
-              <div>
-                <h2>Deine Ameisenvölker</h2>
-              </div>
-              <% if (ants == undefined || ants.length < maximum) { %>
-              
-                <div class="ml-auto">
-                  <button class ="btn btn-success btn-md" onclick="newAnt()">neues Ameisenvolk</button>
-                </div>
-              <% } else { %>
-                <div class="ml-auto"><p class="align-middle">Maximum erreicht, mehr Ameisen bei Levelaufstieg.</p></div>
-              <% } %>
-            </div>
-	          <script>
-	            function newAnt() {
-	              var x = prompt("Name des neuen Ameisenvolks:")
-	              if (x) {
-	                window.location = "/new?name=" + x
-                } else {
-                  alert("Kein Name angegeben")
-                }
-	            }
-	          </script>
-	          <br>
+          <script>
+            function newAnt() {
+              var x = prompt("Name des neuen Ameisenvolks:")
+              if (x) {
+                window.location = "/new?name=" + x
+              } else {
+                alert("Kein Name angegeben")
+              }
+            }
+          </script>
+          <br>
 	
 	        <% if (ants.length == 0) { %>
 	          <p>Du hast noch keine Ameisenvölker. Fange an, ein neues Volk zu erstellen.</p>
@@ -75,10 +46,20 @@
 	              </li>
             	<% } %>
           	</ul>
-          	<% if (user.level >= 2) { %>
-              <br><p><%=ants.length%> von <%=maximum%> Ameisenvölkern in Verwendung</p>
-            <% } %>
           <%} %>
+          <br>
+          <div class="d-flex">
+            <div>
+              <p><%=ants.length%> von <%=maximum%> Ameisenvölkern in Verwendung</p>
+            </div>
+            <div class="ml-auto">
+              <% if (ants === undefined || ants.length < maximum) { %>
+                <p><a href="#" class="btn btn-outline-success btn-sm" onclick="newAnt()">neues Ameisenvolk</a></p>
+              <% } else { %>
+                <p>Maximum erreicht, mehr Ameisen bei Levelaufstieg.</p>
+              <% } %>
+            </div>
+          </div>
         </div>
       </div>
   

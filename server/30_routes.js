@@ -26,7 +26,7 @@ module.exports = function(App) {
     if (!req.session.loggedIn) {
       yield App.users.login(req.body.username, req.body.password, req.params.colony, req)
       if (req.session.loggedIn)
-        res.redirect('/')
+        res.redirect('/home')
       else {
         req.flash('/login', "<strong>Anmeldung gescheitert!</strong> Überprüfe bitte Benutzername und Passwort.")
         res.redirect(req.path)
@@ -47,7 +47,6 @@ module.exports = function(App) {
         maximum: App.ants.maximumAnts(req.user.level),
         highlightElement: 0,
         newtuts: App.getNewTuts(req.user),
-        competitionDone : App.colo.get(req.session.colony).competitionDone,
       })
     } else
       res.render('landing/main', {
@@ -83,6 +82,7 @@ module.exports = function(App) {
       highlightElement:-1,
       newtuts: App.getNewTuts(req.user),
       colonyInfo : App.colo.get(req.session.colony).description,
+      competitionDone : App.colo.get(req.session.colony).competitionDone,
     })
   }))
 

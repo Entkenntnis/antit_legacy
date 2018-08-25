@@ -7,31 +7,60 @@
 
 
   <div class="container">
-
+  
     <div class="jumbotron">
-      <h1>AntIT!</h1>
-	    <p>Lerne spielerisch das Programmieren mit der coolsten und spannendsten Simulation der Welt! Erlebe, wie deine Ameisenvölker zum Leben erwachen und ihre Umgebung erobern.</p>
+      <h1 class="display-3">Erlebe AntIT!</h1>
+      <p class="lead font-weight-normal">Steuere Ameisen, sammle Nahrung, kämpfe gegen Wanzen. Tauche in die Welt der Informatik ein. Und lerne gleichzeitg das Programmieren.</p>
     </div>
-
-    <div class="page-header">
-	    <h3>Aktuelle Kolonien:</h3>
-	  </div>
+    
+    <div style="height:5rem"></div>
+    
+    <h2>Aktuelle Kolonien</h2>
+    
+    <ul class="list-group">
 	  <% for(var i = 0; i < colonies.length; i++) { %>
 	    <% if (!colonies[i].active) continue %>
-	    <a href="/login/<%=colonies[i].colonyName%>"><%=colonies[i].description%></a><br>
+	    <li class="list-group-item"><a href="/login/<%=colonies[i].colonyName%>"><%=colonies[i].description%></a></li>
 	  <% } %>
-	  
-	  <div class="page-header">
-	    <h3>Starte eine Simulation:</h3>
-	  </div>
-	  <p>Eine öffentliche Simulation starten ...</p>
-	  
-	  <div class="page-header">
-	    <h3>Infos für Lehrer</h3>
-	  </div>
-	  <p>Informationen, wie eine Schule Zugriff bekommt ...</p>
+	  </ul>
     
-    <div style="height:300px"></div>
+    <div style="height:11rem"></div>
+    
+    <h2>Bringe die Ameisen in Aktion</h2>
+	  
+	  <img class="img-thumbnail" src="/images/landing_img.png">
+    
+    <div style="height:13rem"></div>
+    
+    <h2>Schreibe Code</h2>
+	  
+	  <img class="img-thumbnail" src="/images/landing_code.png">
+    
+    <div style="height:13rem"></div>
+    
+    <h2>Lerne Schritt für Schritt</h2>
+	  
+	  <img class="img-thumbnail" src="/images/landing_tut.png">
+    
+    <div style="height:13rem"></div>
+    
+    <h2>Optimal für Klassen und Gruppen</h2>
+	  
+	  <img class="img-thumbnail" src="/images/landing_overview.png">
+    
+    <div style="height:13rem"></div>
+    
+    <h2>Programmiersprache: JavaScript</h2>
+    
+    <h2>Empfohlenes Alter: ab 7. Jahrgangsstufe</h2>
+    
+    <h2>Keine Vorkenntnisse notwendig</h2>
+    
+    <div style="height:13rem"></div>
+    
+    <p>Bei Interesse erreichen Sie mich unter:<img src="/images/landing_mail.png"></p>
+    
+    <div style="height:3rem"></div>
   </div>
   </body>
 </html>

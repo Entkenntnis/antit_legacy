@@ -7,6 +7,7 @@
       <div class="container">
         <div class="jumbotron"><h1>Benutzer</h1></div>
         
+        <br>
         <h2>Benutzer <%=existing?'bearbeiten':'erstellen'%></h2>
         
          <form method="post" action="/user/save">
@@ -64,7 +65,7 @@
             <input type="hidden" name="_csrf" value="<%=csrf%>"/>
             <input type="hidden" name="userid" value="<%=user._id%>"/>
             Willst du diesen Benutzer löschen?<br>
-            <a onclick="reallySubmit()" class="btn btn-sm btn-danger"/>Ja, Benutzer und Ameisen endgültig löschen</a>
+            <button onclick="reallySubmit()" class="btn btn-sm btn-danger">Ja, Benutzer und Ameisen endgültig löschen</button>
           </form>
         
         <% } %>
