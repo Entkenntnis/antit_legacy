@@ -47,7 +47,6 @@ module.exports = function(App) {
         maximum: App.ants.maximumAnts(req.user.level),
         highlightElement: 0,
         newtuts: App.getNewTuts(req.user),
-        colonyInfo : App.colo.get(req.session.colony).description,
         competitionDone : App.colo.get(req.session.colony).competitionDone,
       })
     } else
@@ -78,6 +77,14 @@ module.exports = function(App) {
   }))
 
 
+  App.express.get('/home', App.users.auth, co.wrap(function*(req, res) {
+    return res.render('ants/homeoverview', {
+      user : req.user,
+      highlightElement:-1,
+      newtuts: App.getNewTuts(req.user),
+      colonyInfo : App.colo.get(req.session.colony).description,
+    })
+  }))
 
 
 }

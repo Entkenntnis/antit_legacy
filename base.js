@@ -9,7 +9,7 @@ try {
 App.express = require('express')()
 App.express.set('views', __dirname + '/views')
 App.express.set('view engine', 'ejs')
-App.express.use(require('express').static('public'))
+App.express.use(require('connect-gzip-static')('public'))
 App.express.use(require('body-parser').urlencoded({extended: true }))
 App.express.use(require('connect-flash')())
 

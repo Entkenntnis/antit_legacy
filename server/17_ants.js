@@ -98,12 +98,16 @@ function updateName(code) {
         id: req.query.id,
         user: req.user,
         csrf: req.csrfToken(),
+        message : req.flash('/ants/edit')
       })
     } else
       res.redirect('/')
   }))
 
   App.express.post('/save', App.users.auth, App.csurf, co.wrap(function*(req, res) {
+    if (!req.body.data) {
+      return res.send('bad save request <a href="/">back</a>')
+    }
     if (req.body.duplicate) {
       yield insertAnt(updateName(req.body.data), req)
     }
@@ -111,6 +115,7 @@ function updateName(code) {
     if (req.query.close) {
       res.redirect('/')
     } else {
+      req.flash('/ants/edit', "Erfolgreich gespeichert")
       res.redirect('/edit?id=' + req.query.id)
     }
   }))
