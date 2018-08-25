@@ -15,7 +15,7 @@
     
           <br>
           <h2>Freie Simulation</h2>
-          <br>
+          <hr style="margin-top:1.5rem">
           <script>
             function clear() {
               for (i = 1; i <= 8; i++) {
@@ -28,14 +28,14 @@
           <form method="GET" action="/simulation"><div>
           <%
             var colors = ['#ff0000', '#0000ff', '#00ff00', '#00ffff',
-                          '#ffff00', '#ff00ff', '#ffffff', '#000000'];
+                          '#ffee00', '#ff00ff', '#dddddd', '#000000'];
           %>
           <% for (var x = 1; x <= 8; x += 2) { %>
             <div class="row">
               <% for (var t = x; t <= x + 1; t++) { %>
                 <div class="col-md-6">
-                  <span style="color:<%-colors[t-1]%>;<%-t==7||t==5?'background-color:lightgrey;':''%>"><strong>Team <%=t%>:</strong></span>
-                  <select name="team<%=t%>" id="team<%=t%>" style="margin-bottom:1rem;max-width:340px;">
+                  <label><span class=""><strong>Team <%=t%>:</strong></span>
+                  <select name="team<%=t%>" id="team<%=t%>" style="max-width:360px;border-color:<%-colors[t-1]%> !important;" class="custom-select border rounded p-0">
                     <option value="none">-----</option>
                     <% if (ants !== undefined) {
                       for (var i = 0; i < ants.length; i++) { %>
@@ -57,12 +57,12 @@
                       %>><%=globals[i].publicName%></option>
                     <% } %>
                   <%} %>
-                  </select>
+                  </select></label>
                 </div>
               <% } %>
             </div>
           <% } %>
-          <br>
+          <hr>
           
           <% if (user.level >= 6) { %>
             <label><input type="checkbox" id="batchon" name="batchon" value="1" <%=user.previous&&user.previous.batchon==1?'checked':''%>>

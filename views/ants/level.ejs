@@ -20,7 +20,7 @@
             <h2>Deine aktuellen Aufgaben</h2>
             <br>
 	          <% for (var i = 1; i <= user.level; i++) { %>
-	            <div class="card bg-light">
+	            <div class="card bg-light py-0">
                 <%
                   var count = exIndex[i].length
                   var solvedcount = 0
@@ -29,7 +29,7 @@
                       solvedcount++
                   })
                 %>
-                <div class="card-header d-flex" onclick="flip(<%=i%>)" style="cursor:pointer;padding-top:0.25rem;padding-bottom:0.25rem;">
+                <div class="card-header d-flex py-2" onclick="flip(<%=i%>)" style="cursor:pointer">
                   <div>Stufe <%=i%></div>
                   <div class="ml-auto">
                     <span class="badge badge-dark" style="margin-left:30px"><%=solvedcount%>/<%=count%></span>
@@ -51,9 +51,9 @@
                     }
                   }
                 </script>
-                <div class="card-body" <%=ok?"style=display:none":''%> id="level<%=i%>">
+                <div class="card-body py-2" <%=ok?"style=display:none":''%> id="level<%=i%>">
                   <% for (var j = 0; j < exIndex[i].length; j++) { var e = exercises[exIndex[i][j]]%>
-	                  <p><a href="/level?id=<%=exIndex[i][j]%>"><%=e.name%></a>
+	                  <p class="my-2"><a href="/level?id=<%=exIndex[i][j]%>"><%=e.name%></a>
 	                    <% if (solved.indexOf(parseInt(exIndex[i][j])) >= 0) {  %>
 	                      <img src="/static/gruener_Haken.gif" height="20px" style="margin-left:5px">
 	                    <% } %>
@@ -120,7 +120,7 @@
             
             <div style="height:60px"></div>
             <div class="card">
-              <div class="card-header">Lösung einreichen</div>
+              <div class="card-header py-2">Lösung einreichen</div>
               <div class="card-body">
                 <form method="GET" action="/levelsim">
                   <input type="hidden" name="num" value="<%=id%>">

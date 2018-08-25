@@ -5,33 +5,39 @@
   </head>
   <body>
 
-    <div class="container"  style="background-image: url(/deco/login2.png);background-position: center top;background-repeat:no-repeat">
+    <div class="container-fluid"  style="background-image: url(/deco/login2.png);background-position: center top;background-repeat:no-repeat">
     
-      <div style="height:197px"></div>
+      <div style="height:194px"></div>
       
       
       
       <div style="width:390px;margin:0 auto;">
         <%if(message.length > 0){%>
-          <div class="alert alert-danger" role="alert"><%-message[0]%></div>
+          <div class="alert alert-danger alert-dismissible" role="alert"><%-message[0]%>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
         <%}%>
-        <div class="panel panel-primary">
-          <div class="panel-heading">
+        <div class="card">
+          <div class="card-header ">
             <h2 class="panel-title">AntIT! Login</h2>
           </div>
-          <div class="panel-body">
-            <p><%=description%></p>
+          <div class="card-body">
+            <p><strong><%=description%></strong></p>
             <form action="/login/<%=colony%>" method="post">
               <div class="form-group">
                 <label for="startup" class="control-label">Benutzername:</label>
                 <input id="startup" type="text" class="form-control" name="username"/><br>
                 <label for="pw" class="control-label">Passwort:</label>
                 <input type="password" id="pw" class="form-control" name="password"/><br>
-                <input type="submit" value="Anmelden" class="btn btn-primary"/>
+                <div class="d-flex">
+                  <div><a href="/" class="btn btn-outline-primary">zurück</a></div>
+                  <div class="ml-auto"><input type="submit" value="Anmelden" class="btn btn-primary"/></div>
+                </div>
                 <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
               </div>
             </form>
-            <p class="text-right"><a href="/">Mehr Informationen</a></p>
           </div>     
         </div>
       </div>

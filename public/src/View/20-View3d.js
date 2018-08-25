@@ -487,6 +487,8 @@
           geometry.vertices.push(p)
         }
       }
+      if (color == 0)
+        color = 0x111111
       var material = new THREE.PointsMaterial({color:color, size:30, map:poisonCloud, blending: THREE.AdditiveBlending, transparent:true})
       material.depthWrite=false
       var obj = new THREE.Points(geometry, material)

@@ -5,24 +5,22 @@
   </head>
   <body>
     <div class="container">
-      <div class="jumbotron"><h1>Aufgaben</h1>
+      <div class="jumbotron"><h1>Herzlichen Glückwunsch!</h1>
       </div>
 	
 	    <% include menu %>
       
-      <div class="page-header">
-	        <h3>Herzlichen Glückwunsch!</h3>
-      </div>
+      <br>
       
-       <div class="row">
-	        <div class="col-md-2"></div>
-	        <div class="col-md-8">
-	          <img src="/deco/aufstieg.png"></img>
-	          <h4>Du hast jetzt die Stufe <%=user.level%> erreicht.</h4>
-	          <p><a href="/">OK</a></p>
-	        </div>
-	        <div class="col-md-2"></div>
-	      </div>
+      <div class = "row justify-content-center">
+        <div class="col-sm-12" style="max-width:800px">
+          <div class="d-flex">
+            <div><h2>Du hast jetzt die Stufe <%=user.level%> erreicht.</h2></div>
+            <div class="ml-auto"><a href="/home" class="btn btn-sm btn-success">OK, weiter gehts ...</a></div>
+          </div>
+          <img src="/deco/aufstieg.png" class="img-thumbnail"></img>
+        </div>
+      </div>
       
       <div style="height:300px"></div>
     </div>
