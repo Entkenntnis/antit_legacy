@@ -4,17 +4,25 @@
     <% include ../include/commonHead %>
   </head>
   <body>
-    <div class="container">
+    <div class="container-fluid">
 
       <div class="jumbotron">
         <h1>Ameisen-Editor</h1>
-        <p>Bearbeite den Code deines Volks und bestimme das Verhalten deiner Ameisen.</p>
       </div>
-   
+      
+      <br>
+      
+      <% if (message.length > 0) { %>
+        <div class="alert alert-dismissible alert-success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <%=message%>
+        </div>
+      <% } %>
+      
       <form method="POST" action="/save?id=<%=id%>" id="editform">
         <input type="hidden" name="_csrf" value="<%=csrf%>"/>
         <input type="hidden" name="antid" value="<%=id%>"/> 
-        <input type="submit" value="Speichern" class="btn btn-success btn-sm">
+        <input type="submit" value="Speichern" class="btn btn-outline-success btn-sm">
         <script>
           function myclose() {
             if (editor.getValue() == originalCode || confirm("Schließen ohne zu speichern? Änderungen werden verworfen.")) {
@@ -22,7 +30,7 @@
             }
           }
         </script>
-        <button type="button" class="btn btn-warning btn-sm" onclick="mysaveandclose()">Speichern &amp; Schließen</button>
+        <button type="button" class="btn btn-outline-warning btn-sm" onclick="mysaveandclose()">Speichern &amp; Schließen</button>
         <script>
           function mysaveandclose() {
             var form = document.getElementById('editform')
@@ -30,7 +38,7 @@
             form.submit()
           }
         </script>
-        <button type="button" class="btn btn-danger btn-sm" onclick="myclose()">Schließen</button>
+        <button type="button" class="btn btn-outline-danger btn-sm" onclick="myclose()">Schließen</button>
         <% if (user.level >= 5) { %>
           <script src="/js/jshint.min.js"></script>
           <script>
@@ -42,12 +50,14 @@
               document.getElementById('errors').innerHTML = output
             }
           </script>
-          <button onclick="checkSyntax()" style="margin-left:60px" class="btn btn-info btn-sm" type="button">Syntax überprüfen</button>
-          <br><br><div id="errors"></div><br>
+          <button onclick="checkSyntax()" style="margin-left:60px" class="btn btn-outline-info btn-sm" type="button">Syntax überprüfen</button>
+          <br><br><div id="errors"></div>
         <% } else { %>
-          <br><br><br>
+          <br><br>
         <% } %>
-        <textarea rows="50" id="editor" name="data"><%-data;%></textarea><br>
+      <hr>
+      <textarea rows="50" id="editor" name="data"><%-data;%></textarea>
+      <hr>
       </form>
       <link rel="stylesheet" href="/css/codemirror.css">
       <link rel="stylesheet" href="/css/show-hint.css">
@@ -70,11 +80,9 @@
               indentUnit:4,
               matchBrackets:true,
               autoCloseBrackets:true,
-              <% if (user.level >= 2) { %> 
-                extraKeys:{"Ctrl-S":function(){
-                  document.getElementById('editform').submit()
-                }},
-              <% } %>
+              extraKeys:{"Ctrl-S":function(){
+                document.getElementById('editform').submit()
+              }},
         })
       
         var originalCode = editor.getValue()
@@ -121,8 +129,8 @@
             <% if (user.level >= 4) { %>
             
             , "SetzeGift"
-            , "GeheZuBauOffen"
-            , "GeheZuZielOffen"
+            , "GeheZuBauDirekt"
+            , "GeheZuZielDirekt"
             , "Zufall"
             
             <% } %>
@@ -149,8 +157,10 @@
             , "Zufallsname"
             , "Blickrichtung"
             , "Distanz"
-            , "Winkel"
+            , "Richtung"
             , "Bau"
+            , "HatZucker"
+            , "HatApfel"
             //, "Stopp"
             //, "FühreAus"
             // "AktuelleLast"
@@ -192,7 +202,7 @@
       </script>
     
       <% if (user.level >= 3) { %>
-        <button onclick="append()" class="btn btn-primary btn-sm">Ereignis hinzufügen</button>
+        <button onclick="append()" class="btn btn-outline-primary btn-sm">Ereignis hinzufügen</button>
       <% } %>
 
       <div style="height:300px"></div>

@@ -4,163 +4,146 @@
     <% include ../include/commonHead %>
   </head>
   <body>
-    <div class="container">
-      <div class="jumbotron" style="max-height:200px"><h1>Kampfarena</h1>
+    <div class="container-fluid">
+      <div class="jumbotron" style="background-image: url(/deco/arena.png);background-position: center top;background-repeat:no-repeat">
 	    </div>
 	    
 	    <% include menu %>
 	    
-	    <!-- Here comes the content -->    
-	    
-	    <div class="page-header">
-	      <h3>Wettkampf</h3>
-	    </div>
-	    <p><a href="javascript:clear()" style="margin-bottom:10px">Felder zurücksetzen</a></p>
-	    <script>
-	      function clear() {
-	        for (i = 1; i <= 8; i++) {
-	          document.getElementById("team" + i).value = "none";
-	        }
-	        document.getElementById("seedon").checked = false
-	        document.getElementById("batchon").checked = false
-	      }
-	    </script>
-	    <form method="GET" action="/simulation"><div>
-	    <%
-        var colors = ['#ff0000', '#0000ff', '#00ff00', '#00ffff',
-                      '#ffff00', '#ff00ff', '#ffffff', '#000000'];
-	    %>
-	    <% for(var t = 1; t <= 8; t++) { %>
-	        <div style="float:left;padding-left:10px;"> <span style="color:<%-colors[t-1]%>;<%-t==7||t==5?'background-color:lightgrey;':''%>"><strong>Team <%=t%>:</strong></span>
-	        <select name="team<%=t%>" id="team<%=t%>">
-            <option value="none">-----</option>
-            <% if (ants !== undefined) {
-              for (var i = 0; i < ants.length; i++) { %>
-              <option value="<%=ants[i]._id%>" <%
-                if (user.previous) {
-                  if (user.previous["team" + t] == ants[i]._id) {
-                    %> selected="selected"<%
-                  }
-                }
-              %>><%=ants[i].name%></option>
-            <% } %>
-            <% for (var i = 0; i < globals.length; i++) { %>
-              <option value="<%=globals[i]._id%>"<%
-                if (user.previous) {
-                  if (user.previous["team" + t] == globals[i]._id) {
-                    %>selected="selected"<%
-                  }
-                }
-              %>><%=globals[i].publicName%></option>
-            <% } %>
-            <%} %>
-      </select></div>
-      <% } %></div>
-      <div style="clear:both;"><br>
-      <% if (user.level >= 6) { %>
-        <input type="checkbox" id="batchon" name="batchon" value="1" <%=user.previous&&user.previous.batchon==1?'checked':''%>>
-          <span title="Mehrere Simulationen werden hintereinander ausgeführt, keine 3D-Ansicht">Wiederhole:</span>
-        <input type="text" name="repeat" value="<%=user.previous?user.previous.repeat:''%>">
-        <input style="margin-left:50px" type="checkbox" id="harmony" name="harmony" value="1" <%=user.previous&&user.previous.harmony==1?'checked':''%>>
-          <span title="Gift greift keine gegnerische Ameisen an, Punkte nur für Nahrungsmitel">Nur-Sammel-Modus</span>
-        <% if (user.level >= 9) { %>
-          <br><input type="checkbox" id="seedon" name="seedon" value="1" <%=user.previous&&user.previous.seedon==1?'checked':''%>>
-            Seed: <input type="text" name="seed" value="<%=user.previous?user.previous.seed:''%>">
-        <% } %>
-      <br>
-      <br>
-      <% } %>
-      
-      <input type="submit" value="Wettkampf starten" class="btn btn-success btn-sm">
-	    </div>
-      </form>
-      
-      <div class="page-header">
-	      <h3>Ergebnisse</h3>
-	    </div>
-	    
-      <table class="table table-hover">
-        <thead>
-          <tr><th>Team</th><th>Simulationen</th><th>durchschnittliche Punktzahl</th>
-          </tr>
-        </thead>
-        <tbody id="data">
-        </tbody>
-      </table>
-      
-      <p id="log"></p>
-
-      <script>
-      function loadData() {
-        var request = new XMLHttpRequest()
-        request.open("GET", "/ranking")
-        request.addEventListener('load', function(event) {
-          if (request.status >= 200 && request.status < 300) {
-            var table = document.getElementById('data')
-            table.innerHTML = ""
-            var data = JSON.parse(request.responseText)
-            data.stats.forEach(function(e){
-              var row = document.createElement('tr')
-              var t1 = document.createElement('td')
-              t1.innerHTML = e.name
-              var t2 = document.createElement('td')
-              t2.innerHTML = e.count
-              var t3 = document.createElement('td')
-              t3.innerHTML = Math.round(e.points)
-              row.appendChild(t1)
-              row.appendChild(t2)
-              row.appendChild(t3)
-              table.appendChild(row)
-            })
-            var log = document.getElementById('log')
-            log.innerHTML = ""
-            for (var i = 0; i < data.log.length; i++) {
-              log.innerHTML += data.log[i]
-              log.innerHTML += "<br>"
+      <div class="row justify-content-center">
+        <div class="col-sm-12" style="max-width:850px">
+    
+          <br>
+          <h2>Freie Simulation</h2>
+          <br>
+          <script>
+            function clear() {
+              for (i = 1; i <= 8; i++) {
+                document.getElementById("team" + i).value = "none";
+              }
+              document.getElementById("seedon").checked = false
+              document.getElementById("batchon").checked = false
             }
-          }
-          setTimeout(loadData, 10000)
-        })
-        request.send()
-      }
-      
-      loadData()
-      </script>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+          </script>
+          <form method="GET" action="/simulation"><div>
+          <%
+            var colors = ['#ff0000', '#0000ff', '#00ff00', '#00ffff',
+                          '#ffff00', '#ff00ff', '#ffffff', '#000000'];
+          %>
+          <% for (var x = 1; x <= 8; x += 2) { %>
+            <div class="row">
+              <% for (var t = x; t <= x + 1; t++) { %>
+                <div class="col-md-6">
+                  <span style="color:<%-colors[t-1]%>;<%-t==7||t==5?'background-color:lightgrey;':''%>"><strong>Team <%=t%>:</strong></span>
+                  <select name="team<%=t%>" id="team<%=t%>" style="margin-bottom:1rem;max-width:340px;">
+                    <option value="none">-----</option>
+                    <% if (ants !== undefined) {
+                      for (var i = 0; i < ants.length; i++) { %>
+                      <option value="<%=ants[i]._id%>" <%
+                        if (user.previous) {
+                          if (user.previous["team" + t] == ants[i]._id) {
+                            %> selected="selected"<%
+                          }
+                        }
+                      %>><%=ants[i].name%></option>
+                    <% } %>
+                    <% for (var i = 0; i < globals.length; i++) { %>
+                      <option value="<%=globals[i]._id%>"<%
+                        if (user.previous) {
+                          if (user.previous["team" + t] == globals[i]._id) {
+                            %>selected="selected"<%
+                          }
+                        }
+                      %>><%=globals[i].publicName%></option>
+                    <% } %>
+                  <%} %>
+                  </select>
+                </div>
+              <% } %>
+            </div>
+          <% } %>
+          <br>
+          
+          <% if (user.level >= 6) { %>
+            <label><input type="checkbox" id="batchon" name="batchon" value="1" <%=user.previous&&user.previous.batchon==1?'checked':''%>>
+              <span title="Mehrere Simulationen werden hintereinander ausgeführt, keine 3D-Ansicht">Wiederhole:</span></label>
+            <input type="text" name="repeat" style="margin-right:50px" value="<%=user.previous?user.previous.repeat:''%>">
+            <label><input type="checkbox" id="harmony" name="harmony" value="1" <%=user.previous&&user.previous.harmony==1?'checked':''%>>
+              <span title="Gift greift keine gegnerische Ameisen an, Punkte nur für Nahrungsmitel">Nur-Sammel-Modus</span></label>
+            <% if (user.level >= 9) { %>
+              <br><input type="checkbox" id="seedon" name="seedon" value="1" <%=user.previous&&user.previous.seedon==1?'checked':''%>>
+                Seed: <input type="text" name="seed" value="<%=user.previous?user.previous.seed:''%>">
+            <% } %>
+          <br>
+          <br>
+          <% } %>
+          
+          <div class="d-flex">
+            <div><input type="submit" value="Simulation starten" class="btn btn-success btn-sm"></div>
+            <div class="ml-auto"><a href="javascript:clear()">Teams zurücksetzen</a></div>
+          </div>
+          
+          </div>
+          </form>
+          
+          <% if (user.level >= 7 ) { %>
+            <div style="height:50px"></div>
+            <hr>
+            <br>
+            <h3>Statistik</h3>
+            
+            <table class="table table-hover table-sm table-bordered">
+              <thead>
+                <tr><th>Team</th><th>Simulationen</th><th>durchschnittliche Punktzahl</th>
+                </tr>
+              </thead>
+              <tbody id="data">
+              </tbody>
+            </table>
+            
+            <h3>Verlauf</h3>
+            <p id="log"></p>
 
+            <script>
+            function loadData() {
+              var request = new XMLHttpRequest()
+              request.open("GET", "/ranking")
+              request.addEventListener('load', function(event) {
+                if (request.status >= 200 && request.status < 300) {
+                  var table = document.getElementById('data')
+                  table.innerHTML = ""
+                  var data = JSON.parse(request.responseText)
+                  data.stats.forEach(function(e){
+                    var row = document.createElement('tr')
+                    var t1 = document.createElement('td')
+                    t1.innerHTML = e.name
+                    var t2 = document.createElement('td')
+                    t2.innerHTML = e.count
+                    var t3 = document.createElement('td')
+                    t3.innerHTML = Math.round(e.points)
+                    row.appendChild(t1)
+                    row.appendChild(t2)
+                    row.appendChild(t3)
+                    table.appendChild(row)
+                  })
+                  var log = document.getElementById('log')
+                  log.innerHTML = ""
+                  for (var i = 0; i < data.log.length; i++) {
+                    log.innerHTML += data.log[i]
+                    log.innerHTML += "<br>"
+                  }
+                }
+                setTimeout(loadData, 10000)
+              })
+              request.send()
+            }
+            
+            loadData()
+            </script>
+          <% } %>
+          
+        </div>
+      </div>
 	    
       <div style="height:300px"></div>
 	    

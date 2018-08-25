@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <% include ../include/commonHead %>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="jumbotron" style="background-image: url(/deco/startseite.png);background-position: center top;background-repeat:no-repeat">
+      </div>
+	
+	    <% include menu %>
+	    
+	    <% include greetings %>
+	    
+	    <hr>
+      
+      <p>Hallo <strong><%=user.displayName%></strong> auf der Kolonie "<%=colonyInfo%>"</p>
+      
+      <div style="height:300px"></div>
+    </div>
+  </body>
+</html>
+ 

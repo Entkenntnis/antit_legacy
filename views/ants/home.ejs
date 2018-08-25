@@ -4,15 +4,13 @@
     <% include ../include/commonHead %>
   </head>
   <body>
-    <div class="container">
-      <div class="jumbotron" style="background-image: url(/deco/startseite.png);background-position: center top;background-repeat:no-repeat">
-	      <!--<h1>AntIT! Home</h1>
-	      <p>Hallo, <strong><%= user.displayName %>.</strong> Hier beginnt dein Abenteuer. Fange an, neue Ameisenvölker zu erstellen und kontrolliere ihr Verhalten, indem du den Programmcode änderst.</p>-->
+    <div class="container-fluid">
+      <div class="jumbotron" style="background-image: url(/deco/dorfzentrum.png);background-position: center top;background-repeat:no-repeat">
       </div>
 	
 	    <% include menu %>
   
-      <%if (user.superuser) {%>
+      <%if (false && user.superuser) {%>
         <br><br>
         <p>Admin-Tools:</p>
         <ul class="nav nav-pills" role="tablist">
@@ -27,28 +25,33 @@
         </ul>
 	    <% } // endif superuser %>
 	    
-	    <% include greetings %>
-	    
-	    <div class="page-header">
-	      <h3>Deine Ameisenvölker</h3>
-	    </div>
-	    
-	    <div class = "row">
-	      <div class="col-md-2"></div>
-	      <div class="col-md-8">
-	        <% if (ants == undefined || ants.length < maximum) { %>
-	          <p><button class ="btn btn-success btn-sm" onclick="newAnt()">neues Ameisenvolk</button></p>
+	    <div class = "row justify-content-center">
+        <div class="col-sm-12" style="max-width:850px">
+            <br>
+            <div class="d-flex">
+              <div>
+                <h2>Deine Ameisenvölker</h2>
+              </div>
+              <% if (ants == undefined || ants.length < maximum) { %>
+              
+                <div class="ml-auto">
+                  <button class ="btn btn-success btn-md" onclick="newAnt()">neues Ameisenvolk</button>
+                </div>
+              <% } else { %>
+                <div class="ml-auto"><p class="align-middle">Maximum erreicht, mehr Ameisen bei Levelaufstieg.</p></div>
+              <% } %>
+            </div>
 	          <script>
 	            function newAnt() {
 	              var x = prompt("Name des neuen Ameisenvolks:")
 	              if (x) {
 	                window.location = "/new?name=" + x
+                } else {
+                  alert("Kein Name angegeben")
                 }
 	            }
 	          </script>
-	        <% } else { %>
-	          <p>Maximum erreicht, mehr Ameisen bei Levelaufstieg.</p>
-	        <% } %>
+	          <br>
 	
 	        <% if (ants.length == 0) { %>
 	          <p>Du hast noch keine Ameisenvölker. Fange an, ein neues Volk zu erstellen.</p>
@@ -59,29 +62,27 @@
 	              <strong><%=ants[i].name%></strong>
 	              <%if(ants[i].published){%> (freigegeben)<%}%>
 	              <div style="float:right;">
-	                <a href="/edit?id=<%=ants[i]._id%>" class="btn btn-xs btn-primary">Bearbeiten</a>
+	                <a href="/edit?id=<%=ants[i]._id%>" class="btn btn-sm btn-outline-primary">Bearbeiten</a>
 	                <% if (user.level >= 5) { %>
 	                  <%if(ants[i].published){%>
-	                  <a href="/unpublish?id=<%=ants[i]._id%>" class="btn btn-xs btn-warning">Freigabe entfernen</a>
+	                  <a href="/unpublish?id=<%=ants[i]._id%>" class="btn btn-sm btn-outline-warning">Freigabe entfernen</a>
 	                  <%} else {%>
-	                  <a href="/publish?id=<%=ants[i]._id%>" class="btn btn-xs btn-info">Freigeben</a>
+	                  <a href="/publish?id=<%=ants[i]._id%>" class="btn btn-sm btn-outline-info">Freigeben</a>
 	                  <%}%>
                   <% } %>
-	                <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='/delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-xs btn-danger">Löschen</button>
+	                <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='/delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-sm btn-outline-danger">Löschen</button>
 	               </div>
 	              </li>
             	<% } %>
           	</ul>
           	<% if (user.level >= 2) { %>
-              <p><%=ants.length%> von <%=maximum%> Ameisenvölkern in Verwendung.</p>
+              <br><p><%=ants.length%> von <%=maximum%> Ameisenvölkern in Verwendung</p>
             <% } %>
           <%} %>
         </div>
-        <div class="col-md-2"></div>
       </div>
     
-    <hr>
-    <p>Hallo <strong><%=user.displayName%></strong> auf der Kolonie "<%=colonyInfo%>"</p>
+   
     
     <% if (user && user.level >= 5) { %>
   

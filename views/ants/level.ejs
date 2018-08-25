@@ -4,7 +4,7 @@
     <% include ../include/commonHead %>
   </head>
   <body>
-    <div class="container">
+    <div class="container-fluid">
       <div class="jumbotron" style="background-image: url(/deco/Aufgaben.png);background-position: left top;background-repeat:no-repeat"><!--<h1>Aufgaben</h1><p>Versuche diese Aufgaben zu lösen. Daran kannst du zeigen, wie gut du schon mit deinen Ameisen umgehen kannst und steige auf.</p>-->
 	    </div>
 	    
@@ -13,16 +13,14 @@
 	    <!-- Here comes the content -->
 	    
 	    <% if (id < 0) { %>
-	    
-	      <div class="page-header">
-	        <h3>Deine aktuellen Aufgaben</h3>
-	      </div>
 	      
-	      <div class="row">
-	        <div class="col-md-2"></div>
-	        <div class="col-md-8">
+        <div class = "row justify-content-center">
+          <div class="col-sm-12" style="max-width:850px">
+            <br>
+            <h2>Deine aktuellen Aufgaben</h2>
+            <br>
 	          <% for (var i = 1; i <= user.level; i++) { %>
-	            <div class="panel panel-default">
+	            <div class="card bg-light">
                 <%
                   var count = exIndex[i].length
                   var solvedcount = 0
@@ -31,7 +29,12 @@
                       solvedcount++
                   })
                 %>
-                <div class="panel-heading" onclick="flip(<%=i%>)" style="cursor:pointer;">Stufe <%=i%> <span class="badge" style="margin-left:30px"><%=solvedcount%>/<%=count%></span></div>
+                <div class="card-header d-flex" onclick="flip(<%=i%>)" style="cursor:pointer;padding-top:0.25rem;padding-bottom:0.25rem;">
+                  <div>Stufe <%=i%></div>
+                  <div class="ml-auto">
+                    <span class="badge badge-dark" style="margin-left:30px"><%=solvedcount%>/<%=count%></span>
+                  </div>
+                </div>
                 <%
                   var ok = (i != user.level)
                  
@@ -48,7 +51,7 @@
                     }
                   }
                 </script>
-                <div class="panel-body" <%=ok?"style=display:none":''%> id="level<%=i%>">
+                <div class="card-body" <%=ok?"style=display:none":''%> id="level<%=i%>">
                   <% for (var j = 0; j < exIndex[i].length; j++) { var e = exercises[exIndex[i][j]]%>
 	                  <p><a href="/level?id=<%=exIndex[i][j]%>"><%=e.name%></a>
 	                    <% if (solved.indexOf(parseInt(exIndex[i][j])) >= 0) {  %>
@@ -58,31 +61,33 @@
 	                <% } %>
                 </div>
               </div>
+              <br>
               
 	          <% } %>
 	          <% if (user.level < 9) {%>
-	            <div class="well">
-	              <% if (!upgrade) { %>
-	                <br><p>Voraussetzungen für die nächste Stufe:<br>Bearbeite <%=Math.ceil(exIndex[user.level].length/2)%> Aufgaben von Stufe <%=user.level%>.
-	                
-	                <% if (user.level == 5 && !competitionDone) { %>
-                    <br>Nimm am Wettbewerb teil.
-	                <% } %>
-	                
-	                </p>
-                <% } %>
-                <a href="/upgrade" class="btn btn-warning btn-sm <%=upgrade?'':'disabled'%>">Stufe aufsteigen</a>
+	            <div class="card">
+                <div class="card-body">
+                  <% if (!upgrade) { %>
+                    <p>Voraussetzungen für die nächste Stufe:<br>Bearbeite <%=Math.ceil(exIndex[user.level].length/2)%> Aufgaben von Stufe <%=user.level%>
+                    
+                    <% if (user.level == 5 && !competitionDone) { %>
+                      <br>Nimm am Wettbewerb teil.
+                    <% } %>
+                    
+                    </p>
+                  <% } %>
+                  <a href="/upgrade" class="btn btn-warning btn-sm <%=upgrade?'':'disabled'%>">Stufe aufsteigen</a>
+                </div>
               </div>
 	          <% } %>
+        
+            <div style="height:250px"></div>
+            
+            <% if (user.level > 1) { %>
+              <p>Zu schnell hochgestuft? Du kannst dich hier wieder <a href="/downgrade">zurückstufen.</a></p>
+            <% } %>
 	        </div>
-	        <div class="col-md-2"></div>
 	      </div>
-        
-        <div style="height:250px"></div>
-        
-        <% if (user.level > 1) { %>
-          <p>Zu schnell hochgestuft? Du kannst dich hier wieder <a href="/downgrade">zurückstufen.</a></p>
-        <% } %>
         
       <% } else { %>
       
@@ -97,36 +102,36 @@
         
         %>
         
-        <div class="row">
-          <div class="col-md-2"></div>
-          <div class="col-md-8">
+        
+        <div class = "row justify-content-center">
+          <div class="col-sm-12" style="max-width:850px">
 	    
-	          <div class="page-header">
-	            <h3><%=e.name%></h3>
-	          </div>
+            <br>
+	            
+            <h2><%=e.name%></h2>
 	          
 	          <script>
 	            document.getElementById("site-title").innerHTML += " - " + "<%=e.name%>"
 	          </script>
             
-            <div style="height:30px"></div>
+            <br>
             
             <%-e.description%>
             
             <div style="height:60px"></div>
-            <div class="panel panel-default">
-              <div class="panel-heading">Lösung einreichen</div>
-              <div class="panel-body">
+            <div class="card">
+              <div class="card-header">Lösung einreichen</div>
+              <div class="card-body">
                 <form method="GET" action="/levelsim">
                   <input type="hidden" name="num" value="<%=id%>">
                 <% if (ants.length > 0) { %>
-                  <select name="id">
+                  <select name="id" style="max-width:350px;">
                     <% if (ants !== undefined) {
                       for (var i = 0; i < ants.length; i++) { %>
                       <option value="<%=ants[i]._id%>" <%=ants[i]._id == previous ? 'selected="selected"' : ''%>><%=ants[i].name%></option>
                     <% } } %>
                   </select>
-                  <input style="margin-left:20px" type="submit" value="Level starten" class="btn btn-success btn-sm">
+                  <input style="margin-left:20px" type="submit" value="Aufgabe starten" class="btn btn-success btn-sm">
                 <% } else { %>
                   Erstelle zuerst ein neues Ameisenvolk.
                 <% } %>
@@ -134,7 +139,6 @@
               </div>
             </div>
           </div>
-          <div class="col-md-2"></div>
         </div>
         <p></p>
         

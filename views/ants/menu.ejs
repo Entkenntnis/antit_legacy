@@ -3,7 +3,7 @@
 
 function check(num) {
   if (num == highlightElement) {
-    return 'class="active"'
+    return 'active'
   } else {
     return ''
   }
@@ -11,13 +11,31 @@ function check(num) {
 
 %>
 
-<ul class="nav nav-pills" role="tablist">
-  <li role="presentation" <%-check(0)%>><a href="/">Dor<%=Math.random()<0.05?'t':'f'%>zentrum</a></li>
-  <li role="presentation" <%-check(3)%>><a href="/level">Trainingsplatz</a></li>
-  <li role="presentation" <%-check(5)%>><a href="/tutorial">Bibliothek<%-newtuts > 0?
-    ' <span class="badge">' + newtuts + '</span>':''%></a></li>
-  <% if (user && user.level >= 5) { %>
-    <li role="presentation" <%-check(4)%>><a href="/wettbewerb">Kampfarena</a></li>
-  <% } %>
-  <li role="presentation"><a href="/logout">abmelden...</a></li>
-</ul>
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <a class="navbar-brand" href="/home"><img src="/static/home.png" width="20" height="20"/></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item <%-check(0)%>">
+        <a class="nav-link" href="/">Dor<%=Math.random()<0.05?'t':'f'%>zentrum</a>
+      </li>
+      <li class="nav-item <%-check(3)%>">
+        <a class="nav-link" href="/level">Trainingsplatz</a>
+      </li>
+      <li class="nav-item <%-check(5)%>">
+        <a class="nav-link" href="/tutorial">Bibliothek</a>
+      </li>
+      <% if (user && user.level >= 5) { %>
+        <li class="nav-item <%-check(4)%>">
+          <a class="nav-link" href="/wettbewerb">Arena</a>
+        </li>
+      <% } %>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">abmelden...</a>
+      </li>
+    </ul>
+  </div>
+</nav>
