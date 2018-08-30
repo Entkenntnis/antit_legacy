@@ -19,7 +19,7 @@ var AntIT = {};
     , HügelRadius : 40
     , BauErreichtRadius : 10
     , SpielerFarben : [0xff0000, 0x0000ff, 0x00ff00, 0x00ffff,
-                       0xffff00, 0xff00ff, 0xffffff, 0x000000]
+                       0xffff00, 0xff00ff, 0x000000, 0xffffff]
     , FühlerFarben : [
       [0xffffff, 0xffff00],
       [0xffff00, 0xffff00],
