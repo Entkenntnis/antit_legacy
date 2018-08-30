@@ -53,7 +53,7 @@
       Object.defineProperty(window, name, {
         get: function() {
           if (API.staticPlayerId === undefined) {
-            console.warn("Die Eigenschaft '" + name + "' kann nur innerhalb einer Ameise aufgerufen werden.");
+            alert("Die Eigenschaft '" + name + "' kann nur innerhalb einer Ameise aufgerufen werden.");
             return;
           }
           return f();
@@ -64,8 +64,8 @@
     
     this.addFunc = function(name, f) {
       window[name] = function() {
-        if (API.staticPlayerId === undefined) {
-          console.warn("Die Funktion '" + name + "()' kann nur innerhalb einer Ameise aufgerufen werden.");
+        if (API.staticPlayerId === undefined && name != "Zufall") {
+          alert("Die Funktion '" + name + "()' kann nur innerhalb einer Ameise aufgerufen werden.");
           return;
         }
         var args = []

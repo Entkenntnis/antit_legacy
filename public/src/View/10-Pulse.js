@@ -33,7 +33,7 @@
     Sim.Update()
     bus.emit('post-tick')
     var runState = Math.round((Sim.getCycles()-1) / Optionen.Runden * 100);
-    bus.emit('update-status', "Fortschritt: " + runState + "%")
+    bus.emit('update-status', "Fortschritt: " + runState + "%  / Tick " + Math.floor(Sim.getCycles()/10)*10)
   }
   
   Pulse.Tick = function() {
@@ -86,15 +86,18 @@
   View.Pulse = Pulse
   
   
-  AntIT.StarteSimulation = function(h, p, s, hud, levels, colors){
+  AntIT.StarteSimulation = function(h, p, hud, levels, colors){
     hash = h
     prefix = p
-    seed = s
     if (hud)
       hudid = hud
     Sim.setLevels(levels)
     Sim.setColors(colors)
     bus.emit('start')
+  }
+  
+  AntIT.SetzeSeed = function(seed) {
+    Sim.seed(seed)
   }
 
 })(AntIT._view);

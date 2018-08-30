@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <% include ../include/commonHead %>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="jumbotron" style="background-image: url(/deco/startseite.png);background-position: center top;background-repeat:no-repeat">
+      </div>
+	
+	    <% include menu %>
+	    
+	    
+	    <div class = "row justify-content-center">
+        <div class="col-sm-12" style="max-width:850px">
+        
+          <br>
+          <h2>Inhaltsüberblick</h2>
+          <hr>
+          
+          <h3>Stufe 1</h3>
+          
+          <ul>
+            <li><code>Gehe(schritte)</code></li>
+            <li><code>Drehe(winkel)</code></li>
+            <li><code>DreheZuRichtung(himmelsrichtung)</code></li>
+            <li><code>"IstGeboren"</code></li>
+          </ul>
+          
+          <% if (user.level >= 2) { %>
+            
+            <h3>Stufe 2</h3>
+          
+            <ul>
+              <li><code>NimmZucker()</code></li>
+              <li><code>GeheZuBau()</code></li>
+              <li><code>LadeZuckerAb()</code></li>
+              <li><code>TrageApfel()</code></li>
+              <li><code>Ameise.SetzeTeams(anzahl)</code></li>
+              <li><code>if (InTeam(number)) {   }</code></li>
+              <li>Gitternetz</li>
+              <li>Simulationsgeschwindigkeit</li>
+            </ul>
+            
+          <% } %>
+          
+          <% if (user.level >= 3) { %>
+            
+            <h3>Stufe 3</h3>
+          
+            <ul>
+              <li><code>"IstUntätig"</code></li>
+              <li><code>"SiehtZucker"</code></li>
+              <li><code>"SiehtApfel"</code></li>
+              <li><code>"RandErreicht"</code></li>
+              <li><code>GeheZuZiel(objekt)</code></li>
+              <li><code>GeheZuZielDirekt(objekt)</code></li>
+              <li><code>GeheZuBauDirekt()</code></li>
+            </ul>
+            
+          <% } %>
+          
+          <% if (user.level >= 4) { %>
+            
+            <h3>Stufe 4</h3>
+          
+            <ul>
+              <li><code>SetzeGift()</code></li>
+              <li><code>"SiehtWanze"</code></li>
+              <li><code>"SiehWanzeVoraus"</code></li>
+              <li><code>"SiehtGegner"</code></li>
+              <li><code>Ameise.SetzeTeamFolge(nr1, nr2, nr3, ...)</code></li>
+              <li><code>Warte(ticks)</code></li>
+              <li><code>Zufall(von, bis)</code></li>
+              <li><code>FühreAlteBefehleAus()</code></li>
+              <li>Syntax-Checker</li>
+            </ul>
+            
+          <% } %>
+          
+          <% if (user.level >= 5) { %>
+            
+            <h3>Stufe 5</h3>
+          
+            <ul>
+              <li><code>SendeNachricht(betreff, info)</code></li>
+              <li><code>"SetzeLimit()"</code></li>
+              <li><code>SchrittZahl</code></li>
+              <li><code>TickZahl</code></li>
+              <li><code>DreheZuObjekt()</code></li>
+              <li><code>DreheWegVonObjekt()</code></li>
+              <li>Arena</li>
+              <li>Freigabe</li>
+              <li>Todesursache anzeigen</li>
+            </ul>
+            
+          <% } %>
+          
+        </div>
+      </div>
+	    
+      
+      <div style="height:300px"></div>
+    </div>
+  </body>
+</html>
+ 

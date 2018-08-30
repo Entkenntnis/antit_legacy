@@ -86,5 +86,18 @@ module.exports = function(App) {
     })
   }))
 
+  App.express.get('/info', App.users.auth, co.wrap(function*(req, res) {
+    return res.render('ants/info', {
+      user : req.user,
+      highlightElement:-1,
+    })
+  }))
+
+  App.express.get('/abstract', App.users.auth, co.wrap(function*(req, res) {
+    return res.render('ants/abstract', {
+      user : req.user,
+      highlightElement:-1,
+    })
+  }))
 
 }

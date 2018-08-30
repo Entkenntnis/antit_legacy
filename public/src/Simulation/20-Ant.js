@@ -258,6 +258,9 @@
             return true
           }
         }
+        if (type == "Wanze") {
+          snap = Sim.Opts.WanzenKampfweite * 2
+        }
         var des = dest.getPos()
         var d = Sim.Util.dist(my.pos, des)
         if (d <= snap){
@@ -271,7 +274,11 @@
           var v = Sim.Opts.ZufallRichtungsVerschiebung
           rotation += Math.floor(Sim.rng()*v*2-v)
           // prepend-mode, so take care of order
-          this.addGoJob(Math.min(50, d), true)
+          if (type == "Wanze") {
+            this.addGoJob(Math.min(50, Math.max(d-snap+0.5, 0)), true)
+          } else {
+            this.addGoJob(Math.min(50, d), true)
+          }
           if (rotation != 0)
             this.addTurnJob(rotation, true)
           return false

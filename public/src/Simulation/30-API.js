@@ -69,6 +69,8 @@
       return API.curAnt.gotoHome(direkt)
     if (ziel.constructor.name == "Apple")
       return API.curAnt.addGotoJob(ziel, Sim.apples, "Apfel", direkt)
+    if (ziel.constructor.name == "Bug")
+      return API.curAnt.addGotoJob(ziel, Sim.bugs, "Wanze", direkt)
     if (ziel.constructor.name == "Position" || ziel.getPos)
       return API.curAnt.addGotoJob(ziel, undefined, "Position", direkt)
     API.message("Die Funktion '" + fname + "(ziel)' konnte das unbekannte Ziel nicht anvisieren.")
@@ -182,11 +184,11 @@
   })
   
   // API Zusatz: Statusinformationen
-  API.antProp('Reichweite', function(){
-    return Sim.Opts.AmeisenReichweite - API.curAnt.getLap();
+  API.antProp('SchrittZahl', function(){
+    return API.curAnt.getLap();
   })
 
-  API.antProp('Runde', function(){
+  API.antProp('TickZahl', function(){
     return Sim.cycles
   })
 

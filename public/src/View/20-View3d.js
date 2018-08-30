@@ -571,6 +571,29 @@
       }
     })
     
+    var deadinfos = []
+    var deadinfovisible = false
+    
+    Bus.on('add-dead-info', function(info) {
+      deadinfos.push(info)
+      if (deadinfovisible) {
+        Bus.emit('draw-text', info)
+      }
+    })
+    
+    Bus.on('toggle-dead-info', function(){
+      if (deadinfovisible) {
+        deadinfos.forEach(function(i){
+          Bus.emit('remove-text', i.key)
+        })
+      } else {
+        deadinfos.forEach(function(i){
+          Bus.emit('draw-text', i)
+        })
+      }
+      deadinfovisible = !deadinfovisible
+    })
+    
   };
   
   var vw = new ViewController();

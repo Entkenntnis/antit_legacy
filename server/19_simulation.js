@@ -116,7 +116,7 @@ module.exports = function(App) {
       devMode:req.user.level == 10,
       fightMode:false,
       level:NaN,
-      title:"Wettbewerb",
+      title:harmony?"Sammelmodus" : "Wettbewerb",
       colors:query.antColors,
     })
   }))

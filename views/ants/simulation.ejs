@@ -64,6 +64,10 @@
         </script>
       <% } %>
       
+      <script>
+          document.getElementById("site-title").innerHTML += " - " + "<%=title%>"
+      </script>
+      
       <% if (use3d) { %>
         <div style="position: absolute; z-index: 1; left: 50px; bottom: 40px; width:400px; height:40px;font-size:1em;color:white;">
           <p>Maus: Links - drehen / Rechts - ziehen<br />Touch: Wischen - ziehen / lang tippen - drehen</p>
@@ -73,7 +77,6 @@
           <a href="<%=prefix%>" class="btn btn-primary">zurück</a>
         </div>
         <script>
-          document.getElementById("site-title").innerHTML += " - " + "<%=title%>"
 
           function hide(){
             document.getElementById("hud").style.height = "25px";
@@ -95,6 +98,7 @@
         </div>
       <% } else { %>
         <div class="container">
+          <br><br>
           <h1>Headless AntIT! Simulator</h1>
           <div id="loading" style="font-size:2em;color:white;">
             <span class="label label-default" id="intro-text">Simulationsfehler!</span>
@@ -140,7 +144,7 @@
               })();
             <% } else { %>
               <% var exportCode = btoa('(function(){' + c.code + '}).call(42);') %>
-              var whitelist = ['AntIT', 'Gehe', 'Drehe', 'DreheZuRichtung', 'GeheZuBau', 'NimmZucker', 'LadeZuckerAb', 'TrageApfel', 'GeheZuZiel', 'Warte', 'SetzeGift', 'Reichweite', 'Runde', 'Distanz', 'Bau', 'Position', 'DreheWegVonObjekt', 'DreheZuObjekt', 'Gedächtnis', 'SendeNachricht', 'Zufallsname', 'consolebku', 'Aktiv', 'InTeam', 'SetzeLimit', 'Zufall', 'GeheZuBauDirekt', 'GeheZuZielDirekt', 'Object', 'alert', 'FühreAlteBefehleAus', 'Richtung', 'HatZucker', 'HatApfel']
+              var whitelist = ['AntIT', 'Gehe', 'Drehe', 'DreheZuRichtung', 'GeheZuBau', 'NimmZucker', 'LadeZuckerAb', 'TrageApfel', 'GeheZuZiel', 'Warte', 'SetzeGift', 'SchrittZahl', 'TickZahl', 'Distanz', 'Bau', 'Position', 'DreheWegVonObjekt', 'DreheZuObjekt', 'Gedächtnis', 'SendeNachricht', 'Zufallsname', 'consolebku', 'Aktiv', 'InTeam', 'SetzeLimit', 'Zufall', 'GeheZuBauDirekt', 'GeheZuZielDirekt', 'Object', 'alert', 'FühreAlteBefehleAus', 'Richtung', 'HatZucker', 'HatApfel']
               var consolebku = {log:console.log}
         
               eval('(function(' +  Object.keys(window).filter(function(x){return whitelist.indexOf(x)< 0}).join(",") + '){var console = consolebku;' + atob("<%-exportCode%>") + '})();');
@@ -159,8 +163,9 @@
       <% if (use3d) { %>
         var levels = [<%-code.map(function(a){return a.level}).join(',')%>]
         var colors = <%-JSON.stringify(colors)%>
+        AntIT.SetzeSeed("<%-seed%>")
         injectCode()
-        AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", "<%-seed%>", null, levels, colors)
+        AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", null, levels, colors)
       <% } else { %>
         function start(){
           if (counter <= <%=repeat%>) {
@@ -173,8 +178,9 @@
             }
             var levels = [<%-code.map(function(a){return a.level}).join(',')%>]
             var colors = <%-JSON.stringify(colors)%>
+            AntIT.SetzeSeed("<%-seed%>")
             injectCode()
-            AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", "<%-seed%>", hud, levels, colors)
+            AntIT.StarteSimulation("<%-hash%>", "<%=prefix%>", hud, levels, colors)
             if (autoscroll) window.scrollTo(0,document.body.scrollHeight);
           }
         }

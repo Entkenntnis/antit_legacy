@@ -620,7 +620,7 @@
     41 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 1600
+        Sim.Opts.Runden = 3000
       },
       create : function(){
         defaultLevelCreate()

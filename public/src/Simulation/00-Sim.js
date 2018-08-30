@@ -20,10 +20,7 @@
       Sim.memories = {}
       if (Sim.Opts.Levelmodus) Sim.Level.init()
       
-      if (seed) {
-        Sim.rng = new Math.seedrandom(seed)
-        console.log("Seed: " + seed)
-      } else
+      if (!Sim.rng)
         Sim.rng = new Math.seedrandom()
       
       var area = (1 + (Sim.API.ants.length * Optionen.SpielfeldVerhältnis))
@@ -103,13 +100,10 @@
     setColors : function(c) {
       Sim.colors = c
     },
-    toggleDebugDeads : function() {
-      if (!Sim.playground.getDebugDeads()) {
-        Sim.playground.enableDebugDeads()
-      } else {
-        Sim.playground.disableDebugDeads()
-      }
-    }
+    seed : function(s) {
+      Sim.rng = new Math.seedrandom(s)
+      console.log("Seed: " + s)
+    },
   }
 
 })(AntIT._optionen)

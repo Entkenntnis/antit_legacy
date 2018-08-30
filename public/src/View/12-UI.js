@@ -42,7 +42,7 @@
       View.Pulse.getBus().emit('redraw')
     }
     if (e.charCode == 84 || e.charCode == 116) { // T
-      View.Sim.toggleDebugDeads()
+      Sim.getBus().emit('toggle-dead-info')
     }
   }
  

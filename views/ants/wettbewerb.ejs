@@ -12,16 +12,22 @@
 	    
       <div class="row justify-content-center">
         <div class="col-sm-12" style="max-width:850px">
-    
-          <br>
           <hr>
           <script>
             function clear() {
               for (i = 1; i <= 8; i++) {
                 document.getElementById("team" + i).value = "none";
               }
-              document.getElementById("seedon").checked = false
-              document.getElementById("batchon").checked = false
+              function reset(id, prop, val) {
+                var elem = document.getElementById(id)
+                if (elem) {
+                  elem[prop] = val
+                }
+              }
+              reset("seedon", 'checked', false)
+              reset("batchon", 'checked', false)
+              reset("seedvalue", 'value', "")
+              reset("repeatvalue", 'value', "")
             }
           </script>
           <form method="GET" action="/simulation"><div>
@@ -66,12 +72,12 @@
           <% if (user.level >= 6) { %>
             <label><input type="checkbox" id="batchon" name="batchon" value="1" <%=user.previous&&user.previous.batchon==1?'checked':''%>>
               <span title="Mehrere Simulationen werden hintereinander ausgeführt, keine 3D-Ansicht">Wiederhole:</span></label>
-            <input type="text" name="repeat" style="margin-right:50px" value="<%=user.previous?user.previous.repeat:''%>">
+            <input type="text" name="repeat" id="repeatvalue" style="margin-right:50px" value="<%=user.previous?user.previous.repeat:''%>">
             <label><input type="checkbox" id="harmony" name="harmony" value="1" <%=user.previous&&user.previous.harmony==1?'checked':''%>>
               <span title="Gift greift keine gegnerische Ameisen an, Punkte nur für Nahrungsmitel">Nur-Sammel-Modus</span></label>
             <% if (user.level >= 9) { %>
               <br><input type="checkbox" id="seedon" name="seedon" value="1" <%=user.previous&&user.previous.seedon==1?'checked':''%>>
-                Seed: <input type="text" name="seed" value="<%=user.previous?user.previous.seed:''%>">
+                Seed: <input type="text" name="seed" id="seedvalue" value="<%=user.previous?user.previous.seed:''%>">
             <% } %>
           <br>
           <br>
@@ -79,7 +85,7 @@
           
           <div class="d-flex">
             <div><input type="submit" value="Simulation starten" class="btn btn-success btn-sm"></div>
-            <div class="ml-auto"><a href="javascript:clear()">Teams zurücksetzen</a></div>
+            <div class="ml-auto"><a href="javascript:clear()">Felder zurücksetzen</a></div>
           </div>
           
           </div>
