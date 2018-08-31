@@ -267,24 +267,19 @@ module.exports.exercises = {
     level : 5,
   },
   
-  54 : {
-    name : "Gefährliche Flucht",
+  55 : {
+    name : "Geduld",
     description : `
-      <p>Verlasse mit mindestens 15 Ameisen den roten Bereich. Komm den Wanzen und den Gegner dabei nicht zu nahe!
-      </p>
+      <p>Verlockend viel Zucker liegt vor dem Bau, doch dein Ameisenvolk muss bis Tick 1500 warten, bis es den Zucker abbauen darf. Insgesamt hast du 2000 Ticks Zeit, 500 Zucker einzusammeln.</p>
     `,
     level : 5,
   },
   
-  55 : {
-    name : "Geduld",
+  57 : {
+    name : "Gefährliche Flucht",
     description : `
-      <p>Verlockend viel Zucker liegt vor dem Bau, doch dein Ameisenvolk muss bis zur Runde 1500 warten, bis es den Zucker abbauen darf. Insgesamt hast du 2000 Runden Zeit, 600 Zucker einzusammeln.</p>
-      
-      <!--<p>Ähnlich wie bei der Reichweite kannst du über die Eigenschaft <code>Runde</code> die aktuelle Rundennummer abfragen. Die beginnt bei 1 und zählt für jeden Tick der Simulation eins hoch. Ein kleiner Hinweis:
+      <p>Verlasse mit mindestens 15 Ameisen den roten Bereich. Komm den Wanzen und den Gegner dabei nicht zu nahe!
       </p>
-      
-      <p><img src="/images/l5_runde.png" class="img-thumbnail"></p>-->
     `,
     level : 5,
   },

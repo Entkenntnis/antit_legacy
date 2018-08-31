@@ -899,8 +899,31 @@
         return Sim.players[0].getPoints() >= 4000 && Sim.players[0].getDeadAnts() == 0
       },
     },
+ 
+    55 : {
+      init : function() {
+        defaultLevelInit()
+        Sim.Opts.Runden = 2000
+      },
+      create : function(){
+        defaultLevelCreate()
+        for (var i = 0; i < 360; i += 30) {
+          Sim.sugars.push(new Sim.Sugar(Sim.Util.moveDir(locPos(0,0), i, 100)))
+        }
+      },
+      failed : function(){
+        if (Sim.cycles < 1500) {
+          if (Sim.players[0].getSugar() > 0) {
+            return true
+          }
+        }
+      },
+      isDone : function(){
+        return Sim.players[0].getSugar() >= 500
+      },
+    },
     
-    54 : {
+    57 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 5000
@@ -938,29 +961,6 @@
         })
         return count >= 15
       }
-    },
- 
-    55 : {
-      init : function() {
-        defaultLevelInit()
-        Sim.Opts.Runden = 2000
-      },
-      create : function(){
-        defaultLevelCreate()
-        for (var i = 0; i < 360; i += 30) {
-          Sim.sugars.push(new Sim.Sugar(Sim.Util.moveDir(locPos(0,0), i, 100)))
-        }
-      },
-      failed : function(){
-        if (Sim.cycles < 1500) {
-          if (Sim.players[0].getSugar() > 0) {
-            return true
-          }
-        }
-      },
-      isDone : function(){
-        return Sim.players[0].getSugar() >= 600
-      },
     },
  
     61 : makeTestLevel(function(test){
