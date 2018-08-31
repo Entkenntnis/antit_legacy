@@ -2,7 +2,7 @@ module.exports.exercises = {
   11 : {
     name : "Erste Schritte",
     description : `
-      <p>Auf dem Spielfeld befinden sich drei Checkpoints. Laufe mit allen Ameisen diese Checkpoints in einer beliebigen Reihenfolge ab. Die Orte der Checkpoints werden in einem Koordinatensystem angegeben. Der Ursprung befindet sich im Mittelpunkt des Baus. Die x-Achse zeigt aus der Anfangsansicht nach rechts, die y-Achse nach oben, wie aus der Schule gewohnt.
+      <p>Auf dem Spielfeld befinden sich drei Checkpoints. Laufe mit allen Ameisen diese Checkpoints in einer beliebigen Reihenfolge ab. Die Orte der Checkpoints werden in einem Koordinatensystem angegeben: Der Ursprung befindet sich im Mittelpunkt des Baus. Die x-Achse zeigt aus der Anfangsansicht nach rechts (Osten), die y-Achse nach oben (Norden), wie aus der Schule gewohnt.
       </p>
       
       <p>Checkpoint 1 : (300|100)<br>
@@ -40,7 +40,7 @@ module.exports.exercises = {
       <p>Mit der Taste G kannst du dir während der Simulation eine Koordinatengitter anzeigen lassen. Das Gitter hat einen Abstand von 50 Ameisenschritten. Damit kannst du die Koordinaten der Checkpoints bestimmen. Tipp: Die Diagonale eines Gitters ist 71 Ameisenschritte lang.
       </p>
       
-      <p>In der Informatik in dieses Problem als "Traveling Salesman" berühmt geworden. Mit vielen Checkpoints auf dem Spielfeld wird es ziemlich schwer, eine optimale Route zu berechnen.
+      <p>In der Informatik in dieses Problem als "Traveling Salesman" berühmt geworden. Mit vielen Checkpoints auf dem Spielfeld wird es ziemlich schwer, eine optimale Route zu berechnen. Bislang ist es noch niemanden gelungen, einen schnellen Algorithmus für die optimale Route zu finden. Es gibt allerdings viele Möglichkeiten, das Problem anzunähern.
       </p>
     `,
     level : 1,
@@ -79,7 +79,10 @@ module.exports.exercises = {
       
       <p><img src="/images/l2_labyrinth.png" class="img-thumbnail"></p>
       
-      <p>In Zeile 5 bis 13 werden zwei Hilfsfunktionen definiert. Der neue Befehl <code>rechts</code> dreht die Ameise um 90 Grad nach rechts und geht 50 Schritte, der Befehl <code>links</code> tut das entsprechende nach links. Diese können wie vorgegebene Befehle verwendet werden, siehe Zeile 23 bis 25. Vergesse die Klammern nicht. Ergänze ab Zeile 26 den Code für das Team 0 und schreibe den Code für Team 1.
+      <p>In Zeile 5 bis 13 werden zwei Hilfsfunktionen definiert. Der neue Befehl <code>rechts</code> dreht die Ameise um 90 Grad nach rechts und geht 50 Schritte, der Befehl <code>links</code> tut das entsprechende nach links. Diese können wie vorgegebene Befehle verwendet werden, siehe Zeile 23 bis 25. Vergesse die Klammern nicht.
+      </p>
+      
+      <p>Ergänze ab Zeile 26 den Code für das Team 0 und schreibe den Code für Team 1.
       </p>
     `,
     level : 2,
@@ -93,7 +96,7 @@ module.exports.exercises = {
       
       <p>Diese Welt ist besonders, denn dort kannst du auf ganz andere Art mit deinem Programm und der Website interagieren. Aber diese Art ist auch viel geheimnisvoller ...</p>
       
-      <p>Hier sei dir verraten, wie du diese Welt betrittst:
+      <p>Die Welt befindet sich in der <em>Konsole</em> des Browser. Hier sei dir verraten, wie du sie betrittst:
         <ul>
           <li>Im Firefox: Strg + Shift + K</li>
           <li>Im Chrome: Strg + Shift + J</li>
@@ -102,6 +105,8 @@ module.exports.exercises = {
         </ul>
       </p>
       
+      <p>Dort findest du die Aufgabenstellung zu dieser Aufgabe.</p>
+      
       <script>console.log("Aufgabenstellung: Starte eine Simulation mit einem beliebigen Ameisenvolk. Innerhalb der Simulation werden dir auf der Konsole weitere Anweisungen gegeben.")
       </script>
     `,
@@ -109,24 +114,33 @@ module.exports.exercises = {
   },
   
   31 : {
-    name : "Schlaraffenland",
+    name : "Ganz allein",
     description : `
-      <p>Auf dem Spielfeld sind üppig Nahrungsmittel verteilt. Sammle insgesamt 600 Zucker und 2 Äpfel, um die Aufgabe zu lösen. Folge den Schritte aus dem Tutorial "Suchen und Finden".
+      <p>Du hast zu Anfang nur eine einzelne Ameise zur Verfügung. Baue damit den ganzen Zuckerhaufen ab und bringe ihn zum Bau. Der Zucker befindet sich bei (300|0).
       </p>
     `,
     level : 3,
   },
   
   33 : {
-    name : "Wanzenstraße",
+    name : "Verlockung",
     description : `
-      <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, den ganzen Zuckerhaufen abzubauen. Die Ameisen dürfen dabei die x-Achse nicht verlassen.
+      <p>Im Osten befinden sich einige Nahrungsmittel. Bringe davon zwei Zuckerhaufen und zwei Äpfel zum Bau. Lass dich nicht ablenken und tappe der Wanze nicht in die Falle.
       </p>
     `,
     level : 3,
   },
   
   35 : {
+    name : "Schlaraffenland",
+    description : `
+      <p>Auf dem Spielfeld sind üppig Nahrungsmittel verteilt. Sammle insgesamt 600 Zucker und 2 Äpfel, um die Aufgabe zu lösen.
+      </p>
+    `,
+    level : 3,
+  },
+  
+  37 : {
     name : "Alles oder nichts",
     description : `
       <p>Sammle alle Nahrungsmittel auf dem Spielfeld ein. Es sind genau 600 Zucker und 2 Äpfel.</p>
@@ -134,13 +148,61 @@ module.exports.exercises = {
     level : 3,
   },
   
-  37 : {
-    name : "Gefährliche Flucht",
+  39 : {
+    name : "Mehr Botschaften",
     description : `
-      <p>Verlasse mit mindestens 15 Ameisen den roten Bereich. Komm den Wanzen und den Gegner dabei nicht zu nahe!
+      <p>Es gibt noch mehr Orte, an denen Botschaften zu finden sind. Für diese Aufgabe braucht es einen Blick in den Quelltext dieser Seite.
       </p>
+      
+      <p>Du kannst den Quelltext mit der Tastenkombination Strg + U anzeigen lassen (Mac: cmd+alt+u). Dort findest du weitere Hinweise.
+      </p>
+      
+      <!--
+      
+      HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER!
+      
+      HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER!
+      
+      HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER! HIER!
+      
+      
+      Also, das ist also der Code, den ich als Programmierer schreibe, damit du eine Website siehst. Denn eine Website nur mit Text wäre ja laaangweilig.
+      
+      Wenn du die Aufgabe startest, wirst du für die Ameisen einen neuen Befehl haben: AntIT.DieAntwortIst(). Damit kannst du die Antwort abschicken und die Aufgabe lösen.
+      
+      Ein Beispiel: Wenn die Antwort HASE lautet, dann schreibst du folgenden Code:
+      
+      _________________________________________________________
+      
+      var Ameise = AntIT.NeueAmeise("Stufe 3 Aufgabe 5")
+      
+      Ameise.wenn("IstGeboren", function(){
+          AntIT.DieAntwortIst("HASE")
+      })
+      
+      _________________________________________________________
+      
+      
+      Und wie bekommst du die Antwort? Löse das Kreuzworträtsel, dass du unter folgenden Link findest:
+      
+      https://www.xwords-generator.de/de/solve/mws2q
+      
+      
+      Viel Spaß!
+      
+      
+      -->
     `,
     level : 3,
+  },
+  
+  44 : {
+    name : "Wanzenstraße",
+    description : `
+      <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, den ganzen Zuckerhaufen abzubauen. Die Ameisen dürfen dabei die x-Achse nicht verlassen.
+      </p>
+    `,
+    level : 4,
   },
   
   41 : {
@@ -208,6 +270,15 @@ module.exports.exercises = {
     description : `
     <p>Erreiche innerhalb der Simulation 4000 Punkte. Achte darauf, dass keine Ameise stirbt.
     </p>
+    `,
+    level : 5,
+  },
+  
+  54 : {
+    name : "Gefährliche Flucht",
+    description : `
+      <p>Verlasse mit mindestens 15 Ameisen den roten Bereich. Komm den Wanzen und den Gegner dabei nicht zu nahe!
+      </p>
     `,
     level : 5,
   },

@@ -13,14 +13,14 @@
       <p class="lead font-weight-normal">Steuere Ameisen, sammle Nahrung, kämpfe gegen Wanzen. Tauche in die Welt der Informatik ein. Und lerne gleichzeitg das Programmieren.</p>
     </div>
     
-    <div style="height:5rem"></div>
+    <div style="height:2rem"></div>
     
     <h2>Aktuelle Kolonien</h2>
     
-    <ul class="list-group">
+    <ul class="list-group" style="max-width:350px">
 	  <% for(var i = 0; i < colonies.length; i++) { %>
 	    <% if (!colonies[i].active) continue %>
-	    <li class="list-group-item"><a href="/login/<%=colonies[i].colonyName%>"><%=colonies[i].description%></a></li>
+	    <li class="list-group-item py-2"><a href="/login/<%=colonies[i].colonyName%>"><%=colonies[i].description%></a></li>
 	  <% } %>
 	  </ul>
     

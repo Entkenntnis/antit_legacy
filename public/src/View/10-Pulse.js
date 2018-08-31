@@ -32,8 +32,17 @@
     bus.emit('pre-tick')
     Sim.Update()
     bus.emit('post-tick')
-    var runState = Math.round((Sim.getCycles()-1) / Optionen.Runden * 100);
-    bus.emit('update-status', "Fortschritt: " + runState + "%  / Tick " + Math.floor(Sim.getCycles()/10)*10)
+    updateStatus()
+  }
+  
+  var lastStatusUpdate = 0
+  
+  function updateStatus() {
+    if (Date.now() - lastStatusUpdate > 50) {
+      var runState = Math.round((Sim.getCycles()-1) / Optionen.Runden * 100);
+      bus.emit('update-status', "Tick " + Sim.getCycles() + "/" + Optionen.Runden + " (" + runState + "%)")
+      lastStatusUpdate = Date.now()
+    }
   }
   
   Pulse.Tick = function() {
@@ -97,7 +106,8 @@
   }
   
   AntIT.SetzeSeed = function(seed) {
-    Sim.seed(seed)
+    if (seed)
+      Sim.seed(seed)
   }
 
 })(AntIT._view);

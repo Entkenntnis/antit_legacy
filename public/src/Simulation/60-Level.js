@@ -168,17 +168,8 @@
         })
       },
       isDone : function(){
-        if (Sim.ants.length == 20) {
-          var ok = true
-          Sim.ants.forEach(function(a){
-            /*if (Sim.Util.dist({x:763,y:234}, f.getPos()) > 10)
-              ok = false*/
-            if (!(a.hasc1 && a.hasc2 && a.hasc3)) ok = false
-          })
-          if (ok)
-            return true
-        }
-        return false
+        return Sim.ants.length == 20 &&
+          Sim.ants.every(function(a){ return a.hasc1 && a.hasc2 && a.hasc3 })
       }
     },
     13 : {
@@ -387,14 +378,14 @@
         setTimeout(function(){
           console.log("Unten an der Konsole findest du eine Befehlszeile.")
           setTimeout(function(){
-            console.log("Tippe dort \"WeitereInfos()\" ein und drücke auf Enter. Die Anführungszeichen werden nicht mitgeschrieben.")
+            console.log("Tippe dort WeitereInfos() ein und drücke auf Enter.")
             window.WeitereInfos = function(){
               delete window.WeitereInfos
               console.log("Super gemacht...")
               setTimeout(function(){
                 console.log("Du bist ja schon ein richtiger Profi :)")
                 setTimeout(function(){
-                  console.log("Tippe als nächstes \"InfoObjekt\" ein und drücke Enter.")
+                  console.log("Tippe als nächstes InfoObjekt ein und drücke Enter.")
                   window.InfoObjekt = {
                     lalala:123,
                     lol:4543,
@@ -402,11 +393,11 @@
                   }
                   setTimeout(function(){
                     delete window.InfoObjekt
-                    console.log("Wir sollten uns besser kennenlernen. Schreibe mir deinen Namen. Füge ihn dazu in den Befehl \"MeinNameIst()\" ein. Wenn du Max heißt, dann würdest du schreiben: \"MeinNameIst(\"Max\")\"")
+                    console.log("Wir sollten uns besser kennenlernen. Schreibe mir deinen Namen. Füge ihn dazu in den Befehl MeinNameIst() ein. Wenn du Max heißt, dann würdest du schreiben: MeinNameIst(\"Max\")")
                     window.MeinNameIst = function(name) {
                       if (name != undefined && typeof name == "string" &&  name.length > 1) {
                         delete window.MeinNameIst
-                        console.log("Hallo " + name + ", wie alt bist du denn? Schreibe mir das im Befehl \"MeinAlterIst()\". Wenn du 12 Jahre alt bist, dann würdest du schreiben: \"MeinAlterIst(12)\" (Zahlen werden ohne Anführungszeichen geschrieben).")
+                        console.log("Hallo " + name + ", wie alt bist du denn? Schreibe mir das im Befehl MeinAlterIst(). Wenn du 12 Jahre alt bist, dann würdest du schreiben: MeinAlterIst(12) (Zahlen werden ohne Anführungszeichen geschrieben).")
                         window.MeinAlterIst = function(alter) {
                           delete window.MeinAlterIst
                           if (typeof alter == "number" && alter > 5 && alter < 100) {
@@ -414,7 +405,7 @@
                             setTimeout(function(){
                                console.log("Hier ist zum Schluss noch ein Rätsel:")
                                setTimeout(function(){
-                                 console.log("Multipliziere dein Alter mit 3. Addiere dazu die Anzahl der Buchstaben deines Namens. Ziehe von dieser Zahl 10 ab und multipliziere das Ergebnis wieder mit drei. Sage mir die Antwort mit \"DieAntwortIst()\".")
+                                 console.log("Multipliziere dein Alter mit 3. Addiere dazu die Anzahl der Buchstaben deines Namens. Ziehe von dieser Zahl 10 ab und multipliziere das Ergebnis wieder mit drei. Sage mir die Antwort mit DieAntwortIst().")
                                  window.DieAntwortIst = function(answer) {
                                    if (answer === (((alter * 3) + name.length) - 10) * 3) {
                                      console.log("yo")
@@ -448,8 +439,47 @@
         return Sim.l2_done
       }
     },
-    
+ 
     31 : {
+      init : function() {
+        defaultLevelInit()
+        Sim.Opts.Runden = 3000
+        Sim.Opts.ZuckerGröße = 100
+        Sim.Opts.AnfangsEnergie = 200
+      },
+      create : function(){
+        defaultLevelCreate()
+        Sim.sugars.push(new Sim.Sugar(locPos(300, 0)))
+      },
+      isDone : function(){
+        return Sim.players[0].getSugar() >= 100
+      }
+    },
+ 
+    33 : {
+      init : function() {
+        defaultLevelInit()
+        Sim.Opts.Runden = 3000
+        Sim.Opts.ZuckerGröße = 50
+      },
+      create : function(){
+        defaultLevelCreate()
+        var delta = 300 + Sim.rng()*40
+        var y = Sim.rng()*30 - 15
+        Sim.sugars.push(new Sim.Sugar(locPos(delta, y)))
+        Sim.apples.push(new Sim.Apple(locPos(delta+65, y)))
+        Sim.sugars.push(new Sim.Sugar(locPos(delta+65+60, y)))
+        Sim.apples.push(new Sim.Apple(locPos(delta+65+60+55, y)))
+        Sim.sugars.push(new Sim.Sugar(locPos(delta+65+60+55+50, y)))
+        Sim.bugs.push(new Sim.Bug(locPos(delta+65+60+55+50+25, y)))
+        Sim.apples.push(new Sim.Apple(locPos(delta+65+60+55+50+45, y)))
+      },
+      isDone : function(){
+        return Sim.players[0].getSugar() >= 100 && Sim.players[0].getApple() >= 2
+      }
+    },
+    
+    35 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 3000
@@ -473,74 +503,7 @@
       }
     },
     
-    33 : {
-      init : function() {
-        defaultLevelInit()
-        Sim.Opts.Runden = 4000
-        Sim.Opts.ZuckerGröße = 500
-      },
-      create : function(){
-        defaultLevelCreate()
-        var needAlert = true
-        window.SetzeGift = function(){
-          if (needAlert) {
-            needAlert = false
-            alert("Gift kann nicht eingesetzt werden.")
-          }
-        }
-        function pushBug(x,y,h){
-          var bug = new Sim.Bug(locPos(x,y))
-          bug.setHeading(h)
-          Sim.bugs.push(bug)
-        }
-        pushBug(150,100,90)
-        pushBug(150,200,90)
-        pushBug(150,300,90)
-        pushBug(150,-200,90)
-        pushBug(150,-300,90)
-        pushBug(150,-400,90)
-        pushBug(350,0,270)
-        pushBug(350,50,270)
-        pushBug(350,350,270)
-        pushBug(350,400,270)
-        pushBug(350,-300,270)
-        pushBug(350,-350,270)
-        pushBug(550,-350,90)
-        pushBug(550,-300,90)
-        pushBug(550,-200,90)
-        pushBug(550,-150,90)
-        pushBug(550,150,90)
-        pushBug(550,350,90)
-        Sim.sugars.push(new Sim.Sugar(locPos(700,0)))
-      },
-      update : function(){
-        Sim.bugs.forEach(function(bug){
-          var pos = bug.getPos()
-          pos = Sim.Util.moveDir(pos, bug.getHeading(), 2)
-          if (pos.y < 0) {
-            pos.y = Sim.playground.getHeight()
-          } else if (pos.y > Sim.playground.getHeight()) {
-            pos.y = 0
-          }
-          bug.setPos(pos)
-        })
-      },
-      failed : function(){
-        var failed = false
-        Sim.ants.forEach(function(ant){
-          if (Math.abs(ant.getPos().y-hilly) > 5) {
-            failed = true
-            alert("Ameise hat die x-Achse verlassen.")
-          }
-        })
-        return failed
-      },
-      isDone : function(){
-        return Sim.players[0].getSugar() >= 500
-      }
-    },
-    
-    35 : {
+    37 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 5000
@@ -564,56 +527,24 @@
       }
     },
     
-    37 : {
+    39 : {
       init : function() {
         defaultLevelInit()
-        Sim.Opts.Runden = 5000
-        Sim.Opts.ZuckerGröße = 100
-        Sim.Opts.WanzenKampfweite = 20
+        Sim.Opts.Runden = 100
+        Sim.Opts.AnfangsEnergie = 200
+        AntIT.DieAntwortIst = function(x){
+          if (x.toLowerCase() == "alanturing") {
+            Sim.l3_done = true
+          } else {
+            alert("Die Antwort '" + x + "' ist falsch.")
+          }
+        }
       },
       create : function(){
         defaultLevelCreate()
-        var needAlert = true
-        window.SetzeGift = function(){
-          if (needAlert) {
-            needAlert = false
-            alert("Gift kann bei dieser Flucht nicht eingesetzt werden.")
-          }
-        }
-        var gap1 = Math.floor(Sim.rng()*36)*10
-        for (var i = 0; i < 360; i += 10) {
-          if (i < gap1-10 || i > gap1+10)
-            Sim.bugs.push(new Sim.Bug(Sim.Util.moveDir(locPos(0,0), i, 200)))
-        }
-        var gap2 = (gap1+180)%360
-        for (var i = 0; i < 360; i += 5) {
-          if (i < gap2-10 || i > gap2+10)
-            Sim.ants.push(new Sim.Ant(Sim.Util.moveDir(locPos(0,0), i, 400), 1, true))
-        }
-        Sim.Bus.emit('set-ring', locPos(0,0), 0xaa0000, {inner:430,outer:440})
-      },
-      update : function(){
-        Sim.ants.forEach(function(a){
-          if (a.getPlayerid() == 1) {
-            Sim.ants.forEach(function(b){
-              if (b.getPlayerid() == 0) {
-                if (Sim.Util.dist(a.getPos(), b.getPos()) < 20) {
-                  b.subEnergy(100)
-                }
-              }
-            })
-          }
-        })
       },
       isDone : function(){
-        var count = 0
-        Sim.ants.forEach(function(a){
-          if (a.getPlayerid() == 0) {
-            if (Sim.Util.dist(a.getPos(), locPos(0,0)) > 440)
-              count++
-          }
-        })
-        return count >= 15
+        return Sim.l3_done
       }
     },
     
@@ -711,6 +642,73 @@
             }
           }
         })
+      }
+    },
+    
+    44 : {
+      init : function() {
+        defaultLevelInit()
+        Sim.Opts.Runden = 4000
+        Sim.Opts.ZuckerGröße = 500
+      },
+      create : function(){
+        defaultLevelCreate()
+        var needAlert = true
+        window.SetzeGift = function(){
+          if (needAlert) {
+            needAlert = false
+            alert("Gift kann nicht eingesetzt werden.")
+          }
+        }
+        function pushBug(x,y,h){
+          var bug = new Sim.Bug(locPos(x,y))
+          bug.setHeading(h)
+          Sim.bugs.push(bug)
+        }
+        pushBug(150,100,90)
+        pushBug(150,200,90)
+        pushBug(150,300,90)
+        pushBug(150,-200,90)
+        pushBug(150,-300,90)
+        pushBug(150,-400,90)
+        pushBug(350,0,270)
+        pushBug(350,50,270)
+        pushBug(350,350,270)
+        pushBug(350,400,270)
+        pushBug(350,-300,270)
+        pushBug(350,-350,270)
+        pushBug(550,-350,90)
+        pushBug(550,-300,90)
+        pushBug(550,-200,90)
+        pushBug(550,-150,90)
+        pushBug(550,150,90)
+        pushBug(550,350,90)
+        Sim.sugars.push(new Sim.Sugar(locPos(700,0)))
+      },
+      update : function(){
+        Sim.bugs.forEach(function(bug){
+          var pos = bug.getPos()
+          pos = Sim.Util.moveDir(pos, bug.getHeading(), 2)
+          if (pos.y < 0) {
+            pos.y = Sim.playground.getHeight()
+          } else if (pos.y > Sim.playground.getHeight()) {
+            pos.y = 0
+          }
+          bug.setPos(pos)
+        })
+      },
+      failed : function(){
+        var failed = false
+        Sim.ants.forEach(function(ant){
+          if (Math.abs(ant.getPos().y-hilly) > 5) {
+            failed = true
+            alert("Ameise hat die x-Achse verlassen.")
+          }
+        })
+        return failed
+      },
+      isDone : function(){
+        return Sim.players[0].getSugar() >= 500
       }
     },
     
@@ -921,6 +919,59 @@
       isDone : function(){
         return Sim.players[0].getPoints() >= 4000 && Sim.players[0].getDeadAnts() == 0
       },
+    },
+    
+    54 : {
+      init : function() {
+        defaultLevelInit()
+        Sim.Opts.Runden = 5000
+        Sim.Opts.ZuckerGröße = 100
+        Sim.Opts.WanzenKampfweite = 20
+      },
+      create : function(){
+        defaultLevelCreate()
+        var needAlert = true
+        window.SetzeGift = function(){
+          if (needAlert) {
+            needAlert = false
+            alert("Gift kann bei dieser Flucht nicht eingesetzt werden.")
+          }
+        }
+        var gap1 = Math.floor(Sim.rng()*36)*10
+        for (var i = 0; i < 360; i += 10) {
+          if (i < gap1-10 || i > gap1+10)
+            Sim.bugs.push(new Sim.Bug(Sim.Util.moveDir(locPos(0,0), i, 200)))
+        }
+        var gap2 = (gap1+180)%360
+        for (var i = 0; i < 360; i += 5) {
+          if (i < gap2-10 || i > gap2+10)
+            Sim.ants.push(new Sim.Ant(Sim.Util.moveDir(locPos(0,0), i, 400), 1, true))
+        }
+        Sim.Bus.emit('set-ring', locPos(0,0), 0xaa0000, {inner:430,outer:440})
+      },
+      update : function(){
+        Sim.ants.forEach(function(a){
+          if (a.getPlayerid() == 1) {
+            Sim.ants.forEach(function(b){
+              if (b.getPlayerid() == 0) {
+                if (Sim.Util.dist(a.getPos(), b.getPos()) < 20) {
+                  b.subEnergy(100)
+                }
+              }
+            })
+          }
+        })
+      },
+      isDone : function(){
+        var count = 0
+        Sim.ants.forEach(function(a){
+          if (a.getPlayerid() == 0) {
+            if (Sim.Util.dist(a.getPos(), locPos(0,0)) > 440)
+              count++
+          }
+        })
+        return count >= 15
+      }
     },
  
     55 : {

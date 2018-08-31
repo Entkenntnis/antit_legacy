@@ -117,10 +117,8 @@
             <% if (user.level >= 3) { %>
             
             , "GeheZuZiel"
-            , "Warte"
-            , "DreheWegVonObjekt"
-            , "DreheZuObjekt"
-            , "Reichweite"
+            , "GeheZuZielDirekt"
+            , "GeheZuBauDirekt"
             
             <% } %>
             
@@ -129,9 +127,9 @@
             <% if (user.level >= 4) { %>
             
             , "SetzeGift"
-            , "GeheZuBauDirekt"
-            , "GeheZuZielDirekt"
             , "Zufall"
+            , "FühreAlteBefehleAus"
+            , "Warte"
             
             <% } %>
             
@@ -139,10 +137,12 @@
             
             <% if (user.level >= 5) { %>
             
-            , "Runde"
-            , "Position"
+            , "TickZahl"
+            , "SchrittZahl"
             , "SendeNachricht"
             , "SetzeLimit"
+            , "DreheWegVonObjekt"
+            , "DreheZuObjekt"
             
             <% } %>
             
@@ -152,6 +152,7 @@
             <% if (user.level >= 6 ) { %>
             
             , "Gedächtnis"
+            , "Position"
             // , "SendeSelber"
             // , "Zufallszahl"
             , "Zufallsname"
