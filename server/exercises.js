@@ -183,9 +183,11 @@ module.exports.exercises = {
       _________________________________________________________
       
       
-      Und wie bekommst du die Antwort? Löse das Kreuzworträtsel, dass du unter folgenden Link findest:
+      Und wie bekommst du die Antwort? Löse das Kreuzworträtsel, welches du unter folgenden Link findest:
       
-      https://www.xwords-generator.de/de/solve/mws2q
+      ants.arrrg.de/extern/raetsel/informatik.html
+      
+      (Oder mit einem anderen Host, je nach Startseite deines Servers)
       
       
       Viel Spaß!
