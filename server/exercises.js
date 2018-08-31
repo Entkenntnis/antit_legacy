@@ -198,25 +198,7 @@ module.exports.exercises = {
     level : 3,
   },
   
-  44 : {
-    name : "Wanzenstraße",
-    description : `
-      <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, den ganzen Zuckerhaufen abzubauen. Die Ameisen dürfen dabei die x-Achse nicht verlassen.
-      </p>
-    `,
-    level : 4,
-  },
-  
   41 : {
-    name : "Kampf den Wanzen",
-    description : `
-      <p>Eine Gruppe von Wanzen hat sich um den Bau herum niedergelassen. Dein Ameisenvolk hat sie als Gefahr erkannt und möchte sie gerne beseitigen. Vergifte innerhalb der Zeit alle Wanzen auf dem Spielfeld.
-      </p>
-    `,
-    level : 4,
-  },
-  
-  43 : {
     name : "Verteidigung",
     description : `
       <p>Eine Horde gegnerischer Ameisen greift deinen Bau an! Verteidige dich und stelle sicher, dass bis Ende der Simulation kein Gegner die gelbe Zone um den Bau betritt.
@@ -225,12 +207,19 @@ module.exports.exercises = {
     level : 4,
   },
   
-  45 : {
-    name : "Apfelsaison",
+  43 : {
+    name : "Kampf den Wanzen",
     description : `
-      <p>Es ist Erntezeit und viele Äpfel liegen vor der Tür. Sammle mit deinem Ameisenvolk 25 Äpfel ein, um die Aufgabe zu erfüllen.
+      <p>Eine Gruppe von Wanzen hat sich um den Bau herum niedergelassen. Dein Ameisenvolk hat sie als Gefahr erkannt und möchte sie beseitigen. Vergifte alle Wanzen auf dem Spielfeld.
       </p>
-      <p>Ein Problem gibt es aber: Die ganze Umgebung riecht nach Apfel und die meisten Ameisen denken fälschlicherweise, dass sich die Äpfel im grünen Bereich befinden.
+    `,
+    level : 4,
+  },
+  
+  45 : {
+    name : "Wanzenstraße",
+    description : `
+      <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, insgesamt 250 Zucker zu sammeln.
       </p>
     `,
     level : 4,
@@ -239,20 +228,22 @@ module.exports.exercises = {
   47 : {
     name : "Befreiungsaktion",
     description : `
-      <p>Die Wanzen haben die wertvollen Nahrungsmittel umzingelt. Befreie die Nahrungsmittel und sammle 400 Zucker und 2 Äpfel.
+      <p>Die Gegner haben die wertvollen Nahrungsmittel umzingelt. Befreie die Nahrungsmittel und sammle 400 Zucker und 2 Äpfel. Komme den Gegnern nicht zu nahe, diese können deine Ameisen lähmen.
       </p>
     `,
     level : 4,
   },
   
   49 : {
-    name : "Code-Knacker",
+    name : "Scan-Meise",
     description : `
-      <p>Um den Bau herum befinden sich vier Checkpoints mit folgender Belegung: Ost=1, Süd=2, West=3 und Nord=4. Das Ziel der Aufgabe ist es, den Code zu knacken. Der Code besteht aus vier Ziffern zwischen 1 und 4, die den Checkpoints entsprechen. Die Ameisen sollen entsprechend dem Code die Checkpoints ablaufen.
+      <p>Über dem Bau findest du eine Liste von fünf Objekten. Für jede Objektart gibt es im unteren Bereich einen entsprechenden Checkpoint. Deine Scan-Meise hat die Aufgabe, die fünf Objekte abzufahren und dann die Checkpoints in der richtigen Reihenfolge zu besuchen.
       </p>
-      <p>Ein Beispiel: Wenn der Code 4,2,2,3 lautet, dann muss eine Ameise zuerst den Checkpoint im Norden besuchen, dann den Checkpoint im Süden, diesen wieder verlassen und wieder besuchen und zum Schluss den Checkpoint im Westen besuchen. Ist der Code richtig, wird die Aufgabe abgeschlossen. Ist der Code falsch, wird eine entsprechende Nachricht in der Konsole ausgegeben. Schaue dort nach, um weitere Ausgaben zu erhalten.
+      
+      <p>Ein Beispiel: Wenn Nr. 1 ein Apfel ist, Nr. 2 ein Zucker und Nr. 3 bis Nr. 5 Wanzen sind, dann soll die Scan-Meise zuerst den Apfelcheckpoint im Osten besuchen, dann den Zuckercheckpoint im Süden und schließlich dreimal den Wanzencheckpoint im Westen.
       </p>
-      <p>Während jeder Simulation wird der Code neu generiert. Es gibt keine Möglichkeit, diesen Code auszulesen - er muss erraten werden.
+      
+      <p>Der Schlüssel zu dieser Aufgabe ist der geschickte Einsatz von <code>FühreAlteBefehleAus()</code>.
       </p>
     `,
     level : 4,

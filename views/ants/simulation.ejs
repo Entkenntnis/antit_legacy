@@ -143,7 +143,7 @@
                 <%-c.code%>
               })();
             <% } else { %>
-              <% var exportCode = btoa('(function(){' + c.code + '}).call(42);') %>
+              <% var exportCode = btoa('(function(){' + c.code + '\n}).call(42);') %>
               var whitelist = ['AntIT', 'Gehe', 'Drehe', 'DreheZuRichtung', 'GeheZuBau', 'NimmZucker', 'LadeZuckerAb', 'TrageApfel', 'GeheZuZiel', 'Warte', 'SetzeGift', 'SchrittZahl', 'TickZahl', 'Distanz', 'Bau', 'Position', 'DreheWegVonObjekt', 'DreheZuObjekt', 'Gedächtnis', 'SendeNachricht', 'Zufallsname', 'consolebku', 'Aktiv', 'InTeam', 'SetzeLimit', 'Zufall', 'GeheZuBauDirekt', 'GeheZuZielDirekt', 'Object', 'alert', 'FühreAlteBefehleAus', 'Richtung', 'HatZucker', 'HatApfel']
               var consolebku = {log:console.log}
         
