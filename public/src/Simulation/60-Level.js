@@ -1107,6 +1107,9 @@
         if (m == "B") {
           return ns[3] - ns[1]
         }
+        if (m == "C") {
+          return ns[3] * ns[4]
+        }
       }
       function addTest(title, arr, m) {
         test.addTest({
@@ -1119,6 +1122,7 @@
       }
       addTest("Beispiel A", [2, 3, 4.5, 1, 2], "A")
       addTest("Beispiel B", [2, 3, 4.5, 1, 2], "B")
+      addTest("Beispiel C", [2, 3, 4.5, 1, 2], "C")
       function numGen(nd, sm){
         var diff = !nd?Math.floor(Sim.rng()*8)/8:0
         return Math.floor(sm?Sim.rng()*10+2:Sim.rng()*100-50) + diff
@@ -1126,12 +1130,130 @@
       var arr = [numGen(), numGen(true, true), numGen(), numGen(), numGen(true, true)]
       addTest("Zufall 1 A", arr.slice(0), "A")
       addTest("Zufall 1 B", arr.slice(0), "B")
+      addTest("Zufall 1 C", arr.slice(0), "C")
       var arr2 = [numGen(), numGen(true, true), numGen(), numGen(), numGen(true, true)]
       addTest("Zufall 2 A", arr2.slice(0), "A")
       addTest("Zufall 2 B", arr2.slice(0), "B")
+      addTest("Zufall 2 C", arr2.slice(0), "C")
     }),
  
     73 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Check")[0]
+      function solution(arr) {
+        if (arr.length == 0)
+          return "Array ist leer"
+        if (arr.length == 1)
+          return "Array besteht aus genau einem Element"
+        else
+          return arr.length
+      }
+      function addTest(title, arr) {
+        test.addTest({
+          title:title + " (" + arr.length + ")",
+          description:"Teste ein Array der Länge " + arr.length,
+          expected:solution(arr),
+          userFunc:userFunc,
+          params:[arr]
+        })
+      }
+      addTest("Leeres Array", [])
+      addTest("Array mit einem Element", [4])
+      addTest("Großes Array 1", [4,5,6,7,8,9])
+      addTest("Großes Array 2", [1,2,3,4,5,6,7,8,9,10])
+      addTest("Großes Array 3", [1,2,4,5,7,8,1,2,4,5,7,8,1,2,6,7,9,8,9])
+      for (var i = 0; i < 4; i++) {
+        var arr = []
+        arr.length = Math.floor(Sim.rng()*40)
+        addTest("Zufallstest " + (i+1), arr)
+      }
+    }),
+ 
+    75 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Mittelwert")[0]
+      var buffer = [0,0,0,0]
+      function solution(x) {
+        buffer.push(x)
+        buffer.shift()
+        return (buffer[0] + buffer[1] + buffer[2] + buffer[3]) / 4
+      }
+      function addTest(title, x) {
+        test.addTest({
+          title:title + " (füge " + x + " hinzu)",
+          description:"Füge neuen Datenpunkt " + x + " hinzu.",
+          expected:solution(x),
+          userFunc:userFunc,
+          params:[x]
+        })
+      }
+      addTest("Beispiel 1", 4)
+      addTest("Beispiel 2", 8)
+      addTest("Beispiel 3", 6)
+      addTest("Neuer Wert 1", 6)
+      addTest("Neuer Wert 2", 16)
+      addTest("Neuer Wert 3", 18)
+      addTest("Neuer Wert 4", 24)
+      for (var i = 0; i < 6; i++) {
+        addTest("Zufallswert " + (i+1), Math.floor(Sim.rng()*100))
+      }
+    }),
+ 
+    77 : makeTestLevel(function(test){
+      var userFunc1 = Sim.players[0].getKI().Bus.getHandler("#Anfrage")[0]
+      var userFunc2 = Sim.players[0].getKI().Bus.getHandler("#Besuch")[0]
+      var list = []
+      function add(name) {
+        if (list.length < 4) {
+          list.push(name)
+          return "Okay"
+        } else
+          return "Besucherliste leider voll"
+      }
+      function visit(name) {
+        if (list[0] == name) {
+          list.shift()
+          return "Herzlich Willkommen"
+        } else {
+          return "Leider nicht angemeldet"
+        }
+      }
+      function addTest1(title, name) {
+        test.addTest({
+          title:title + " (Anfrage " + name + ")",
+          description:"Neue Anfrage von " + name,
+          expected:add(name),
+          userFunc:userFunc1,
+          params:[name]
+        })
+      }
+      function addTest2(title, name) {
+        test.addTest({
+          title:title + " (Besuch " + name + ")",
+          description:"Person " + name + " ist zu Besuch",
+          expected:visit(name),
+          userFunc:userFunc2,
+          params:[name]
+        })
+      }
+      addTest1("Beispiel 1", "Thomas Hook")
+      addTest1("Beispiel 2", "Fabian Taggart")
+      addTest2("Beispiel 3", "Thomas Hook")
+      addTest2("Beispiel 4", "Max Müller")
+      addTest1("Viele Anfragen 1", "Gabriel Tall")
+      addTest1("Viele Anfragen 2", "Moritz West")
+      addTest1("Viele Anfragen 3", "Hagen Murr")
+      addTest1("Viele Anfragen 4", "Timon Rust")
+      addTest1("Viele Anfragen 5", "John Galt")
+      addTest2("Viele Besucher 1", "Fabian Taggart")
+      addTest2("Viele Besucher 2", "Timon Rust")
+      addTest2("Viele Besucher 3", "Gabriel Tall")
+      addTest2("Viele Anfragen 4", "Hagen Murr")
+      addTest2("Viele Anfragen 5", "Moritz West")
+      addTest2("Viele Anfragen 6", "Hagen Murr")
+      addTest2("Viele Anfragen 7", "Max Müller")
+      
+    }),
+ 
+    79 : makeTestLevel(function(test){
       var userFunc = Sim.players[0].getKI().Bus.getHandler("#Rechenmaschine")[0]
       function solution(ns, m) {
         if (m == "A") {
@@ -1141,12 +1263,15 @@
           return ns[0] * ns[1] * ns[2] * ns[3] / ns[4]
         }
         if (m == "C") {
-          return ns[3] - ns[1]
+          return ns[3] * ns[4]
         }
         if (m == "D") {
-          return Math.round(ns[2])
+          return ns[3] - ns[1]
         }
         if (m == "E") {
+          return Math.round(ns[2])
+        }
+        if (m == "F") {
           return Math.pow(ns[0], ns[1])
         }
       }
@@ -1164,6 +1289,7 @@
       addTest("Beispiel C", [2, 3, 4.5, 1, 2], "C")
       addTest("Beispiel D", [2, 3, 4.5, 1, 2], "D")
       addTest("Beispiel E", [2, 3, 4.5, 1, 2], "E")
+      addTest("Beispiel F", [2, 3, 4.5, 1, 2], "F")
       function numGen(nd, sm){
         var diff = !nd?Math.floor(Sim.rng()*8)/8:0
         return Math.floor(sm?Sim.rng()*10+2:Sim.rng()*100-50) + diff
@@ -1174,66 +1300,7 @@
       addTest("Zufall C", arr.slice(0), "C")
       addTest("Zufall D", arr.slice(0), "D")
       addTest("Zufall E", arr.slice(0), "E")
-    }),
- 
-    75 : makeTestLevel(function(test){
-      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Warteschlange")[0]
-      function addTest(title, zahl) {
-        test.addTest({
-          title:title,
-          description:"Teste die Zahl " + zahl,
-          expected:zahl==0?"Zahl ist null":(zahl>0?"Zahl ist positiv":"Zahl ist negativ"),
-          userFunc:userFunc,
-          params:[zahl]
-        })
-      }
-      addTest("Null-Test", 0)
-      addTest("Positiv-Test", 1)
-      addTest("Negativ-Test", -1)
-      for (var i = 1; i <= 4; i++) {
-        var number = Math.floor(Math.random()*30000) - 15000
-        addTest("Zufallstest " + i + " mit Zahl " + number, number)
-      }
-    }),
- 
-    77 : makeTestLevel(function(test){
-      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Vorzeichen")[0]
-      function addTest(title, zahl) {
-        test.addTest({
-          title:title,
-          description:"Teste die Zahl " + zahl,
-          expected:zahl==0?"Zahl ist null":(zahl>0?"Zahl ist positiv":"Zahl ist negativ"),
-          userFunc:userFunc,
-          params:[zahl]
-        })
-      }
-      addTest("Null-Test", 0)
-      addTest("Positiv-Test", 1)
-      addTest("Negativ-Test", -1)
-      for (var i = 1; i <= 4; i++) {
-        var number = Math.floor(Math.random()*30000) - 15000
-        addTest("Zufallstest " + i + " mit Zahl " + number, number)
-      }
-    }),
- 
-    79 : makeTestLevel(function(test){
-      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Vorzeichen")[0]
-      function addTest(title, zahl) {
-        test.addTest({
-          title:title,
-          description:"Teste die Zahl " + zahl,
-          expected:zahl==0?"Zahl ist null":(zahl>0?"Zahl ist positiv":"Zahl ist negativ"),
-          userFunc:userFunc,
-          params:[zahl]
-        })
-      }
-      addTest("Null-Test", 0)
-      addTest("Positiv-Test", 1)
-      addTest("Negativ-Test", -1)
-      for (var i = 1; i <= 4; i++) {
-        var number = Math.floor(Math.random()*30000) - 15000
-        addTest("Zufallstest " + i + " mit Zahl " + number, number)
-      }
+      addTest("Zufall F", arr.slice(0), "F")
     }),
  
     81 : {

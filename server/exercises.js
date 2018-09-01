@@ -359,7 +359,7 @@ module.exports.exercises = {
   },
   
   71 : {
-    name : "Rechenmaschine I [JS]",
+    name : "Rechenmaschine [JS]",
     description : `
       <p>Dir wird ein Array aus Zahlen gegeben. Je nach Modus soll ein bestimmter Wert berechnet werden. Ergänze folgende Funktion:
       </p>
@@ -368,12 +368,14 @@ module.exports.exercises = {
       
       <p>In <code style="color:blue">arr</code> ist ein Array mit fünf Einträgen gespeichert, <code style="color:blue">modus</code> gibt die Rechenvorschrift an. Es sollen folgende Möglichkeiten programmiert werden:<br>
       1. Modus <code style="color:brown">"A"</code>: Berechne die Summe des 1., 2. und 3. Eintrags.<br>
-      2. Modus <code style="color:brown">"B"</code>: Berechne die Differenz des 4. und des 2. Eintrags.</p>
+      2. Modus <code style="color:brown">"B"</code>: Berechne die Differenz des 4. und des 2. Eintrags.<br>
+      3. Modus <code style="color:brown">"C"</code>: Berechne das Produkt des 4. und 5. Eintrags.</p>
       
       <p>Beispiel:<pre>arr = [2, 3, 4.5, 1, 2]
       
 Ergebnis "A": 2 + 3 + 4.5 = 9.5
-Ergebnis "B": 1 - 3 = -2</pre></p>
+Ergebnis "B": 1 - 3 = -2
+Ergebnis "C": 1 * 2 = 2</pre></p>
 
       <p><br>Tipp: Beachte, dass der erste Eintrag den Index 0 hat.</p>
     `,
@@ -381,44 +383,110 @@ Ergebnis "B": 1 - 3 = -2</pre></p>
   },
   
   73 : {
-    name : "Rechenmaschine II [JS]",
+    name : "Array-Check [JS]",
     description : `
-      <p>Ergänze die Rechenmaschine um folgende Modi:<br>
-      3. Modus <code style="color:brown">"C"</code>: Berechne das Produkt der ersten vier Einträge und dividiere es durch den fünften Eintrag.<br>
-      4. Modus <code style="color:brown">"D"</code>: Gib den gerundeten Wert des 3. Eintrags zurück.<br>
-      5. Modus <code style="color:brown">"E"</code>: Berechne den 1. Eintrag hoch den 2. Eintrag.</p>
+      <p>Führe eine Analyse auf einem Array durch. Ergänze dazu folgende Funktion:
+      </p>
       
-      <p>Beispiel:<pre>arr = [2, 3, 4.5, 1, 2]
+      <p><img class="img-thumbnail" src="/images/l7_check.png"></p>
       
-Ergebnis "A": 2 + 3 + 4.5 = 9.5
-Ergebnis "B": 1 - 3 = -2
-Ergebnis "C": (2 * 3 * 4.5 * 1) / 2 = 27 / 2 = 13.5
-Ergebnis "D": 4.5 ~= 5
-Ergebnis "E": 2 hoch 3 = 8</pre></p>
+      <p>Unterscheide dabei folgende Fälle:<br>
+      1. Ist das Array leer, dann gib die Antwort <code style="color:brown">"Array ist leer"</code><br>
+      2. Hat das Array die Länge 1, dann gib die Antwort <code style="color:brown">"Array besteht aus genau einem Element"</code><br>
+      3. Hat das Array mehr als ein Element, dann gib die Länge des Arrays zurück.
     `,
     level : 7,
   },
   
   75 : {
-    name : "Warteschlange I [JS]",
+    name : "Gleitender Mittelwert [JS]",
     description : `
-      <p></p>
+      <p>Für eine Datenreihe soll ein gleitender Mittelwert berechnet werden. Die Werte werden wir nacheinander einzeln übergeben. Ergänze folgende Vorlage:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_mittel.png"></p>
+      
+      <p>Zeile 3 definiert die Variable <code style="color:blue">Puffer</code>. Dieser ist ein Array aus vier Einträgen, die jeweils mit Null initialisiert sind. Wenn die Funktion aufgerufen wird, dann füge die neue Zahl an das Ende der Liste hinzu und lösche das erste Element der Liste. Gib anschließend den Mittelwert der vier Einträge im Puffer zurück. Der Mittelwert berechnet sich aus der Summe der Einträge geteilt durch 4.
+      </p>
+      
+      <p>Beispiel:<pre>
+Puffer = [0,0,0,0]
+
+// neuer Wert 4
+
+Puffer = [0,0,0,4]
+Mittelwert = 1
+
+// neuer Wert 8
+
+Puffer = [0,0,4,8]
+Mittelwert = 3
+
+// neuer Wert 6
+
+Puffer = [0,4,8,6]
+Mittelwert = 4.5
+
+// und so weiter</pre>
     `,
     level : 7,
   },
   
   77 : {
-    name : "Warteschlange II [JS]",
+    name : "Besucherliste [JS]",
     description : `
-      <p></p>
+      <p>Ein Geschäftsmann will sich mit einigen seiner Partner treffen. Um den Ablauf zu organisieren, führt er eine Besucherliste. Verwalte diese Liste und ergänze dazu folgende Vorlage:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_besucher.png"></p>
+      
+      <p>Zeile 3 definiert eine leere Liste. Dort werden die Besucher gespeichert. Diesmal gibt es zwei Funktionen. Diese haben folgendes Verhalten:
+      </p>
+      
+      <p>Die Funktion <code>#Anfrage</code> wird aufgerufen, wenn ein neuer Partner sich mit dem Geschäftsmann treffen will. Er gibt seinen Namen an. Wenn die Liste weniger als 4 Einträge hat, dann gib die Antwort <code style="color:brown">"Okay"</code> zurück und füge seinen Namen an das Ende der Liste hinzu, ansonsten gib die Antwort <code style="color:brown">"Besucherliste leider voll"</code>.
+      </p>
+      
+      <p>Die Funktion <code>#Besuch</code> wird aufgerufen, wenn sich ein Partner beim Geschäftsmann (bzw seiner Sekretärin) anmeldet. Wenn der Partner ganz vorne in der Besucherliste steht, dann lösche ihn aus der Liste und gibt die Antwort <code style="color:brown">"Herzlich Willkommen"</code>. Ansonsten antworte <code style="color:brown">"Leider nicht angemeldet"</code>
+      </p>
+      
+      <p>Beispiel:<pre>
+// Anfrage "Thomas Hook"
+// -> Antwort: "Okay"
+
+Liste = ["Thomas Hook"]
+
+// Anfrage "Fabian Taggart"
+// -> Antwort: "Okay"
+
+Liste = ["Thomas Hook", "Fabian Taggart"]
+
+// Besuch "Thomas Hook"
+// -> Antwort: "Herzlich Willkommen
+
+Liste = ["Fabian Taggart"]
+
+// Besuch "Max Müller"
+// -> Antwort: "Leider nicht angemeldet"</pre></p>
     `,
     level : 7,
   },
   
   79 : {
-    name : "Punktestand [JS]",
+    name : "Superrechenmaschine [JS]",
     description : `
-      <p></p>
+      <p>Ergänze die Rechenmaschine um folgende Modi:<br>
+      4. Modus <code style="color:brown">"D"</code>: Berechne das Produkt der ersten vier Einträge und dividiere es durch den fünften Eintrag.<br>
+      5. Modus <code style="color:brown">"E"</code>: Gib den gerundeten Wert des 3. Eintrags zurück.<br>
+      6. Modus <code style="color:brown">"F"</code>: Berechne den 1. Eintrag hoch den 2. Eintrag.</p>
+      
+      <p>Beispiel:<pre>arr = [2, 3, 4.5, 1, 2]
+      
+Ergebnis "A": 2 + 3 + 4.5 = 9.5
+Ergebnis "B": 1 - 3 = -2
+Ergebnis "C": 1 * 2 = 2
+Ergebnis "D": (2 * 3 * 4.5 * 1) / 2 = 27 / 2 = 13.5
+Ergebnis "E": 4.5 ~= 5
+Ergebnis "F": 2 hoch 3 = 8</pre></p>
     `,
     level : 7,
   },
