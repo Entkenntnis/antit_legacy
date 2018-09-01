@@ -75,16 +75,18 @@
       if (cur) {
         var result
         if (typeof cur.userFunc != "function") {
-          result = "Keine Antwort abgegeben."
+          result = "[Funktion nicht gefunden]"
         } else {
           try {
             result = cur.userFunc.apply(null, cur.params)
+            if (result === undefined)
+              result = "[leer]"
           } catch (e) {
             result = e + " [Fehler]"
           }
         }
         if (result === cur.expected) {
-          println(cur.title + " bestanden", 0x00ff00)
+          println(cur.title + " bestanden [" + result + "]", 0x00ff00)
           delay(doTests, 40)
         } else {
           println(cur.title + " gescheitert:", 0xff0000)
@@ -119,7 +121,7 @@
       create : function() {
         defaultLevelCreate()
         Sim.Bus.emit('set-ring', locPos(200,100), 0xae00ff, {inner:10, outer:20})
-        Sim.Bus.emit('draw-text', {text:"Aufgaben gibt es hier", pos: locPos(230,100), nocenter:true, color:0x000000, key:1})
+        Sim.Bus.emit('draw-text', {text:"Tests gibt es hier", pos: locPos(230,100), nocenter:true, color:0x000000, key:1})
         
         Sim.lx_test = new AntTest(locPos(230,50))
         cb(Sim.lx_test)
@@ -964,7 +966,7 @@
     },
  
     61 : makeTestLevel(function(test){
-      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Zahlentest")[0]
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Vorzeichen")[0]
       function addTest(title, zahl) {
         test.addTest({
           title:title,
@@ -984,55 +986,45 @@
     }),
  
     63 : makeTestLevel(function(test){
-      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Rechner")[0]
-      function solution(art, a, b) {
-        if (art == "plus")
-          return a + b
-        if (art == "mal")
-          return a * b
-        if (art == "geteilt")
-          return a / b
-        if (art == "minus")
-          return a - b
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Testergebnis")[0]
+      function lösung(p) {
+        if (p > 80 || p < 0) {
+          return "Ungültige Punktzahl"
+        }
+        if (p >= 65) {
+          return "summa cum laude"
+        }
+        if (p >= 50) {
+          return "cum laude"
+        }
+        if (p >= 35) {
+          return "rite"
+        } else {
+          return "non probatum"
+        }
       }
-      function addTest(title, art, a, b) {
+      
+      function addTest(title, zahl) {
         test.addTest({
-          title:title + " (" + art + ", " + a + ", " + b + ")",
-          description:"Führe die Rechenart '" + art + "' auf den Zahlen " + a + " und " + b + " aus",
-          expected:solution(art, a, b),
+          title:title + " (" + zahl + ")",
+          description:"Teste das Prüfungsergebnis " + zahl,
+          expected:lösung(zahl),
           userFunc:userFunc,
-          params:[art, a, b]
+          params:[zahl]
         })
       }
-      addTest("Addition", "plus", 3, 4)
-      addTest("Subtraktion", "minus", 10, 6)
-      addTest("Multiplikation", "mal", 4, 10)
-      addTest("Division", "geteilt", 20, 5)
-      for (var i = 1; i <= 3; i++) {
-        addTest("Zufallsbeispiel Addition " + i,
-                "plus",
-                Math.floor(Math.random()*30000) - 15000,
-                Math.floor(Math.random()*30000) - 15000)
-      }
-      for (var i = 1; i <= 3; i++) {
-        addTest("Zufallsbeispiel Subtraktion " + i,
-                "minus",
-                Math.floor(Math.random()*30000) - 15000,
-                Math.floor(Math.random()*30000) - 15000)
-      }
-      for (var i = 1; i <= 3; i++) {
-        addTest("Zufallsbeispiel Multiplikation " + i,
-                "mal",
-                Math.floor(Math.random()*30000) - 15000,
-                Math.floor(Math.random()*30000) - 15000)
-      }
-      for (var i = 1; i <= 3; i++) {
-        var a = Math.floor(Math.random()*300) - 150
-        var b = Math.floor(Math.random()*300) - 150
-        addTest("Zufallsbeispiel Division " + i,
-                "geteilt",
-                a * b, b)
-      }
+      addTest("Zu kleine Punktzahl", -1)
+      addTest("Zu hohe Punktzahl", 81)
+      addTest("Test 1", 75)
+      addTest("Test 2", 60)
+      addTest("Test 3", 40)
+      addTest("Test 4", 10)
+      addTest("Randfall 1", 65)
+      addTest("Randfall 2", 64)
+      addTest("Randfall 3", 50)
+      addTest("Randfall 4", 49)
+      addTest("Randfall 5", 35)
+      addTest("Randfall 6", 34)
     }),
  
     65 : makeTestLevel(function(test){
@@ -1067,7 +1059,184 @@
       addTest("B gewinnt 3", "Stein", "Papier")
     }),
  
-    71 : {
+    67 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Statistik")[0]
+      function solution(art, a, b) {
+        if (art == "Minimum")
+          return a < b ? a : b
+        if (art == "Maximum")
+          return a > b ? a : b
+        if (art == "Summe")
+          return a + b
+        if (art == "Durchschnitt")
+          return (a + b) / 2
+      }
+      function addTest(title, art, a, b) {
+        test.addTest({
+          title:title + " (" + art + ", " + a + ", " + b + ")",
+          description:"Führe die Operation  '" + art + "' auf den Zahlen " + a + " und " + b + " aus",
+          expected:solution(art, a, b),
+          userFunc:userFunc,
+          params:[art, a, b]
+        })
+      }
+      addTest("Summe 1", "Summe", 10, 20)
+      addTest("Summe 2", "Summe", -4.5, 7.24)
+      addTest("Durchschnitt 1", "Durchschnitt", 4, 10)
+      addTest("Durchschnitt 2", "Durchschnitt", 25, -40)
+      addTest("Minimum 1", "Minimum", 0, 4)
+      addTest("Minimum 2", "Minimum", 3, 2)
+      addTest("Minimum 3", "Minimum", -3, -3)
+      addTest("Maximum 1", "Maximum", 543, 444)
+      addTest("Maximum 2", "Maximum", -23, -21)
+      addTest("Maximum 3", "Maximum", 0, 0)
+      for (var i = 0; i < 4; i++) {
+        addTest("Zufallsbeispiel " + (i+1),
+                ["Summe", "Durchschnitt", "Minimum", "Maximum"][Math.floor(Sim.rng()*4)],
+                Math.round(Sim.rng()*100-50),
+                Math.floor(Sim.rng()*100-50))
+      }
+    }),
+ 
+    71 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Rechenmaschine")[0]
+      function solution(ns, m) {
+        if (m == "A") {
+          return ns[0] + ns[1] + ns[2]
+        }
+        if (m == "B") {
+          return ns[3] - ns[1]
+        }
+      }
+      function addTest(title, arr, m) {
+        test.addTest({
+          title:title + " ([" + arr.join(",") + "] / " + m + ")",
+          description:"Führe Vorschrift " + m + " auf [" + arr + "] aus.",
+          expected:solution(arr, m),
+          userFunc:userFunc,
+          params:[arr, m]
+        })
+      }
+      addTest("Beispiel A", [2, 3, 4.5, 1, 2], "A")
+      addTest("Beispiel B", [2, 3, 4.5, 1, 2], "B")
+      function numGen(nd, sm){
+        var diff = !nd?Math.floor(Sim.rng()*8)/8:0
+        return Math.floor(sm?Sim.rng()*10+2:Sim.rng()*100-50) + diff
+      }
+      var arr = [numGen(), numGen(true, true), numGen(), numGen(), numGen(true, true)]
+      addTest("Zufall 1 A", arr.slice(0), "A")
+      addTest("Zufall 1 B", arr.slice(0), "B")
+      var arr2 = [numGen(), numGen(true, true), numGen(), numGen(), numGen(true, true)]
+      addTest("Zufall 2 A", arr2.slice(0), "A")
+      addTest("Zufall 2 B", arr2.slice(0), "B")
+    }),
+ 
+    73 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Rechenmaschine")[0]
+      function solution(ns, m) {
+        if (m == "A") {
+          return ns[0] + ns[1] + ns[2]
+        }
+        if (m == "B") {
+          return ns[0] * ns[1] * ns[2] * ns[3] / ns[4]
+        }
+        if (m == "C") {
+          return ns[3] - ns[1]
+        }
+        if (m == "D") {
+          return Math.round(ns[2])
+        }
+        if (m == "E") {
+          return Math.pow(ns[0], ns[1])
+        }
+      }
+      function addTest(title, arr, m) {
+        test.addTest({
+          title:title + " ([" + arr.join(",") + "] / " + m + ")",
+          description:"Führe Vorschrift " + m + " auf [" + arr + "] aus.",
+          expected:solution(arr, m),
+          userFunc:userFunc,
+          params:[arr, m]
+        })
+      }
+      addTest("Beispiel A", [2, 3, 4.5, 1, 2], "A")
+      addTest("Beispiel B", [2, 3, 4.5, 1, 2], "B")
+      addTest("Beispiel C", [2, 3, 4.5, 1, 2], "C")
+      addTest("Beispiel D", [2, 3, 4.5, 1, 2], "D")
+      addTest("Beispiel E", [2, 3, 4.5, 1, 2], "E")
+      function numGen(nd, sm){
+        var diff = !nd?Math.floor(Sim.rng()*8)/8:0
+        return Math.floor(sm?Sim.rng()*10+2:Sim.rng()*100-50) + diff
+      }
+      var arr = [numGen(), numGen(true, true), numGen(), numGen(), numGen(true, true)]
+      addTest("Zufall A", arr.slice(0), "A")
+      addTest("Zufall B", arr.slice(0), "B")
+      addTest("Zufall C", arr.slice(0), "C")
+      addTest("Zufall D", arr.slice(0), "D")
+      addTest("Zufall E", arr.slice(0), "E")
+    }),
+ 
+    75 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Warteschlange")[0]
+      function addTest(title, zahl) {
+        test.addTest({
+          title:title,
+          description:"Teste die Zahl " + zahl,
+          expected:zahl==0?"Zahl ist null":(zahl>0?"Zahl ist positiv":"Zahl ist negativ"),
+          userFunc:userFunc,
+          params:[zahl]
+        })
+      }
+      addTest("Null-Test", 0)
+      addTest("Positiv-Test", 1)
+      addTest("Negativ-Test", -1)
+      for (var i = 1; i <= 4; i++) {
+        var number = Math.floor(Math.random()*30000) - 15000
+        addTest("Zufallstest " + i + " mit Zahl " + number, number)
+      }
+    }),
+ 
+    77 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Vorzeichen")[0]
+      function addTest(title, zahl) {
+        test.addTest({
+          title:title,
+          description:"Teste die Zahl " + zahl,
+          expected:zahl==0?"Zahl ist null":(zahl>0?"Zahl ist positiv":"Zahl ist negativ"),
+          userFunc:userFunc,
+          params:[zahl]
+        })
+      }
+      addTest("Null-Test", 0)
+      addTest("Positiv-Test", 1)
+      addTest("Negativ-Test", -1)
+      for (var i = 1; i <= 4; i++) {
+        var number = Math.floor(Math.random()*30000) - 15000
+        addTest("Zufallstest " + i + " mit Zahl " + number, number)
+      }
+    }),
+ 
+    79 : makeTestLevel(function(test){
+      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Vorzeichen")[0]
+      function addTest(title, zahl) {
+        test.addTest({
+          title:title,
+          description:"Teste die Zahl " + zahl,
+          expected:zahl==0?"Zahl ist null":(zahl>0?"Zahl ist positiv":"Zahl ist negativ"),
+          userFunc:userFunc,
+          params:[zahl]
+        })
+      }
+      addTest("Null-Test", 0)
+      addTest("Positiv-Test", 1)
+      addTest("Negativ-Test", -1)
+      for (var i = 1; i <= 4; i++) {
+        var number = Math.floor(Math.random()*30000) - 15000
+        addTest("Zufallstest " + i + " mit Zahl " + number, number)
+      }
+    }),
+ 
+    81 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1500

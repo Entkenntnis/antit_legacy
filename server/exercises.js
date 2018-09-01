@@ -285,43 +285,39 @@ module.exports.exercises = {
   },
   
   61 : {
-    name : "Zahlentester [JS]",
+    name : "Vorzeichen [JS]",
     description : `
-      <p>Deine Aufgabe ist es, eine Zahl auf ihre grundlegende Eigenschaft zu überprüfen.
+      <p>Prüfe eine Zahl auf ihr Vorzeichen. Ergänze dazu folgende Funktion:
       </p>
       
-      <p>Deine Ameise soll eine Ereignisdefinition <code>#Zahlentest</code> mit dem Parameter <code>zahl</code> enthalten. Dieser Zahlentester unterscheidet zwischen drei Fällen:
+      <p><img class="img-thumbnail" src="/images/l6_vorzeichen.png"></p>
+      
+      <p>Diese Funktion unterscheidet drei Fälle:<br>
+      1. Ist <code style="color:blue">zahl</code> gleich 0, dann gib als Antwort <code style="color:brown">"Zahl ist null"</code> zurück.<br>
+      2. Ist <code style="color:blue">zahl</code> größer 0, dann gib als Antwort <code style="color:brown">"Zahl ist positiv"</code> zurück.<br>
+      3. Ist <code style="color:blue">zahl</code> kleiner 0, dann gib als Antwort <code style="color:brown">"Zahl ist negativ"</code> zurück.
       </p>
       
-      <p>1. Wird dem Zahlentester die Zahl 0 gegeben, dann gibt er als Antwort <code>Zahl ist null</code> zurück.
-      </p>
-      
-      <p>2. Wird dem Zahlentester eine positive Zahl gegeben, dann gibt er als Antwort <code>Zahl ist positiv</code> zurück.
-      </p>
-      
-      <p>3. Wird dem Zahlentester eine negative Zahl gegeben, dann gibt er als Antwort <code>Zahl ist negativ</code> zurück.
-      </p>
-      
-      <p>Der Zahlentester soll mit den Zahlen 0, 1 und -1 funktionieren, sowie vier Zufallsbeispiele richtig beantworten.
+      <p>Besuche den Checkpoint, um deine Funktion testen zu lassen. Die Aufgabe ist gelöst, wenn deine Funktion alle Tests besteht.
       </p>
     `,
     level : 6,
   },
   
   63 : {
-    name : "Rechenmaschine [JS]",
+    name : "Testergebnis [JS]",
     description : `
-      <p>Deine Ameise soll die vier Grundrechenarten verstehen. Dazu soll sie eine Ereignisdefinition <code>#Rechner</code> mit den drei Parametern <code>rechenart, a, b</code> enthalten.
-      </p>
+      <p>Bewerte ein Testergebnis. Ergänze dazu folgende Funktion:
       
-      <p>Wenn als Rechenart der Wert <code>plus</code> übergeben wird, dann soll diese Funktion die Summe der Zahlen a und b zurückgeben.
-      </p>
+      <p><img class="img-thumbnail" src="/images/l6_testergebnis.png"></p>
+    
+      <p>Die Anzahl der Punkte liegt im Bereich 0 bis maximal 80. Sollte <code style="color:blue">punkte</code> kleiner als null oder größer als 80 sein, dann gib als Antwort <code style="color:brown">"Ungültige Punktzahl"</code>.</p>
       
-      <p>Wenn als Rechenart der Wert <code>minus</code> übergeben wird, dann soll diese Funktion die Differenz a minus b zurückgeben.
-      </p>
-      
-      <p>Entsprechend gibt diese Funktion bei der Rechenart <code>mal</code> das Produkt a mal b, bei <code>geteilt</code> den Quotienten a geteilt durch b zurück.
-      </p>
+      <p>Für eine gültige Punktzahl gib eine der folgenden Bemerkungen:<br>
+      80 - 65 Punkte: <code style="color:brown">"summa cum laude"</code><br>
+      64 - 50 Punkte: <code style="color:brown">"cum laude"</code><br>
+      49 - 35 Punkte : <code style="color:brown">"rite"</code><br>
+      34 - 0 Punkte: <code style="color:brown">"non probatum"</code></p>
     `,
     level : 6,
   },
@@ -329,22 +325,105 @@ module.exports.exercises = {
   65 : {
     name : "Schere, Stein, Papier [JS]",
     description : `
-      <p>Zwei Spieler spielen Schere, Stein, Papier. Deine Ameise soll entscheiden, wer gewonnen hat.
-      </p>
+      <p>Zwei Personen spielen Schere, Stein, Papier. Deine Funktion soll entscheiden, wer gewinnt:</p>
       
-      <p>Erstelle dazu die Ereignisdefinition <code>#Spiel</code> mit den Parametern <code>a, b</code>. Dabei ist a die Auswahl vom Spieler A und b die Auswahl vom Spieler B.
-      </p>
+      <p><img class="img-thumbnail" src="/images/l6_ssp.png"></p>
       
-      <p>Wenn beide Spieler das gleiche Zeichen spielen, dann soll die Funktion den Wert "Unentschieden" zurückgeben. Ansonsten soll die Funktion entweder "Spieler A gewinnt" oder "Spieler B gewinnt" zurückgeben.
-      </p>
+      <p>Die Parameter <code style="color:blue">a</code> und <code style="color:blue">b</code> entsprechen der Auswahl von Spieler A und Spieler B. Die Parameter können einen der Werte <code style="color:brown">"Schere"</code>, <code style="color:brown">"Stein"</code> oder <code style="color:brown">"Papier"</code> annehmen.</p>
       
-      <p>Die Parameter können die Werte "Schere", "Stein" und "Papier" annehmen.
+      <p>Für den Spielausgang gibt es drei Möglichkeiten:<br>
+      <code style="color:brown">"Unentschieden"</code>, wenn beide das gleiche Zeichen gewählt haben.<br>
+      <code style="color:brown">"Spieler A gewinnt"</code>, wenn <code style="color:blue">a</code> stärker ist als <code style="color:blue">b</code> und<br>
+      <code style="color:brown">"Spieler B gewinnt"</code>, wenn <code style="color:blue">b</code> stärker ist als <code style="color:blue">a</code>.</p>
+    `,
+    level : 6,
+  },
+  
+  67 : {
+    name : "Statistik [JS]",
+    description : `
+      <p>Wir wollen ein wenig Statistik betreiben. Selbst mit zwei Zahlen lassen sich schon einige Werte bestimmen. Ergänze folgende Funktion:</p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_statistik.png"></p>
+      
+      <p>Der Parameter <code style="color:blue">modus</code> ist eine Zeichenkette, die beschreibt, was für eine Operation auf den Zahlen <code style="color:blue">a</code> und <code style="color:blue">b</code> ausgeführt werden soll.</p>
+      
+      <p>Folgende Möglichkeiten sollen programmiert werden:<br>
+      1. Modus <code style="color:brown">"Summe"</code>: Gib die Summe der beiden Zahlen zurück.<br>
+      2. Modus <code style="color:brown">"Durchschnitt"</code>: Gib den Durchschnitt der beiden Zahlen zurück.<br>
+      3. Modus <code style="color:brown">"Minimum"</code>: Gib die kleinere Zahl zurück.<br>
+      4. Modus <code style="color:brown">"Maximum"</code>: Gib die größere Zahl zurück.</p>
       </p>
     `,
     level : 6,
   },
   
   71 : {
+    name : "Rechenmaschine I [JS]",
+    description : `
+      <p>Dir wird ein Array aus Zahlen gegeben. Je nach Modus soll ein bestimmter Wert berechnet werden. Ergänze folgende Funktion:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_rechenmaschine.png"></p>
+      
+      <p>In <code style="color:blue">arr</code> ist ein Array mit fünf Einträgen gespeichert, <code style="color:blue">modus</code> gibt die Rechenvorschrift an. Es sollen folgende Möglichkeiten programmiert werden:<br>
+      1. Modus <code style="color:brown">"A"</code>: Berechne die Summe des 1., 2. und 3. Eintrags.<br>
+      2. Modus <code style="color:brown">"B"</code>: Berechne die Differenz des 4. und des 2. Eintrags.</p>
+      
+      <p>Beispiel:<pre>arr = [2, 3, 4.5, 1, 2]
+      
+Ergebnis "A": 2 + 3 + 4.5 = 9.5
+Ergebnis "B": 1 - 3 = -2</pre></p>
+
+      <p><br>Tipp: Beachte, dass der erste Eintrag den Index 0 hat.</p>
+    `,
+    level : 7,
+  },
+  
+  73 : {
+    name : "Rechenmaschine II [JS]",
+    description : `
+      <p>Ergänze die Rechenmaschine um folgende Modi:<br>
+      3. Modus <code style="color:brown">"C"</code>: Berechne das Produkt der ersten vier Einträge und dividiere es durch den fünften Eintrag.<br>
+      4. Modus <code style="color:brown">"D"</code>: Gib den gerundeten Wert des 3. Eintrags zurück.<br>
+      5. Modus <code style="color:brown">"E"</code>: Berechne den 1. Eintrag hoch den 2. Eintrag.</p>
+      
+      <p>Beispiel:<pre>arr = [2, 3, 4.5, 1, 2]
+      
+Ergebnis "A": 2 + 3 + 4.5 = 9.5
+Ergebnis "B": 1 - 3 = -2
+Ergebnis "C": (2 * 3 * 4.5 * 1) / 2 = 27 / 2 = 13.5
+Ergebnis "D": 4.5 ~= 5
+Ergebnis "E": 2 hoch 3 = 8</pre></p>
+    `,
+    level : 7,
+  },
+  
+  75 : {
+    name : "Warteschlange I [JS]",
+    description : `
+      <p></p>
+    `,
+    level : 7,
+  },
+  
+  77 : {
+    name : "Warteschlange II [JS]",
+    description : `
+      <p></p>
+    `,
+    level : 7,
+  },
+  
+  79 : {
+    name : "Punktestand [JS]",
+    description : `
+      <p></p>
+    `,
+    level : 7,
+  },
+  
+  81 : {
     name : "Der richtige Abstand",
     description : `
       <p>Diese Aufgabe ist für Teilnehmer geeignet, die bereits Erfahrungen mit einer Programmiersprache wie Java oder C/C++/C# haben. 
@@ -367,7 +446,7 @@ module.exports.exercises = {
       <p>Von den Äpfel auf dem Spielfeld befindet sich einer genau 245 Schritte vom Bau entfernt. Trage diesen Apfel zum Bau. Berühre die anderen Äpfel nicht.
       </p>
     `,
-    level : 7,
+    level : 8,
   },
   
   /*2 : {
