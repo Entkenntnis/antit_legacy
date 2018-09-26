@@ -21,10 +21,10 @@
           <h3>Stufe 1</h3>
           
           <ul>
-            <li><code>Gehe(schritte)</code></li>
-            <li><code>Drehe(winkel)</code></li>
-            <li><code>DreheZuRichtung(himmelsrichtung)</code></li>
-            <li><code>"IstGeboren"</code></li>
+            <li>Neue Ameisen erstellen und bearbeiten</li>
+            <li>Bestandteile eines Programms: Ameisendefinition, Ereignisdefinition, Anweisungen</li>
+            <li>Ereignis <code>"IstGeboren"</code></li>
+            <li>Grundlegende Befehle: <code>Gehe(schritte)</code>, <code>Drehe(winkel)</code> und <code>DreheZuRichtung(himmelsrichtung)</code></li>
           </ul>
           
           <% if (user.level >= 2) { %>
@@ -32,14 +32,11 @@
             <h3>Stufe 2</h3>
           
             <ul>
-              <li><code>NimmZucker()</code></li>
-              <li><code>GeheZuBau()</code></li>
-              <li><code>LadeZuckerAb()</code></li>
-              <li><code>TrageApfel()</code></li>
-              <li><code>Ameise.SetzeTeams(anzahl)</code></li>
-              <li><code>if (InTeam(number)) {   }</code></li>
-              <li>Gitternetz</li>
-              <li>Simulationsgeschwindigkeit</li>
+              <li>Interaktion mit Nahrungsmitteln: <code>NimmZucker()</code>, <code>LadeZuckerAb()</code> und <code>TrageApfel()</code></li>
+              <li>Rückkehr zum Bau mit <code>GeheZuBau()</code></li>
+              <li>Teamdefinition: <code>Ameise.SetzeTeams(anzahl)</code></li>
+              <li>Bedingte Anweisungen pro Team mit <code>if (InTeam(nummer)) {   }</code></li>
+              <li>Tastenkominationen während Simulation: 1/2/3 für Geschwindigkeit, G für Gitternetz</li>
             </ul>
             
           <% } %>
