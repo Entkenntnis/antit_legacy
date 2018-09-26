@@ -65,7 +65,7 @@ module.exports = function(App) {
   App.express.get('/tutorial', App.users.auth, function(req, res) {
     var tutid = checkInt(req.query.id)
     if (tutid > 0 && (!tutorials[tutid] || tutorials[tutid].level > req.user.level))
-      return res.redirect('/')
+      return res.redirect('/home')
     
     if (App.config.devmode) {
       delete require.cache[require.resolve('./tutorials.js')]

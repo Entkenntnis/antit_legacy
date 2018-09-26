@@ -1,5 +1,5 @@
 module.exports.tutorials = {
-  1: {
+  11: {
     level : 1,
     name : "Herzlich Willkommen!",
     text : ` 
@@ -42,7 +42,7 @@ module.exports.tutorials = {
     ],
     solution : [1,0,1,0,0,1],
   },
-  2 : {
+  12 : {
     level : 1,
     name : "Die Welt der Ameisen",
     text : `
@@ -99,7 +99,7 @@ module.exports.tutorials = {
     ],
     solution : [1,0,0,0,0,1],
   },
-  3 : {
+  13 : {
     level : 1,
     name : "Grundlagen der Programmierung [API]",
     text : `
@@ -147,7 +147,7 @@ module.exports.tutorials = {
     ],
     solution : [1,0,1,1,1,0],
   },
-  4 : {
+  21 : {
     level : 2,
     name : "Nahrungsmittel [API]",
     text : `
@@ -190,7 +190,7 @@ module.exports.tutorials = {
     ],
     solution : [1,1,0,0,1,0],
   },
-  5 : {
+  22 : {
     level : 2,
     name : "Effektives Arbeiten",
     text : `
@@ -276,7 +276,7 @@ module.exports.tutorials = {
     ],
     solution : [0,1,0,1,1,1],
   },
-  13 : {
+  23 : {
     level : 2,
     name : "Teamwork [API]",
     text : `
@@ -312,104 +312,109 @@ module.exports.tutorials = {
     ],
     solution : [1,0,1,1,0,1]
   },
-  6 : {
+  31 : {
     level : 3,
-    name : "Programmieren für Fortgeschrittene [API]",
+    name : "Programmieren mit Ereignissen [API]",
     text : `
-      <p>Jetzt ist der Zeitpunkt gekommen, um uns nochmal intensiv mit Ereignissen zu beschäftigen. Bisher kennst du nur "IstGeboren". In diesem Tutorial wirst du (endlich!) weitere Ereignisse kennenlernen.
+      <p>Jetzt ist der Zeitpunkt gekommen, um uns nochmal intensiv mit Ereignissen zu beschäftigen. Bisher kennst du nur "IstGeboren". In diesem Tutorial wirst du ein paar weitere Ereignisse kennenlernen.
       </p>
       
-      <p>Stell dir das Leben einer Ameise als Zeitstrahl vor. Am Anfang steht die Geburt und am Ende der Tod. Ein Ereignis ist im Kern die Definition eines Zeitpunkts. Diese können als Kreuze auf dem Zeitstrahl dargestellt werden.
+      <p>In den ersten zwei Stufen hast du nur Anweisungen geschrieben, die bei der Geburt der Ameisen ausgeführt wurden. Danach blieben die Ameisen stehen. Dieses Prinzip ist relativ einfach zu verstehen und hat für die bisherigen Aufgaben auch gereicht. Jetzt wollen wir aber auch Probleme lösen, die darüber hinausgehen und wir werden sehen, dass unsere bisherige Methode zu unflexibel ist.
       </p>
       
-      <p><img src="/images/l3_zeitstrahl1.png" class="img-thumbnail" title=""></p>
+      <p>Programmieren mit Ereignissen ist dagegen sehr flexibel, was die möglichen Anwendungen betrifft. Das macht es aber wiederum schwerer zu verstehen. Wir wollen uns daher Schritt für Schritt annähern und auf dieser Stufe zwei neue, wesentliche Muster anschauen. Das eine ist die Ausführung von Anweisungen in Schleife und das andere ist Suchen und Finden. Letzteres wird im nächsten Tutorial genauer erklärt.</p>
       
-      <p>Die Befehle, die die Ameise als Anweisungen in der Ereignisdefinition erhalten hat, werden dann unmittelbar danach ausgeführt. Diese werden also als pinken Strich dargestellt.
+      <p>Nehmen wir an, wir wollen, dass eine Ameise ständig zwischen dem Bau und einem bestimmten Punkt hin und her läuft, z.B. um etwas zu bewachen. Wir können die Anweisungen 10-Mal hinschreiben, oder 100-Mal, aber immer wird es einen Zeitpunkt geben, an dem die Ameise mit allen Anweisungen fertig ist und aufhört. Wir können noch nicht sagen, dass eine Ameise etwas <em>immer</em> tun soll. Der folgende Codeausschnitt zeigt eine solche Situation:
       </p>
       
-      <p><img src="/images/l3_zeitstrahl2.png" class="img-thumbnail" title=""></p>
+      <p><img src="/images/l3_schleife.png" class="img-thumbnail" title=""></p>
       
-      <p>Soweit kennen wir das System bereits. Jetzt kommt ein neues Ereignis hinzu: <code>"IstUntätig"</code>. Dieses Ereignis wird immer dann aufgerufen, wenn die Ameise ihre Anweisungen fertig ausgeführt hat.
+      <p>Wir wollen, dass die Ameise immer wieder 200 Schritte nach Osten geht. Aber wir müssen jede einzelne Wiederholung selber programmieren. Das ist eine ziemliche Einschränkung. Das Ereignis <code>"IstUntätig"</code> kommt uns hier zur Rettung. Dieses Ereignis wird in dem Moment aktiviert, wo die Ameise fertig ist mit ihren Aufgaben. Anweisungen, die hier programmiert werden, werden also immer wieder aufgerufen. Konkret sieht das so aus:
       </p>
       
-      <p><img src="/images/l3_zeitstrahl3.png" class="img-thumbnail" title=""></p>
+      <p><img src="/images/l3_schleife2.png" class="img-thumbnail" title=""></p>
       
-      <p>Im Unterschied zu "IstGeboren" kann "IstUntätig" mehrfach aufgerufen werden, und zwar immer, wenn die Ameise mit ihren Anweisungen fertig ist. Diesen Umstand kann man nutzen, um die Ameise eine Tätigkeit wiederholen zu lassen.
+      <p>Geändert hat sich der Name in der Ereignisdefinition. Dieser lautet nun "IstUntätig". Wir schreiben die Anweisungen, die wir wiederholen wollen, einmal hin. Bei der Geburt ist die Ameise automatisch untätig und das Ereignis wird aufgerufen. Sind alle Anweisungen ausgeführt, dann wird "IstUntätig" erneut aufgerufen und die Schleife beginnt von vorne. Damit haben wir es geschafft, eine Aufgabe immer zu tun. Sollte die Ameise zwischendrin noch andere Anweisungen erhalten, dann führt sie diese aus und begibt sich danach zurück in ihre Schleife. Auf ein zusätzliches "IstGeboren" kann verzichtet werden, weil die Ameise am Anfang ja automatisch untätig ist.</p>
+      
+      <p>Soweit dazu. Im nächsten Tutorial werden wir sehen, dass eine Programm auch mit mehreren Ereignissen gleichzeitig arbeiten kann und damit dann suchen und finden kann. Als Hilfsmittel kannst du mit der Schaltfläche "Ereignis hinzufügen" eine neue Ereignisdefinition zum Code hinzufügen. Ergänze darin dann den Ereignisnamen:</p>
+      
+      <p><img src="/images/l3_hinzu.png" class="img-thumbnail" title=""></p>
+      
+      <p><img src="/images/l3_ereignisneu.png" class="img-thumbnail" title=""></p>
+      
+      <p>Noch zwei wichtige Hinweise: Jedes Ereignis kann im Programm maximal einmal definiert werden. Ereignisse dürfen also nicht mehrfach vorkommen:</p>
+      
+      <p><img src="/images/l3_doppel.png" class="img-thumbnail" title=""></p>
+      
+      <p>Genausowenig dürfen Ereignisse verschachtelt werden. Ereignisdefinition kommen niemals innerhalb von Ereignissen vor:
       </p>
       
-      <p><img src="/images/l3_zeitstrahl4.png" class="img-thumbnail" title=""></p>
-      
-      <p>Wir geben der Ameise bei der Geburt ein paar kleine Anweisungen. Diese werden einmalig ausgeführt. Dann wird "IstUntätig" immer wieder aufgerufen und die Ameise arbeitet in einer Schleife. Die Ameise kann z.B. das Spielfeld ablaufen.
-      </p>
-      
-      <p>Über Ereignisse können die Ameisen Nahrungsmittel wahrnehmen. Sieht die Ameise innerhalb ihres Sichtbereichs von 70 Schritten einen Zuckerhaufen, dann wird das Ereignis <code>"SiehtZucker"</code> aufgerufen. Die Ameise unterbricht ihre Anweisungen und führt stattdessen die Anweisungen des neuen Ereignisses aus:
-      </p>
-      
-      <p><img src="/images/l3_zeitstrahl5.png" class="img-thumbnail" title=""></p>
-      
-      <p>Hier sieht man, wie bei der zweiten Schleife die Ameise einen Zuckerhaufen sieht und ihre Tätigkeit unterbricht. Stattdessen werden die Anweisungen von "SiehtZucker" ausgeführt. Sind diese fertig, wird wieder "IstUntätig" aufgerufen.
-      </p>
-      
-      <p>Analog dazu gibt es auch das Ereignis <code>"SiehtApfel"</code>, das aufgerufen wird, wenn die Ameise einen Apfel sieht. Mit diesen Ereignissen kann man jetzt eine Ameise programmieren, die das Spielfeld absucht und Nahrungsmittel finden kann. Bisher musste man immer genau wissen, wo die Nahrungsmittel sind, weil die Ameisen "blind" waren. Jetzt können sie sehen.
-      </p>
-      
-      <p>Im nächsten Tutorial lernst du, wie du diese Ereignisse im Code umsetzen kannst.
-      </p>
+      <p><img src="/images/l3_schachtel.png" class="img-thumbnail" title=""></p>
     `,
     questions : [
-      "Ereignisse sind im Kern Zeitpunkte.",
-      "\"IstGeboren\" wird mehrfach aufgerufen.",
-      "Der Zeitstrahl läuft von rechts nach links.",
-      "\"IstUntätig\" und \"IstGeboren\" kann man kombinieren.",
-      "IstGeboren und IstUntätig haben die gleiche Anzahl an Buchstaben.",
-      "Mit \"SiehtZucker\" und \"SiehtApfel\" kann die Ameise Nahrungsmittel sehen."
+      "Ereignisse sind sehr flexibel.",
+      "Mit \"IstGeboren\" lassen sich Schleifen programmerien.",
+      "Die Ameise ist am Anfang nicht untätig.",
+      "Wenn man keine Schleife braucht, kann weiterhin \"IstGeobren\" verwendet werden.",
+      "Ereignisse kommen nicht doppelt vor.",
+      "Ereignisse werden nicht verschachtelt."
     ],
     solution : [1,0,0,1,1,1],
   },
-  12 : {
+  32 : {
     level : 3,
     name : "Suchen und Finden [API]",
     text : `
-      <p>Jetzt werden wir das Wissen des letzten Tutorials konkret auf ein Ameisenvolk anwenden. Folge dazu den Schritten dieser Anleitung. Diese bereiten die erste Aufgabe dieser Stufe vor.
+      <p>In diesem Tutorial werden wir lernen, wie man mit der Ameise gezielt nach Nahrungsmitteln suchen kann. Im Normalfall ist es nämlich so, dass die Ameise nicht genau weiß, wo sich die Nahrungsmittel auf dem Spielfeld befinden. Beim bisherigen Ansatz musste man immer die Ameise genau zum Zucker oder zum Apfel hinsteuern, sonst haben die Befehle nicht funktioniert. Mit Ereignissen werden wir in der Lage sein, ein Gebiet abzulaufen, anzuhalten, wenn ein Zucker oder ein Apfel in Sichtweite kommt und dann darauf zuzulaufen.
       </p>
       
-      <ol>
-        <li><p>Erstelle ein neues Ameisenvolk mit dem Namen "Stufe 3 Aufgabe 1".
-        </p>
-        </li>
-        <li><p>Trage in die Kopfzeile der ersten Ereignisdefinition den Ereignisnamen "IstUntätig" ein.
-        </p>
-        </li>
-        <li><p>Klicke auf die Schaltfläche "Ereignis hinzufügen" im Editor, die ab jetzt verfügbar ist. Diese erzeugt eine neue Vorlage für eine Ereignisdefinition. Trage in die Kopfzeile der zweiten Ereignisdefinition den Ereignisnamen "SiehtZucker" ein. Jetzt haben wir zwei Ereignisse definiert und der Code sollte so aussehen:<img src="/images/l3_tut1_1.png" class="img-thumbnail">
-        </p>
-        </li>
-        <li><p>Neu kommt hinzu, dass das Ereignis "SiehtZucker" einen Parameter annimmt. Bisher haben wir nur Parameter weitergegeben, jetzt nehmen wir selber einen Parameter an. Dieser Parameter ist das Zuckerobjekt, das wir gesehen haben und wir geben diesem Objekt einen Namen. Schreibe dazu in die runden Klammern der Kopfzeile "zucker" (Zeile 7). Dieses Objekt übergeben wir an den neuen Befehl <code>GeheZuZiel</code> (Zeile 8):<img src="/images/l3_tut1_2.png" class="img-thumbnail" title="Der Name des Parameters darf frei gewählt werden."><br>
-        </p>
-        </li>
-        <li><p>Entsprechend gibt es das Ereignis "SiehtApfel". Füge ein weiteres Ereignis hinzu und trage als Ereignisname "SiehtApfel" ein. Schreibe den Parameter dazu und lasse die Ameise auf diesen Apfel zulaufen.
-        </p>
-        </li>
-        <li><p>Ergänze die Anweisungen für SiehtZucker und SiehtApfel so, dass die Ameise die Nahrungsmittel jeweils auch zum Bau transportiert.
-        </p></li>
-        <li><p>Überlege dir, welche Tätigkeit die Ameise bei "IstUntätig" ausführen soll, damit sie möglichst gut das Spielfeld ablaufen kann.
-        </p></li>
-      </ol>
-      
-      <p>Damit hast du das Grundgerüst einer suchenden Ameise zur Hand. Sie ist noch nicht perfekt. Man muss nämlich beachten, dass eine Ameise nur eine Reichweite von 3000 Schritten hat. Überschreitet sie diese Reichweite, dann stirbt sie. Wenn sie zum Bau zurückkehrt, kann sie ihre Reichweite wiederherstellen. Diese Reichweite ist für den Moment genug. Auf der nächsten Stufe wirst du lernen, wie man verhindert, dass die Ameise ihre Reichweite überschreitet und stirbt.
+      <p>Das Ablaufen eines Gebiets, am besten in einer Schleife, können wir mit dem letzten Tutorial schon bewerkstelligen. Jetzt geht es darum, die Ameise anzuhalten, wenn ein Nahrungsmittel in Sichtweite kommt. Jede Ameise hat eine Sichtweite von 70 Schritten. Sobald sie darin ein Nahrungsmittel wittert, wird nun eines der Ereignisse <code>"SiehtZucker"</code> oder <code>"SiehtApfel"</code> aufgerufen. Wir sind in der Lage, darauf zu reagieren. Diese zwei Ereignisse sind etwas besondern, weil sie zusätzlich ein <em>Sichtungsobjekt</em> übertragen, das dem Programm genauere Informationen mitgibt.
       </p>
+      
+      <p>Nehmen wir das Beispiel des Zuckers. Sobald die Ameise den Zucker sieht, soll sie darauf zulaufen. Das funktioniert mit dem neuen Befehl <code>GeheZuZiel()</code>.
+      </p>
+      
+      <p><img src="/images/l3_zucker.png" class="img-thumbnail" title=""></p>
+      
+      <p>In die Ereignisdefinition wird nun zusätzlich zum Ereignisnamen noch der Name des Parameters angegeben. Dieser Name gibt an, wie das Sichtungsobjekt heißt, das die Ameise gerade gesehen hat. Passend dazu erwartet GeheZuZiel() genau diesen Namen, um zum jeweiligen Nahrungsmittel zu laufen. In diesem Fall lautet der Parameter 'zucker', er kann aber frei gewählt werden. Wichtig ist nur, dass die beiden Namen gleich sind.
+      </p>
+      
+      <p>Das Programm ist hier noch nicht vollständig. Ab jetzt können noch die bekannten Befehle ergänzt werden, um den Zucker abzubauen und zum Bau zu bringen. Dieses ganze System funktioniert natürlich auf mit Äpfeln. Diesmal wurde als Parameter ein etwas anderer Name gewählt:
+      </p>
+      
+      <p><img src="/images/l3_apfel.png" class="img-thumbnail" title=""></p>
+      
+      <p>Diese Sichtungsereignisse werden immer dann aufgerufen, wenn ein Nahrungsmittel in die Reichweite der Ameise von 70 Schritten kommen. Die Ameise vergisst dann alle bisherigen Befehle und führt die Anweisungen aus, die sie neu erhält. Wenn sie das Nahrungsmittel verlässt und nach einer Weile wieder sieht, dann wird das Ereignis erneut aufgerufen.
+      </p>
+      
+      <p>Es gibt jetzt noch die Möglichkeit, dieses Verhalten zu steuern. Zu den bekannten Befehlen gibt es dafür die Befehlsvarianten <code>GeheZuBauDirekt()</code> und <code>GeheZuZielDirekt()</code>. Diese Befehle verhalten sich genau wie die normalen Varianten, mit der einzigen Ausnahme, dass die Ameise auf dem Weg <em>nicht</em> auf Nahrungsmittel reagiert. Ein wichtiger Anwendungsfall ist, wenn eine Ameise sich Zucker aufgeladen hat und auf dem Rückweg zum Bau nicht auf einen weiteren Zuckerhaufen reagieren möchte. In diesem Fall sollte die Version GeheZuBauDirekt() statt der normalen Version GeheZuBau() benutzt werden.
+      </p>
+      
+      <p>An dieser Stelle sei auch noch erwähnt, dass die Ameisen nur eine Reichweite von 3000 Schritten haben. Nach dieser Schrittzahl sterben die Ameisen. Die Schrittzahl kann im Bau zurückgesetzt werden, indem die Ameise mit GeheZuBau() (oder GeheZuBauDirekt()) zum Bau zurückkehrt. Du musst also darauf achten, dass die Ameisen immer wieder zum Bau zurückkehren, z.B. über eine entsprechend programmierte Schleife.
+      </p>
+      
+      <p>Zusatz: An manchen Stellen kannst du (als Lösungsvariante) die Ameisen auch auf den Rand reagieren lassen. Dazu gibt es das Ereignis <code>"RandErreicht"</code>. Dieses Ereignis wird aufgerufen, sobald die Ameise gegen den Rand läuft. Ein Beispiel ist, dass sich die Ameise um 180 Grad dreht:
+      </p>
+      
+      <p><img src="/images/l3_rand.png" class="img-thumbnail" title=""></p>
+      
+      <p>Es gilt weiterhin, dass Ereignisse nicht verschachtelt werden dürfen. Solcher Code ist also falsch:
+      </p>
+      
+      <p><img src="/images/l3_falsch.png" class="img-thumbnail"></p>
     `,
     questions : [
-      "Ereignisse nehmen nie Parameter.",
+      "Ereignisse können keine Sichtungsobjekte übergeben.",
       "SiehtZucker besteht aus 10 Buchstaben.",
       "Eine Ameise hat eine Sichtweite von 70 Ameisenschritten.",
       "GeheZuZiel kann für Zucker und Äpfel verwendet werden.",
       "Ameisen sind blind für Äpfel.",
-      "Dieses Tutorial hat 6 Unterpunkte."
+      "GeheZuZiel() und GeheZuZielDirekt() haben keine Unterschiede."
     ],
     solution : [0,0,1,1,0,0],
   },
-  14 : {
-    level : 3,
+  41 : {
+    level : 4,
     name : "Gefahren ausweichen [API]",
     text : `
       <p>Damit sich die Ameise schützen kann, gibt es außerdem eine Reihe von Funktionen, mit denen die Ameise ihre Feinde wahrnehmen und auf diese reagieren kann.
