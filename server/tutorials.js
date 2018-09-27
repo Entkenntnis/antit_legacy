@@ -544,7 +544,7 @@ module.exports.tutorials = {
     ],
     solution : [1,1,0,1,0,0],
   },
-  9 : {
+  51 : {
     level : 5,
     name : "Kommunikation [API]",
     text : `
@@ -554,7 +554,7 @@ module.exports.tutorials = {
       <p>Und bisher ging das auch ziemlich gut. Bisher. Die erste Aufgabe dieser Stufe bietet in dieser Hinsicht eine Herausforderung: Auf dem Spielfeld befindet sich zu jeder Zeit nur ein Apfel. Diesen müssen die Ameisen aber gemeinsam zum Bau tragen. Es wäre doch praktisch, wenn die Ameise, die als erstes beim Apfel ist, an ihre Kollegen eine Nachricht schicken könnte?
       </p>
       
-      <p>In diesem Tutorial wird es genau darum gehen, wie man kommuniziert. Dazu können die Ameisen Nachrichten senden. Eine Nachricht kann mit dem Befehl <code>SendeNachricht</code> verschickt werden. Eine Nachricht besteht aus einem Betreff und einem (optionalen) Inhalt. Der Betreff ist ein frei wählbarer Text, der verwendet wird, um verschiedene Nachrichtentypen zu unterscheiden. Sehen wir uns dazu mal ein erstes Beispiel an:
+      <p>In diesem Tutorial wird es genau darum gehen, wie man kommuniziert. Dazu können die Ameisen Nachrichten senden. Eine Nachricht kann mit dem Befehl <code>SendeNachricht()</code> verschickt werden. Eine Nachricht besteht aus einem Betreff und einem (optionalen) Inhalt. Der Betreff ist ein frei wählbarer Text, der verwendet wird, um verschiedene Nachrichtentypen zu unterscheiden. Sehen wir uns dazu mal ein erstes Beispiel an:
       </p>
       
       <p><img src="/images/l5_sendetanzt.png" class="img-thumbnail"></p>
@@ -567,7 +567,7 @@ module.exports.tutorials = {
       <p>Der Ereignisname entspricht dem Betreff mit einem Doppelpunkt vorangestellt. Dieser Doppelpunkt bedeutet: Das hier ist eine Nachricht. Jede Ameise empfängt diese Nachricht und führt dann die Anweisungen aus, in diesem Fall dreht sie sich einmal um 360 Grad.
       </p>
       
-      <p>Je näher eine Ameise am Sender, umso früher bekommt sie die Nachricht. Man kann festlegen, dass nur eine bestimmte Anzahl an Ameisen eine Nachricht bekommt. Wenn eine feste Anzahl an Ameisen um den Sender herum die Nachricht erhalten haben, dann wird sie nicht mehr weitergegeben. Dafür schreibt man unmittelbar vor dem Nachrichtenbefehl den Befehl <code>SetzeLimit</code> und gibt als Parameter an, wie viele Ameisen die Nachricht erhalten sollen:
+      <p>Je näher eine Ameise am Sender, umso früher bekommt sie die Nachricht. Man kann festlegen, dass nur eine bestimmte Anzahl an Ameisen eine Nachricht bekommt. Wenn eine feste Anzahl an Ameisen um den Sender herum die Nachricht erhalten haben, dann wird sie nicht mehr weitergegeben. Dafür schreibt man unmittelbar vor dem Nachrichtenbefehl den Befehl <code>SetzeLimit()</code> und gibt als Parameter an, wie viele Ameisen die Nachricht erhalten sollen:
       </p>
       
       <p><img src="/images/l5_sendetanztlimit.png" class="img-thumbnail"></p>
@@ -601,86 +601,9 @@ module.exports.tutorials = {
     ],
     solution : [0,1,0,1,1,0],
   },
-  53 : {
+  52 : {
     level : 5,
-    name : "Reichweite und Runde abfragen [API]",
-    text : `
-      <p>Bedingte Anweisungen sind uns schon beim Teamwork begegnet. Jetzt lernst du eine Reihe von neuen Bedingungen kennen, mit denen du deine Ameisen steuern kannst.
-      </p>
-      
-      <p>Wir erinnern uns zurück: Die Anweisungen innerhalb einer Ereignisdefinition können nochmals verschachtelt werden zu bedingten Anweisungen. Die bedingten Anweisungen haben ebenfalls eine Kopfzeile und eine Schlusszeile. Die Kopfzeile besteht aus dem Schlüsselwort "if", einem runden Paar Klammern mit der Bedingung und einer öffnenden geschweiften Klammer, die in der Schlusszeile wieder geschlossen wird:
-      </p>
-      
-      <p><img src="/images/l5_bedingteleer.png" class="img-thumbnail"></p>
-      
-      <p>Dazwischen liegen die bedingten Anweisungen. In diesem Fall sind es die zwei Befehle Drehe(360) und Gehe(100). Diese Befehle werden ausgeführt, wenn zusätzlich zum Ereignis auch eine bestimmte Bedingung erfüllt ist. Jetzt geht es also um die Frage, was für Bedingungen uns zur Verfügung stehen.
-      </p>
-      
-      <p>Eine Bedingung kann entweder den Wert true (wahr) oder false (falsch) haben. Der Computer schaut sich die Bedingung an und entscheidet dann, ob sie in der aktuellen Situation wahr oder falsch ist. Die Reichweite und die aktuellen Runde sind beides Zahlen. Für diese gibt es einige Vergleichsoperatoren.
-      </p>
-      
-      <p>
-      <script>
-        function checkcond() {
-          var cond = document.getElementById('cond').value
-          var result 
-          try {
-            result = eval(cond)
-          } catch (e) { }
-          if (result === true || result === false) {
-            document.getElementById('output').innerHTML = result
-          } else {
-            document.getElementById('output').innerHTML = "Keine Bedingung"
-          }
-        }
-      </script>
-      <input id="cond"><button onclick="checkcond()">Prüfen</button></p>
-      <p><span style="margin-left:30px" id="output">...</span>
-      </p>
-      
-      <p>Dieses Tool nimmt eine Bedingung und sagt dir, welchen Wert sie ergibt. Schreibe die folgenden Zeilen in das Tool und beobachte, welcher Wert herauskommt:
-      </p>
-      
-      <p><pre>100 < 200
-400 > 1000
-10 >= 10
-123
-lalala</pre></p>
-
-      <p>Die ersten drei Zeilen sind verschiedene Möglichkeiten, Zahlen miteinander zu vergleichen. Die entsprechen den Bedeutungen, die man aus dem Mathe-Unterricht kennt. 123 und lalala sind keine Bedingungen. Diese geben einen Fehler. Zusätzlich zu den Vergleichsoperatoren stehen uns die Variablen <code>Reichweite</code> und <code>Runde</code> zur Verfügung. Diese können innerhalb einer Bedingung verwendet werden:
-      </p>
-      
-      <p><img src="/images/l5_bedingt2.png" class="img-thumbnail"></p>
-      
-      <p>In diesem Fall werden die bedingten Anweisungen nur ausgeführt, wenn die Rundenzahl kleiner als 500 ist. Die Rundenzahl startet bei 1 und zählt mit jedem Tick um eins hoch. In einer Sekunde vergehen bei normaler Geschwindigkeit 40 Ticks. Die Bedingung prüft, ob das Ereignis noch innerhalb der ersten 12,5 Sekunden der Simulation ist.
-      </p>
-      
-      <p><img src="/images/l5_bedingt3.png" class="img-thumbnail"></p>
-      
-      <p>Diesmal werden die Anweisungen ausgeführt, wenn die Reichweite der Ameise größer als 2000 ist. Die Reichweite gibt an, wie viele Schritte die Ameise noch laufen kann. Sie ist zu Beginn bei 3000 und wird mit jedem Schritt runtergezählt. Bei 0 stirbt die Ameise an Müdigkeit.
-      </p>
-      
-      <p>Es spricht nichts dagegen, auch hier wieder mehrere bedingte Anweisungen zu schreiben. Hier ändert die Ameise ihr Verhalten, je nach dem, ob die 1000. Runde vorbei ist oder nicht:
-      </p>
-      
-      <p><img src="/images/l5_bedingt4.png" class="img-thumbnail"></p>
-      
-      <p>Bedingte Anweisungen können in jeder Ereignisdefinition verwendet werden. Sie empfehlen sich aber vor allem für "IstUntätig", um die Tätigkeit der Schleife zu steuern. Zum Beispiel kann die Ameise bei genügend großer Reichweite die Gegend erkunden und bei kleiner Reichweite zum Bau zurückkehren.
-      </p>
-    `,
-    questions : [
-    "Die Kopfzeile einer bedingten Anweisung beginnt mit 'if'",
-    "Die bedingten Anweisungen sind in geschweiften Klammern eingeschlossen.",
-    "Die Reichweite ist keine Zahl.",
-    "42 == 42 ergibt true.",
-    "1 = 1 ergibt true.",
-    "42 ergibt true."
-    ],
-    solution : [1,1,0,1,0,0],
-  },
-  55 : {
-    level : 5,
-    name : "Der Ameisenwettbewerb",
+    name : "Der Ameisenwettbewerb [API]",
     text : `
       <p>Ein Höhepunkt jedes Workshops ist der Ameisenwettbewerb, der bald stattfinden wird. Auf der Stufe 5 hast du nun Zugriff auf die Kampfarena. Dort kannst du deine Ameisen nochmal ausgiebig optimieren und schließlich gegeneinander antreten lassen.
       </p>
@@ -702,25 +625,44 @@ lalala</pre></p>
       </li>
       </ul>
       
-      <p>Der Wettbewerb erstreckt sich über mehrere Runden und die Sieger wird noch Turnierregeln, die an die Anzahl der Teilnehmer angepasst ist, bestimmt.
+      <p>Der Wettbewerb erstreckt sich über mehrere Runden und die Sieger wird nach Turnierregeln, die an die Anzahl der Teilnehmer angepasst ist, bestimmt.
       </p>
       
-      <p>Zur Vorbereitung auf den Wettbewerb stehen dir ab sofort zwei neue Werkzeuge zur Verfügung: Einerseits gibt es im Editor die neue Schaltfläche "Syntax überprüfen". Dieser checkt den Code auf gängige Fehler und stellt sicher, dass alle Klammern richtig gesetzt sind. Andererseits kannst du dir in der Simulation anzeigen lassen, wo die Ameisen sterben und wie sie sterben. Drücke in der Simulation die Taste T, um diese Funktion zu aktivieren.
+      <p>Vor dem Wettbewerb seien dir hier noch ein paar neue Funktionen vorgestellt:
       </p>
       
-      <p>Vor dem Wettbewerb können vorab Testrunden gespielt werden. Wenn man seine Ameise freischaltet, kann diese von anderen Teams gespielt werden. Die Ergebnisse dieser Spiele kann in der Ergebnisübersicht gesehen werden. Um in der Übersicht angezeigt zu werden müssen alle Ameisen aus verschiedenen Teams stammen und es müssen mindestens zwei Ameisen an der Runde teilnehmen.
+      <p>Zwei praktische Helfer stehen wir nun zur Verfügung: Einerseits kannst du dir in der Simulation anzeigen lassen, wo und wie deine Ameisen gestorben sind. Drücke dafür während der Simulation auf die Taste T. Andererseits kannst du ab jetzt deine Ameisen freigeben. Freigegebene Ameisen können von anderen Teilnehmern dieser Kolonie in der Arena gestartet werden. Damit kannst du erste Testrunden spielen und die Stärke deiner Ameisen abschätzen.
       </p>
       
-      <p>Die Stufe 6 wird nach dem Wettbewerb freigeschaltet.
+      <p>Außerdem gibt es die neuen Befehle <code>DreheZuObjekt()</code> und <code>DreheWegVonObjekt()</code>. Diese dienen als Ergänzung zu GeheZuZiel() und sind von der Verwendung her flexibler. Beispielsweise kann man damit programmieren, dass die Ameisen, wenn sie einen Zucker sehen, erstmal 100 Schritte davon weggehen:
+      </p>
+      
+      <p><img src="/images/l5_drehezu.png" class="img-thumbnail"></p>
+      
+      <p>DreheWegVonObjekt() lässt die Ameise sich so drehen, dass sie vom Zuckerhaufen wegschaut. Dann geht sie 100 Schritte und dreht sich mit DreheZuObjekt() dann zum Zuckerhaufen. Dieses Programm kann nützlich sein, um sich zum Beispiel davor zu schützen, in eine Giftwolke reinzulaufen, die um den Zucker herum besteht. Diese zwei Befehle können auch im Zusammenhang mit Wanzen und Gegner verwendet werden.</p>
+      
+      <p>Schließlich können über die Variablen <code>SchrittZahl</code> und <code>TickZahl</code> auf Informationen über die Ameise und die Simulation zugegriffen werden. SchrittZahl gibt an, wie viele Schritte die Ameise schon gelaufen ist. Das Maximum beträgt 3000. Ähnlich wie bei Teamabfragen kann ein Teil der Anweisungen nur unter einer bestimmen Bedingung aufgerufen werden, wenn z.B. die Anzahl der Schritt größer oder kleiner ist als eine bestimmte Zahl:
+      </p>
+      
+      <p><img src="/images/l5_bedingt.png" class="img-thumbnail"></p>
+      
+      <p>In der ersten Abfrage (Zeile 4 bis 7) werden die Anweisungen nur ausgeführt, wenn die Ameise noch weniger als 1000 Schritte gegangen ist. In der zweiten Abfrage geht die Ameise zum Bau zurück, wenn sie mehr als 2500 Schritte gegangen ist. Es können die Vergleichsoperatoren <, <=, > und >= verwendet werden.</p>
+      
+      <p>Ähnlich kann man mit der TickZahl das Verhalten der Ameise ändern, je nach dem, wie viele Ticks vergangen sind. Hier ist nochmal ein Beispiel dafür:
+      </p>
+      
+      <p><img src="/images/l5_tick.png" class="img-thumbnail"></p>
+      
+      <p>Vor der Runde 1000 setzt die Ameise beim Zucker das Limit auf 1000. Danach setzt die Ameise das Limit auf 10.
       </p>
     `,
     questions : [
       "Ab Stufe 5 kann man auf die Kampfarena zugreifen.",
       "Ein Zuckerhaufen besteht aus 15 Zuckerstücken.",
       "Vergiftete Gegner bringen mehr Punkte als vergiftete Wanzen.",
-      "Eine Runde dauert etwa 3 Minuten.",
-      "4 * 1250 == 5 * 1000",
-      "Nach dem Wettbewerb geht es mit Stufe 6 weiter."
+      "DreheZuObjekt() nimmt als Parameter ein Sichtungsobjekt.",
+      "SchrittZahl gibt an, wie viele Schritte die Ameise schon gelaufen ist.",
+      "TickZahl <= 400 und TickZahl < 401 bedeuten das gleiche."
     ],
     solution : [1,0,0,1,1,1],
   },
