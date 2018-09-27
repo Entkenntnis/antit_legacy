@@ -61,15 +61,13 @@
             <h3>Stufe 4</h3>
           
             <ul>
-              <li><code>SetzeGift()</code></li>
-              <li><code>"SiehtWanze"</code></li>
-              <li><code>"SiehWanzeVoraus"</code></li>
-              <li><code>"SiehtGegner"</code></li>
-              <li><code>Ameise.SetzeTeamFolge(nr1, nr2, nr3, ...)</code></li>
-              <li><code>Warte(ticks)</code></li>
-              <li><code>Zufall(von, bis)</code></li>
-              <li><code>FühreAlteBefehleAus()</code></li>
-              <li>Syntax-Checker</li>
+              <li>Gift setzen mit <code>SetzeGift()</code></li>
+              <li>Teamdefinition mit eigener Reihenfolge: <code>Ameise.SetzeTeamFolge(...)</code></li>
+              <li>Zufallszahlen erzeugen: <code>Zufall(von, bis)</code></li>
+              <li>Warten mit <code>Warte(ticks)</code></li>
+              <li>Wanzen und Gegner aufspüren mit Ereignissen <code>"SiehtWanze"</code>, <code>"SiehWanzeVoraus"</code>, und <code>"SiehtGegner"</code>, jeweils mit Sichtungsobjekt</li>
+              <li>Alte Befehle bei Ereignis behalten: <code>FühreAlteBefehleAus()</code></li>
+              <li>Syntax-Checker im Editor</li>
             </ul>
             
           <% } %>

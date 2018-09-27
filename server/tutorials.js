@@ -402,6 +402,10 @@ module.exports.tutorials = {
       </p>
       
       <p><img src="/images/l3_falsch.png" class="img-thumbnail"></p>
+      
+      <p>Die richtige Version sieht so aus:</p>
+      
+      <p><img src="/images/l3_richtig.png" class="img-thumbnail"></p>
     `,
     questions : [
       "Ereignisse können keine Sichtungsobjekte übergeben.",
@@ -415,42 +419,7 @@ module.exports.tutorials = {
   },
   41 : {
     level : 4,
-    name : "Gefahren ausweichen [API]",
-    text : `
-      <p>Damit sich die Ameise schützen kann, gibt es außerdem eine Reihe von Funktionen, mit denen die Ameise ihre Feinde wahrnehmen und auf diese reagieren kann.
-      </p>
-      
-      <p>Wanzen auf dem Spielfeld in Sichtweite nimmt die Ameise mit dem Ereignis namens <code>"SiehtWanze"</code> wahr. Dieses Ereignis liefert einen Parameter mit, der die Wanze darstellt. Mit <code>DreheWegVonObjekt</code> kann sich die Ameise von der Wanze wegbewegen. Es gibt noch die spezielle Variante <code>"SiehtWanzeVoraus"</code>, die aufgerufen wird, wenn sich die Wanze im Winkel +-45 Grad vor der Ameise befindet. In diesem Fall wird "SiehtWanze" ebenfalls aufgerufen.
-      </p>
-      
-      <p>Ameisen aus gegnerischen Teams werden mit dem Ereignis <code>"SiehtGegner"</code> wahrgenommen. Der Vollständigkeit halber sei noch erwähnt, dass es zu DreheWegVonObjekt noch das Gegenstück <code>DreheZuObjekt</code> existiert. Dieser Befehl dreht die Ameise auf ein Objekt zu. 
-      </p>
-      
-      <p>Im Gefahrenfall kann man die Ameise auch einfach in Schockstarre versetzen. Mit dem Befehl <code>Warte</code> kann man die Ameise eine gewisse Zeit lang stehen lassen. Die Zeit wird dabei in Anzahl Ticks angegeben. Normalerweise vergehen 40 Ticks pro Sekunde. In dieser Zeit tut die Ameise nichts.
-      </p>
-      
-      <p>Der Rand stellt für die Ameisen zum Glück keine Lebensgefahr dar. Trotzdem ist es gut, wenn sie darauf reagieren kann. Das Ereignis <code>"RandErreicht"</code> wird aufgerufen, wenn die Ameise an den Rand angestoßen ist. Sie kann sich dann z.B. um einen bestimmten Winkel drehen oder zum Bau zurückkehren.
-      </p>
-      
-      <p>Nicht alle Funktionen sind immer sinnvoll. Hier ist mal ein Beispiel, das ziemlich willkürlich gewählt ist. Dafür zeigt es zumindest, wie die Ereignisse und Befehle verwendet werden:
-      </p>
-      
-      <p><img src="/images/l3_ausweichen.png" class="img-thumbnail">
-      </p>
-    `,
-    questions : [
-      "Eine Ameise kann auf Gegner und Wanzen reagieren.",
-      "Eine Ameise kann sich zu einem Objekt hin und weg von einem Objekt drehen.",
-      "Die Wartezeit für den Befehl Warte wird in Millisekunden angegeben.",
-      "DreheWegVonObjekt hat sechs Vokale.",
-      "Wenn die Ameise den Rand erreicht wird das Ereignis IstAmRand aufgerufen.",
-      "Wenn SiehtWanzeVoraus aufgerufen wird, dann wird SiehtWanze nicht aufgerufen."
-    ],
-    solution : [1,1,0,1,0,0],
-  },
-  7 : {
-    level : 4,
-    name : "Gift, Zufall und Fühler [API]",
+    name : "Gift, Teams und Zufall [API]",
     text : `
       <p>Bisher konntest du gegen die Wanzen nichts tun: Sie standen im Weg und du musstest ihnen ausweichen. Das ändert sich jetzt, denn du lernst, wie du die giftige Ladung deiner Ameisen dazu einsetzen kannst, Wanzen zu beseitigen.
       </p>
@@ -464,9 +433,9 @@ module.exports.tutorials = {
       <ul>
       <li>Eine Giftwolke hat einen Radius von 80 Ameisenschritten. (Zum Vergleich: Der Sichtradius beträgt 70 Ameisenschritte)
       </li>
-      <li>Eine Giftwolke hält 160 Ticks (das entsprechen 4 Sekunden). Danach verstreut sie sich wieder.
+      <li>Eine Giftwolke hält 160 Ticks (das entspricht 4 Sekunden). Danach verstreut sie sich wieder.
       </li>
-      <li>Giftwolken werden erst dann giftig, wenn mindestens 3 Wolken sich überlappen. In diesen Bereichen sterben Wanzen und gegnerische Ameisen sofort.
+      <li>Giftwolken werden erst dann giftig, wenn sich mindestens 3 Wolken überlappen. In diesen Bereichen sterben Wanzen und gegnerische Ameisen sofort.
       </li>
       <li>Eine Ameise kann nur eine Ladung Gift setzen. Danach muss sie zum Bau zurückkehren (mit dem Befehl GeheZuBau()) und regeneriert dort ihre Ladung.
       </li>
@@ -476,107 +445,104 @@ module.exports.tutorials = {
       <p>Viel Spaß beim Kämpfen!
       </p>
       
-      <p>Die weiteren zwei Funktionen sind weniger aggressiv. So unscheinbar sie auch wirken, sind sie in einigen Situationen trotzdem unersetzlich.
+      <p>Um das Gift effektiv einsetzen zu können, gibt es noch eine Reihe weiterer Funktionen, die dir helfen, die Ameisen besser zu koordinieren:
       </p>
       
-      <p>Die erste Funktion gibt den Ameisen die Möglichkeit, Zufallszahlen zu erzeugen. Für eine Computerameise, die ein komplett vorherbestimmtes Leben hat, ist dies keine einfache Leistung. Ohne sich in die technischen Details zu verstricken ist es trotzdem möglich und es steht der Befehl <code>Zufall</code> zur Verfügung. Dieser Befehl nimmt zwei Parameter, die den Bereich angeben, innerhalb dessen eine Zahl erzeugt werden soll. Ein paar Beispiele:
+      <p>Zum einen gibt es die Möglichkeit, feiner zu steuern, die die Ameisen in die Teams eingeteilt werden. Bisher konntest du die Anzahl der Teams setzen und dann wurden die Ameisen nacheinander in die Teams zugeteilt. Wenn du 4 Teams setzt, dann werden die Ameisen in der Reihenfolge der Geburt in die Teams 0, 1, 2, 3, 0, 1, 2, 3, usw. zugeordnet:
+      </p>
+      
+      <p><img src="/images/l4_teams.png" class="img-thumbnail"></p>
+      
+      <p>Für den Einsatz von Gift ist das ungünstig. Die Ameisen aus einem bestimmten Team sind zu weit auseinander und die Giftwolken verschwinden, bevor sich drei überlappen können. Es wäre besser, wenn sich die Teams in Gruppen einteilen könnten. Das geht mit der neuen Teamdefinition <code>SetzeTeamFolge()</code>. Mit diesem Befehl schreibst du direkt auf, in welche Teams die Ameisen in der Reihe der Geburt eingeteilt werden sollen:
+      </p>
+      
+      <p><img src="/images/l4_teamfolge.png" class="img-thumbnail"></p>
+      
+      <p>Jetzt werden die ersten drei Ameisen in das Team 0 gesetzt, die nächsten drei Ameisen in Team 1, und so weiter bis zum vierten Team. Wenn die Folge zu Ende ist, dann beginnt sie von vorne, die 13. Ameise kommt also wieder ins Team 0. Mit der Teamfolge hast du nun eine sehr flexible Möglichkeit zur Hand, die Teams einzuteilen. Du entscheidest, wie groß die Teams sind und in welcher Folge sie zugeteilt werden.
+      </p>
+      
+      <p>Außerdem gibt es die Möglichkeit, Zufallszahlen zu erzeugen. Für eine Computerameise, die ein komplett vorherbestimmtes Leben hat, ist dies keine einfache Leistung. Ohne sich in die technischen Details zu verstricken ist es trotzdem möglich und es steht die Funktion <code>Zufall()</code> zur Verfügung. Diese Funktion nimmt zwei Parameter, die den Bereich angeben, innerhalb dessen eine Zahl erzeugt werden soll. Ein paar Beispiele:
       </p>
       
       <p><img src="/images/l4_zufall.png" class="img-thumbnail" title="* = Multiplikation"></p>
       
-      <p>Die Funktion Zufall kann dort verwendet werden, so sonst eine feste Zahl stehen würde. Diese Zahl wird nun zufällig bestimmt. In Zeile 5 geht die Ameise 100 bis 300 Schritte, in Zeile 6 dreht sich die Ameise zwischen -30 bis 30 Grad. In Zeile 7 dreht sich die Ameise in eine der Richtung 0, 90, 180 oder 270.
+      <p>Die Funktion Zufall ist kein selbstständiger Befehl, sondern kann nur in Kombination mit einem bekannten Befehl verwendet werden und zwar dort, wo sonst eine feste Zahl stehen würde. Diese Zahl wird nun zufällig bestimmt. In Zeile 5 geht die Ameise zwischen 100 und 300 Schritte, in Zeile 6 dreht sich die Ameise zwischen -30 bis 30 Grad. In Zeile 7 dreht sich die Ameise in eine der Richtung 0, 90, 180 oder 270.
       </p>
       
-      <p>Zum Schluss verfügt die Ameise ab dieser Stufe über die zwei neuen Befehle <code>GeheZuBauOffen()</code> und <code>GeheZuZielOffen</code>. Das sind ganz klar Varianten von den bekannten Befehlen. Was ist da nun der Unterschied?
+      <p>Schließlich kann es manchmal nützlich sein, wenn die Ameise kurz innehält. Dazu gibt es den neuen Befehl <code>Warte()</code>. Diese veranlasst die Ameise, eine bestimmte Zeitspanne stehen zu bleiben. Der Parameter gibt die Wartezeit in Ticks an (zur Erinnerung: 40 Ticks entsprechen einer Sekunde). Um die Ameise 2 Sekunden warten zu lassen schreibt man also:
       </p>
       
-      <p>Diese Befehle haben mit den Fühlern der Ameise zu tun. Diese Fühler sind normalerweise geschlossen, wenn die Ameise zum Bau, zu einem Apfel oder zu einem Zucker geht (oder gehen wird). Erst wenn die Ameise das Ziel erreicht hat, schaut sie sich wieder um. Konkret heißt es, dass auf dem Weg zum Ziel die beiden Ereignisse "SiehtZucker" und "SiehtApfel" zeitweise deaktiviert werden. Das ist ein vernünftiges Verhalten, denn die Ameise hat ja bereits ein Ziel und soll nicht abgelenkt werden (und sich womöglich in eine Schleife festsetzen).
-      </p>
-      
-      <p>In speziellen Situationen möchte man aber dieses Verhalten nicht. In diesen Fällen kann man die Fühler offen lassen und die Ereignisse "SiehtZucker" und "SiehtApfel" weiter aufrufen lassen. Ein Beispiele wäre, wenn die Ameise zum Bau zurückkehrt, aber auf dem Weg dahin gerne nach Nahrungsmittel mitnehmen würde. Dann kann diese spezielle Variante verwendet werden. Sonst verhalten sich die Befehle genau gleich.
-      </p>
-      
-      <p>"SiehtWanze" und "SiehtGegner" sind davon ausgenommen. Diese werden immer aufgerufen, unabhängig von den Fühlern.
-      </p>
+      <p><img src="/images/l4_warte.png" class="img-thumbnail" title=""></p>
     `,
     questions : [
       "Wanzen sind unsterblich.",
       "Die Reichweite von Gift ist größer als die Sichtweite",
       "Giftwolken bleiben für immer bestehen.",
-      "Zufallszahlen zu erzeugen ist nicht trivial.",
+      "SetzeTeamFolge(0,1,2,3) ist das gleiche wie SetzeTeams(4).",
       "Zufall(3,6) hat die möglichen Ergebnisse 3, 4, 5 und 6.",
-      "Wenn die Fühler geschlossen sind, werden trotzdem noch Wanzen gesehen."
+      "120 Ticks entsprechen drei Sekunden."
     ],
     solution : [0,1,0,1,1,1],
   },
-  8 : {
+  42 : {
     level : 4,
-    name : "Hinter den Kulissen: Das Ameisenaufgabenverzeichnis",
+    name : "Gefahren erkennen [API]",
     text : `
-      <p>Unter der Oberfläche einer Programmiersprache passieren eine Menge an Sachen. Im Idealfall funktionieren diese so wie erwartet und man muss seine Aufmerksamkeit nicht darauf richten. Als Programmierer möchte man den Befehl "Gehe" schreiben und man erwartet, dass die Simulation die Position entsprechend aktualisieren, die Interaktionen mit dem Spielfeld korrekt passieren und schließlich die 3D-Ansicht sich neu zeichnet. Wenn es gut läuft braucht man sich nicht mit den Details zu beschäftigen.
+      <p>Damit die Ameise sich schützen kan, gibt es außerdem eine Reihe von Funktionen, mit denen die Ameise ihre Feinde wahrnehmen kann. Diese bestehen aus ein paar Ereignissen, die sehr ähnlich sind zu den bisher eingeführten Ereignissen.
       </p>
       
-      <p>Glücklicherweise hat AntIT! mittlerweile eine Stabilität erreicht, wo man sich darüber tatsächlich keine Sorgen machen muss. Alle Sprachelemente sind schon in vielen Kombinationen getestet worden und Fehler korrigiert. In den ersten Workshops kam es z.B. noch regelmäßig vor, dass Befehle nicht ausgeführt wurden oder Ereignisse nicht oder falsch aufgerufen wurden.
+      <p>Das erste Ereignis, um auf Wanzen zu reagieren, heißt <code>"SiehtWanze"</code>. Dieses Ereignis wird aktiviert, wenn die Ameise innerhalb ihrer Sichtweite eine Wanze sieht. Dieses Ereignis stellt auch ein Sichtungsobjekt zur Verfügung und man kann zur Wanze gehen (was aber gefährlich ist!). Besser ist es aber, einfach gibt zu setzen und zum Bau zurückzukehren. Der Befehl in Zeile 4 ist auskommentiert und wird daher nicht ausgeführt:
       </p>
       
-      <p>Trotzdem <em>kann</em> es den einen oder anderen Interessieren, wie die Abläufe hinter den Kulissen genau ablaufen. Insbesondere wenn jemand AntIT! weiterentwickeln möchte, muss diese Person sich mit den Details beschäftigen. Das gilt auch für mich als Entwickler. Dieses Tutorial ist auch für mich geschrieben, damit ich an in ein paar Jahren noch weiß, wie die Ameisen hier funktionieren.
+      <p><img src="/images/l4_wanze.png" class="img-thumbnail" title=""></p>
+      
+      <p>Dieses Ereignis gibt es auch in einer speziellen Variante, die nur auf Wanzen reagiert, die sich im 45-Grad-Bereich vor der Ameise befinden. Das Ereignis heißt <code>"SiehtWanzeVoraus"</code> und verhält sich sonst genauso wie "SiehtWanze". Beide werden unabhängig voneinander aufgerufen, man sollte sich also für eine der beiden Varianten entscheiden und nicht beide gleichzeitig verwenden.
       </p>
       
-      <p>Wir wollen uns jetzt also das <strong>Ameisenaufgabenverzeichnis</strong> anschauen. Dieser Teil kümmert sich darum, dass Befehle entgegen genommen werden und später zum richtigen Zeitpunkt ausgeführt werden. Dieser Teil ist die erste Schnittstelle, die man als Programmierer mit dem System hat. Daher habe ich mich dazu entschieden, meine Erklärungen mit dem Ameisenaufgabenverzeichnis zu beginnen (und nicht mit der Simulation oder der 3D-Ansicht, was sicherlich auch manche interessieren würde).
+      <p><img src="/images/l4_wanzevoraus.png" class="img-thumbnail" title=""></p>
+      
+      <p><img src="/images/l4_winkel.png" class="img-thumbnail" title=""></p>
+
+      <p>Eine weitere Version gibt es, um auf gegnerische Ameisen zu reagieren. Dieses Ereignis heißt <code>"SiehtGegner"</code> und wird aktiviert, sobald sich eine gegnerische Ameise im Sichtbereich befinden. Dieses Ereignis liefert auch ein Sichtungsobjekt mit, hat aber keine Variant mit 45-Grad-Bereich:
       </p>
       
-      <p>Um die Situation ein wenig zu illustrieren beginne ich mit einer kleinen Geschichte. Diese möchte zeigen, dass es zu Problemen kommen kann, wenn mehrere Personen an einer Sache gleichzeitig arbeiten:
+      <p><img src="/images/l4_gegner.png" class="img-thumbnail" title=""></p>
+      
+      <p>Kleiner Hinweis: Die Befehle GeheZuBauDirekt() und GeheZuZielDirekt() wirken sich nicht auf die Sichtung von Wanzen und Gegner aus. Diese sind immer aktiviert und werden mit diesen Befehlen nicht ignoriert.
       </p>
       
-      <p><em>Die Firma ABC bietet ein teures Gerät tageweise zum Verleih an. Leider ist diese Firma noch schlecht vernetzt und verwaltet die Verfügbarkeit des Geräts über eine schriftliche Liste im Zimmer 102. Die Mitarbeiter, die mit den Kunden kommunizieren, müssen bei Anfragen in das Zimmer 102 kommen, die Liste überprüfen und sich dann dort eintragen. Es ist geplant, das System möglichst bald umzustellen, aber noch ist das nicht geschehen.</em>
+      <p>Zum Abschluss wollen wir uns noch anschauen, was eigentlich mit den alten Befehlen passiert, die die Ameise ausführt, wenn ein Ereignis aktiviert wird. Sollten innerhalb eines Ereignis neue Befehle gegeben werden, dann werden die alten Befehle gelöscht. Das kann schlecht sein.
       </p>
       
-      <p><em>So passiert es also, dass eines Tages der Kunde X anruft und den Mitarbeiter Y fragt, ob er das Gerät für den 2. Dezember ausleihen könnte. Der Mitarbeiter Y freut sich über die Anfrage und geht sofort los in das Zimmer 102, um die Verfügbarkeit zu überprüfen. In diesem Moment ruft der Kunde &alpha; an. Dieser hat den Mitarbeiter &beta; am Apparat und möchte ebenfalls das Gerät für den 2. Dezember ausleihen. Also geht er auch dieser los zum Zimmer 102. Auf dem Weg treffen sich die beiden Mitarbeiter nicht. Beide sehen, dass der 2. Dezember noch verfügbar ist.</em>
+      <p>Ein Beispiel: Die Ameise hat die Anweisungen, zu einem festen Zuckerhaufen zu gehen und dort Zucker zu holen:
       </p>
       
-      <p><em>Das teilen sie ihren Kunden mit und versprechen, das Gerät für diesen Tag unverzüglich in der Liste zu reservieren. Die Kunden verabschieden sich und gehen davon aus, dass alles geklappt hat. Nun gehen Mitarbeiter Y und Mitarbeiter &beta; wieder in das Zimmer 102, um die Reservierung durchzuführen. Als &beta; ankommt, sieht dieser, wie sich Y gerade für den 2. Dezember eingetragen hat. Sein Gesichtsausdruck war sicherlich sehr verdutzt. Hatte er nicht extra überprüft, dass die Liste frei war? Wie konnte es dann zu dieser Situation kommen?</em>
+      <p><img src="/images/l4_beispiel.png" class="img-thumbnail" title=""></p>
+      
+      <p>Die Ameise hat den Zuckerhaufen bereits erreicht und sich den Zucker aufgeladen. Sie führt gerade Zeile 7 aus (GeheZuBau()) und hat noch Zeile 8 vorgemerkt. Auf dem Rückweg trifft sie auf eine Wanze. Diese ist erstmal so programmiert:
       </p>
       
-      <p>Innerhalb der Simulation laufen viele Sachen gleichzeitig ab. Wenn die Simulation so schlecht verwaltet wird wie die Firma ABC, dann kann es passieren, dass Ameisen einen Apfel tragen sollen, der schon von einem anderen Team weggeschnappt worden ist oder sich ein Zuckerstück von einem leeren Zuckerhaufen nehmen. Das sind Fehlerzustände, die unbedingt verhindert werden sollten.
+      <p><img src="/images/l4_wanzeloesche.png" class="img-thumbnail" title=""></p>
+      
+      <p>Die Ameise weicht der Wanze aus. Sie hat immer noch ihren Zucker geladen, aber weil alle alten Befehle gelöscht wurden, bleibt sie mit dem Zucker auf dem Spielfeld stehen! Das wollen wir vermeiden. Dazu können wir innerhalb eines Ereignis sagen, dass die alten Befehle weiter ausgeführt werden sollen. Das passiert mit dem Befehl <code>FühreAlteBefehleAus()</code>. An Stelle dieses Befehls werden nun die bisherigen Befehle weiter ausgeführt:
       </p>
       
-      <p>Die Programmiersprache, in der die Ameisen entwickelt sind, hat für dieses Problem ein einfaches wie radikales Mittel: Sie hat nur einen einzigen Mitarbeiter und dieser kümmert sich um alle Geschäfte. Mit nur einem Mitarbeiter wäre der Firma ABC dieser Fehler nicht passiert: Der Mitarbeiter arbeitet zuerst den Kunden X ab und kümmert sich dann um den Kunden &alpha;, dem er dann absagen wird.
+      <p><img src="/images/l4_wanzegut.png" class="img-thumbnail" title=""></p>
+      
+      <p>Für alle die bis zum Schluss durchgehalten haben: Es gibt im Editor eine neues Tool, den Syntax-Checker! Dieser liest deinen Programmcode ein und prüft ihn auf Klammerfehler. Sollte irgendwo eine Klammer zu wenig oder zu viel sein, gibt er eine Fehlermeldung und sagt auch, was er auszusetzen hat. Einfach draufklicken und der Code wird überprüft.
       </p>
       
-      <p>Diese Lösung hat natürlich auch ihren Preis. Die Telefonwarteschlange der Firma ABC ist nun öfters in Gebrauch. Für AntIT! heißt es, dass wir nun das Ameisenaufgabenverzeichnis einführen müssen. So läuft das genau ab:
-      </p>
-      
-      <p>Die Firma AntIT! führt Ameisensimulationen durch. Dazu haben sie einen Raum, in dem die ganze Simulation nachgebaut ist. Ein Mitarbeiter verwaltet die Simulation und verschiebt die Ameisenfiguren entsprechend den Anweisungen der Programmierer. Um Probleme mit der Synchronität zu vermeiden hat die Firma AntIT! nur einen einzigen Mitarbeiter angestellt.
-      </p>
-      
-      <p>Der Mitarbeiter berechnet die Simulation Tick für Tick. Für jede Ameise auf dem Spielfeld führt er einen Eintrag im Ameisenaufgabenverzeichnis, kurz AAV. Dort steht drin, welchen Befehl die Ameise gerade ausführt, z.B., dass die Ameise 200 Schritte gehen soll. Der Mitarbeiter verschiebt die Ameise pro Tick immer nur um ein kleines Stückchen, aber irgendwann hat er die 200 Schritte geschafft und hakt die Aufgabe im AAV als erledigt ab. Um das AAV zu füllen, ruft der Mitarbeiter immer wieder die Programmierer an.
-      </p>
-      
-      <p>Beispielsweise wird eine neue Ameise geboren. Der Mitarbeiter stellt die Ameise auf das Spielfeld, erstellt für diese Ameise einen Eintrag im AAV und ruft den Programmierer an: "Hey, eine neue Ameise ist geboren. Was soll sie tun?". Der Programmierer antwortet: "Die Ameise soll bitte 300 Schritte gehen und sich dann um 90 Grad drehen." Der Mitarbeiter trägt diese beiden Befehle im AAV ein. Tick für Tick arbeitet er diese ab. Sobald der Mitarbeiter sieht, dass die Ameise mit beiden Befehlen fertig ist, ruft er wieder die Programmierer an: "Hey, die Ameise hat nichts mehr zu tun. Soll sie was machen?" Der Programmierer antwortet: "Gehe jetzt 500 Schritte". Der Mitarbeiter trägt das wieder ins AAV ein. Wenn der Mitarbeiter feststellt, dass die Ameise einen Zucker sieht, ruft er wieder den Programmierer an: "Hey, deine Ameise hat gerade einen Zucker gesehen. Was soll sie machen?" ... So geht das Spiel immer weiter.
-      </p>
-      
-      <p>Die Anrufe des Mitarbeiters entsprechen den Ereignissen der Simulation wie "IstGeboren", "IstUntätig" oder "SiehtZucker". Als Programmierer schreibt man rein, welche Befehle die Ameise dann ausführen soll. Diese werden vom Mitarbeiter nicht sofort ausgeführt, sondern erstmal in das AAV eingetragen. Davon merkt man als Programmierer eigentlich nichts. Es wirkt so, als ob die einzelnen Befehle direkt danach ausgeführt werden.
-      </p>
-      
-      <p>An zwei Punkten muss man sich aber doch mit den Feinheiten des AAV beschäftigen. Diese möchte ich hier zum Schluss noch erwähnen:
-      </p>
-      
-      <ol>
-      <li><p>Was ist nämlich, wenn der Programmierer Anweisungen gibt und es noch unfertige Befehle im AAV gibt, typischerweise dann, wenn die Ameise etwas sieht. Wie soll der Mitarbeiter mit den Befehlen im AAV umgehen? Dafür wurde folgende Regelung gesetzt, die sich im praktischen Alltag bewährt hat: Falls die neuen Anweisungen den Befehl "GeheZuBau" oder "GeheZuZiel" enthalten, dann werden die alten Befehle im AAV gelöscht. Es wird davon ausgegangen, dass diese keine Bedeutung mehr haben. Das ist der Normalfall. Falls die neuen Anweisungen diese Befehle aber nicht enthalten, dann wird davon ausgegangen, dass die alten Anweisungen noch gebraucht werden und die neuen Anweisungen werden <em>vor</em> den alten Anweisungen ausgeführt. Der wesentliche Anwendungsfall ist, wenn man einer Wanze ausweicht.
-      </p></li>
-      <li><p>Auf der nächsten Stufe wirst du bedingte Anweisungen kennenlernen, um beispielsweise mit der Reichweite oder der Runde umzugehen. Diese Anweisungen passen erstmal nicht in das Schema des AAV. Solange die Abfragen einfach sind und nicht mit anderen Befehlen verschachtelt werden, kommt es auch noch nicht zu Problemen. Zu diesem Punkt wird es an gegebener Stelle nochmal ein Tutorial geben.
-      </p></li>
-      </ol>
+      <p><img src="/images/l4_syntax.png" class="img-thumbnail" title=""></p>
     `,
     questions : [
-      "Solange die Dinge wie erwartet funktionieren benötigt man kein Wissen über die Details.",
-      "AntIT! enthält viele Bugs.",
-      "AntIT! ist die beste Ameisensimulation der Welt.",
-      "Bei mehreren Mitarbeitern kommt es nie zu Problemen.",
-      "Die Programmiersprache der Ameisen enthält genau zwei Mitarbeiter.",
-      "Dieser Satz enhält sechs Wörter."
+      "Eine Ameise kann auf Gegner und Wanzen reagieren.",
+      "SiehtWanzeVoraus beachtet nur Wanzen im 45-Grad-Bereich.",
+      "SiehtGegnerVoraus kann verwendet werden.",
+      "GeheZuBauDirekt() reagiert weiterhin auf Wanzen.",
+      "Bei einem alten Ereignis werden automatisch die alten Befehle behalten.",
+      "Es gibt keine Möglichkeit, die alten Befehle weiter auszuführen."
     ],
-    solution : [1,0,1,0,0,0],
+    solution : [1,1,0,1,0,0],
   },
   9 : {
     level : 5,
@@ -776,6 +742,75 @@ lalala</pre></p>
       "Frage 6"
     ],
     solution : [0,0,0,1,1,1],
+  },
+  81 : {
+    level : 8,
+    name : "Hinter den Kulissen: Das Ameisenaufgabenverzeichnis",
+    text : `
+      <p>Unter der Oberfläche einer Programmiersprache passieren eine Menge an Sachen. Im Idealfall funktionieren diese so wie erwartet und man muss seine Aufmerksamkeit nicht darauf richten. Als Programmierer möchte man den Befehl "Gehe" schreiben und man erwartet, dass die Simulation die Position entsprechend aktualisieren, die Interaktionen mit dem Spielfeld korrekt passieren und schließlich die 3D-Ansicht sich neu zeichnet. Wenn es gut läuft braucht man sich nicht mit den Details zu beschäftigen.
+      </p>
+      
+      <p>Glücklicherweise hat AntIT! mittlerweile eine Stabilität erreicht, wo man sich darüber tatsächlich keine Sorgen machen muss. Alle Sprachelemente sind schon in vielen Kombinationen getestet worden und Fehler korrigiert. In den ersten Workshops kam es z.B. noch regelmäßig vor, dass Befehle nicht ausgeführt wurden oder Ereignisse nicht oder falsch aufgerufen wurden.
+      </p>
+      
+      <p>Trotzdem <em>kann</em> es den einen oder anderen Interessieren, wie die Abläufe hinter den Kulissen genau ablaufen. Insbesondere wenn jemand AntIT! weiterentwickeln möchte, muss diese Person sich mit den Details beschäftigen. Das gilt auch für mich als Entwickler. Dieses Tutorial ist auch für mich geschrieben, damit ich an in ein paar Jahren noch weiß, wie die Ameisen hier funktionieren.
+      </p>
+      
+      <p>Wir wollen uns jetzt also das <strong>Ameisenaufgabenverzeichnis</strong> anschauen. Dieser Teil kümmert sich darum, dass Befehle entgegen genommen werden und später zum richtigen Zeitpunkt ausgeführt werden. Dieser Teil ist die erste Schnittstelle, die man als Programmierer mit dem System hat. Daher habe ich mich dazu entschieden, meine Erklärungen mit dem Ameisenaufgabenverzeichnis zu beginnen (und nicht mit der Simulation oder der 3D-Ansicht, was sicherlich auch manche interessieren würde).
+      </p>
+      
+      <p>Um die Situation ein wenig zu illustrieren beginne ich mit einer kleinen Geschichte. Diese möchte zeigen, dass es zu Problemen kommen kann, wenn mehrere Personen an einer Sache gleichzeitig arbeiten:
+      </p>
+      
+      <p><em>Die Firma ABC bietet ein teures Gerät tageweise zum Verleih an. Leider ist diese Firma noch schlecht vernetzt und verwaltet die Verfügbarkeit des Geräts über eine schriftliche Liste im Zimmer 102. Die Mitarbeiter, die mit den Kunden kommunizieren, müssen bei Anfragen in das Zimmer 102 kommen, die Liste überprüfen und sich dann dort eintragen. Es ist geplant, das System möglichst bald umzustellen, aber noch ist das nicht geschehen.</em>
+      </p>
+      
+      <p><em>So passiert es also, dass eines Tages der Kunde X anruft und den Mitarbeiter Y fragt, ob er das Gerät für den 2. Dezember ausleihen könnte. Der Mitarbeiter Y freut sich über die Anfrage und geht sofort los in das Zimmer 102, um die Verfügbarkeit zu überprüfen. In diesem Moment ruft der Kunde &alpha; an. Dieser hat den Mitarbeiter &beta; am Apparat und möchte ebenfalls das Gerät für den 2. Dezember ausleihen. Also geht er auch dieser los zum Zimmer 102. Auf dem Weg treffen sich die beiden Mitarbeiter nicht. Beide sehen, dass der 2. Dezember noch verfügbar ist.</em>
+      </p>
+      
+      <p><em>Das teilen sie ihren Kunden mit und versprechen, das Gerät für diesen Tag unverzüglich in der Liste zu reservieren. Die Kunden verabschieden sich und gehen davon aus, dass alles geklappt hat. Nun gehen Mitarbeiter Y und Mitarbeiter &beta; wieder in das Zimmer 102, um die Reservierung durchzuführen. Als &beta; ankommt, sieht dieser, wie sich Y gerade für den 2. Dezember eingetragen hat. Sein Gesichtsausdruck war sicherlich sehr verdutzt. Hatte er nicht extra überprüft, dass die Liste frei war? Wie konnte es dann zu dieser Situation kommen?</em>
+      </p>
+      
+      <p>Innerhalb der Simulation laufen viele Sachen gleichzeitig ab. Wenn die Simulation so schlecht verwaltet wird wie die Firma ABC, dann kann es passieren, dass Ameisen einen Apfel tragen sollen, der schon von einem anderen Team weggeschnappt worden ist oder sich ein Zuckerstück von einem leeren Zuckerhaufen nehmen. Das sind Fehlerzustände, die unbedingt verhindert werden sollten.
+      </p>
+      
+      <p>Die Programmiersprache, in der die Ameisen entwickelt sind, hat für dieses Problem ein einfaches wie radikales Mittel: Sie hat nur einen einzigen Mitarbeiter und dieser kümmert sich um alle Geschäfte. Mit nur einem Mitarbeiter wäre der Firma ABC dieser Fehler nicht passiert: Der Mitarbeiter arbeitet zuerst den Kunden X ab und kümmert sich dann um den Kunden &alpha;, dem er dann absagen wird.
+      </p>
+      
+      <p>Diese Lösung hat natürlich auch ihren Preis. Die Telefonwarteschlange der Firma ABC ist nun öfters in Gebrauch. Für AntIT! heißt es, dass wir nun das Ameisenaufgabenverzeichnis einführen müssen. So läuft das genau ab:
+      </p>
+      
+      <p>Die Firma AntIT! führt Ameisensimulationen durch. Dazu haben sie einen Raum, in dem die ganze Simulation nachgebaut ist. Ein Mitarbeiter verwaltet die Simulation und verschiebt die Ameisenfiguren entsprechend den Anweisungen der Programmierer. Um Probleme mit der Synchronität zu vermeiden hat die Firma AntIT! nur einen einzigen Mitarbeiter angestellt.
+      </p>
+      
+      <p>Der Mitarbeiter berechnet die Simulation Tick für Tick. Für jede Ameise auf dem Spielfeld führt er einen Eintrag im Ameisenaufgabenverzeichnis, kurz AAV. Dort steht drin, welchen Befehl die Ameise gerade ausführt, z.B., dass die Ameise 200 Schritte gehen soll. Der Mitarbeiter verschiebt die Ameise pro Tick immer nur um ein kleines Stückchen, aber irgendwann hat er die 200 Schritte geschafft und hakt die Aufgabe im AAV als erledigt ab. Um das AAV zu füllen, ruft der Mitarbeiter immer wieder die Programmierer an.
+      </p>
+      
+      <p>Beispielsweise wird eine neue Ameise geboren. Der Mitarbeiter stellt die Ameise auf das Spielfeld, erstellt für diese Ameise einen Eintrag im AAV und ruft den Programmierer an: "Hey, eine neue Ameise ist geboren. Was soll sie tun?". Der Programmierer antwortet: "Die Ameise soll bitte 300 Schritte gehen und sich dann um 90 Grad drehen." Der Mitarbeiter trägt diese beiden Befehle im AAV ein. Tick für Tick arbeitet er diese ab. Sobald der Mitarbeiter sieht, dass die Ameise mit beiden Befehlen fertig ist, ruft er wieder die Programmierer an: "Hey, die Ameise hat nichts mehr zu tun. Soll sie was machen?" Der Programmierer antwortet: "Gehe jetzt 500 Schritte". Der Mitarbeiter trägt das wieder ins AAV ein. Wenn der Mitarbeiter feststellt, dass die Ameise einen Zucker sieht, ruft er wieder den Programmierer an: "Hey, deine Ameise hat gerade einen Zucker gesehen. Was soll sie machen?" ... So geht das Spiel immer weiter.
+      </p>
+      
+      <p>Die Anrufe des Mitarbeiters entsprechen den Ereignissen der Simulation wie "IstGeboren", "IstUntätig" oder "SiehtZucker". Als Programmierer schreibt man rein, welche Befehle die Ameise dann ausführen soll. Diese werden vom Mitarbeiter nicht sofort ausgeführt, sondern erstmal in das AAV eingetragen. Davon merkt man als Programmierer eigentlich nichts. Es wirkt so, als ob die einzelnen Befehle direkt danach ausgeführt werden.
+      </p>
+      
+      <p>An zwei Punkten muss man sich aber doch mit den Feinheiten des AAV beschäftigen. Diese möchte ich hier zum Schluss noch erwähnen:
+      </p>
+      
+      <ol>
+      <li><p>Was ist nämlich, wenn der Programmierer Anweisungen gibt und es noch unfertige Befehle im AAV gibt, typischerweise dann, wenn die Ameise etwas sieht. Wie soll der Mitarbeiter mit den Befehlen im AAV umgehen? Dafür wurde folgende Regelung gesetzt, die sich im praktischen Alltag bewährt hat: Falls die neuen Anweisungen den Befehl "GeheZuBau" oder "GeheZuZiel" enthalten, dann werden die alten Befehle im AAV gelöscht. Es wird davon ausgegangen, dass diese keine Bedeutung mehr haben. Das ist der Normalfall. Falls die neuen Anweisungen diese Befehle aber nicht enthalten, dann wird davon ausgegangen, dass die alten Anweisungen noch gebraucht werden und die neuen Anweisungen werden <em>vor</em> den alten Anweisungen ausgeführt. Der wesentliche Anwendungsfall ist, wenn man einer Wanze ausweicht.
+      </p></li>
+      <li><p>Auf der nächsten Stufe wirst du bedingte Anweisungen kennenlernen, um beispielsweise mit der Reichweite oder der Runde umzugehen. Diese Anweisungen passen erstmal nicht in das Schema des AAV. Solange die Abfragen einfach sind und nicht mit anderen Befehlen verschachtelt werden, kommt es auch noch nicht zu Problemen. Zu diesem Punkt wird es an gegebener Stelle nochmal ein Tutorial geben.
+      </p></li>
+      </ol>
+    `,
+    questions : [
+      "Solange die Dinge wie erwartet funktionieren benötigt man kein Wissen über die Details.",
+      "AntIT! enthält viele Bugs.",
+      "AntIT! ist die beste Ameisensimulation der Welt.",
+      "Bei mehreren Mitarbeitern kommt es nie zu Problemen.",
+      "Die Programmiersprache der Ameisen enthält genau zwei Mitarbeiter.",
+      "Dieser Satz enhält sechs Wörter."
+    ],
+    solution : [1,0,1,0,0,0],
   },
   91 : {
     level : 9,
