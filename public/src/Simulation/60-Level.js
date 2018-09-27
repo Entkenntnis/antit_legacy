@@ -1304,6 +1304,107 @@
     }),
  
     81 : {
+      init : function(){
+        defaultLevelInit()
+        Sim.Opts.Runden = 2000
+      },
+      create : function(){
+        defaultLevelCreate()
+        var sugar = Sim.Util.moveDir(locPos(0,0), Sim.rng()*360, 200 + Sim.rng()*200)
+        Sim.sugars.push(new Sim.Sugar(sugar))
+        var hill = locPos(0,0)
+        Sim.l8_mid = {x:(sugar.x+hill.x)/2,y:(sugar.y+hill.y)/2}
+        Sim.Bus.emit('move-spawn-point', 0, Sim.l8_mid)
+      },
+      isDone : function(){
+        return Sim.ants.length == 20 &&
+          Sim.ants.every(function(a){ return Sim.Util.dist(a.getPos(), Sim.l8_mid) < 10})
+      }
+    },
+ 
+    82 : {
+      init : function(){
+        defaultLevelInit()
+        Sim.Opts.Runden = 2000
+      },
+      create : function(){
+        defaultLevelCreate()
+        var d1 = Sim.rng()*90
+        var d2 = Sim.rng()*90 + 120
+        var d3 = Sim.rng()*90 + 240
+        Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), d1, 250 + Sim.rng()*150)))
+        Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), d2, 250 + Sim.rng()*150)))
+        Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), d3, 250 + Sim.rng()*150)))
+        Sim.Bus.emit('set-ring', locPos(0,0), 0x00aa00, {inner:195,outer:205})
+      },
+      isDone : function(){
+        return Sim.apples.every(function(a){
+          var dist = Sim.Util.dist(a.getPos(), locPos(0,0))
+          return dist >= 195 && dist <= 205
+          
+        })
+      }
+    },
+ 
+    83 : {
+      init : function(){
+        defaultLevelInit()
+        Sim.Opts.Runden = 2000
+        Sim.Opts.AnfangsEnergie = 1200
+      },
+      create : function(){
+        defaultLevelCreate()
+        var basedist = 150 + Sim.rng()*280
+        Sim.l8_bugs = []
+        for (var i = 0; i < 5; i++) {
+          var bug = new Sim.Bug(locPos(
+            basedist + i*110 + (Sim.rng()*30-15),
+            (Sim.rng()*10+20)*(Math.floor(Sim.rng()*2)*2-1)))
+          if (i != 2)
+            Sim.l8_bugs.push(bug)
+          Sim.bugs.push(bug)
+        }
+      },
+      isDone : function(){
+        return Sim.cycles > 1000 && Sim.bugs.length == 4 && Sim.bugs.every(function(b){
+          return Sim.l8_bugs.indexOf(b) >= 0
+        })
+      },
+      failed : function() {
+        return Sim.bugs.length < 4
+      },
+    },
+ 
+    84 : {
+      init : function(){
+        defaultLevelInit()
+        Sim.Opts.Runden = 2000
+        Sim.Opts.AnfangsEnergie = 1200
+      },
+      create : function(){
+        defaultLevelCreate()
+        var basedist = 150 + Sim.rng()*280
+        Sim.l8_bugs = []
+        for (var i = 0; i < 5; i++) {
+          var bug = new Sim.Bug(locPos(
+            basedist + i*110 + (Sim.rng()*30-15),
+            (Sim.rng()*10+20)*(Math.floor(Sim.rng()*2)*2-1)))
+          if (i != 2)
+            Sim.l8_bugs.push(bug)
+          Sim.bugs.push(bug)
+        }
+      },
+      isDone : function(){
+        return Sim.cycles > 1000 && Sim.bugs.length == 4 && Sim.bugs.every(function(b){
+          return Sim.l8_bugs.indexOf(b) >= 0
+        })
+      },
+      failed : function() {
+        return Sim.bugs.length < 4
+      },
+    },
+ 
+    991 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1500

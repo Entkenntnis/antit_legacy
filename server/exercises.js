@@ -492,6 +492,47 @@ Ergebnis "F": 2 hoch 3 = 8</pre></p>
   },
   
   81 : {
+    name : "Mittelpunkt",
+    description : `
+      <p>Auf dem Spielfeld befindet sich ein einzelner Zuckerhaufen. Finde ihn und bewege alle Ameisen genau in den Mittelpunkt zwischen dem Zucker und dem Bau.
+      </p>
+    `,
+    level : 8,
+  },
+  
+  82 : {
+    name : "Der richtige Abstand",
+    description : `
+      <p>Auf dem Spielfeld befinden sich drei Äpfel. Trage sie Richtung Bau und stelle sie auf dem grünen Ring ab. Dieser Ring liegt 200 Schritte um den Bau herum. Die Aufgabe ist geschafft, wenn die drei Äpfel auf dem Ring liegen.
+      </p>
+      
+    `,
+    level : 8,
+  },
+  
+  83 : {
+    name : "Gezielter Angriff",
+    description : `
+      <p>Im Osten befinden sich fünf Wanzen. Vergifte genau die dritte Wanze und lasse die anderen am Leben. Nutze dafür folgende Vorlage:
+      </p>
+      
+      <p><img src="/images/l8_wanzen.png" class="img-thumbnail"></p>
+      
+    `,
+    level : 8,
+  },
+  
+  84 : {
+    name : "Zuckerspur",
+    description : `
+      <p>Bla bla bla ...
+      </p>
+      
+    `,
+    level : 8,
+  },
+  
+  /*991 : {
     name : "Der richtige Abstand",
     description : `
       <p>Diese Aufgabe ist für Teilnehmer geeignet, die bereits Erfahrungen mit einer Programmiersprache wie Java oder C/C++/C# haben. 
@@ -514,8 +555,8 @@ Ergebnis "F": 2 hoch 3 = 8</pre></p>
       <p>Von den Äpfel auf dem Spielfeld befindet sich einer genau 245 Schritte vom Bau entfernt. Trage diesen Apfel zum Bau. Berühre die anderen Äpfel nicht.
       </p>
     `,
-    level : 8,
-  },
+    level : 9,
+  },*/
   
   /*2 : {
     name : "Koordinaten",
