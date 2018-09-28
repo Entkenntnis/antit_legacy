@@ -285,7 +285,7 @@ module.exports.exercises = {
   },
   
   61 : {
-    name : "Vorzeichen [JS]",
+    name : "Vorzeichen",
     description : `
       <p>Prüfe eine Zahl auf ihr Vorzeichen. Ergänze dazu folgende Funktion:
       </p>
@@ -305,7 +305,7 @@ module.exports.exercises = {
   },
   
   63 : {
-    name : "Testergebnis [JS]",
+    name : "Testergebnis",
     description : `
       <p>Bewerte ein Testergebnis. Ergänze dazu folgende Funktion:
       
@@ -323,7 +323,7 @@ module.exports.exercises = {
   },
   
   65 : {
-    name : "Schere, Stein, Papier [JS]",
+    name : "Schere, Stein, Papier",
     description : `
       <p>Zwei Personen spielen Schere, Stein, Papier. Deine Funktion soll entscheiden, wer gewinnt:</p>
       
@@ -340,7 +340,7 @@ module.exports.exercises = {
   },
   
   67 : {
-    name : "Statistik [JS]",
+    name : "Statistik",
     description : `
       <p>Wir wollen ein wenig Statistik betreiben. Selbst mit zwei Zahlen lassen sich schon einige Werte bestimmen. Ergänze folgende Funktion:</p>
       

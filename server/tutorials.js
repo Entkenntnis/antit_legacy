@@ -668,22 +668,115 @@ module.exports.tutorials = {
   },
   61 : {
     level : 6,
-    name : "Programmieren in JS",
+    name : "Programmieren mit Logik",
     text : `
-      <p>[Vorstellung, wie man mit den Aufgaben umgeht.]
+      <p>Du hast jetzt einige Erfahrung mit Code gesammelt. Deine Ameisen sind auf dem Spielfeld spazieren gewesen, haben Nahrungsmittel gefunden, haben gekämpft und Nachrichten gesendet. Dabei hast du viele Funktionen und Befehle aus der API verwendet, wie z.B. GeheZuZiel() oder SendeNachricht(). Diese reichen aber nicht immer aus.
+      </p>
+      
+      <p>Für stärkere Ameisen wird es nötig sein, eigene Funktionen zu entwickeln. Dafür brauchen wir Logik. Du hast sie schon bei der Einteilung der Teams und der der Abfrage von Schrittzahl und Runde kennengelernt. Auf dieser Stufe wollen wir uns noch einmal intensiv mit Logik beschäftigen.
+      </p>
+      
+      <p>Dabei wirst du sehen, dass die Programmiersprache, die du hier lernst, alltagstauglich ist. Sie ist nicht nur dazu gut, Ameisen zu programmieren, sondern man kann mit ihr auch Probleme aus ganz anderen Bereichen angehen. Daher haben die Aufgaben auf dieser Stufe auch erstmal scheinbar wenig mit Ameisen zu tun. Die Technik dahinter ist aber gleich und wird dann später auf die Ameisen angewendet.
+      </p>
+      
+      <p>Die Aufgaben auf dieser Stufe sind anders. Neu ist, dass du jetzt eine Ereignisdefinition vorgegeben bekommst. Diese unterscheidet sich aber von den Ereignissen, die wir bisher kennen:
+      </p>
+      
+      <p><img src="/images/l6_beispiel.png" class="img-thumbnail"></p>
+      
+      <p>Zum einen beginnt der Ereignisname mit einem Hashtag. Für jede Aufgabe gibt es ein eigenes Ereignis. Außerdem kommt hinzu, dass diese Ereignisse eine Antwort von dir erwarten. Daher sprechen wir in diesem Fall von einer <em>Funktion</em>. Hier wurde also die Funktion 'Beispiel' definiert.
+      </p>
+      
+      <p>Funktionen nehmen Parameter entgegen. Diese werden in der ersten Zeile der Ereignisdefinition in die runden Klammern geschrieben. Es gibt viele Funktionen, die mehr als einen Parameter annehmen. Unsere Funktion nimmt nur den einen Parameter 'x' an. Für jede Aufgabe ist angegeben, wie die Parameter heißen und was sie bedeuten.
+      </p>
+      
+      <p>Jede Funktion erwartet von dir eine Antwort. Diese wird mit dem Schlüsselwort <code>return</code> zurückgegeben. Die Antwort hat einen bestimmten Datentyp, für uns sind erstmal zwei wichtig: Einerseits gibt es Zahlen, z.B. der der Wert <code style="color:blue">4</code> oder der Wert <code style="color:blue">2.5</code> (kein Komma, sondern Punkt als Dezimalzeichen). Andererseits gibt es Zeichenketten wie z.B. der Wert <code style="color:brown">"Hallo"</code> (mit doppelten Anführungszeichen). In der Angabe wird auch ziemlich deutlich, von welchem Typ die Antwort seien soll.
+      </p>
+      
+      <p>Unsere Beispielfunktion soll einfach die Zeichenkette "Alles in Ordnung" zurückgeben. Dazu schreibst du:
+      </p>
+      
+      <p><img src="/images/l6_return.png" class="img-thumbnail"></p>
+      
+      <p>'return' ist kein Befehl und braucht keine runden Klammern. Schreibe einfach den Wert dahinter. Zu beachten ist, dass nach dem 'return' kein weiterer Code ausgeführt wird. Die Funktion ist damit abgeschlossen.
+      </p>
+      
+      <p>Unsere Funktion 'Beispiel' hat jetzt ihren Parameter ignoriert. Als zweites Beispiel schauen wir uns eine Funktion mit dem Namen 'QuadratHalbe' an. Diese macht etwas mit ihrem Parameter:
+      </p>
+      
+      <p><img src="/images/l6_quadrat.png" class="img-thumbnail"></p>
+      
+      <p>Der Parameter 'x' ist eine Zahl (wie das x aus dem Matheunterricht). Das Sternchen (<code>*</code>) ist ein Multiplikationszeichen. Das x wird also mit sich selber multipliziert. Der Schrägstrich (<code>/</code>) ist ein Divisionszeichen. Danach wird das x durch 2 geteilt. Daher hat die Funktion den Namen 'QuadratHalbe'. Das Ergebnis wird zurückgegeben und der Datentyp der Antwort ist Zahl.
+      </p>
+      
+      <p>Wer ruft nun diese Funktionen auf? Auf dem Spielfeld befindet sich ein Checkpoint. Gehe mit der Ameise dort hin, dann starten eine Reihe von Tests. Diese Tests rufen deine Funktion auf und schauen sich deine Antwort. Je nach dem, ob die Funktion den Vorschriften entspricht, wird eine Meldung zurückgegeben:
+      </p>
+      
+      <p><img src="/images/l6_tests.png" class="img-thumbnail"></p>
+      
+      <p>Hier siehst du, wie die Ameise die Tests starten, den Ersten besteht und beim Zweiten einen Fehler macht. Als Lösung wurde die Zeichenkette "Zahl ist positiv" erwartet, die Funktion hat aber gar keine Antwort gegeben. Hier wurde natürlich nicht QuadratHalbe getestet, sondern die Vorzeichenfunktion aus der ersten Aufgabe.
+      </p>
+      
+      <p>Das ist unser Grundgerüst, mit dem wir die Logik üben wollen. Im nächsten Tutorial geht es direkt weiter mit Bedingungen.
       </p>
     `,
-    js: true,
-    noq : true,
     questions : [
-      "Frage 1",
-      "Frage 2",
-      "Frage 3",
-      "Frage 4",
-      "Frage 5",
-      "Frage 6"
+      "Viele Probleme können logisch gelöst werden.",
+      "Ereignisse mit Hashtag nennen wir hier Funktionen.",
+      "Jede Funktion nimmt genau einen Parameter.",
+      "Jede Funktion erwartet eine Antwort mit 'return'.",
+      "Division schreibt man mit Doppelpunkt.",
+      "Die Funktion wird während der Aufgabe ausführlich getestet."
     ],
-    solution : [0,0,0,1,1,1],
+    solution : [1,1,0,1,0,1],
+  },
+  62 : {
+    level : 6,
+    name : "Bedingte Anweisungen",
+    text : `
+      <p>Das Kernstück der Logik sind bedingte Anweisungen. Diese ermöglichen es dem Programm, auf die Umgebung zu reagieren und aufgrund dessen Entscheidungen zu treffen. Das Grundgerüst einer bedingten Anweisung sieht so aus:
+      </p>
+      
+      <p><img src="/images/l6_if.png" class="img-thumbnail"></p>
+      
+      <p>Begonnen wir mit dem Schlüsselwort 'if'. Danach kommt in die runden Klammern eine Bedingungen. Das ist ein logischer Ausdruck, der wahr oder falsch sein kann. Ist die Bedingung wahr, werden die Anweisungen innerhalb der geschweiften Klammern ausgeführt. Ist die Bedingung falsch, werden diese Anweisungen übersprungen. Die Anweisungen werden also nur <em>bedingt</em> ausgeführt. Anweisungen können sein: Befehle, eine 'return' Anweisung oder sogar wieder eine 'if'-Abfrage!
+      </p>
+      
+      <p>Bedinungen können mit einem Vergleichsoperator geschrieben werden. Vier Stück kennst du bereits: <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> und <code>&gt;=</code>. Damit kannst du eine Funktion schreiben, die je nach Parameter eine andere Antwort zurückgibt:
+      </p>
+      
+      <p><img src="/images/l6_groesser.png" class="img-thumbnail"></p>
+      
+      <p>Diese Funktion gibt "Ja" zurück, wenn die Zahl größer als 10 ist. Wenn die Zahl kleiner gleich 10 ist, gibt sie "Nein" zurück. Es kommen zwei bedingte Anweisungen vor mit allen Elementen.
+      </p>
+      
+      <p>Wenn du diese Beispiel nochmal genauer anschaust, wirst du sehen, dass immer entweder der eine Fall oder der andere Fall eintritt. Egal welche Zahl als Parameter eingesetzt wird, immer ist genau eine der Bedingungen richtig. Weil das ein besonderer Fall ist gibt es dafür eine spezielle Erweiterung: Mit dem Schlüsselwort 'else' lassen sich zwei <em>Anweisungsblöcke</em> hintereinanderkoppeln, wie zwei Waggons. Der erste Anweisungsblock direkt nach dem 'if' wird ausgeführt, wenn die Bedingung wahr ist. Der andere Anweisungsblock wird ausgeführt, wenn die Anweisung falsch ist. Dazwischen steht das 'else':
+      </p>
+      
+      <p><img src="/images/l6_if2.png" class="img-thumbnail"></p>
+      
+      <p>Die vier Vergleichsoperatoren gelten nur für Zahlen. Es gibt einen weiteren Operator, der auf Gleichheit prüft und für Zahlen und Zeichenketten funktioniert. Dieser wird mit zwei (!) Gleichheitszeichen geschrieben: <code>==</code>. Das folgende Programm prüft, ob der Name gleich "Peter" ist und gibt dann eine Antwort zurück.
+      </p>
+      
+      <p><img src="/images/l6_string.png" class="img-thumbnail"></p>
+      
+      <p>Schließlich kommen noch die logischen Verknüpfungen <code>&&</code> (UND) und <code>||</code> (ODER)  ins Spiels. Bei der UND-Verknüpfung müssen beide Seiten wahr sein, damit die Bedingung insgesamt zutrifft. Bei der ODER-Verknüfung reicht es, wenn mindestens eine der Seiten wahr ist. Es können zwei oder mehr Bedingungen verknüpft werden. Eventuell muss auf die Klammersetzung geachtet werden. Sehen wir uns dazu ein Beispiel an:
+      </p>
+      
+      <p><img src="/images/l6_verkn.png" class="img-thumbnail"></p>
+      
+      <p>Hier sind also alle Elemente in Aktion: In Zeile 4 werden drei Bedingungen mit ODER verknüpft. Der Block in Zeile 5 wird also ausgeführt, sobald eines der drei Bedingungen erfüllt ist. In Zeile 7 und Zeile 10 wurde je zwei Bedingungen mit UND verknüpft. Dabei ist es zulässig, dass die eine Seite mit Zeichenketten arbeitet und die andere Seite mit Zahlen. Tritt keine der Bedingungen zu, wurde also keine Antwort gegeben, wird die Zeile 13 aufgerufen.
+      </p>
+    `,
+    questions : [
+      "Bedingte Anweisungen beginnen mit dem Schlüsselwort 'wenn'.",
+      "'<=' funktioniert nur mit Zahlen.",
+      "Bei 'else' wird immer genau einer der zwei Blöcke ausgeführt.",
+      "Zahlen vergleicht man wie in der Schule mit '='",
+      "&& steht für die UND-Verknüpfung.",
+      "Bei ODER reicht es, wenn eines der Bedingungen zutrifft."
+    ],
+    solution : [0,1,1,0,1,1],
   },
   81 : {
     level : 8,
