@@ -15,7 +15,7 @@
         <div class="col-sm-12" style="max-width:850px">
         
           <br>
-          <h2>Inhaltsüberblick</h2>
+          <h2>Inhaltsübersicht</h2>
           <hr>
           
           <h3>Stufe 1</h3>
@@ -90,7 +90,7 @@
             
           <% } %>
           
-          <% if (user.level >= 6) { %>
+          <% if (user.level == 6) { %>
             
             <h3>Stufe 6</h3>
           
@@ -103,6 +103,22 @@
               <li>Vergleichsoperatoren: <code>==</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> und <code>&gt;=</code></li>
               <li>Logische Verknüpfungen: <code>&&</code> (UND), <code>||</code> (ODER)</li>
               <li>Simulationsoptionen: Wiederholung und Nur-Sammel-Modus</li>
+              
+            </ul>
+            
+          <% } %>
+          
+          <% if (user.level >= 7) { %>
+            
+            <h3>Stufe 6</h3>
+          
+            <ul>
+              <li>Listen erzeugen mit <code>[ , , ... ]</code></li>
+              <li>Zugriff auf Einträge mit <code>arr[i]</code>, Index <code>i</code>wird ab 0 gezählt</li>
+              <li>Zugriff auf Länge über <code>arr.length</code></li>
+              <li>Liste verändern mit <code>arr.push(obj)</code> und <code>arr.shift()</code></li>
+              <li>Variablen definieren mit <code>var</code>, global wenn außerdem von Ereignissen</li>
+              <li>Mathematische Funktionen: <code>Math.pow(basis, exponent)</code> und <code>Math.round(x)</code></li>
               
             </ul>
             

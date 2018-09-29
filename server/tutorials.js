@@ -778,6 +778,114 @@ module.exports.tutorials = {
     ],
     solution : [0,1,1,0,1,1],
   },
+  71 : {
+    level : 7,
+    name : "Listen",
+    text : `
+      <p>Eine Liste gibt dir die Möglichkeit, mehrere Werte gemeinsam zu speichern und als ganzen Paket zu transportieren. Dabei musst du noch nicht einmal wissen, wie viele Werte du dabei speichern willst: Es können 10 Werte sein, oder auch 1000. Damit sind Listen ein wesentliches Werkzeug, um Informationen zu speichern und zu verwalten.
+      </p>
+      
+      <p>In diesem Tutorial wirst du die Grundlagen von Listen kennenlernen. Damit kannst du schon einige Dinge anpacken, wobei natürlich noch nicht der volle Umfang erreicht ist.
+      </p>
+      
+      <p>Beginnen wir damit, eine Liste zu erzeugen. Das funktioniert mit dem Syntax <code>[ , , ... ]</code>, den du in der Überschrift dieser Stufe schon gesehen hast. Innerhalb von eckigen Klamern werden die einzelnen Werte mit Komma getrennt aufgeschrieben. Diese bilden dann die <em>Einträge</em> der Liste. Eine Beispielfunktion, die als Antwort eine Liste zurückgibt:
+      </p>
+      
+      <p><img src="/images/l7_listedek.png" class="img-thumbnail"></p>
+      
+      <p>Das ist eine Liste aus Zahlen. Es gibt auch Listen aus Zeichenketten. Und sogar die leere Liste, die allein aus dem Symbol <code>[]</code> besteht.
+      </p>
+      
+      <p>Oft ist die Liste schon erstellt und wird dir von der Funktion als Parameter übergeben. Um von einer solchen Liste die Werte zu erhalten, schreiben wir hinter den Namen in eckigen Klammern die Nummer des Eintrags, den wir haben wollen, der sogenannte <em>Index</em>. Beachte: Dieser beginnt in der Zählung mit 0:
+      </p>
+      
+      <p><img src="/images/l7_index.png" class="img-thumbnail"></p>
+      
+      <p>Der zweite Eintrag hat den Index 1, und der dritte Eintrag hat den Index 2. Auf diese zwei Werte greifen wir zu und addieren sie auf. Ist z.B. in arr der Wert <code>[4,6,8]</code> enthalten, dann rechnet die Funktion 6 + 8 = 14 aus.
+      
+      <p>Der Namme 'arr' ist eine Abkürzung von Array, was das englische Original ist von Liste. Wenn auf einer Website von Arrays gesprochen wird, dann sind genau diese Listen hier gemeint.
+      </p>
+      
+      <p>Aus einer Liste lassen sich noch weitere Informationen auslesen. Zum Beispiel können wir über <code>.length</code> ermitteln, wie lang die Liste ist. Dieser Wert kann direkt verwendet werden oder in einer Bedingung, wie hier im Beispiel:
+      </p>
+      
+      <p><img src="/images/l7_laenge3.png" class="img-thumbnail"></p>
+      
+      <p>Schließlich lernst du hier zwei Methoden kennen, mit denen du die Liste verändern kannst. Die eine Methode heißt <code>.push(obj)</code> und diese fügt am Ende einer Liste ein Element hinzu. Die Methode <code>.shift()</code> entfernt das erste Element und schiebt alle Elemente eins nach vorne. Beide zusammen machen eine Liste zu einer Warteschlange: Hinten kommen die Einträge rein, wandern zum Anfang und werden dort entfernt. Konkret im Code sieht das so aus:
+      </p>
+      
+      <p><img src="/images/l7_pp.png" class="img-thumbnail"></p>
+      
+      <p>Wir erstellen eine neue Liste 'arr'. Zeile 4 definiert eine neue Variablen und das wird im nächsten Tutorial genauer angeschaut. In der nächsten Zeile löschen wir das erste Element, "Max". Danach fügen wir zwei Namen hinzu, Zeile 8 zeigt, wie die Liste danach aussieht. Dann geben wir den ersten Eintrag zurück, der ist das "Paul".
+      </p>
+      
+      <p>Damit haben wir die Grundlagen der Listen gemeistert!
+      </p>
+    `,
+    questions : [
+      "Listen haben stets eine vorgegebene Länge.",
+      "Die Werte innerhalb einer Liste heißen Einträge.",
+      "Eine leere Liste wird mit [EMPTY] erzeugt.",
+      "Die Länge einer Liste kann man abfragen.",
+      "shift() fügt ein Element am Anfang der Liste ein.",
+      "pop() löscht ein Element vom Anfang der Liste."
+    ],
+    solution : [0,1,0,1,1,0],
+  },
+  72 : {
+    level : 7,
+    name : "Globale Variablen und Mathematik",
+    text : `
+      <p>In letzten Tutorial hast du bereits ein Beispiel einer Variabledefinition gesehen. Variablen sind ein Hilfsmittel, um mit Informationen umzugehen. Die Parameter von Ereignissen und Funktionen sind bereits eine Form von Variablen. Diese werden verwendet, um Informationen zwischen der Simulation und dem Programm zu übertragen. Wir werden Variablen jetzt verwenden, um Informationen zu speichern.
+      </p>
+      
+      <p>Die Variablen, die wir hier als Informationspeicher verwenden, werden global sein. Das bedeutet, dass diese Variable nicht an eine Ameise oder ein Ereignis gebunden ist, sondern an das gesamte Programm. Eine globale Variable kann also dazu verwendet werden, Informationen zwischen allen Ameisen zu jederzeit auszutauschen. Das ist sehr mächtig - aber wie es in der Informatik oft ist: Mächtige Werkzeuge brauchen auch fähige Programmierer ;).
+      </p>
+      
+      <p>Wir werden uns daher zuerst mit einem ganz bestimmten Anwendungsfall beschäftigen, dazu ein Beispiel:
+      </p>
+      
+      <p><img src="/images/l7_global.png" class="img-thumbnail"></p>
+      
+      <p>Zeile 3 definiert die globale Variable 'ZuckerListe'. Die Definition beginnt mit dem Schlüsselwort <code>var</code>. Nach dem Schlüsselwort kommt der Name der Variablen, dann ein einfaches Gleichheitszeichen und schließlich der Anfangswert. In unserem Beispiel ist der Anfangswert eine leere Liste.
+      </p>
+      
+      <p>Jedesmal, wenn ein Zuckerhaufen gesehen wird, wird das Sichtungsobjekt zur dieser Liste hinzugefügt. Diese Liste gibt es für das gesamte Ameisenvolk nur einmal. Alle Ameisen greifen auf die gleiche Liste zu. Ereignisaufrufe zu unterschiedlichen Zeiten greifen auch auf die gleiche Liste zu. Das macht diese Liste global. Mit der Zeit werden ganz viele Sichtungsobjekte in dieser Variablen gespeichert sein.
+      </p>
+      
+      <p>Auf diese Liste kann dann wiederum zugegriffen werden. Wenn eine Ameise untätig ist, nimmt sie das erste Element der Liste, geht dahin und löscht dieses dann aus der Liste. Wir behalten die Zucker nicht in der Liste, damit die Ameisen immer zu abwechselnden Zuckerhaufen hingehen. Man muss ja bedenken, dass <em>jede</em> Ameise, die beim Zucker ankommt, einen neuen Eintrag anlegt. Das kann mit der Zeit schon viel werden:
+      </p>
+      
+      <p><img src="/images/l7_zugriff.png" class="img-thumbnail"></p>
+      
+      <p>Dieser Code hat allerdings noch ein Problem: Wenn die Liste leer ist, wird der Aufruf in Zeile 10 nicht funktionieren, weil kein Element mit dem Index 0 vorhanden ist. Um das zu reparieren wird noch eine Abfrage gebraucht:
+      </p>
+      
+      <p><img src="/images/l7_zugriff2.png" class="img-thumbnail"></p>
+      
+      <p>Und damit haben wir eine Ameise, die Zuckerhaufen speichert und wieder auf diese zugreifen kann. Wenn diese Vorlage entsprechend ergänzt wird, kann damit ein sehr starkes Ameisenvolk programmiert werden.
+      </p>
+      
+      <p>Zum Schluss soll es noch ein wenig um Mathematik gehen. Zwei Funktionen möchten wir dir hier vorstellen: Einerseits die Funktion <code>Math.pow()</code>. Diese kann Potenzen berechnen, wie z.B. 2 hoch 8. Dafür schreibst du: Math.pow(2, 8). Der erste Parameter ist die Basis, und der zweite Parameter ist der Exponent. Hier ist eine Funktion, die ihren Parameter 'x' in die fünfte Potenz hebt:
+      </p>
+      
+      <p><img src="/images/l7_potenz.png" class="img-thumbnail"></p>
+      
+      <p>Außerdem kannst du mit <code>Math.round()</code> Zahlen runden. Die Zahl 3.4 wird auf 3 gerunden, die Zahl 3.5 auf 4, usw, wie aus der Schule bekannt. Auch hierzu ein Beispiel:
+      </p>
+      
+      <p><img src="/images/l7_runden.png" class="img-thumbnail"></p>
+    `,
+    questions : [
+      "Globale Variablen sind an eine einzelne Ameise gebunden.",
+      "Variablen werden mit dem Schlüsselwort 'var' definiert.",
+      "Leere Listen sind oft ein Spezialfall und müssen abfragt werden.",
+      "Eine leere Liste hat die Länge -1.",
+      "Math.pow(3,2) berechnet 2 hoch 3.",
+      "7.5 wird auf 8 aufgerundet."
+    ],
+    solution : [0,1,1,0,0,1],
+  },
   81 : {
     level : 8,
     name : "Hinter den Kulissen: Das Ameisenaufgabenverzeichnis",
