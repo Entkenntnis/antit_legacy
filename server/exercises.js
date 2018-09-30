@@ -522,7 +522,7 @@ Ergebnis "F": 2 hoch 3 = 8</pre></p>
     level : 8,
   },
   
-  84 : {
+  /*84 : {
     name : "Zuckerspur",
     description : `
       <p>Bla bla bla ...
@@ -530,7 +530,7 @@ Ergebnis "F": 2 hoch 3 = 8</pre></p>
       
     `,
     level : 8,
-  },
+  },*/
   
   /*991 : {
     name : "Der richtige Abstand",

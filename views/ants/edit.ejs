@@ -43,7 +43,7 @@
           <script src="/js/jshint.min.js"></script>
           <script>
             function checkSyntax() {
-              var result = JSHINT(editor.getValue(), {asi:true})
+              var result = JSHINT(editor.getValue(), {asi:true, esversion:6})
               var output = result ? "Syntax ist in Ordnung." : JSHINT.errors.map(function(err){
                 return "Fehler in Zeile " + err.line + ": " + err.reason
               }).join('<br>')

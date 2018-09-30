@@ -888,6 +888,74 @@ module.exports.tutorials = {
   },
   81 : {
     level : 8,
+    name : "Vermessung, Statuswerte und Co. [API]",
+    text : `
+      <p>Nachdem du dich mit der Logik vertraut gemacht hast, bist du bereit, die letzten Teile der API kennenzulernen.
+      </p>
+      
+      <p>Die Ameisen können auf dem Spielfeld Vermessungen durchführen. Dazu gibt es die Funktionen <code>Distanz()</code> und <code>Richtung()</code>. Diese Funktionen sind keine selbstständige Befehle, sondern können nur in Kombination mit bedingten Anweisungen oder anderen Befehlen verwendet werden. Meisten kommen sie innerhalb von Bedingungen vor.
+      </p>
+      
+      <p>Beide Befehle braucht zwei Parameter. Diese stellen Orte auf dem Spielfeld dar. Distanz berechnet den Abstand zwischen diesen zwei Orten. Richtung berechnet die Richtung, in die man schauen muss, um vom ersten Ort zum zweiten Ort zu gelangen. Die Richtung wird als Himmelsrichtung (0 bis 359) angegeben. Ein Beispiel mit einem Zuckerhaufen (A) als ersten Parameter und einer Ameise (B) als zweiten Parameter:
+      </p>
+      
+      <p><img src="/images/l8_vermessung.png" class="img-thumbnail"></p>
+      
+      <p>Als Orte können Sichtungsobjekte verwendet werden. Außerdem kann mit der Variablen <code>Bau</code> auf dem Heimatbau, mit <code>Position</code> auf die aktuelle Position der Ameise zugegriffen werden. Hier ein Beispiel mit allem in Kombination:
+      </p>
+      
+      <p><img src="/images/l8_vermessungcode.png" class="img-thumbnail"></p>
+      
+      <p>Wenn die Ameise einen Zuckerhaufen sieht, dann prüft sie, ob die Entfernung zum Bau maximal 1000 ist und geht erst dann dahin. Eine andere Art der Verwendung besteht darin, die Zahl, die diese Funktionen zurückgeben, in einem Befehl zu verwenden:
+      </p>
+      
+      <p><img src="/images/l8_vermessungcode2.png" class="img-thumbnail"></p>
+      
+      <p>Die Ameise bestimmt hier die Himmelsrichtung von ihrer Position aus zum Bau und dreht sich dann in diese Richtung. Das ist übrigens das Gleiche wie <code>DreheZuObjekt(Bau)</code>.
+      </p>
+      
+      <p>Es gibt außerdem drei neue Statuswerte, auf die über Variablen zugegriffen werden kann. Kennen tust du bereits den Status SchrittZahl, jetzt kommen die Variablen <code>HatZucker</code>, <code>HatApfel</code> und <code>Blickrichtung</code> hinzu. Der letzte Status ist eine Zahl die angibt, in welche Himmelsrichtung die Ameise gerade schaut. In fortgeschrittenen Programmen (hihi) kann das manchmal wichtig sein. Die anderen zwei neuen Statuswerte geben an, ob die Ameise aktuell einen Zucker trägt bzw. ob die Ameise an einem Apfel steht oder diesen trägt. Dazu ein Beispiel:
+      </p>
+      
+      <p><img src="/images/l8_status.png" class="img-thumbnail"></p>
+      
+      <p>Wenn die Ameise einen Apfel sieht, dann prüft sie, ob sie aktuell einen Zucker trägt. Wenn ja, dann lädt sie diesen ab und wird damit "Ballast" los. Eine Besonderheit hier: 'HatZucker' braucht keinen Operator sondern kann direkt als Bedingung verwendet werden. Das liegt daran, dass die Variable selber bereits einen Wahrheitswert dargestellt, also 'wahr' oder 'falsch' ist.
+      </p>
+      
+      <p>Desweiteren gibt es ein neues Ereignis mit dem Namen <code>"Tick"</code>. Dieses Ereignis wird <em>jeden</em> Simulationstick für <em>jede</em> Ameise aufgerufen. Das Ereignis findet damit quasi ständig statt. Das kann genutzt werden, um zu ganz bestimmten Zeitpunkten ganz bestimmte Aktionen auszulösen:</p>
+      
+      <p><img src="/images/l8_tick.png" class="img-thumbnail"></p>
+      
+      <p>Genau im Tick 1000 werden alle Ameisen zum Bau zurückgeschickt. Das bewirkt diese Ereignisdefinition. Eine andere Anwendung wäre es, die Ameisen über einer gewissen Schrittzahl sofort zum Bau zurückzuschicken. Das ist nicht ganz einfach und sprengt leider den Umfang dieses Tutorials. Für die Aufgaben wird es mit diesen Informationen reichen.
+      </p>
+      
+      <p>Globalen Variablen hast du nun kennengelernt. Es gibt dazu noch die Möglichkeit, jeder Ameise persönlich Variablen zuzuordnen. Diese Variablen werden im <code>Gedächtnis</code> gespeichert. Im Gegensatz zu globalen Variablen müssen die Einträge im Gedächtnis nicht definiert werden, sondern werden automatisch bei der ersten Zuweisung erstellt. Die Namen für die Einträge mit einem Punkt hinter das Objekt 'Gedächtnis' geschrieben:
+      </p>
+      
+      <p><img src="/images/l8_gedaechtnis.png" class="img-thumbnail"></p>
+      
+      <p>Die Ameise kann mit jeder Zuckersichtung den Wert im Gedächtnis erhöhen. Außerdem können Gedächtniseinträge in Abfragen verwendet werden:
+      </p>
+      
+      <p><img src="/images/l8_ged2.png" class="img-thumbnail"></p>
+      
+      <p>Beim zehnten Zucker gibt sie über den Befehl <code>alert</code> eine Meldung aus:
+      </p>
+      
+      <p><img src="/images/l8_ged3.png" class="img-thumbnail"></p>
+    `,
+    questions : [
+      "Frage 1",
+      "Frage 2",
+      "Frage 3",
+      "Frage 4",
+      "Frage 5",
+      "Frage 6"
+    ],
+    solution : [0,0,0,1,1,1],
+  },
+  82 : {
+    level : 8,
     name : "Hinter den Kulissen: Das Ameisenaufgabenverzeichnis",
     text : `
       <p>Unter der Oberfläche einer Programmiersprache passieren eine Menge an Sachen. Im Idealfall funktionieren diese so wie erwartet und man muss seine Aufmerksamkeit nicht darauf richten. Als Programmierer möchte man den Befehl "Gehe" schreiben und man erwartet, dass die Simulation die Position entsprechend aktualisieren, die Interaktionen mit dem Spielfeld korrekt passieren und schließlich die 3D-Ansicht sich neu zeichnet. Wenn es gut läuft braucht man sich nicht mit den Details zu beschäftigen.
@@ -935,15 +1003,24 @@ module.exports.tutorials = {
       <p>Die Anrufe des Mitarbeiters entsprechen den Ereignissen der Simulation wie "IstGeboren", "IstUntätig" oder "SiehtZucker". Als Programmierer schreibt man rein, welche Befehle die Ameise dann ausführen soll. Diese werden vom Mitarbeiter nicht sofort ausgeführt, sondern erstmal in das AAV eingetragen. Davon merkt man als Programmierer eigentlich nichts. Es wirkt so, als ob die einzelnen Befehle direkt danach ausgeführt werden.
       </p>
       
-      <p>An zwei Punkten muss man sich aber doch mit den Feinheiten des AAV beschäftigen. Diese möchte ich hier zum Schluss noch erwähnen:
+      <p>Probleme treten auf, wenn Befehle mit anderen Anweisungen gemischt werden, die sofort ausgeführt werden. Dazu gehören Bedingungen und Zuweisungen zu Variablen. Diese stören sich dann untereinander:
       </p>
       
-      <ol>
-      <li><p>Was ist nämlich, wenn der Programmierer Anweisungen gibt und es noch unfertige Befehle im AAV gibt, typischerweise dann, wenn die Ameise etwas sieht. Wie soll der Mitarbeiter mit den Befehlen im AAV umgehen? Dafür wurde folgende Regelung gesetzt, die sich im praktischen Alltag bewährt hat: Falls die neuen Anweisungen den Befehl "GeheZuBau" oder "GeheZuZiel" enthalten, dann werden die alten Befehle im AAV gelöscht. Es wird davon ausgegangen, dass diese keine Bedeutung mehr haben. Das ist der Normalfall. Falls die neuen Anweisungen diese Befehle aber nicht enthalten, dann wird davon ausgegangen, dass die alten Anweisungen noch gebraucht werden und die neuen Anweisungen werden <em>vor</em> den alten Anweisungen ausgeführt. Der wesentliche Anwendungsfall ist, wenn man einer Wanze ausweicht.
-      </p></li>
-      <li><p>Auf der nächsten Stufe wirst du bedingte Anweisungen kennenlernen, um beispielsweise mit der Reichweite oder der Runde umzugehen. Diese Anweisungen passen erstmal nicht in das Schema des AAV. Solange die Abfragen einfach sind und nicht mit anderen Befehlen verschachtelt werden, kommt es auch noch nicht zu Problemen. Zu diesem Punkt wird es an gegebener Stelle nochmal ein Tutorial geben.
-      </p></li>
-      </ol>
+      <p><img src="/images/l8_async.png" class="img-thumbnail"></p>
+      
+      <p>Das ist ein typisches Beispiel: Man würde erwarten, dass die Ameise nach dem Aufladen des Zuckers eine Meldung gibt. Allerdings kommt nie eine Meldung. Das liegt daran, dass die Bedingung zum Zeitpunkt des Ereignis sofort ausgeführt werden, die Befehle aber im AAV zwischengespeichert werden und später erst ausgeführt werden. Beim Zeitpunkt des Ereignis hat die Ameise noch einen Zucker geladen.
+      </p>
+      
+      <p>Weil das ärgerlich ist, gibt es eine offizielle Möglickeit, das Programm zu 'unterbrechen' und bis zu bestimmten Befehlen zu warten. Das geht dadurch, dass man in der Ereignisdefinition ein Sternchen hinzufügt und beim entsprechenden Befehl das Schlüsselwort <code>yield</code> anwendet:
+      </p>
+      
+      <p><img src="/images/l8_yield.png" class="img-thumbnail"></p>
+      
+      <p>Anweisungen sind also unterbrochen. Der erste Teil geht bis zum Befehl 'NimmZucker()'. Durch das yield bleibt das Programm "stehen" und wird erst zu dem Zeitpunkt ausgeführt, wo der Befehl 'NimmZucker()' fertig ausgeführt wurde. Erst dann wird die Bedingung ausgewertet und dann erscheint auch die richtige Meldung.
+      </p>
+      
+      <p>Wie das mit dem AAV gelöst ist? Der Programmierer sagt, dass er gerne zurückgeruft werden möchte. Der Mitarbeiter schreibt sich die Nummer auf und notiert sie nach dem letzten Befehl, der im AAV steht. Ist dieser Befehl dann fertig ausgeführt, ruft er zurück und der Programmierer kann seine weiteren Anweisungen geben.
+      </p>
     `,
     questions : [
       "Solange die Dinge wie erwartet funktionieren benötigt man kein Wissen über die Details.",
@@ -951,18 +1028,17 @@ module.exports.tutorials = {
       "AntIT! ist die beste Ameisensimulation der Welt.",
       "Bei mehreren Mitarbeitern kommt es nie zu Problemen.",
       "Die Programmiersprache der Ameisen enthält genau zwei Mitarbeiter.",
-      "Dieser Satz enhält sechs Wörter."
+      "Mit function* und yield kann ein Rückruf organisiert werden."
     ],
-    solution : [1,0,1,0,0,0],
+    solution : [1,0,1,0,0,1],
   },
   91 : {
     level : 9,
-    name : "Weitere Inhalte",
+    name : "Ausblick",
     text : `
-      <p>Für weitere Inhalte besuche folgende Datei: <a href="/doc/script.pdf">AntIT für Fortgeschrittene</a>
+      <p>Ciao.
       </p>
     `,
-    noq : true,
     questions : [
       "Frage 1",
       "Frage 2",
