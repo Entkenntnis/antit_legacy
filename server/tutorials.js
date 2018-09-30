@@ -943,14 +943,17 @@ module.exports.tutorials = {
       </p>
       
       <p><img src="/images/l8_ged3.png" class="img-thumbnail"></p>
+      
+      <p>Zum Schluss gibt es noch die Funktion <code>Aktiv()</code>, mit der man gespeicherte Nahrungsmittel darauf prüfen kann, ob sie noch auf dem Spielfeld vorhanden sind. 
+      </p>
     `,
     questions : [
-      "Frage 1",
-      "Frage 2",
-      "Frage 3",
-      "Frage 4",
-      "Frage 5",
-      "Frage 6"
+      "Distanz berechnet immer den Abstand vom Bau zu einem Ort.",
+      "Die aktuelle Position kann mit der Variablen 'this' abgefragt werden.",
+      "HatZucker gibt an, ob die Ameise noch Zucker aufladen kann.",
+      "Tick wird jeden Simulationstick für jede Ameise aufgerufen.",
+      "Gedächtniswerte gelten für jede Ameise persönlich.",
+      "Mit 'alert()' lässt sich eine Meldung ausgeben."
     ],
     solution : [0,0,0,1,1,1],
   },

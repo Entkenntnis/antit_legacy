@@ -522,15 +522,15 @@ Ergebnis "F": 2 hoch 3 = 8</pre></p>
     level : 8,
   },
   
-  /*84 : {
-    name : "Zuckerspur",
+  84 : {
+    name : "Zuckerhaufen",
     description : `
-      <p>Bla bla bla ...
+      <p>Auf dem Spielfeld befinden sich vier Checkpoints, die von Zuckerhaufen umgeben sind. Laufe alle Checkpoints ab und melde über <code>alert()</code> schließlich, wie viele Zuckerhaufen du insgesamt gesehen hast.
       </p>
       
     `,
     level : 8,
-  },*/
+  },
   
   /*991 : {
     name : "Der richtige Abstand",

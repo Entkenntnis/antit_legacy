@@ -470,11 +470,11 @@
         var y = Sim.rng()*30 - 15
         Sim.sugars.push(new Sim.Sugar(locPos(delta, y)))
         Sim.apples.push(new Sim.Apple(locPos(delta+65, y)))
-        Sim.sugars.push(new Sim.Sugar(locPos(delta+65+60, y)))
-        Sim.apples.push(new Sim.Apple(locPos(delta+65+60+55, y)))
-        Sim.sugars.push(new Sim.Sugar(locPos(delta+65+60+55+50, y)))
-        Sim.bugs.push(new Sim.Bug(locPos(delta+65+60+55+50+25, y)))
-        Sim.apples.push(new Sim.Apple(locPos(delta+65+60+55+50+45, y)))
+        Sim.sugars.push(new Sim.Sugar(locPos(delta+65+65, y)))
+        Sim.apples.push(new Sim.Apple(locPos(delta+65+65+65, y)))
+        Sim.sugars.push(new Sim.Sugar(locPos(delta+65+65+65+65, y)))
+        Sim.bugs.push(new Sim.Bug(locPos(delta+65+65+65+65+32, y)))
+        Sim.apples.push(new Sim.Apple(locPos(delta+65+65+65+65+65, y)))
       },
       isDone : function(){
         return Sim.players[0].getSugar() >= 100 && Sim.players[0].getApple() >= 2
@@ -1379,29 +1379,50 @@
       init : function(){
         defaultLevelInit()
         Sim.Opts.Runden = 2000
-        Sim.Opts.AnfangsEnergie = 1200
+        Sim.Opts.AnfangsEnergie = 200
+        
       },
       create : function(){
         defaultLevelCreate()
-        var basedist = 150 + Sim.rng()*280
-        Sim.l8_bugs = []
-        for (var i = 0; i < 5; i++) {
-          var bug = new Sim.Bug(locPos(
-            basedist + i*110 + (Sim.rng()*30-15),
-            (Sim.rng()*10+20)*(Math.floor(Sim.rng()*2)*2-1)))
-          if (i != 2)
-            Sim.l8_bugs.push(bug)
-          Sim.bugs.push(bug)
-        }
-      },
-      isDone : function(){
-        return Sim.cycles > 1000 && Sim.bugs.length == 4 && Sim.bugs.every(function(b){
-          return Sim.l8_bugs.indexOf(b) >= 0
+        var cps = [locPos(200,0), locPos(-200,0), locPos(0,200), locPos(0,-200)]
+        var sum = 0
+        cps.forEach(function(cp){
+          var number = 5 + Math.floor(Sim.rng()*20)
+          sum += number
+          for (var i = 0; i < number; i++) {
+            Sim.sugars.push(new Sim.Sugar(Sim.Util.moveDir(cp, Sim.rng()*360, 20 + Sim.rng()*20)))
+          }
+          Sim.Bus.emit('move-spawn-point', sum, cp)
+        })
+        Sim.l8_result = sum
+        Sim.Bus.emit('draw-text', {
+          text:sum + " Zucker",
+          pos:locPos(200,200),
+          color:0xabcd00
         })
       },
-      failed : function() {
-        return Sim.bugs.length < 4
+      isDone : function(){
+        return Sim.l8_done
       },
+      failed : function(){
+        if (Sim.l8_fail) {
+          alert("Antwort war leider falsch")
+        }
+        return Sim.l8_fail
+      },
+      preload : function(){
+        var origAlert = window.alert
+        window.alert = function(x){
+          if (Sim.l8_result) {
+            if (x == Sim.l8_result) {
+              Sim.l8_done = true
+            } else {
+              Sim.l8_fail = true
+            }
+          }
+          origAlert(x)
+        }
+      }
     },
  
     991 : {
@@ -1475,6 +1496,8 @@
   }
   
   var l = levels[Sim.Opts.Level]
+  
+  if (l.preload) l.preload()
 
   function init() {
     if (!l)
