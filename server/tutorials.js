@@ -1039,9 +1039,22 @@ module.exports.tutorials = {
     level : 9,
     name : "Ausblick",
     text : `
-      <p>Ciao.
+      <p>Hier sind wir also, beim letzten Tutorial. Wie geht es danach für dich weiter?
+      </p>
+      
+      <p>Wenn dir die Aufgaben Spaß gemacht haben und du noch nicht alle gelöst hast, kannst du jetzt nochmal zurückgehen und die restlichen Aufgaben lösen. Diese stellen eine gute Übung dar, um die gelernten Inhalte zu vertiefen.
+      </p>
+      
+      <p>Die Programmiersprache, die du hier gelernt hast, heißt "JavaScript". Wenn du dich für weitere Programmiertechniken interessiert: Dafür gibt es im Internet sehr viele Ressourcen, Tutorials und Einführungen.
+      </p>
+      
+      <p>Schwieriger wird es, gute Aufgaben zu finden, an denen du deine Fähigkeiten üben kannst.
+      </p>
+      
+      <p>TODO: Erstelle hier eine Liste mit Links
       </p>
     `,
+    noq: true,
     questions : [
       "Frage 1",
       "Frage 2",

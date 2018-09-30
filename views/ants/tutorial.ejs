@@ -27,7 +27,7 @@
                     <div>
                       <a href="/tutorial?id=<%=index[i][j]%>"><%=tuts[index[i][j]].name%></a>
                     </div>
-                    <% if (done.indexOf(parseInt(index[i][j])) < 0) { %>
+                    <% if (done.indexOf(parseInt(index[i][j])) < 0 && !tuts[index[i][j]].noq) { %>
                       <div class="ml-auto"><span class="badge badge-info" style="background-color:#9954bb">neu</span></div>
                     <% } %>
                   </div>
