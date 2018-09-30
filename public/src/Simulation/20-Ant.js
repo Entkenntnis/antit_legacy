@@ -441,34 +441,42 @@
       return curjob.opts.direct ? false : true
     }
     
-    var lastsugar
+    var sugarSeen = []
     
     function senseSugar() {
       if (!this.isSensing()) return
-      var sugar = Sim.Util.closest(my.pos, Sim.sugars, Sim.Opts.AmeiseSichtweite);
-      if (sugar != undefined) {
-        if (lastsugar != sugar) {
-          lastsugar = sugar
+      var sugars = Sim.Util.inRange(my.pos, Sim.sugars, Sim.Opts.AmeiseSichtweite)
+      sugars.sort(function(a,b){
+        return Sim.Util.dist(my.pos, a.getPos()) - Sim.Util.dist(my.pos, b.getPos())
+      })
+      sugars.forEach(function(sugar){
+        if (sugarSeen.indexOf(sugar) < 0) {
+          sugarSeen.push(sugar)
           Sim.API.callUserFunc("SiehtZucker", [sugar])
         }
-      } else {
-        lastsugar = undefined
-      }
+      })
+      sugarSeen = sugarSeen.filter(function(s) {
+        return sugars.indexOf(s) >= 0
+      })
     }
     
-    var lastapple
+    var appleSeen = []
     
     function senseApple() {
       if (!this.isSensing()) return
-      var apple = Sim.Util.closest(my.pos, Sim.apples, Sim.Opts.AmeiseSichtweite);
-      if (apple != undefined && apple.needHelp(Sim.API.curAnt)) {
-        if (lastapple != apple) {
-          lastapple = apple
+      var apples = Sim.Util.inRange(my.pos, Sim.apples, Sim.Opts.AmeiseSichtweite)
+      apples.sort(function(a,b){
+        return Sim.Util.dist(my.pos, a.getPos()) - Sim.Util.dist(my.pos, b.getPos())
+      })
+      apples.forEach(function(apple){
+        if (appleSeen.indexOf(apple) < 0) {
+          appleSeen.push(apple)
           Sim.API.callUserFunc("SiehtApfel", [apple])
         }
-      } else {
-        lastapple = undefined
-      }
+      })
+      appleSeen = appleSeen.filter(function(a) {
+        return apples.indexOf(a) >= 0
+      })
     }
     
     var previousBug
