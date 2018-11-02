@@ -116,6 +116,39 @@
             
             <%-e.description%>
             
+            <style>
+              .hint {
+                max-height:32px;
+                width:100px;
+                transition: max-height 1s ease 0.5s, width 1s ease 1.5s;
+              }
+              
+              .hint-title {
+                cursor: default;
+              }
+              
+              .hint:hover {
+                max-height:200px;
+                width:100%;
+                transition: width 1s ease 0.5s, max-height 1s linear 1.5s;
+              }
+            </style>
+            
+            <% if (e.hint) { %>
+              
+              <div class="card text-white bg-primary hint">
+                <div class="card-header py-1 hint-title">Hinweis</div>
+                <div class="card-body py-2">
+                  <p class="card-text"><%-e.hint%></p>
+                </div>
+              </div>
+            
+            <% } %>
+            
+            
+            
+            
+            
             <div style="height:1.5rem;"></div>
             <div class="card">
               <div class="card-header py-2">Lösung einreichen</div>

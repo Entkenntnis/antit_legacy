@@ -222,6 +222,7 @@ module.exports.exercises = {
       <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, insgesamt 250 Zucker zu sammeln.
       </p>
     `,
+    hint : "Hallo!",
     level : 4,
   },
   
