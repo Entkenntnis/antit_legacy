@@ -827,7 +827,7 @@ module.exports.tutorials = {
       "Die Werte innerhalb einer Liste heißen Einträge.",
       "Eine leere Liste wird mit [EMPTY] erzeugt.",
       "Die Länge einer Liste kann man abfragen.",
-      "shift() fügt ein Element am Anfang der Liste ein.",
+      "shift() entfernt ein Element am Anfang der Liste ein.",
       "pop() löscht ein Element vom Anfang der Liste."
     ],
     solution : [0,1,0,1,1,0],

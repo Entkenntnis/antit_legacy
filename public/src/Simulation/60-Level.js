@@ -452,9 +452,10 @@
       create : function(){
         defaultLevelCreate()
         Sim.sugars.push(new Sim.Sugar(locPos(300, 0)))
+        Sim.sugars.push(new Sim.Sugar(locPos(-300, 0)))
       },
       isDone : function(){
-        return Sim.players[0].getSugar() >= 100
+        return Sim.players[0].getSugar() >= 200
       }
     },
  
@@ -554,6 +555,7 @@
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 4300
+        Sim.Opts.AnfangsRichtung = 0 // notwendig, damit Gegner richtig spawnen
       },
       create : function(){
         defaultLevelCreate()
@@ -580,7 +582,7 @@
           var pos = Sim.Util.moveDir(locPos(0,0), angle, 450)
           var a = new Sim.Ant(pos, 1, true)
           Sim.ants.push(a)
-          var angle = Sim.Util.getDir(pos, Sim.hills[0].getPos())
+          var angle = Sim.Util.getDir(pos, Sim.hills[0].getPos()) + (Sim.rng()*50-25)
           a.turn(angle)
         }
         Sim.ants.forEach(function(a){
@@ -1260,13 +1262,13 @@
           return ns[0] + ns[1] + ns[2]
         }
         if (m == "B") {
-          return ns[0] * ns[1] * ns[2] * ns[3] / ns[4]
+          return ns[3] - ns[1]
         }
         if (m == "C") {
           return ns[3] * ns[4]
         }
         if (m == "D") {
-          return ns[3] - ns[1]
+          return ns[0] * ns[1] * ns[2] * ns[3] / ns[4]
         }
         if (m == "E") {
           return Math.round(ns[2])
@@ -1338,11 +1340,14 @@
         Sim.Bus.emit('set-ring', locPos(0,0), 0x00aa00, {inner:195,outer:205})
       },
       isDone : function(){
-        return Sim.apples.every(function(a){
+        return Sim.apples.length == 3 && Sim.apples.every(function(a){
           var dist = Sim.Util.dist(a.getPos(), locPos(0,0))
           return dist >= 195 && dist <= 205
           
         })
+      },
+      failed : function(){
+        return Sim.apples.length != 3
       }
     },
  

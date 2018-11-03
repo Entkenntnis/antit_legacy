@@ -107,7 +107,7 @@ module.exports.exercises = {
       
       <p>Dort findest du die Aufgabenstellung zu dieser Aufgabe.</p>
       
-      <script>console.log("Aufgabenstellung: Starte eine Simulation mit einem beliebigen Ameisenvolk. Innerhalb der Simulation werden dir auf der Konsole weitere Anweisungen gegeben.")
+      <script>console.log("Aufgabenstellung: Starte die Aufgabe mit einem beliebigen Ameisenvolk. Innerhalb der Simulation werden dir auf der Konsole weitere Anweisungen gegeben.")
       </script>
     `,
     level : 2,
@@ -116,7 +116,7 @@ module.exports.exercises = {
   31 : {
     name : "Ganz allein",
     description : `
-      <p>Du hast zu Anfang nur eine einzelne Ameise zur Verfügung. Baue damit den ganzen Zuckerhaufen ab und bringe ihn zum Bau. Der Zucker befindet sich bei (300|0).
+      <p>Du hast zu Anfang nur eine einzelne Ameise zur Verfügung. Baue damit den ganzen Zucker ab und bringe ihn zum Bau. Der Zucker befindet sich bei (300|0) und (-300|0).
       </p>
     `,
     level : 3,
@@ -222,7 +222,7 @@ module.exports.exercises = {
       <p>Überquere die Wanzenstraßen, ohne zu sterben. Bleibe stehen, wenn eine Wanze vorbeikommt! Ziel ist es, insgesamt 250 Zucker zu sammeln.
       </p>
     `,
-    hint : "Hallo!",
+    hint : "Vergesse nicht, wenn du eine Wanze siehst, die alten Befehle weiter auszuführen. Ignoriere außerdem Wanzen, die von der Seite oder von hinten kommen.",
     level : 4,
   },
   
