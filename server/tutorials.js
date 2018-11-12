@@ -142,7 +142,7 @@ module.exports.tutorials = {
       "Der Ereignisname wird außerhalb einer Ereignisdefinition eingetragen.",
       "Wir nutzen bisher nur das Ereignis \"IstGeboren\".",
       "Der Parameter eines Befehls steht in runden Klammern.",
-      "'Geh!' ist die umgangssprachliche Form von 'Gehe!'",
+      "Um die Ameisen vorwärts zu bewegen verwendest du den Befehl 'Gehe'.",
       "Südwest = 45."
     ],
     solution : [1,0,1,1,1,0],
@@ -168,7 +168,7 @@ module.exports.tutorials = {
       
       <p><img src="/images/l2_ameisezucker2.png" width="400px" class="img-thumbnail" title="Huch!"></p>
       
-      <p>Am Ende, wenn die Ameise im Bau steht, kann sie mit dem Befehl <code>LadeZuckerAb()</code> den Zucker in den Bau geben. Dann erhält du deine Punkte dafür und die Menge wird in der Statistik angezeigt.
+      <p>Am Ende, wenn die Ameise im Bau steht, kann sie mit dem Befehl <code>LadeZuckerAb()</code> den Zucker in den Bau geben. Dann erhälst du deine Punkte dafür und die Menge wird in der Statistik angezeigt.
       </p>
       
       <p>Für Äpfel gibt es nur einen Befehl: <code>TrageApfel()</code>. Sobald die Ameise am Apfel steht, kann sie diesen Befehl ausführen. Dann fängt sie an, auf ihre Kollegen zu warten. Wenn vier Ameisen zusammenkommen, tragen sie den Apfel zurück zum Bau. Das alles steckt in diesem einen Befehl. Du musst dich nur darum kümmern, dass die Kollegen zum Apfel hinfinden.
@@ -214,7 +214,7 @@ module.exports.tutorials = {
       
       <h4>Koordinatengitter verwenden</h4>
       
-      <p>Mit der Taste G kann innerhalb Simulation ein Koordinatengitter um den Bau angezeigt werden. Damit kann man die Positionen von Objekten auf dem Spielfeld genau bestimmen. Das Koordinatengitter hat einen Abstand von 50 Ameisenschritten. ProTipp: Eine Diagonale hat eine Länge von 71 Ameisenschritten.
+      <p>Mit der Taste G kann innerhalb der Simulation ein Koordinatengitter um den Bau angezeigt werden. Damit kann man die Positionen von Objekten auf dem Spielfeld genau bestimmen. Das Koordinatengitter hat einen Abstand von 50 Ameisenschritten. ProTipp: Eine Diagonale hat eine Länge von 71 Ameisenschritten.
       </p>
       
       <h4>Sonderzeichen tippen</h4>
@@ -280,7 +280,7 @@ module.exports.tutorials = {
     level : 2,
     name : "Teamwork [API]",
     text : `
-      <p>Bei so vielen Ameisen ergibt es sich ganz natürlich, dass man das Ameisenvolk aufteilen  möchte. Jedes Team soll dann eine eigene Aufgabe bekommen. Wir werden in diesem Tutorial sehen, wie das geht und lernen dabei auch bedinge Anweisungen kennen.
+      <p>Bei so vielen Ameisen ergibt es sich ganz natürlich, dass man das Ameisenvolk aufteilen  möchte. Jedes Team soll dann eine eigene Aufgabe bekommen. Wir werden in diesem Tutorial sehen, wie das geht und lernen dabei auch bedingte Anweisungen kennen.
       </p>
       
       <p>Über eine <em>Teamdefinition</em> kannst du festlegen, in wie viele Teams das Volk unterteilt wird. Der wesentliche Parameter ist dabei die Anzahl der Teams. Diese übergibt man an eine Funktion namens "SetzeTeams" (die aber kein normaler Befehl ist!). Die Teamdefinition kommt direkt nach der Ameisendefinition und vor allen Ereignisdefinitionen:
@@ -308,7 +308,7 @@ module.exports.tutorials = {
       "Bedingte Anweisungen kommen innerhalb von Ereignissen vor.",
       "\"InTeam(2)\" prüft, ob die Ameise im dritten Team ist.",
       "Das zweite Codebeispiel enthält 10 geschweifte Klammern.",
-      "Bedingte Anweisungen werden nochmals eingerückt.",
+      "Befehle innerhalb von bedingten Anweisungen werden insgesamt zweimal eingerückt.",
     ],
     solution : [1,0,1,1,0,1]
   },
