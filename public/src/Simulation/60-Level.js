@@ -467,7 +467,7 @@
       },
       create : function(){
         defaultLevelCreate()
-        var delta = 300 + Sim.rng()*40
+        var delta = 300 + Sim.rng()*20
         var y = Sim.rng()*30 - 15
         Sim.sugars.push(new Sim.Sugar(locPos(delta, y)))
         Sim.apples.push(new Sim.Apple(locPos(delta+65, y)))
@@ -478,7 +478,10 @@
         Sim.apples.push(new Sim.Apple(locPos(delta+65+65+65+65+65, y)))
       },
       isDone : function(){
-        return Sim.players[0].getSugar() >= 100 && Sim.players[0].getApple() >= 2
+        return Sim.players[0].getDeadAnts() == 0 && Sim.cycles > 2000 && Sim.players[0].getSugar() >= 100 && Sim.players[0].getApple() >= 2
+      },
+      failed: function() {
+        return Sim.players[0].getDeadAnts() > 0
       }
     },
     

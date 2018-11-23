@@ -6,11 +6,11 @@ module.exports.exercises = {
       </p>
       
       <p>Checkpoint 1 : (300|100)<br>
-      Checkpoint 2: (-200|-200)<br>
-      Checkpoint 3: (0|400)
+      Checkpoint 2: (0|400)<br>
+      Checkpoint 3: (-200|-200)
       </p>
       
-      <p>Die Ameisen werden alle mit Blick nach Osten geboren.
+      <p>Die Ameisen werden in dieser Aufgabe alle mit Blick nach Osten geboren.
       </p>
     `,
     level : 1,
@@ -51,9 +51,10 @@ module.exports.exercises = {
     description : `
       <p>Die Ameisen bekommen langsam richtig Hunger. Zum Glück sind auf dem Spielfeld einige Nahrungsmittel verteilt. Sammle sie alle ein. Vermeide es, mit den Wanzen in Berühung zu kommen!
       </p>
-      <p>Hinweis: Nutze das Koordinatengitter, um die Positionen zu bestimmen. Teams sind noch nicht nötig.
+      <p>Nutze das Koordinatengitter, um die Positionen zu bestimmen
       <p>
     `,
+    hint: "Teams sind bei dieser Aufgabe nicht notwendig. Beachte auch, dass die Ameisen mit einer beliebigen Blickrichtung starten.",
     level : 2,
   },
   
@@ -68,6 +69,7 @@ module.exports.exercises = {
       <p>Klicke auf den obigen Link, um die Vorlage zu kopieren. Ergänze die weiteren bedingten Anweisungen für die Teams. Passe die Befehle so an, dass die Ameisen die Nahrungsmittel einsammeln.
       </p>
     `,
+    hint : "Die Ameisen aus den Zuckerteams müssen zweimal zum Zuckerhaufen laufen, um ihn komplett abzubauen.",
     level : 2,
   },
   
@@ -195,6 +197,7 @@ module.exports.exercises = {
       
       -->
     `,
+    hint : "Eine 2D-Zahlentabelle nennt man in der Mathematik \"Matrix\".",
     level : 3,
   },
   
@@ -204,6 +207,7 @@ module.exports.exercises = {
       <p>Eine Horde gegnerischer Ameisen greift deinen Bau an! Verteidige dich und stelle sicher, dass bis Ende der Simulation kein Gegner die gelbe Zone um den Bau betritt.
       </p>
     `,
+    hint : "Wie wäre es damit, den Ameisenbau ständig in Giftwolken einzuhüllen?",
     level : 4,
   },
   
