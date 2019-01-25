@@ -289,7 +289,159 @@ module.exports.exercises = {
     level : 5,
   },
   
+  
+  
   61 : {
+    name : "An der Kasse",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 6,
+  },
+  
+  63 : {
+    name : "Im Sekretariat",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 6,
+  },
+  
+  65 : {
+    name : "Rabattaktion",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 6,
+  },
+  
+  67 : {
+    name : "Kinderreime",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 6,
+  },
+  
+  68 : {
+    name : "Zeitplanung",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 6,
+  },
+  
+  69 : {
+    name : "Spielbericht",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 6,
+  },
+  
+  71 : {
+    name : "Flexi-Flat",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 7,
+  },
+  
+  73 : {
+    name : "Prüfungsergebnis",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 7,
+  },
+  
+  75 : {
+    name : "Geburtstagsgruß",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 7,
+  },
+  
+  77 : {
+    name : "Stachel, Stock, Blüte",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 7,
+  },
+  
+  78 : {
+    name : "Passwortsicherheit",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 7,
+  },
+  
+  79 : {
+    name : "Gruppenticket",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 7,
+  },
+  
+  81 : {
+    name : "Bunte Äpfel",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 8,
+  },
+  
+  83 : {
+    name : "Viele Objekte",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 8,
+  },
+  
+  85 : {
+    name : "Wanzenbombe",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 8,
+  },
+  
+  87 : {
+    name : "Formation",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 8,
+  },
+  
+  
+  
+  
+  /* REWORK */
+  
+  // Wird ersetzt
+  /*61 : {
     name : "Vorzeichen",
     description : `
       <p>Prüfe eine Zahl auf ihr Vorzeichen. Ergänze dazu folgende Funktion:
@@ -307,8 +459,10 @@ module.exports.exercises = {
       </p>
     `,
     level : 6,
-  },
+  },*/
   
+  // Wird ersetzt
+  /*
   63 : {
     name : "Testergebnis",
     description : `
@@ -325,8 +479,10 @@ module.exports.exercises = {
       34 - 0 Punkte: <code style="color:brown">"non probatum"</code></p>
     `,
     level : 6,
-  },
+  },*/
   
+  // Wird ersetzt
+  /*
   65 : {
     name : "Schere, Stein, Papier",
     description : `
@@ -343,8 +499,9 @@ module.exports.exercises = {
     `,
     level : 6,
   },
+  */
   
-  67 : {
+  91 : {
     name : "Statistik",
     description : `
       <p>Wir wollen ein wenig Statistik betreiben. Selbst mit zwei Zahlen lassen sich schon einige Werte bestimmen. Ergänze folgende Funktion:</p>
@@ -360,11 +517,11 @@ module.exports.exercises = {
       4. Modus <code style="color:brown">"Maximum"</code>: Gib die größere Zahl zurück.</p>
       </p>
     `,
-    level : 6,
+    level : 9,
   },
   
-  71 : {
-    name : "Rechenmaschine [JS]",
+  93 : {
+    name : "Rechenmaschine",
     description : `
       <p>Dir wird ein Array aus Zahlen gegeben. Je nach Modus soll ein bestimmter Wert berechnet werden. Ergänze folgende Funktion:
       </p>
@@ -384,11 +541,11 @@ Ergebnis "C": 1 * 2 = 2</pre></p>
 
       <p><br>Tipp: Beachte, dass der erste Eintrag den Index 0 hat.</p>
     `,
-    level : 7,
+    level : 9,
   },
   
-  73 : {
-    name : "Array-Check [JS]",
+  95 : {
+    name : "Array-Check",
     description : `
       <p>Führe eine Analyse auf einem Array durch. Ergänze dazu folgende Funktion:
       </p>
@@ -400,11 +557,11 @@ Ergebnis "C": 1 * 2 = 2</pre></p>
       2. Hat das Array die Länge 1, dann gib die Antwort <code style="color:brown">"Array besteht aus genau einem Element"</code><br>
       3. Hat das Array mehr als ein Element, dann gib die Länge des Arrays zurück.
     `,
-    level : 7,
+    level : 9,
   },
   
-  75 : {
-    name : "Gleitender Mittelwert [JS]",
+  97 : {
+    name : "Gleitender Mittelwert",
     description : `
       <p>Für eine Datenreihe soll ein gleitender Mittelwert berechnet werden. Die Werte werden wir nacheinander einzeln übergeben. Ergänze folgende Vorlage:
       </p>
@@ -434,11 +591,11 @@ Mittelwert = 4.5
 
 // und so weiter</pre>
     `,
-    level : 7,
+    level : 9,
   },
   
-  77 : {
-    name : "Besucherliste [JS]",
+  99 : {
+    name : "Besucherliste",
     description : `
       <p>Ein Geschäftsmann will sich mit einigen seiner Partner treffen. Um den Ablauf zu organisieren, führt er eine Besucherliste. Verwalte diese Liste und ergänze dazu folgende Vorlage:
       </p>
@@ -473,11 +630,11 @@ Liste = ["Fabian Taggart"]
 // Besuch "Max Müller"
 // -> Antwort: "Leider nicht angemeldet"</pre></p>
     `,
-    level : 7,
+    level : 9,
   },
   
-  79 : {
-    name : "Superrechenmaschine [JS]",
+  101 : {
+    name : "Superrechenmaschine",
     description : `
       <p>Ergänze die Rechenmaschine um folgende Modi:<br>
       4. Modus <code style="color:brown">"D"</code>: Berechne das Produkt der ersten vier Einträge und dividiere es durch den fünften Eintrag.<br>
@@ -493,29 +650,19 @@ Ergebnis "D": (2 * 3 * 4.5 * 1) / 2 = 27 / 2 = 13.5
 Ergebnis "E": 4.5 ~= 5
 Ergebnis "F": 2 hoch 3 = 8</pre></p>
     `,
-    level : 7,
+    level : 9,
   },
   
-  81 : {
+  103 : {
     name : "Mittelpunkt",
     description : `
       <p>Auf dem Spielfeld befindet sich ein einzelner Zuckerhaufen. Finde ihn und bewege alle Ameisen genau in den Mittelpunkt zwischen dem Zucker und dem Bau.
       </p>
     `,
-    level : 8,
+    level : 9,
   },
   
-  82 : {
-    name : "Der richtige Abstand",
-    description : `
-      <p>Auf dem Spielfeld befinden sich drei Äpfel. Trage sie Richtung Bau und stelle sie auf dem grünen Ring ab. Dieser Ring liegt 200 Schritte um den Bau herum. Die Aufgabe ist geschafft, wenn die drei Äpfel auf dem Ring liegen.
-      </p>
-      
-    `,
-    level : 8,
-  },
-  
-  83 : {
+  105 : {
     name : "Gezielter Angriff",
     description : `
       <p>Im Osten befinden sich fünf Wanzen. Vergifte genau die dritte Wanze und lasse die anderen am Leben. Nutze dafür folgende Vorlage:
@@ -524,54 +671,26 @@ Ergebnis "F": 2 hoch 3 = 8</pre></p>
       <p><img src="/images/l8_wanzen.png" class="img-thumbnail"></p>
       
     `,
-    level : 8,
+    level : 9,
   },
   
-  84 : {
+  107 : {
     name : "Zuckerhaufen",
     description : `
       <p>Auf dem Spielfeld befinden sich vier Checkpoints, die von Zuckerhaufen umgeben sind. Laufe alle Checkpoints ab und melde über <code>alert()</code> schließlich, wie viele Zuckerhaufen du insgesamt gesehen hast.
       </p>
       
     `,
-    level : 8,
+    level : 9,
   },
   
-  /*991 : {
+  109 : {
     name : "Der richtige Abstand",
     description : `
-      <p>Diese Aufgabe ist für Teilnehmer geeignet, die bereits Erfahrungen mit einer Programmiersprache wie Java oder C/C++/C# haben. 
+      <p>Auf dem Spielfeld befinden sich drei Äpfel. Trage sie Richtung Bau und stelle sie auf dem grünen Ring ab. Dieser Ring liegt 200 Schritte um den Bau herum. Die Aufgabe ist geschafft, wenn die drei Äpfel auf dem Ring liegen.
       </p>
       
-      <p>Die Ameisen unserer kleinen Welt hier sind in der Lage, Entfernungen und Richtungen auf dem Spielfeld präzise zu berechnen. Dazu stellen sie die Funktionen <code>Distanz</code> und <code>Winkel</code> zur Verfügung. Diese Funktionen nehmen zwei Parameter. Diese entsprechen den zu vermessenden Objekten. Diese können folgende sein:
-      <ul>
-      <li>Ein Sichtungsobjekt aus SiehtZucker, SiehtApfel, SiehtWanze oder SiehtGegner.</li>
-      <li>Der Wert <code>Bau</code> für den Heimatbau der Ameise.</li>
-      <li>Der Wert <code>Position</code> für die aktuelle Position der Ameise</li>
-      </ul>
-      </p>
-      
-      <p>Distanz gibt den Abstand in Ameisenschritten zurück. Der Aufruf <pre>Distanz(Bau, Position)</pre>berechnet z.B. den aktuellen Abstand der Ameise zum Bau. Die Reihenfolge der Parameter ist egal.
-      </p>
-      
-      <p>Winkel berechnet die Himmelsrichtung, aus der der erste Parameter den zweiten Parameter sieht. Der Aufruf<pre>Winkel(Position, Bau)</pre>gibt z.B. die Himmelsrichtung an, in die sich die Ameise drehen muss, damit sie den Bau anschaut. Hierbei macht die Reihenfolge natürlich einen Unterschied. Kombiniert man diese zwei Funktionen mit Abfragen, dann lässt sich folgende Aufgabe lösen:
-      </p>
-      
-      <p>Von den Äpfel auf dem Spielfeld befindet sich einer genau 245 Schritte vom Bau entfernt. Trage diesen Apfel zum Bau. Berühre die anderen Äpfel nicht.
-      </p>
     `,
     level : 9,
-  },*/
-  
-  /*2 : {
-    name : "Koordinaten",
-    description : "Das ist die Beschreibung zur zweiten Aufgabe.",
-    level : 1,
   },
-  
-  3 : {
-    name : "Bewegung",
-    description : "Das ist die Beschreibung zur dritten Aufgabe.",
-    level : 2,
-  },*/
 }

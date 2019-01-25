@@ -16,7 +16,7 @@
 	      
         <div class = "row justify-content-center">
           <div class="col-sm-12" style="max-width:850px">
-            <br>
+            <p class="my-2 text-right"><a href="#" onclick="flipAll()" id="flipall">alle aufklappen</a></p>
 	          <% for (var i = 1; i <= user.level; i++) { %>
 	            <div class="card bg-light py-0">
                 <%
@@ -45,6 +45,21 @@
                         e.style.display = ""
                       } else {
                         e.style.display = "none"
+                      }
+                    }
+                  }
+                  
+                  function flipAll() {
+                    var el = document.getElementById("flipall")
+                    var prevState = el.innerHTML
+                    if (prevState == "alle aufklappen")
+                      el.innerHTML = "alle zuklappen"
+                    else if (prevState == "alle zuklappen")
+                      el.innerHTML = "alle aufklappen"
+                    for (var i = 1; i <= 9; i++) {
+                      var x = document.getElementById("level" + i)
+                      if (x) {
+                        x.style.display = prevState == "alle aufklappen" ? "" : "none"
                       }
                     }
                   }

@@ -666,9 +666,9 @@ module.exports.tutorials = {
     ],
     solution : [1,0,0,1,1,1],
   },
-  61 : {
-    level : 6,
-    name : "Programmieren mit Logik",
+  91 : {
+    level : 9,
+    name : "Programmieren mit Logik [TODO]",
     text : `
       <p>Du hast jetzt einige Erfahrung mit Code gesammelt. Deine Ameisen sind auf dem Spielfeld spazieren gewesen, haben Nahrungsmittel gefunden, haben gekämpft und Nachrichten gesendet. Dabei hast du viele Funktionen und Befehle aus der API verwendet, wie z.B. GeheZuZiel() oder SendeNachricht(). Diese reichen aber nicht immer aus.
       </p>
@@ -730,9 +730,9 @@ module.exports.tutorials = {
     ],
     solution : [1,1,0,1,0,1],
   },
-  62 : {
-    level : 6,
-    name : "Bedingte Anweisungen",
+  93 : {
+    level : 9,
+    name : "Bedingte Anweisungen [TODO]",
     text : `
       <p>Das Kernstück der Logik sind bedingte Anweisungen. Diese ermöglichen es dem Programm, auf die Umgebung zu reagieren und aufgrund dessen Entscheidungen zu treffen. Das Grundgerüst einer bedingten Anweisung sieht so aus:
       </p>
@@ -778,8 +778,8 @@ module.exports.tutorials = {
     ],
     solution : [0,1,1,0,1,1],
   },
-  71 : {
-    level : 7,
+  95 : {
+    level : 9,
     name : "Listen",
     text : `
       <p>Eine Liste gibt dir die Möglichkeit, mehrere Werte gemeinsam zu speichern und als ganzen Paket zu transportieren. Dabei musst du noch nicht einmal wissen, wie viele Werte du dabei speichern willst: Es können 10 Werte sein, oder auch 1000. Damit sind Listen ein wesentliches Werkzeug, um Informationen zu speichern und zu verwalten.
@@ -832,8 +832,8 @@ module.exports.tutorials = {
     ],
     solution : [0,1,0,1,1,0],
   },
-  72 : {
-    level : 7,
+  97 : {
+    level : 9,
     name : "Globale Variablen und Mathematik",
     text : `
       <p>In letzten Tutorial hast du bereits ein Beispiel einer Variabledefinition gesehen. Variablen sind ein Hilfsmittel, um mit Informationen umzugehen. Die Parameter von Ereignissen und Funktionen sind bereits eine Form von Variablen. Diese werden verwendet, um Informationen zwischen der Simulation und dem Programm zu übertragen. Wir werden Variablen jetzt verwenden, um Informationen zu speichern.
@@ -886,8 +886,8 @@ module.exports.tutorials = {
     ],
     solution : [0,1,1,0,0,1],
   },
-  81 : {
-    level : 8,
+  99 : {
+    level : 9,
     name : "Vermessung, Statuswerte und Co. [API]",
     text : `
       <p>Nachdem du dich mit der Logik vertraut gemacht hast, bist du bereit, die letzten Teile der API kennenzulernen.
@@ -957,8 +957,8 @@ module.exports.tutorials = {
     ],
     solution : [0,0,0,1,1,1],
   },
-  82 : {
-    level : 8,
+  101 : {
+    level : 9,
     name : "Hinter den Kulissen: Das Ameisenaufgabenverzeichnis",
     text : `
       <p>Unter der Oberfläche einer Programmiersprache passieren eine Menge an Sachen. Im Idealfall funktionieren diese so wie erwartet und man muss seine Aufmerksamkeit nicht darauf richten. Als Programmierer möchte man den Befehl "Gehe" schreiben und man erwartet, dass die Simulation die Position entsprechend aktualisieren, die Interaktionen mit dem Spielfeld korrekt passieren und schließlich die 3D-Ansicht sich neu zeichnet. Wenn es gut läuft braucht man sich nicht mit den Details zu beschäftigen.
@@ -1035,7 +1035,7 @@ module.exports.tutorials = {
     ],
     solution : [1,0,1,0,0,1],
   },
-  91 : {
+  103 : {
     level : 9,
     name : "Ausblick",
     text : `
