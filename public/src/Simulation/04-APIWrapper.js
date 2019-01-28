@@ -95,6 +95,7 @@
     var newAnt = {Name:name,Bus:bus,wenn:bus.on,
       teams:undefined,
       curTeamCount:0,
+      exports:[],
       SetzeTeams:function(count){
         if (!isNaN(count) && count === parseInt(count, 10) && count > 1) {
           var t = []
@@ -117,6 +118,12 @@
           this.teams = arr
         else
           alert('Setzen der Teams fehlgeschlagen')
+      },
+      Exportiere:function(f1, f2, f3, f4) {
+        this.exports[0] = f1
+        this.exports[1] = f2
+        this.exports[2] = f3
+        this.exports[3] = f4
       }
     };
     if (Sim.API.ants.length < Sim.Opts.MaximaleSpieler) {

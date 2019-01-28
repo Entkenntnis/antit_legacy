@@ -40,15 +40,7 @@
     document.body.appendChild( stats.dom );
     
     // make it movable
-    controls = new THREE.OrbitControls(camera);
-    controls.maxPolarAngle = Math.PI/2 - 0.06;
-    controls.maxDistance = 3000;
-    controls.minDistance = 100;
-    controls.maxY = 0
-    
-    controls.addEventListener('change', function(){
-      vw.needRedraw = true;
-    });
+    makeControls()
     
     // handle loading
     manager = new THREE.LoadingManager();
@@ -64,6 +56,18 @@
       View.Pulse.Init()
       animate();
     };
+  }
+  
+  function makeControls() {
+    controls = new THREE.OrbitControls(camera);
+    controls.maxPolarAngle = Math.PI/2 - 0.06;
+    controls.maxDistance = 3000;
+    controls.minDistance = 100;
+    controls.maxY = 0
+    
+    controls.addEventListener('change', function(){
+      vw.needRedraw = true;
+    })
   }
 
   function resize() {
@@ -440,6 +444,11 @@
       gamefloor.geometry = new THREE.PlaneGeometry(w, h, 1, 1)
       gamefloor.geometry.verticesNeedUpdate = true
       setControlsBounds(w/2, h/2)
+    })
+    
+    Bus.on('set-camera', function(x, y, z) {
+      camera.position.set(x, y, z)
+      makeControls()
     })
     
     Bus.on('move-sugar', function(key, pos, scale) {

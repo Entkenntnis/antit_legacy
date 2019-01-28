@@ -46,7 +46,7 @@
     }
   }
  
-  View.Pulse.getBus().on('submit', View.Opts.Levelmodus ? onSubmitLevel : onSubmit)
+  View.Pulse.getBus().on('submit', View.Opts.Levelmodus ? function(){} : onSubmit)
   
   function onSubmit(points) {
     var info = View.Pulse.getInfo()
@@ -77,7 +77,11 @@
               simStatus.innerHTML = "Simulation abgeschlossen"
               alert("Glückwunsch, du hast die Aufgabe geschafft!")
               var ind = info.prefix.indexOf("?")
-              window.location = info.prefix.substr(0, ind)
+              var level = parseInt(info.prefix.substring(info.prefix.indexOf("id=") + 3))
+              if (level < 60 || level >= 90)
+                setTimeout(function() {
+                  window.location = info.prefix.substr(0, ind)
+                }, 5000)
               return
             }
          }

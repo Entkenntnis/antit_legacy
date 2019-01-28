@@ -121,10 +121,17 @@
       create : function() {
         defaultLevelCreate()
         Sim.Bus.emit('set-ring', locPos(200,100), 0xae00ff, {inner:10, outer:20})
-        Sim.Bus.emit('draw-text', {text:"Tests gibt es hier", pos: locPos(230,100), nocenter:true, color:0x000000, key:1})
+        //Sim.Bus.emit('draw-text', {text:"Tests gibt es hier", pos: locPos(230,100), nocenter:true, color:0x000000, key:1})
         
-        Sim.lx_test = new AntTest(locPos(230,50))
+        Sim.lx_test = new AntTest(locPos(230,100))
         cb(Sim.lx_test)
+        Sim.players[0].getKI().wenn("IstGeboren", function() {
+          DreheZuRichtung(0)
+          Gehe(200)
+          Drehe(-90)
+          Gehe(100)
+        })
+        Sim.Bus.emit('set-camera', 0, 900, 200)
         
       },
       update : function() {
@@ -971,24 +978,49 @@
     },
  
     61 : makeTestLevel(function(test){
-      var userFunc = Sim.players[0].getKI().Bus.getHandler("#Vorzeichen")[0]
+      var userFunc = function (x) {
+        return Math.round(Sim.players[0].getKI().exports[0].call(null, x)*100)/100
+      }
       function addTest(title, zahl) {
         test.addTest({
-          title:title,
-          description:"Teste die Zahl " + zahl,
-          expected:zahl==0?"Zahl ist null":(zahl>0?"Zahl ist positiv":"Zahl ist negativ"),
+          title:title + " " + zahl + "kg",
+          description:"Kunde kauft " + zahl + "kg Zucker",
+          expected: Math.round((2.99 + 9.99 * zahl) * 100) / 100,
           userFunc:userFunc,
           params:[zahl]
         })
       }
-      addTest("Null-Test", 0)
-      addTest("Positiv-Test", 1)
-      addTest("Negativ-Test", -1)
+      addTest("Kleiner Einkauf", 0.5)
+      addTest("Kleiner Einkauf", 1.5)
+      addTest("Mittlerer Einkauf", 3.5)
+      addTest("Mittlerer Einkauf", 4.5)
+      addTest("Großer Einkauf", 10)
+      addTest("Großer Einkauf", 20)
+      addTest("Leerer Einkauf", 0)
       for (var i = 1; i <= 4; i++) {
-        var number = Math.floor(Math.random()*30000) - 15000
-        addTest("Zufallstest " + i + " mit Zahl " + number, number)
+        var number = Math.floor(Math.random()*100)
+        addTest("Zufallsteinkauf " + i + " mit", number)
       }
     }),
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
     63 : makeTestLevel(function(test){
       var userFunc = Sim.players[0].getKI().Bus.getHandler("#Testergebnis")[0]
@@ -1531,8 +1563,10 @@
   function update() {
     if (l.update) l.update()
     if (Sim.cycles % 100 == 40) {
-      if (isDone())
+      if (isDone()) {
         Sim.Bus.emit('submit-level')
+        Sim.cycles = Infinity
+      }
     }
     if (l.failed && l.failed()) {
       Sim.cycles = Infinity
