@@ -979,13 +979,13 @@
  
     61 : makeTestLevel(function(test){
       var userFunc = function (x) {
-        return Math.round(Sim.players[0].getKI().exports[0].call(null, x)*100)/100
+        return Sim.Util.roundTo(Sim.players[0].getKI().exports[0].call(null, x), 5)
       }
       function addTest(title, zahl) {
         test.addTest({
           title:title + " " + zahl + "kg",
           description:"Kunde kauft " + zahl + "kg Zucker",
-          expected: Math.round((2.99 + 9.99 * zahl) * 100) / 100,
+          expected: Sim.Util.roundTo(2.99 + 9.90 * zahl, 5),
           userFunc:userFunc,
           params:[zahl]
         })

@@ -95,6 +95,11 @@
     }
   }
   
+  Util.roundTo = function(num, digits) {
+    var factor = Math.pow(10, digits)
+    return Math.round(num * factor) / factor
+  }
+  
   Sim.Util = Util
 
 })(AntIT._rawsim)

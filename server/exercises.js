@@ -294,8 +294,20 @@ module.exports.exercises = {
   61 : {
     name : "An der Kasse",
     description : `
-      <p>...
+      <p>Im Supermarkt des Ameisendorfs wird deine Hilfe benötigt! Hier kaufen die Bewohner ihren Zuckervorrat ein und die Kassierer berechnen für jeden Kunden den Preis - aktuell noch per Hand. Vielleicht kann man das mit einem Computerprogramm leichter lösen?
       </p>
+      
+      <p>Der Zucker wird pro Kilogramm verkauft. Ein Kilogramm kostet 9,90€. Um den Zucker zu transportieren gibt es einen Zuckerkorb, den man für 2,99€ dazu kaufst. In folgender Vorlage findest du das Grundgerüst für die Funktion:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a1.png"></p>
+      
+      <p>Der Parameter <code style="color:blue">menge</code> gibt die Einwaage des Kunden in Kilogramm an. Berechne daraus den Preis in Euro und gebe ihn zurück. Du kannst annehmen, dass jeder Kunde einen Zuckerkorb dazukauft. Hier sind zwei Beispiele:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a1_bsp1.png"></p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a1_bsp2.png"></p>
     `,
     level : 6,
   },
