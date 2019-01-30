@@ -310,13 +310,29 @@ module.exports.exercises = {
       <p><img class="img-thumbnail" src="/images/l6_a1_bsp2.png"></p>
     `,
     level : 6,
+    hint: "Dezimalzahlen werden im Code mit Punkt abgetrennt. Statt 2,99 schreibt man 2.99",
   },
   
   63 : {
     name : "Im Sekretariat",
     description : `
-      <p>...
+      <p>Als nächstes gibt es im Sekretariat einige Aufgaben zu erledigen. Einige Schülerinnen und Schüler sollen eine Benachrichtigung bekommen, die zum Beispiel so aussieht:
       </p>
+      
+      <p><code style="color:brown">Hallo Peter, komm bitte ins Seketariat und hole dein Formular ab.</code></p>
+      </p>
+      
+      <p>Da kannst du mit einem Programm helfen. Das Grundgerüst enthält wieder eine Funktion. Diese Funktion erhält als Parameter den Namen des Schülers. Erzeuge daraus die entsprechende Nachricht:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a2.png"></p>
+      
+      <p>Zwei Beispiele:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a2_bsp1.png"></p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a2_bsp2.png"></p>
     `,
     level : 6,
   },

@@ -111,7 +111,8 @@
     }
   }
   
-  function makeTestLevel(cb){
+  function makeTestLevel(cb, offsetx){
+    if (!offsetx) offsetx = 200
     return {
       init : function() {
         defaultLevelInit()
@@ -120,14 +121,14 @@
       },
       create : function() {
         defaultLevelCreate()
-        Sim.Bus.emit('set-ring', locPos(200,100), 0xae00ff, {inner:10, outer:20})
+        Sim.Bus.emit('set-ring', locPos(offsetx,100), 0xae00ff, {inner:10, outer:20})
         //Sim.Bus.emit('draw-text', {text:"Tests gibt es hier", pos: locPos(230,100), nocenter:true, color:0x000000, key:1})
         
-        Sim.lx_test = new AntTest(locPos(230,100))
+        Sim.lx_test = new AntTest(locPos(offsetx + 30,100))
         cb(Sim.lx_test)
         Sim.players[0].getKI().wenn("IstGeboren", function() {
           DreheZuRichtung(0)
-          Gehe(200)
+          Gehe(offsetx)
           Drehe(-90)
           Gehe(100)
         })
@@ -135,7 +136,7 @@
         
       },
       update : function() {
-        if (Sim.ants[0] && Sim.Util.dist(Sim.ants[0].getPos(), locPos(200,100)) < 10) {
+        if (Sim.ants[0] && Sim.Util.dist(Sim.ants[0].getPos(), locPos(offsetx,100)) < 10) {
           Sim.lx_test.start()
         }
         if (Sim.lx_test) {
@@ -1003,26 +1004,47 @@
       }
     }),
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
     63 : makeTestLevel(function(test){
+      var userFunc = function (x) {
+        return Sim.players[0].getKI().exports[0].call(null, x)
+      }
+      function addTest(title, name) {
+        test.addTest({
+          title:title + " " + name,
+          description:"Erzeuge Nachricht an " + name,
+          expected: "Hallo " + name + ", komm bitte ins Seketariat und hole dein Formular ab.",
+          userFunc:userFunc,
+          params:[name]
+        })
+      }
+      addTest("Beispiel 1", "Peter")
+      addTest("Beispiel 2", "Sarah")
+      addTest("Schüler 1", "Pablo")
+      addTest("Schülerin 1", "Lucy")
+      addTest("Schüler 2", "Wang Xi")
+      addTest("Schülerin 2", "Lydia")
+    }, 50),
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    993 : makeTestLevel(function(test){
       var userFunc = Sim.players[0].getKI().Bus.getHandler("#Testergebnis")[0]
       function lösung(p) {
         if (p > 80 || p < 0) {

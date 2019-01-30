@@ -447,8 +447,10 @@
     })
     
     Bus.on('set-camera', function(x, y, z) {
+      camera = new THREE.PerspectiveCamera(60, 1 /*aspect*/, 0.1, 200000)
       camera.position.set(x, y, z)
       makeControls()
+      resize()
     })
     
     Bus.on('move-sugar', function(key, pos, scale) {
