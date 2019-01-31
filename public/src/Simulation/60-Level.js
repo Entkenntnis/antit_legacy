@@ -1025,6 +1025,26 @@
       addTest("Schülerin 2", "Lydia")
     }, 50),
  
+    65 : makeTestLevel(function(test){
+      var userFunc = function (x, y) {
+        return Sim.Util.roundTo(Sim.players[0].getKI().exports[0].call(null, x, y), 5)
+      }
+      function addTest(title, gr, rt) {
+        test.addTest({
+          title:title + " (" + gr + ", " + rt + ")",
+          description:"Kunde kauft  " + gr + "kg grüne Äpfel und " + rt + "kg rote Äpfel.",
+          expected: Sim.Util.roundTo((gr * 6.9 + rt * 7.9 + 2.5) * 0.8, 5),
+          userFunc:userFunc,
+          params:[gr, rt],
+        })
+      }
+      addTest("Beispiel 1", 0.5, 0.5)
+      addTest("Beispiel 2", 3, 1.3)
+      for (var i = 1; i <= 5; i++) {
+        addTest("Zufälliger Kunde " + i, Sim.Util.roundTo(Math.random()*5,1), Sim.Util.roundTo(Math.random()*5,1))
+      }
+    }),
+ 
  
  
  
@@ -1086,7 +1106,7 @@
       addTest("Randfall 6", 34)
     }),
  
-    65 : makeTestLevel(function(test){
+    965 : makeTestLevel(function(test){
       var userFunc = Sim.players[0].getKI().Bus.getHandler("#Spiel")[0]
       function solution(a, b) {
         if (a == b)
@@ -1118,7 +1138,7 @@
       addTest("B gewinnt 3", "Stein", "Papier")
     }),
  
-    67 : makeTestLevel(function(test){
+    967 : makeTestLevel(function(test){
       var userFunc = Sim.players[0].getKI().Bus.getHandler("#Statistik")[0]
       function solution(art, a, b) {
         if (art == "Minimum")
@@ -1157,7 +1177,7 @@
       }
     }),
  
-    71 : makeTestLevel(function(test){
+    971 : makeTestLevel(function(test){
       var userFunc = Sim.players[0].getKI().Bus.getHandler("#Rechenmaschine")[0]
       function solution(ns, m) {
         if (m == "A") {
@@ -1196,7 +1216,7 @@
       addTest("Zufall 2 C", arr2.slice(0), "C")
     }),
  
-    73 : makeTestLevel(function(test){
+    973 : makeTestLevel(function(test){
       var userFunc = Sim.players[0].getKI().Bus.getHandler("#Check")[0]
       function solution(arr) {
         if (arr.length == 0)
@@ -1227,7 +1247,7 @@
       }
     }),
  
-    75 : makeTestLevel(function(test){
+    975 : makeTestLevel(function(test){
       var userFunc = Sim.players[0].getKI().Bus.getHandler("#Mittelwert")[0]
       var buffer = [0,0,0,0]
       function solution(x) {
@@ -1256,7 +1276,7 @@
       }
     }),
  
-    77 : makeTestLevel(function(test){
+    977 : makeTestLevel(function(test){
       var userFunc1 = Sim.players[0].getKI().Bus.getHandler("#Anfrage")[0]
       var userFunc2 = Sim.players[0].getKI().Bus.getHandler("#Besuch")[0]
       var list = []
@@ -1312,7 +1332,7 @@
       
     }),
  
-    79 : makeTestLevel(function(test){
+    979 : makeTestLevel(function(test){
       var userFunc = Sim.players[0].getKI().Bus.getHandler("#Rechenmaschine")[0]
       function solution(ns, m) {
         if (m == "A") {
@@ -1362,7 +1382,7 @@
       addTest("Zufall F", arr.slice(0), "F")
     }),
  
-    81 : {
+    981 : {
       init : function(){
         defaultLevelInit()
         Sim.Opts.Runden = 2000
@@ -1381,7 +1401,7 @@
       }
     },
  
-    82 : {
+    982 : {
       init : function(){
         defaultLevelInit()
         Sim.Opts.Runden = 2000
@@ -1408,7 +1428,7 @@
       }
     },
  
-    83 : {
+    983 : {
       init : function(){
         defaultLevelInit()
         Sim.Opts.Runden = 2000
@@ -1437,7 +1457,7 @@
       },
     },
  
-    84 : {
+    984 : {
       init : function(){
         defaultLevelInit()
         Sim.Opts.Runden = 2000

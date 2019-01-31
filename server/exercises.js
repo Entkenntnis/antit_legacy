@@ -340,9 +340,24 @@ module.exports.exercises = {
   65 : {
     name : "Rabattaktion",
     description : `
-      <p>...
+      <p>Der Supermarkt braucht wieder deine Hilfe! Diesmal geht es um eine Rabattaktion für Äpfel. Es gibt zwei Sorten von Äpfe, rote und grüne. Die roten Äpfel kosten 7,90€ das Kilogramm, die grünen Äpfel kosten 6,90€. Der Korb dazu kostet 2,50€. Wer beide Sorten zusammen kauft, bekommt auf den gesamten Einkaufspreis einen Rabatt von 20%!
       </p>
+      
+      <p>Ergänze in dieser Vorlage die dafür notwendige Berechnung:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a3.png"></p>
+      
+      <p>Diesmal gibt es zwei Parameter: <code style="color:blue">mengeGrün</code> gibt die Einwaage der grünen Äpfel in Kilogramm an, <code style="color:blue">mengeRot</code> entsprechend die Einwaage der roten Äpfel in Kilogramm. Hier sind zwei Beispiele:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a3_bsp1.png"></p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a3_bsp2.png"></p>
+      
+      <p>Es kann passieren, dass das Ergebnis zu viele Nachkommastellen hat. Das braucht nicht korrigiert zu werden. Die Kassierer schneiden den Preis einfach nach der zweiten Kommastelle ab.</p>
     `,
+    hint: "Um einen Wert x um 20% zu verkleinern, kannst du x * 0.8 rechnen.",
     level : 6,
   },
   
