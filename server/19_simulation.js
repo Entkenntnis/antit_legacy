@@ -27,6 +27,14 @@ function findAnts(users, userid, ids) {
       })
     })
   }
+  require('./demos.js').demos.forEach(demo => {
+    if (ids.indexOf(demo.id) >= 0) {
+      ants[demo.id] = demo
+      ants[demo.id].username = "Beispiel"
+      ants[demo.id].level = demo.level
+      ants[demo.id].antid = demo.id
+    }
+  })
   return ids.map(function(id){
     return ants[id]
   }).filter(function(ant){

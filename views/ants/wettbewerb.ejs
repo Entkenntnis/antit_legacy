@@ -12,7 +12,14 @@
 	    
       <div class="row justify-content-center">
         <div class="col-sm-12" style="max-width:850px">
-          <hr>
+          <% if (publicServer) { %>
+            <p class="text-right mt-2 mb-1">
+              <a href="/friends">Freunde verwalten</a>
+            </p>
+            <hr class="mt-0">
+          <% } else { %>
+            <hr>
+          <% } %>
           <script>
             function clear() {
               for (i = 1; i <= 8; i++) {
@@ -52,6 +59,15 @@
                         }
                       %>><%=ants[i].name%></option>
                     <% } %>
+                    <% for (var i = 0; i < demos.length; i++) { %>
+                      <option value="<%=demos[i].id%>"<%
+                        if (user.previous) {
+                          if (user.previous["team" + t] == demos[i].id) {
+                            %>selected="selected"<%
+                          }
+                        }
+                      %>><%="[Beispiel] " + demos[i].name%></option>
+                    <% } %>
                     <% for (var i = 0; i < globals.length; i++) { %>
                       <option value="<%=globals[i]._id%>"<%
                         if (user.previous) {
@@ -75,7 +91,7 @@
             <input type="text" name="repeat" id="repeatvalue" style="margin-right:50px" value="<%=user.previous?user.previous.repeat:''%>">
             <label><input type="checkbox" id="harmony" name="harmony" value="1" <%=user.previous&&user.previous.harmony==1?'checked':''%>>
               <span title="Gift greift keine gegnerische Ameisen an, Punkte nur für Nahrungsmitel">Nur-Sammel-Modus</span></label>
-            <% if (user.level >= 9) { %>
+            <% if (user.level >= 9 && user.superuser) { %>
               <br><input type="checkbox" id="seedon" name="seedon" value="1" <%=user.previous&&user.previous.seedon==1?'checked':''%>>
                 Seed: <input type="text" name="seed" id="seedvalue" value="<%=user.previous?user.previous.seed:''%>">
             <% } %>
@@ -91,7 +107,7 @@
           </div>
           </form>
           
-          <% if (user.level >= 7 ) { %>
+          <% if (user.level >= 7 && user.superuser) { %>
             <div style="height:50px"></div>
             <hr>
             <br>

@@ -66,12 +66,21 @@ module.exports = function(App) {
     if (req.session.cachedQuery) {
       req.user.previous = req.session.cachedQuery
     }
+    
+    // Demo-Ameisen
+    if (App.config.devmode) {
+      delete require.cache[require.resolve('./demos.js')]
+    }
+    let demos = require('./demos.js').demos.filter(d => d.level <= req.user.level)
+    
     res.render('ants/wettbewerb', {
       user: req.user,
       ants: result.ants,
       globals: result.globals,
+      demos: demos,
       highlightElement: 4,
       newtuts: App.getNewTuts(req.user),
+      publicServer: App.colo.get(req.session.colony).public,
     })
   }))
 
