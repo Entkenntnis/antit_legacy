@@ -389,12 +389,25 @@ module.exports.exercises = {
   },
   
   68 : {
-    name : "Zeitplanung",
+    name : "Zahlenrätsel",
     description : `
-      <p>...
+      <p>Auf einem Baumstumpf sind rätselhafte Zahlen eingraviert:
       </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a5.png"></p>
+      
+      <p>Aber diese Zahlen sind sicherlich nicht zufällig! Die Spalten stehen in einer exakten Beziehung zu einander. Kannst du ein Programm schreiben, dass solche Zahlen erzeugen kann?
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a5_.png"></p>
+      
+      <p>Der Name <code style="color:blue">f</code> erinnert an eine mathematische Funktion. Der Parameter <code style="color:blue">x</code> entspricht einer Zahl der linken Spalte. Das Ergebnis der Funktion soll die Zahl in der rechten Spalte. Das sieht also so aus:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a5_bsp.png"></p>
     `,
     level : 6,
+    hint: "Quadratzahlen spielen bei dieser Aufgabe eine wichtige Rolle.",
   },
   
   69 : {

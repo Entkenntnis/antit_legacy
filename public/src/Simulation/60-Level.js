@@ -1069,6 +1069,29 @@
       }
     }, 50),
  
+    68 : makeTestLevel(function(test){
+      var userFunc = function (x) {
+        return Sim.players[0].getKI().exports[0].call(null, x)
+      }
+      function addTest(title, x) {
+        test.addTest({
+          title:title + " (x=" + x + ")",
+          description:"In der linken Spalte steht " + x,
+          expected: x * x + (x / 10),
+          userFunc:userFunc,
+          params:[x]
+        })
+      }
+      addTest("Zeile 1", 10)
+      addTest("Zeile 2", 20)
+      addTest("Zeile 3", 30)
+      addTest("Zeile 4", 40)
+      addTest("Zeile 5", 50)
+      for (var i = 1; i <= 5; i++) {
+        addTest("Zufallstest " + i, Math.floor(Math.random() * 90 + 10) * 10)
+      }
+    }),
+ 
  
  
  
