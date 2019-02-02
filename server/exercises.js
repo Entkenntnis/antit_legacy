@@ -364,8 +364,26 @@ module.exports.exercises = {
   67 : {
     name : "Kinderreime",
     description : `
-      <p>...
+      <p>Im Ameisenkindergarten singen die Ameisenkinder gerne. Dabei erfinden sie auch mal ihre eigenen "Lieder". Aktuell ist folgendes Muster im Trend:
       </p>
+      
+      <p>Pi Pah, Pi Pah Pah, Pi Pah Pi Pah Pi!
+      </p>
+      
+      <p>Hi Ha, Hi Ha Ha, Hi Ha Hi Ha Hi!
+      </p>
+      
+      <p>Die Kinder nehmen zwei ähnliche Wörter und bauen sie in dieser Reihenfolge hintereinander. Die Kindergärtner haben das Muster erkannt und würden gerne ein Programm haben, dass solche Kinderreime erzeugt. Hier ist die Vorlage dazu:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a4.png"></p>
+      
+      <p>Dabei beschreiben <code style="color:blue">wort1</code> und <code style="color:blue">wort2</code> die zwei Reimbestandteile. Und gleich noch zwei Beispiele:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a4_bsp1.png"></p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a4_bsp2.png"></p>
     `,
     level : 6,
   },

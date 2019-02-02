@@ -1045,6 +1045,29 @@
       }
     }),
  
+    67 : makeTestLevel(function(test){
+      var userFunc = function (wort1, wort2) {
+        return Sim.players[0].getKI().exports[0].call(null, wort1, wort2)
+      }
+      function addTest(title, wort1, wort2) {
+        test.addTest({
+          title:title + " (" + wort1 + ", " + wort2 + ")",
+          description:"Kinder bauen Reim mit " + wort1 + " und " + wort2,
+          expected:  wort1 + " " + wort2 + ", " + wort1 + " " + wort2 + " " + wort2 + ", " + wort1 + " " + wort2 + " " + wort1 + " " + wort2 + " " + wort1 + "!",
+          userFunc:userFunc,
+          params:[wort1, wort2],
+        })
+      }
+      addTest("Beispiel 1", "Tee", "Toh")
+      addTest("Beispiel 2", "Max", "Paul")
+      var konsonanten = "BCDFGHJKLMNPQRSTVWXYZ"
+      var vocale = "aeioc"
+      for (var i = 1; i <= 5; i++) {
+        var k = konsonanten.charAt(Math.floor(Math.random()*konsonanten.length))
+        var vind = Math.floor(Math.random() * 4)
+        addTest("Zufallsbeispiel " + i, k + vocale.charAt(vind), k + vocale.charAt(vind + 1))
+      }
+    }, 50),
  
  
  
@@ -1056,6 +1079,7 @@
  
  
  
+
  
  
  
