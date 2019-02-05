@@ -411,9 +411,25 @@ module.exports.exercises = {
   },
   
   69 : {
-    name : "Spielbericht",
+    name : "Messwerte",
     description : `
-      <p>...
+      <p>Die Ameisen betreiben eine Wetterstation und sie wollen die Messerwerte auf einem Display im Dorfzentrum anzeigen lassen. So sollte das aussehen:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a6_lcd.png" width="400"></p>
+      
+      <p>Deine Aufgabe ist es, die Messwerte der Wetterstation in einen solchen Anzeigetext zu übersetzen. Die Wetterstation misst einerseits die Temperatur in Fahrenheit (die Ameisen haben sich einen amerikanischen Sensor gekauft), das ist der erste Parameter. Der zweite Parameter gibt den Luftdruck in Hektopascal direkt an:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l6_a6.png" width="400"></p>
+      
+      <p>Als Rückgabewert wird folgender Text erwartet:
+      </p>
+      
+      <p><code>Temp.: 10C/50F|Druck: 1023hPa
+      </code></p>
+      
+      <p>Die Temperatur soll in Celsius und Fahrenheit angezeigt werden, der senkrechte Strich kennzeichnet, dass eine neue Zeile beginnt. Zur Umrechnung gibt es <a href="https://de.wikihow.com/Fahrenheit-in-Celsius-umrechnen" target="_blank">diese Rechenanweisung</a>.
       </p>
     `,
     level : 6,

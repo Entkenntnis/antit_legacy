@@ -1092,6 +1092,25 @@
       }
     }),
  
+    69 : makeTestLevel(function(test){
+      var userFunc = function (t, p) {
+        return Sim.players[0].getKI().exports[0].call(null, t, p)
+      }
+      function addTest(title, t, p) {
+        test.addTest({
+          title:title + " (" + t + ", " + p + ")",
+          description:"Die Messstation liefert die Werte " + t + " und " + p,
+          expected: "Temp.: " + ((t-32)/1.8) + "C/" + t + "F|Druck: " + p + "hPa",
+          userFunc:userFunc,
+          params:[t, p]
+        })
+      }
+      addTest("Beispiel", 50, 1023)
+      addTest("Normaler Tag", 77, 1011)
+      addTest("Heißer Tag", 86, 1039)
+      addTest("Kalter Tag", 5, 994)
+    }, 50),
+ 
  
  
  
