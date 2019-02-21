@@ -1111,6 +1111,34 @@
       addTest("Kalter Tag", 5, 994)
     }, 50),
  
+    71 : makeTestLevel(function(test){
+      var userFunc = function (mbs) {
+        return Sim.Util.roundTo(Sim.players[0].getKI().exports[0].call(null, mbs), 5)
+      }
+      function solution(mbs) {
+        return Math.min(41.99, Math.max(2.99, 2.99 + (mbs-50)*0.02))
+      }
+      
+      function addTest(title, mbs) {
+        test.addTest({
+          title:title + " (" + mbs + " MB)",
+          description:"Der Benutzer hat " + mbs + " MB im Monat verbraucht.",
+          expected: Sim.Util.roundTo(solution(mbs), 5),
+          userFunc:userFunc,
+          params:[mbs]
+        })
+      }
+      addTest("Beispiel 1", 51, 3.01)
+      addTest("Beispiel 2", 100, 3.99)
+      addTest("Wenig Verbrauch", 4, 2.99)
+      addTest("Viel Verbrauch", 2100, 41.99)
+      addTest("An der Grenze unten", 50, 2.99)
+      addTest("An der Grenze oben", 1999, 41.97)
+      for (var i = 1; i <= 4; i++) {
+        addTest("Zufallstest " + i, Math.floor(Math.random() * 3000))
+      }
+    }, 50),
+ 
  
  
  

@@ -438,8 +438,18 @@ module.exports.exercises = {
   71 : {
     name : "Flexi-Flat",
     description : `
-      <p>...
+      <p>Das Handy-Unternehmen des Ameisendorfs möchte die Abrechnungen mithilfe eines Programms automatisieren. Der Tarif der Flexi-Flat ist in diesem Diagramm dargestellt:
       </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_a1_flow.png"></p>
+      
+      <p>Abgerechnet wird nach der Menge an verbrauchten Megabytes. Wenn man weniger oder gleich 50 MB im Monat genutzt hat, kostet das 2,99€. Verbraucht man mehr als 50 MB, dann wird jedes zusätzliche MB über die 50 MB hinaus mit 0,02€ abgerechnet. Der Vertrag ist außerdem nach oben hin begrenzt. Verbraucht man mehr als 2000 MB, dann zahlt man 41,99€.
+      </p>
+      
+      <p>Wenn man 51 MB verbracht, zahlt man also 3,01€, wenn man 100 MB verbraucht, sind es 3,99€. Schreibe dein Programm in folgendes Grundgerüst hinein:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_a1.png"></p>
     `,
     level : 7,
   },
