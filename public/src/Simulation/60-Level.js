@@ -1137,7 +1137,43 @@
       for (var i = 1; i <= 4; i++) {
         addTest("Zufallstest " + i, Math.floor(Math.random() * 3000))
       }
-    }, 50),
+    }),
+ 
+    73 : makeTestLevel(function(test){
+      var userFunc = function (pkt) {
+        return Sim.players[0].getKI().exports[0].call(null, pkt)
+      }
+      function solution(pkt) {
+        if (pkt < 60)
+          return "Nicht bestanden."
+        if (pkt < 120)
+          return "Ausreichend"
+        if (pkt < 150)
+          return "Gut"
+        if (pkt < 180)
+          return "Sehr gut!"
+        return "Exzellent!"
+      }
+      
+      function addTest(title, pkt) {
+        test.addTest({
+          title:title + " (" + pkt + " Punkte)",
+          description:"Der Kandidat hat " + pkt + " Punkte in der Prüfung erreicht.",
+          expected: solution(pkt),
+          userFunc:userFunc,
+          params:[pkt]
+        })
+      }
+      addTest("Kandidat 1", 30)
+      addTest("Kandidat 2", 60)
+      addTest("Kandidat 3", 119)
+      addTest("Kandidat 4", 140)
+      addTest("Kandidat 5", 150)
+      addTest("Kandidat 6", 180)
+      for (var i = 1; i <= 5; i++) {
+        addTest("Zufallskandidat " + i, Math.floor(Math.random() * 200))
+      }
+    }),
  
  
  

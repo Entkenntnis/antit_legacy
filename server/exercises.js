@@ -457,8 +457,44 @@ module.exports.exercises = {
   73 : {
     name : "Prüfungsergebnis",
     description : `
-      <p>...
+      <p>Jedes Jahr im Frühjahr finden die Abschlussprüfungen der Ameisenakademie statt. Bei den Prüfungen können insgesamt 200 Punkte erreicht werden. Je nach Punktzahl gibt es eine andere Bewertung:
       </p>
+      
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Punktzahl</th>
+            <th scope="col">Bewertung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>180 - 200</td>
+            <td>Exzellent!</td>
+          </tr>
+          <tr>
+            <td>150 - 179</td>
+            <td>Sehr gut!</td>
+          </tr>
+          <tr>
+            <td>120 - 149</td>
+            <td>Gut</td>
+          </tr>
+          <tr>
+            <td>60 - 119</td>
+            <td>Ausreichend</td>
+          </tr>
+          <tr>
+            <td>0 - 59</td>
+            <td>Nicht bestanden.</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p>Hilf den Korrektoren, indem du ein Programm schreibst, das zu einer Punktzahl die entsprechende Bewertung ausgibt. Schreibe dein Programm in folgende Vorlage hinein:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_a2.png"></p>
     `,
     level : 7,
   },
