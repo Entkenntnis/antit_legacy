@@ -1175,6 +1175,63 @@
       }
     }),
  
+    75 : makeTestLevel(function(test){
+      var userFunc = function (name, alter, geschlecht) {
+        return Sim.players[0].getKI().exports[0].call(null, name, alter, geschlecht)
+      }
+      function solution(name, alter, geschlecht) {
+        return "Liebe" + (geschlecht=="männlich"?"r":"") + " " + name + ", wir wünschen dir alles Gute zum " + alter + ". Geburtstag!"
+      }
+      
+      function addTest(title, name, alter, geschlecht) {
+        test.addTest({
+          title:title,
+          description:"Name: " + name + ", Alter: " + alter + ", Geschlecht: " + geschlecht,
+          expected: solution(name, alter, geschlecht),
+          userFunc:userFunc,
+          params:[name, alter, geschlecht]
+        })
+      }
+      addTest("Beispiel 1", "Thomas", 16, "männlich")
+      addTest("Beispiel 2", "Stella", 12, "weiblich")
+      addTest("Gruß 1", "Markus", 13, "männlich")
+      addTest("Gruß 2", "Luca", 15, "weiblich")
+      addTest("Gruß 3", "Alix", 17, "weiblich")
+    }, 50),
+ 
+    77 : makeTestLevel(function(test){
+      var userFunc = function (sp1, sp2) {
+        return Sim.players[0].getKI().exports[0].call(null, sp1, sp2)
+      }
+      function solution(sp1, sp2) {
+        var code = ["Stachel", "Stock", "Blüte"]
+        var result = (code.indexOf(sp1) + code.indexOf(sp2) * 2) % 3
+        if (result == 0)
+          return "Unentschieden"
+        else
+          return "Spieler " + result + " gewinnt!"
+      }
+      
+      function addTest(title, sp1, sp2) {
+        test.addTest({
+          title:title + " (" + sp1 + " vs " + sp2 + ")",
+          description: "Es wurde " + sp1 + " gegen " + sp2 + " gespielt.",
+          expected: solution(sp1, sp2),
+          userFunc:userFunc,
+          params:[sp1, sp2]
+        })
+      }
+      addTest("Beispiel 1", "Stachel", "Blüte")
+      addTest("Beispiel 2", "Blüte", "Stock")
+      addTest("Beispiel 3", "Stock", "Stachel")
+      addTest("Gleiches Zeichen 1", "Stachel", "Stachel")
+      addTest("Gleiches Zeichen 2", "Stock", "Stock")
+      addTest("Gleiches Zeichen 3", "Blüte", "Blüte")
+      addTest("Beispiel 1b", "Blüte", "Stachel")
+      addTest("Beispiel 2b", "Stock", "Blüte")
+      addTest("Beispiel 3b", "Stachel", "Stock")
+    }, 100),
+ 
  
  
  

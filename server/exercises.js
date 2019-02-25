@@ -502,7 +502,24 @@ module.exports.exercises = {
   75 : {
     name : "Geburtstagsgruß",
     description : `
-      <p>...
+      <p>Das Sekretariat der Schule braucht wieder deine Hilfe. Die Schule möchte allen Schülern, die Geburtstag haben, eine Grußkarte schreiben. Um den Aufwand gering zu halten soll dazu der Text vom Computer erzeugt werden. Der Text enthält den Namen des Schülers und den Geburtstag. Ein Beispiel:
+      </p>
+      
+      <p><code style="color:brown">Lieber Thomas, wir wünschen dir alles Gute zum 16. Geburtstag!</code>
+      </p>
+      
+      <p>Ein Detail ist aber zu beachten: Bei Mädchen muss die Anrede angepasst werden!
+      </p>
+      
+      <p><code style="color:brown">Liebe Stella, wir wünschen dir alles Gute zum 12. Geburtstag!</code>
+      </p>
+      
+      <p>Dein Programm sollte das natürlich beachten. Hier ist die Vorlage:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_a3.png"></p>
+      
+      <p>Die Funktion hat drei Parameter: Der erste Parameter ist der Name, der zweite Parameter das Alter. Das Geschlecht kann entweder <code style="color:brown">"weiblich"</code> oder <code style="color:brown">"männlich"</code> sein.
       </p>
     `,
     level : 7,
@@ -511,8 +528,17 @@ module.exports.exercises = {
   77 : {
     name : "Stachel, Stock, Blüte",
     description : `
-      <p>...
+      <p>Die Ameisenkinder haben ein Spiel, dass unserem "Schere, Stein, Papier" sehr ähnlich ist, es heißt "Stachel, Stock, Blüte". Der Stachel schlägt die Blüte, die Blüte den Stock und der Stock den Stachel.
       </p>
+      
+      <p>Weil du dir die Reihenfolge einfach nicht merken kannst, möchtest du gerne ein Programm schreiben, dass dir bei der Auswertung hilft. Dein Programm erhält zwei Parameter: Der erste Parameter beschreibt, welches Zeichen der erste Spieler macht, der zweite Parameter beschreibt, welches Zeichen der zweite Spieler macht. Du möchtest eines von drei Antwortmöglichkeiten zurückgeben:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_a4_info.png"></p>
+      
+      <p>Hier ist der Anfang des Programms:</p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_a4.png"></p>
     `,
     level : 7,
   },
