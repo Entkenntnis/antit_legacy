@@ -546,7 +546,62 @@ module.exports.exercises = {
   78 : {
     name : "Passwortsicherheit",
     description : `
-      <p>...
+      <p>Für das soziale Netzwerk der Ameisen braucht man zur Anmeldung ein sicheres Passwort. Mithilfe eines Programms möchte man überprüfen, ob das Passwort sicher genug ist.
+      </p>
+      
+      <p>Die Buchstaben des Passworts werden in vier Kategorien eingeteilt: Großbuchstaben, Kleinbuchstaben, Sonderzeichen und Ziffern. Außerdem ist die Länge des Passworts entscheidend: Je kürzer das Passwort, umso unterschiedlichen sollten die Zeichen. Als Eingabe erhält dein Programm fünf Eigenschaften des Passworts:
+      </p>
+      
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Passwort</th>
+            <th scope="col">L(änge)</th>
+            <th scope="col">G(roßbuchstaben)</th>
+            <th scope="col">K(leinbuchstaben)</th>
+            <th scope="col">S(onderzeichen)</th>
+            <th scope="col">Z(iffern)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>abc123</code></td>
+            <td>6</td>
+            <td>3</td>
+            <td>0</td>
+            <td>0</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td><code>Schalke04!</code></td>
+            <td>10</td>
+            <td>1</td>
+            <td>6</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td><code>?rVR,@qD&6TC!{erF</code></td>
+            <td>17</td>
+            <td>6</td>
+            <td>4</td>
+            <td>6</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p>Ein Expertengremium hat sich nach längerer Beratung auf folgende Kritieren festgelegt:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_a5_flow.png"></p>
+      
+      <p>Oh je, Experten machen alles so kompliziert! Und du wurdest beautragt, diese Regeln in ein Programm zu übertragen. Hier ist deine Vorlage:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_a5.png"></p>
+      
+      <p><code style="color:blue">true</code> und <code style="color:blue">false</code> sind spezielle Namen in der Programmiersprache. Sie beschreiben, ob etwas wahr oder falsch ist. Wenn das Passwort sicher ist, gib <code style="color:blue">true</code> zurück, sonst <code style="color:blue">false</code>.
       </p>
     `,
     level : 7,

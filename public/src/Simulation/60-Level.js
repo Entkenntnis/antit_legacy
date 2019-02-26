@@ -1232,6 +1232,48 @@
       addTest("Beispiel 3b", "Stachel", "Stock")
     }, 100),
  
+    78 : makeTestLevel(function(test){
+      var userFunc = function (L, G, K, S, Z) {
+        return Sim.players[0].getKI().exports[0].call(null, L, G, K, S, Z)
+      }
+      function solution(L, G, K, S, Z) {
+        var c1 = G > 0 && K > 0
+        var c2 = S > 0 || Z > 0
+        var c3 = S > 0 && Z > 0
+        return L > 25 || (L > 17 && (c1 || c2)) || (L > 11 && c1 && c2) || (L > 7 && c1 && c3)
+      }
+      
+      function addTest(title, L, G, K, S, Z) {
+        test.addTest({
+          title:title + " (" + L + ", " + G + ", " + K + ", " + S + ", " + Z + ")",
+          description: "Das Passwort ist " + L + " Zeichen lang mit " + G + " Großbuchstaben, " + K + " Kleinbuchstaben, " + S + " Sonderzeichen und " + Z + " Ziffern.",
+          expected: solution(L, G, K, S, Z),
+          userFunc:userFunc,
+          params:[L, G, K, S, Z]
+        })
+      }
+      function analyse(pwd) {
+        var l = pwd.length
+        var g = (pwd.match(/[A-Z]/g) || []).length
+        var k = (pwd.match(/[a-z]/g) || []).length
+        var z = (pwd.match(/[0-9]/g) || []).length
+        var s = l - g - k - z
+        addTest(pwd, l, g, k, s, z)
+      }
+      analyse("abc123")
+      analyse("Schalke04!")
+      analyse("?rVR,@qD&6TC!{erF")
+      analyse("lala123") // zu kurz
+      analyse("kaffeepause") // zu wenige Varianten
+      analyse("3L!TeHkr") // ok
+      analyse("MaxMustermann") // zu wenige Varianten
+      analyse("PaulSuperschlau!") // ok
+      analyse("BestPassword03") // ok
+      analyse("LoLroflasdfghjklqw") // ok
+      analyse("QWERTZUIOPASDFGHJKL") // zu wenige Varianten
+      analyse("mnbvcxylkjhgfdsapoiuztrewq") // ok
+    }, 100),
+ 
  
  
  
