@@ -127,9 +127,10 @@ module.exports.exercises = {
   33 : {
     name : "Verlockung",
     description : `
-      <p>Im Osten befinden sich einige Nahrungsmittel. Bringe davon zwei Zuckerhaufen und zwei Äpfel zum Bau. Lass dich nicht ablenken und tappe der Wanze nicht in die Falle.
+      <p>Im Osten befinden sich einige Nahrungsmittel. Bringe davon 2 Zuckerhaufen und 2 Äpfel zum Bau. Lass dich nicht ablenken und tappe der Wanze nicht in die Falle.
       </p>
     `,
+    hint: "Nutze für diese Aufgabe die Ereignisse \"SiehtZucker\" und \"SiehtApfel\".",
     level : 3,
   },
   
@@ -217,6 +218,7 @@ module.exports.exercises = {
       <p>Eine Gruppe von Wanzen hat sich um den Bau herum niedergelassen. Dein Ameisenvolk hat sie als Gefahr erkannt und möchte sie beseitigen. Vergifte alle Wanzen auf dem Spielfeld.
       </p>
     `,
+    hint: "Greife die Wanzen gezielt an. Bei den beweglichen Wanzen kannst du dich ihnen in den Weg stellen und etwas warten.",
     level : 4,
   },
   
@@ -277,6 +279,7 @@ module.exports.exercises = {
     description : `
       <p>Verlockend viel Zucker liegt vor dem Bau, doch dein Ameisenvolk muss bis Tick 1500 warten, bis es den Zucker abbauen darf. Insgesamt hast du 2000 Ticks Zeit, 500 Zucker einzusammeln.</p>
     `,
+    hint: "Verwende die Variable TickZahl, siehe dazu das Tutorial 'Ameisenwettbewerb' in der Bibliothek.",
     level : 5,
   },
   
@@ -610,8 +613,18 @@ module.exports.exercises = {
   79 : {
     name : "Gruppenticket",
     description : `
-      <p>...
+      <p>Am Eingang des Ameisenmuseums hängt folgende Preistafel:
       </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_a6_preise.png" width=600></p>
+      
+      <p>Einzelpersonen zahlen den regulären Preis. Wenn eine Gruppe mit 10 Personen oder mehr das Museum besuchen möchte (Erwachsene und Kinder zusammengerechnet), dann gilt ein ermäßigter Preis. Für eine größere Gruppe von Kindern gilt der Schulklassenpreis, hier dürfen zwei Erwachsene als Begleitpersonen das Museum kostenlos besuchen.
+      </p>
+      
+      <p>Um den Preis schnell berechnen zu können, sollst du nun ein Programm schreiben, dass diese Regeln umsetzt. Dein Programm erhält die Anzahl an Erwachsenen und Kinder. Berechne daraus den Gesamtpreis:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l7_a6.png"></p>
     `,
     level : 7,
   },

@@ -1274,6 +1274,40 @@
       analyse("mnbvcxylkjhgfdsapoiuztrewq") // ok
     }, 100),
  
+    79 : makeTestLevel(function(test){
+      var userFunc = function (erw, kin) {
+        return Sim.players[0].getKI().exports[0].call(null, erw, kin)
+      }
+      function solution(erw, kin) {
+        if (kin >= 20) {
+          return Math.max(0, (erw-2) * 8 + kin * 3)
+        }
+        if (erw + kin >= 10) {
+          return erw * 9 + kin * 5
+        }
+        return erw * 11 + kin * 6
+      }
+      
+      function addTest(title, erw, kin) {
+        test.addTest({
+          title:title + " (" + erw + " Erw, " + kin + " Kin)",
+          description:erw + " Erwachsene und " + kin + " Kinder besuchen das Museum.",
+          expected: solution(erw, kin),
+          userFunc:userFunc,
+          params:[erw, kin]
+        })
+      }
+      addTest("Einzelpersonen", 1, 0)
+      addTest("Einzelpersonen", 2, 2)
+      addTest("Einzelpersonen", 5, 4)
+      addTest("Gruppe", 4, 6)
+      addTest("Gruppe", 15, 10)
+      addTest("Gruppe", 5, 19)
+      addTest("Klasse", 2, 20)
+      addTest("Klasse", 4, 25)
+      addTest("Klasse", 6, 45)
+    }, 100),
+ 
  
  
  
