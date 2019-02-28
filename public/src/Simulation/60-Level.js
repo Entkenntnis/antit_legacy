@@ -1308,6 +1308,33 @@
       addTest("Klasse", 6, 45)
     }, 100),
  
+    81 : {
+      init : function(){
+        defaultLevelInit()
+        Sim.Opts.Runden = 2000
+      },
+      create : function(){
+        defaultLevelCreate()
+        Sim.l8_checkpoints = []
+        for (var i = 0; i < 20; i++) {
+          Sim.l8_checkpoints.push(Sim.Util.moveDir(locPos(0, 0), i * 18, 200))
+        }
+        Sim.l8_checkpoints.forEach(function(pos, id) {
+          console.log(pos)
+          Sim.Bus.emit('move-spawn-point', id, pos)
+        })
+      },
+      update : function(){
+      },
+      isDone : function(){
+        return Sim.l8_checkpoints.every(function(pos) {
+          return Sim.ants.some(function(ant){
+            return Sim.Util.dist(ant.getPos(), pos) < 3
+          })
+        })
+      }
+    },
+ 
  
  
  

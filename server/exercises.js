@@ -630,16 +630,21 @@ module.exports.exercises = {
   },
   
   81 : {
-    name : "Bunte Äpfel",
+    name : "Kreisformation",
     description : `
-      <p>...
+      <p>Stelle deine 20 Ameisen in einem Kreis um den Ameisenbau auf. Die Zielpositionen sind auf dem Spielfeld markiert.
       </p>
+      
+      <p>Nutze bei dieser Aufgabe eine Variable. Diese Variable soll den Austrittswinkel beschreiben. Wenn eine Ameise geboren wird, geht sie zu dieser Richtung und erhöhe dann den Austrittswinkel um einen bestimmten Wert. Dadurch werden nach und nach alle Himmelsrichtungen abgedeckt.
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l8_a1_flow.png"></p>
     `,
     level : 8,
   },
   
   83 : {
-    name : "Viele Objekte",
+    name : "Gezogene Linie",
     description : `
       <p>...
       </p>
@@ -648,7 +653,7 @@ module.exports.exercises = {
   },
   
   85 : {
-    name : "Wanzenbombe",
+    name : "Spirale",
     description : `
       <p>...
       </p>
@@ -657,7 +662,16 @@ module.exports.exercises = {
   },
   
   87 : {
-    name : "Formation",
+    name : "???",
+    description : `
+      <p>...
+      </p>
+    `,
+    level : 8,
+  },
+  
+  88 : {
+    name : "???",
     description : `
       <p>...
       </p>
