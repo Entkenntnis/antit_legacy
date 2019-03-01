@@ -644,10 +644,21 @@ module.exports.exercises = {
   },
   
   83 : {
-    name : "Gezogene Linie",
+    name : "Gestreckte Linie",
     description : `
-      <p>...
+      <p>Als nächstes sollen die Ameisen sich auf einer Linie aufstellen, die sich vom Hügel aus in Richtung Osten erstreckt. Die Ameisen sollen sich in folgenden Abständen vom Hügel aufstellen:
       </p>
+      
+      <p>100, 110, 123, 139, 158, 180, 205, 233, ...
+      </p>
+      
+      <p>Erkennst du das Muster? Die Reihe beginnt bei 100. Der Abstand erhöht sich beim ersten Mal um 10, dann um 13, dann um 16, dann um 19, und so weiter. Insgesamt ergibt sich damit eine gestreckte Linie.
+      </p>
+      
+      <p>Mithilfe von zwei Variablen namens <em>strecke</em> und <em>abstand</em> lässt sich das programmieren. Hier ist ein möglicher Programmablauf:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l8_a2.png"></p>
     `,
     level : 8,
   },
