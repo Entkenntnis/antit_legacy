@@ -666,14 +666,14 @@ module.exports.exercises = {
   85 : {
     name : "Spirale",
     description : `
-      <p>...
+      <p>In dieser Aufgabe sollen die Ergebnisse der letzten zwei Aufgaben kombiniert werden. Die Ameisen sollen sich in einer Spirale auf dem Spielfeld aufstellen. Die Spirale beginnt im Südosten, die Positionen sind gleichmäßig im Kreis verteilt. Die Abstände zum Bau entsprechen genau den Abständen aus der letzten Aufgabe (also 100, 110, 123, 139, 158, ...)
       </p>
     `,
     level : 8,
   },
   
   87 : {
-    name : "???",
+    name : "Pendel",
     description : `
       <p>...
       </p>
@@ -682,7 +682,7 @@ module.exports.exercises = {
   },
   
   88 : {
-    name : "???",
+    name : "Dirigent",
     description : `
       <p>...
       </p>
