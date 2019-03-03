@@ -1394,6 +1394,46 @@
       }
     },
  
+    87 : {
+      init : function(){
+        defaultLevelInit()
+        Sim.Opts.Runden = 3000
+      },
+      create : function(){
+        defaultLevelCreate()
+        var curX = 90
+        var dir = 2
+        
+        Sim.l8_ok = 0
+        Sim.l8_fail = 0
+        
+        var orig = window.SetzeGift
+        window.SetzeGift = function(){
+          orig().then(function() {
+            var x = Sim.Util.getDir(locPos(0,0), Sim.API.curAnt.getPos())
+            
+            if (Math.abs(x-curX)<3) Sim.l8_ok++
+            else Sim.l8_fail++
+            
+            if (curX > 135) dir = -2
+            if (curX < 45) dir = 2
+            curX += dir
+          })
+        }
+      },
+      update : function(){
+      },
+      isDone : function(){
+        var sum = Sim.l8_ok + Sim.l8_fail
+        var okrate = Sim.l8_ok / sum
+        if (sum > 250 && okrate > 0.8) {
+          console.log(okrate)
+          return true
+        }
+        return false
+      }
+    },
+ 
  
  
  

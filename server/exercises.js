@@ -675,8 +675,19 @@ module.exports.exercises = {
   87 : {
     name : "Pendel",
     description : `
-      <p>...
+      <p>Eine schöne Anwendung von Variablen ist folgendes Pendel:
       </p>
+      
+      <p><img class="img-thumbnail" src="/images/l8_a4.gif"></p>
+      
+      
+      <p>Die technische Beschreibung sieht so aus: Die erste Ameise soll vom Bau aus 200 Richtung Süden (Winkel 90) gehen und dort eine Giftwolke setzen. Die nächste Ameise geht zwei Grad weiter, also zum Winkel 92, und setzt dort die Giftwolke. Das geht mit den Winkeln 94, 96, 98, ... weiter, bis als letztes der Winkel 136 getroffen wird. Von dort aus gehen die nächsten Ameisen wieder in die andere Richtung, also 132, 134, 136, 134, 132, ... Auf der anderen Seite geht der Winkel bis minimal 44 und dreht sich dann um: 48, 46, 44, 46, 48, ...
+      </p>
+      
+      <p>Du kannst dir mal selber überlegen, wie man das mit Variablen programmieren könnte. Ansonsten findest du hier eine Anleitung:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l8_a4flow.png"></p>
     `,
     level : 8,
   },
