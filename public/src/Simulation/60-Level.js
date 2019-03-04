@@ -1434,6 +1434,69 @@
       }
     },
  
+    88 : {
+      init : function(){
+        defaultLevelInit()
+        Sim.Opts.Runden = 3000
+        Sim.Opts.AmeisenReichweite = 30000
+      },
+      create : function(){
+        defaultLevelCreate()
+        Sim.l8_ok = 0
+        Sim.l8_fail = 0
+        Sim.l8_dirs = []
+      },
+      update : function(){
+        // Überprüfe, ob alle Ameisen gleich laufen
+        var dirs = {}
+        Sim.ants.forEach(function(ant) {
+          var d = Math.round(ant.getHeading())
+          if (dirs[d]) {
+            dirs[d]++
+          } else {
+            dirs[d] = 1
+          }
+        })
+        var maxCount = 0
+        var maxDir = NaN
+        for (var k in dirs) {
+          if (dirs[k] > maxCount) {
+            maxCount = dirs[k]
+            maxDir = k
+          }
+        }
+        var ratio = maxCount/Sim.ants.length
+        if (ratio < 0.75) {
+          Sim.l8_fail++
+        } else {
+          Sim.l8_ok++
+          if (!isNaN(maxDir)) {
+            if (Sim.l8_dirs.indexOf(maxDir) < 0) {
+              Sim.l8_dirs.push(maxDir)
+            }
+          }
+        }
+      },
+      isDone : function(){
+        var laufsumme = 0
+        Sim.ants.forEach(function(ant) {
+          laufsumme += ant.getLap()
+        })
+        if (laufsumme > 50000) {
+          if (Sim.l8_ok / (Sim.l8_ok + Sim.l8_fail) > 0.7) {
+            // zum Schluss noch Vielfalt der Richtungen
+            if (Sim.l8_dirs.length > 10) {
+              return true
+            }
+          }
+        }
+        /*console.log(laufsumme)
+        console.log(Sim.l8_ok / (Sim.l8_ok + Sim.l8_fail))
+        console.log(Sim.l8_dirs)*/
+        return false
+      }
+    },
+ 
  
  
  

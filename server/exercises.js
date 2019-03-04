@@ -27,6 +27,9 @@ module.exports.exercises = {
       </p>
       
       <p>Allerdings starten die Ameisen diesmal mit einer beliebigen Richtung. Richte sie zu Beginn richtig aus.</p>
+      
+      <p>Es ist empfehlenswert, für jede Aufgabe ein neues Ameisenvolk anzulegen.
+      </p>
     `,
     level : 1,
   },
@@ -695,7 +698,12 @@ module.exports.exercises = {
   88 : {
     name : "Dirigent",
     description : `
-      <p>...
+      <p>Variablen ermöglichen es dem Ameisenvolk, ihre Bewegungen auf eine sehr präzise Art zu synchronisieren. Das funktioniert, weil unsere Variablen <em>global</em> definiert werden und damit alle Ameisen auf die gleichen Variablen zugreifen - also eine Art von Telepathie. Das wollen wir in dieser Aufgabe ausnutzen und die Ameisen ganz synchron laufen lassen:
+      </p>
+      
+      <p><img class="img-thumbnail" src="/images/l8_a5.gif"></p>
+      
+      <p>Genauer: Das Ameisenvolk wird in zwei Gruppen aufgeteilt: Eine einzelne Ameise bleibt im Bau stehen und spielt den Dirigenten (im GIF nicht zu sehen), alle anderen Ameisen folgen den Befehlen dieser Ameise. Die Dirigentenameise legt eine Himmelsrichtung fest, in die alle Ameisen laufen sollen. Diese Richtung ändert sie alle zwei Sekunden zufällig. Die anderen Ameisen versuchen ständig, in diese Richtung zu gehen. Bei dieser Aufgabe ist die Reichweitenbegrenzung der Ameisen aufgehoben.
       </p>
     `,
     level : 8,
