@@ -114,7 +114,9 @@
     
     function addJob(type, opts, cb) {
       if (jobs.length > Sim.Opts.JobLimit) {
-        Sim.API.message("Warteschlange der Ameise ist vollgelaufen!") 
+        //Sim.API.message("Warteschlange der Ameise ist vollgelaufen!") 
+        console.warn("Warteschlange der Ameise ist vollgelaufen, neuer Befehl wird ignoriert!")
+        return {then: function() {}}
       }
       if (jobsoutofdate && !execmode) {
         jobsoutofdate = false

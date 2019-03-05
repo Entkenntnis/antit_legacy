@@ -84,7 +84,7 @@ var AntIT = {};
     , Levelmodus : false
     , Toleranz : 3
     , ZuckerRadius : 10
-    , JobLimit : 100
+    , JobLimit : 200
     , Harmonie : false
   }
  
