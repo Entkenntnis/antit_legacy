@@ -666,6 +666,101 @@ module.exports.tutorials = {
     ],
     solution : [1,0,0,1,1,1],
   },
+  61 : {
+    level : 6,
+    name : "Funktionen erstellen",
+    text : `
+      <p>Nach dem ganzen Kämpfen ist es nun an der Zeit, etwas nützliches zu machen. Im Ameisendorf gibt es viele Leute, die deine Hilfe im Alltag brauchen und hier lernst du, wie du ihnen helfen kannst.
+      </p>
+      
+      <p>Dazu brauchen wir <em>Funktionen</em>. Du kannst dir eine Funktion wie eine automatische Maschine vorstellen, die Daten als Eingabe nimmt und nach der Verarbeitung Daten als Ausgabe wieder ausspuckt: 
+      </p>
+      
+      <p><img src="/images/l6_funktion_q.png" class="img-thumbnail"></p>
+      
+      <p>Hier ist eine "Maschine", die Zahlen quadriert. Erhält sie eine 11 als Eingabe, dann spuckt sie die Zahl 121 als Ausgabe aus. Die Eingabe hat hier den Namen x - und das erinnert schon sehr an die Mathematik.</p>
+      
+      <p>Diese Funktionen lässt sich nun in Code schreiben:
+      </p>
+      
+      <p><img src="/images/l6_funktion_code.png" class="img-thumbnail"></p>
+      
+      <p>Das hier ist ein Ameisenvolk, dass Zahlen quadrieren kann. Ereignisse werden nicht benötigt und können aus dem Code gelöscht werden. In Zeile 3 bis 5 ist die eigentliche Definition unserer Funktion. Begonnen wird mit dem Schlüsselwort <code>function</code>, dahinter folgt der Name der Funktion. In die runden Klammern wird der Name der Eingabe geschrieben. In unserem Fall heißt die Funktion 'quadriere' und die Eingabe hat den Namen 'x'. In Zeile 3 öffnen wir geschweifte Klammern und schließen sie wieder in Zeile 5.
+      </p>
+      
+      <p>Innerhalb der geschweiften Klammern kommt nun der Code für die Berechnung. In unserem Fall ist das recht klar: Wir nehmen die Eingabe und multiplizieren sie mit sich selbst. Das wird in Zeile 4 gemacht. Um zu zeigen, dass das bereits unsere Antwort ist, schreiben wir vor die Rechnung das Schlüsselwort <code>return</code>. Damit weiß die Funktion, dass das ihre Ausgabe ist. Und fertig! Damit haben wir unsere erste Funktion definiert.
+      </p>
+      
+      <p>Diese kann dann zum Beispiel mit <code style="color:blue">quadriere(11)</code> aufgerufen werden. Das liefert das Ergebnis 121. Der Aufruf <code style="color:blue">quadriere(101)</code> liefert das Ergebnis 10201. Bei den Aufgaben auf dieser Stufe werden wir die Funktion nicht selber verwenden, sondern anderen zur Verfügung stellen. Dazu brauchen wir die Zeile 7: Mit dem Befehl <code>Exportiere</code> geben wir die Funktion 'quadriere' frei und andere Leute können sie dann verwenden.
+      </p>
+      
+      <p><img src="/images/l6_tester.png" class="img-thumbnail"></p>
+      
+      <p>Hier siehst du das Beispiel einer Aufgabe, bei der Zahlen quadriert werden sollen. Unsere Funktion erfüllt ihren Zweck und hat alle Testaufrufe bestanden. In den runden Klammern stehen die Eingaben, in den eckigen Klammern unsre Ausgabe.
+      </p>
+      
+      <p>Bei einer anderen Aufgabe könnte allerdings das passieren:
+      </p>
+      
+      <p><img src="/images/l6_test_fail.png" class="img-thumbnail"></p>
+      
+      <p>Unser Ameisenvolk kann Zahlen quadrieren, aber bei der Aufgabe war nach der dritten Potenz gefragt. Das führt natürlich zu einer Fehlermeldung und der Test scheitert.
+      </p>
+      
+      <p>Jetzt wollen wir uns noch ein paar <em>Operatoren</em> anschauen, mit denen Funktionen aufgebaut werden können. Zum Rechnen mit Zahlen gibt die die Operatoren <code>+</code>, <code>-</code>, <code>*</code> (mal) und <code>/</code> (geteilt). Ein kleines Beispiel, wo eine Funktion auch mehr als eine Eingabe verwenden kann (p und q sind dabei die Seitenlängen der Diagonalen):
+      </p>
+      
+      <p><img src="/images/l6_raute.png" class="img-thumbnail"></p>
+      
+      <p>
+      </p>
+      
+      <p>Außer mit Zahlen können wir auch mit <em>Text</em> arbeiten. Hier ist eine Funktion, die eine Begrüßung erzeugt:
+      </p>
+      
+      <p><img src="/images/l6_strings.png" class="img-thumbnail"></p>
+      
+      <p>Ein Text wird immer in doppelte Anführungszeichen geschrieben. Um Texte miteinander zu verbinden, wird der Operator <code>+</code> verwendet. Dieses plus hat also eine ganz andere Funktion als das plus für Zahlen. Die Zeile 4 ist wie eine Schablone, in die die Eingabe an die entsprechenden Stellen eingefügt wird.
+      </p>
+      
+      <p>Ein Beispielaufruf sieht so aus:
+      </p>
+      
+      <p><img src="/images/l6_begr.png" class="img-thumbnail"></p>
+    `,
+    questions : [
+      "Funktionen werden mit dem Schlüsselwort 'funktion' eingeleitet.",
+      "Das Schlüsselwort 'return' wird für die Rückgabe verwendet",
+      "Eine Funktion nimmt maximal eine Eingabe.",
+      "Funktionen können Zahlen und Text verarbeiten.",
+      "Wenn man 3 kubiert, kommt 27 heraus.",
+      "Die Division wird mit Doppelpunkt geschrieben."
+    ],
+    solution : [0,1,0,1,1,0],
+  },
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   91 : {
     level : 9,
     name : "Programmieren mit Logik [TODO]",
