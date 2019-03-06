@@ -666,7 +666,7 @@ module.exports.tutorials = {
     ],
     solution : [1,0,0,1,1,1],
   },
-  61 : {
+  65 : {
     level : 6,
     name : "Funktionen erstellen",
     text : `
@@ -707,7 +707,10 @@ module.exports.tutorials = {
       <p>Unser Ameisenvolk kann Zahlen quadrieren, aber bei der Aufgabe war nach der dritten Potenz gefragt. Das führt natürlich zu einer Fehlermeldung und der Test scheitert.
       </p>
       
-      <p>Jetzt wollen wir uns noch ein paar <em>Operatoren</em> anschauen, mit denen Funktionen aufgebaut werden können. Zum Rechnen mit Zahlen gibt die die Operatoren <code>+</code>, <code>-</code>, <code>*</code> (mal) und <code>/</code> (geteilt). Ein kleines Beispiel, wo eine Funktion auch mehr als eine Eingabe verwenden kann (p und q sind dabei die Seitenlängen der Diagonalen):
+      <p>Jetzt wollen wir uns noch ein paar <em>Operatoren</em> anschauen, mit denen Funktionen aufgebaut werden können. Zum Rechnen mit Zahlen gibt die die Operatoren <code>+</code>, <code>-</code>, <code>*</code> (mal) und <code>/</code> (geteilt). <b>Wichtig</b>: Um Dezimalzahlen zu schreiben, verwende den Punkt!
+      </p>
+      
+      <p>Ein kleines Beispiel, wo eine Funktion auch mehr als eine Eingabe verwenden kann (p und q sind dabei die Seitenlängen der Diagonalen):
       </p>
       
       <p><img src="/images/l6_raute.png" class="img-thumbnail"></p>
@@ -738,6 +741,87 @@ module.exports.tutorials = {
     ],
     solution : [0,1,0,1,1,0],
   },
+  73 : {
+    level : 7,
+    name : "If-Anweisung: Einführung",
+    text : `
+      <p>Mit den Funktionen aus dem letzten Tutorial können schon viele Situationen im Alltag gemeistert werden. Allerdings ist die Welt nicht immer so einfach, dass sie sich in einer einzelnen Formel darstellen lässt.
+      </p>
+      
+      <p>Ein Beispiel ist die Preisermittlung bei einem Großhändler, z.B. für Holzbretter. Ein einzelnes Brett kostet 10€. Wenn man genau 400 Bretter kauft, passen die genau auf eine Palette und kosten im Aktionspreis statt 4000€ nur 3000€. Wenn man mehr als 400 Bretter kauft, gibt es einen Mengenrabatt und man zahlt nur 8€ pro Brett. Puh, das lässt sich nicht mehr in einer einfachen Formel darstellen. Am besten, wir zeichnen uns die Situation auf:
+      </p>
+      
+      <p><img src="/images/l7_flow1.png" class="img-thumbnail"></p>
+      
+      <p>Das ist ein Flussdiagramm und kann folgendermaßen gelesen werden: Beginne bei Start und laufe zur ersten Verzweigung. Kauft man weniger als 400 Bretter, dann geht man nach rechts zum ersten Kasten. Der Preis berechnet sich dann mit 10€ pro Brett (x = Anzahl der Bretter). Ansonsten geht man zur zweiten Verzweigung. Dort wird geprüft, ob man genau 400 Bretter kauft. Ist das der Fall, zahlt man 3000€. Falls das nicht zutrifft, dann kann es nur noch sein, dass man mehr als 400 Bretter kauft und dann gilt der ermäßigte Preis von 8€.
+      </p>
+      
+      <p>Genau das lässt sich nun mit <em>If-Anweisungen</em> in Code ausdrücken:
+      </p>
+      
+      <p><img src="/images/l7_preis.png" class="img-thumbnail"></p>
+      
+      <p>Zeile 4 bildet die erste Verzweigung. Die Verzweigung beginnt mit dem Schlüsselwort <code>if</code> und wird gefolgt von runden Klammern, in denen die <em>Bedingung</em> steht. In diesem Fall ist die Bedingung, dass die Anzahl der gekauften Bretter (das x) kleiner als 400 ist. Trifft die Bedingung zu, dann wird der Code innerhalb der geschweiften Klammern ausgeführt, also Zeile 5. Diese Zeile gibt den Preis zurück und beendet damit die Funktion
+      </p>
+      
+      <p>Sollte die Bedingung in Zeile 4 nicht zutreffen, dann wird der Block übersprungen und man landet in Zeile 7. Hier wird die nächste Bedingung überprüft, in diesem Fall, ob x gleich 400 ist. <b>Wichtig:</b> Die Gleichheit wird mit doppelten Anführungszeichen geprüft! Falls genau 400 Bretter gekauft wurden, wird der Wert 3000 zurückgegeben und die Funktion wird beendet.
+      </p>
+      
+      <p>Falls beide Bedingungen nicht zutreffen, dann landet man in Zeile 10 und hier wird einfach der ermäßigte Preis berechnet.
+      </p>
+      
+      <p>Man kann so viele Bedingungen untereinander schreiben, wie man benötigt. Für die Bedingungen stehen insgesamt folgende Operatoren zur Verfügung: <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code> (kleiner und größer gleich), <code>==</code> (für Gleichheit) und <code>!=</code> (für Ungleichheit).
+      </p>
+      
+      <p>If-Anweisungen sind einer der wesentlichen Grundbausteine von Software. Daher hier nochmal ein Beispiel. Diesmal wird kein Ergebnis berechnet, sondern ein Text zurückgegeben. Die neuen Vergleichsoperatoren sind im Einsatz:
+      </p>
+      
+      <p><img src="/images/l7_zahl.png" class="img-thumbnail"></p>
+    `,
+    questions : [
+      "Eigentlich lassen sich alle Dinge der Welt in einer einzelnen Formel darstellen.",
+      "Ein Flussdiagramm dient zur Darstellung von Entscheidungen.",
+      "Verzweigungen werden mit Rechtecken gezeichnet.",
+      "Der Start ist eine Raute.",
+      "x = 4 prüft, ob x gleich 4 ist.",
+      "In einer Funktionen können viele If-Anweisungen enthalten sein."
+    ],
+    solution : [0,1,0,0,0,1],
+  },
+  74 : {
+    level : 7,
+    name : "If-Anweisung: Logik und mehr",
+    text : `
+      <p>
+      </p>
+    `,
+    questions : [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    solution : [0,1,0,1,1,0],
+  },
+  83 : {
+    level : 8,
+    name : "Variablen verwenden",
+    text : `
+      <p>
+      </p>
+    `,
+    questions : [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    solution : [0,1,0,1,1,0],
+  },
   
   
   
@@ -761,9 +845,9 @@ module.exports.tutorials = {
   
   
   
-  91 : {
+  /*91 : {
     level : 9,
-    name : "Programmieren mit Logik [TODO]",
+    name : "Programmieren mit Logik",
     text : `
       <p>Du hast jetzt einige Erfahrung mit Code gesammelt. Deine Ameisen sind auf dem Spielfeld spazieren gewesen, haben Nahrungsmittel gefunden, haben gekämpft und Nachrichten gesendet. Dabei hast du viele Funktionen und Befehle aus der API verwendet, wie z.B. GeheZuZiel() oder SendeNachricht(). Diese reichen aber nicht immer aus.
       </p>
@@ -827,7 +911,7 @@ module.exports.tutorials = {
   },
   93 : {
     level : 9,
-    name : "Bedingte Anweisungen [TODO]",
+    name : "Bedingte Anweisungen",
     text : `
       <p>Das Kernstück der Logik sind bedingte Anweisungen. Diese ermöglichen es dem Programm, auf die Umgebung zu reagieren und aufgrund dessen Entscheidungen zu treffen. Das Grundgerüst einer bedingten Anweisung sieht so aus:
       </p>
@@ -872,8 +956,8 @@ module.exports.tutorials = {
       "Bei ODER reicht es, wenn eines der Bedingungen zutrifft."
     ],
     solution : [0,1,1,0,1,1],
-  },
-  95 : {
+  },*/
+  /*102 : {
     level : 9,
     name : "Listen",
     text : `
@@ -926,10 +1010,10 @@ module.exports.tutorials = {
       "pop() löscht ein Element vom Anfang der Liste."
     ],
     solution : [0,1,0,1,1,0],
-  },
-  97 : {
+  },*/
+  /*97 : {
     level : 9,
-    name : "Globale Variablen und Mathematik",
+    name : "Globale Variablen und Mathematik [???]",
     text : `
       <p>In letzten Tutorial hast du bereits ein Beispiel einer Variabledefinition gesehen. Variablen sind ein Hilfsmittel, um mit Informationen umzugehen. Die Parameter von Ereignissen und Funktionen sind bereits eine Form von Variablen. Diese werden verwendet, um Informationen zwischen der Simulation und dem Programm zu übertragen. Wir werden Variablen jetzt verwenden, um Informationen zu speichern.
       </p>
@@ -980,7 +1064,7 @@ module.exports.tutorials = {
       "7.5 wird auf 8 aufgerundet."
     ],
     solution : [0,1,1,0,0,1],
-  },
+  },*/
   99 : {
     level : 9,
     name : "Vermessung, Statuswerte und Co. [API]",
