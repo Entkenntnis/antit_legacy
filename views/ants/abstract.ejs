@@ -97,7 +97,8 @@
             <ul>
               <li>Funktionsdefinition mit <code>function() { }</code>, Rückgabe mit <code>return</code></li>
               <li>Rechenoperatoren: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code></li>
-              <li>Texte verketten mit <code>+</code>
+              <li>Dezimalzahlen mit Punkt trennen, z.B. <code>1.25</code></li>
+              <li>Texte verketten mit <code>+</code></li>
               <li>Simulationsoptionen: Wiederholung und Nur-Sammel-Modus</li>
               
             </ul>
@@ -109,16 +110,14 @@
             <h3>Stufe 7</h3>
           
             <ul>
-              <li>Bedingte Anweisungen: <code>if ( ) { }</code></li>
-              <li>Bedingte Anweisung mit entweder-oder: <code>if ( ) { } else { }</code></li>
-              <li>Vergleichsoperatoren: <code>==</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> und <code>&gt;=</code></li>
+              <li>Darstellung eines Programms als Flussdiagramm</li>
+              <li>If-Anweisung: <code>if ( ) { }</code> für Verzweigungen</li>
+              <li>Vergleichsoperatoren: <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> und <code>&gt;=</code></li>
               <li>Logische Verknüpfungen: <code>&&</code> (UND), <code>||</code> (ODER)</li>
-              <li>Listen erzeugen mit <code>[ , , ... ]</code></li>
-              <li>Zugriff auf Einträge mit <code>arr[i]</code>, Index <code>i</code> wird ab 0 gezählt</li>
-              <li>Zugriff auf Länge über <code>arr.length</code></li>
-              <li>Liste verändern mit <code>arr.push(obj)</code> und <code>arr.shift()</code></li>
-              <li>Variablen definieren mit <code>var</code>, global wenn außerdem von Ereignissen</li>
-              <li>Mathematische Funktionen: <code>Math.pow(basis, exponent)</code> und <code>Math.round(x)</code></li>
+              
+              <li>If-Else-Anweisung: <code>if ( ) { } else { }</code>, genau einer der Blöcke wird ausgeführt</li>
+              
+             
               
             </ul>
             
@@ -129,6 +128,17 @@
             <h3>Stufe 8</h3>
           
             <ul>
+              
+              
+            </ul>
+            
+          <% } %>
+          
+          <% if (user.level >= 9) { %>
+            
+            <h3>Stufe 9</h3>
+          
+            <ul>
               <li>Vermessung mit <code>Distanz(a, b)</code> und <code>Richtung(a, b)</code>, zusammen mit den Variablen <code>Bau</code> und <code>Position</code></li>
               <li>Statuswerte <code>HatZucker</code>, <code>HatApfel</code> und <code>Blickrichtung</code></li>
               <li>Ereignis <code>"Tick"</code></li>
@@ -136,7 +146,12 @@
               <li>Meldung ausgeben mit <code>alert(nachricht)</code></li>
               <li>Gespeicherte Sichtungsobjekte prüfen mit <code>Aktiv(obj)</code></li>
               <li>Code unterbrechen mit <code>function*</code> und <code>yield</code></li>
-              
+              <li>Listen erzeugen mit <code>[ , , ... ]</code></li>
+              <li>Zugriff auf Einträge mit <code>arr[i]</code>, Index <code>i</code> wird ab 0 gezählt</li>
+              <li>Zugriff auf Länge über <code>arr.length</code></li>
+              <li>Liste verändern mit <code>arr.push(obj)</code> und <code>arr.shift()</code></li>
+              <li>Variablen definieren mit <code>var</code>, global wenn außerdem von Ereignissen</li>
+              <li>Mathematische Funktionen: <code>Math.pow(basis, exponent)</code> und <code>Math.round(x)</code></li>
             </ul>
             
           <% } %>

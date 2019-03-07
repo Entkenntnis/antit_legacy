@@ -277,7 +277,7 @@ module.exports.exercises = {
     level : 5,
   },
   
-  55 : {
+  58 : {
     name : "Geduld",
     description : `
       <p>Verlockend viel Zucker liegt vor dem Bau, doch dein Ameisenvolk muss bis Tick 1500 warten, bis es den Zucker abbauen darf. Insgesamt hast du 2000 Ticks Zeit, 500 Zucker einzusammeln.</p>

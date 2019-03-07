@@ -792,7 +792,43 @@ module.exports.tutorials = {
     level : 7,
     name : "If-Anweisung: Logik und mehr",
     text : `
-      <p>
+      <p>Verzweigungen sind beim Programmieren ziemlich wichtig und deshalb gibt es eine Reihe von weiteren Funktionen, mit denen wir uns hier vertraut machen wollen.
+      </p>
+      
+      <p>Die erste solche Funktion ermöglicht es uns, Bedingungen aus mehreren Teilen zusammenzusetzen. Dabei helfen uns die Operatoren <code>&&</code> (UND) bzw. <code>||</code> (ODER). Mit UND tritt die Bedingung ein, wenn BEIDE Teile erfüllt sind, bei ODER tritt die Bedingung ein, wenn ein oder beide Teile erfüllt sind. Ein kleines Beispiel: 
+      </p>
+      
+      <p><img src="/images/l7_logik.png" class="img-thumbnail"></p>
+      
+      <p>Die Bedingung in Zeile 4 tritt nur ein, wenn sowohl a als auch b gleich 3 ist. Schlägt einer der Teile fehl, dann trifft die Bedingung nicht zu. Anders in Zeil 7. Hier reicht es, wenn mindestens eine der Zahlen gleich 5 ist. Sie trifft auch dann zu, wenn beide Zahlen gleich 5 sind (also <em>kein</em> entweder-oder). Logische Verknüpfungen lassen sich wie Rechenoperatoren mit Klammern gliedern und es dürfen auch mehrere Verknüpfungen auf einmal vorkommen. Dann wird es aber immer schwerer, die Logik zu verstehen ...
+      </p>
+      
+      <p><img src="/images/l7_logikdeep.png" class="img-thumbnail"></p>
+      
+      <p>Die nächste Funktion ist nicht schwer zu verstehen, aber man sollte sie mal gesehen haben:
+      </p>
+      
+      <p><img src="/images/l7_typparam.png" class="img-thumbnail"></p>
+      
+      <p>Der Parameter 'anzahl' gibt die Anzahl von Menschen an, ist also eine ganz normale Zahl. Der Parameter 'typ' ist speziell an unsere Funktion angepasst und nimmt nur einen der Werte "Kind" oder "Erwachsener" an. Das wird im Vorfeld, z.B. in der Aufgabenstellung, so festgelegt. Mit dieser Annahme schreiben wir die Funktion so, dass sie entsprechend auch nur auf diese beiden Fälle reagiert. Das besondere ist eben, dass dafür ein Text verwendet wird, wir aber für diesen Text nur ganz bestimmte Werte zulassen.
+      </p>
+      
+      <p>Manchmal reicht auf eine Frage eine ganz simples Ja oder Nein. In der Informatik übersetzt sich das in die Schlüsselwörter <code>true</code> und <code>false</code>. Diese können von einer Funktion zurückgegeben werden und entsprechen einer Ja/Nein-Antwort:
+      </p>
+      
+      <p><img src="/images/l7_iq.png" class="img-thumbnail"></p>
+      
+      <p>Ist der IQ größer als 180, dann ist die Person superschlau und die Antwort lautet true (= ja). Bei einem IQ darunter lautet die Antwort false (= nein). Dieses Beispiel lässt sich noch etwas umschreiben, und zwar mit dem Schlüsselwort <code>else</code>:
+      </p>
+      
+      <p><img src="/images/l7_else.png" class="img-thumbnail"></p>
+      
+      <p>Hinter den if-Block fügt am das Wort 'else' hinzu und eröffnet einen neuen Block. Wichtig zu wissen: Es wird immer nur einer der beiden Blöcke ausgeführt. Wenn die Bedingung wahr ist, wird der erste Block (Zeile 5) ausgeführt. Ist die Bedingung falsch, dann wird der zweite Block (Zeile 7) ausgeführt. Es kann nicht passieren, dass beide Blöcke zusammen ausgeführt werden - genauso passiert es nicht, dass keiner der beiden Blöcke ausgeführt wird. In diesem Fall ist es natürlich ziemlich egal, ob wir den else-Block verwenden, weil unsere Funktion beim 'return' einfach abbricht. Beim nächsten Beispiel allerdings ist die Unterscheidung wichtig:
+      </p>
+      
+      <p><img src="/images/l7_else2.png" class="img-thumbnail"></p>
+      
+      <p>Die Ameise tut eine von zwei Dingen: Zum Bau zurückkehren oder weiterlaufen. Was die Ameise tut, entscheidet sich an der Bedingung in Zeile 4. Die Ameise soll sich immer für eine der beiden Alternativen entscheiden und zwar so, wie es der Situation angemessen ist. Das wird mit dieser If-Else-Anweisung erreicht.
       </p>
     `,
     questions : [
