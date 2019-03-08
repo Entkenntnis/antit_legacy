@@ -1516,7 +1516,7 @@
  
  
  
-    993 : makeTestLevel(function(test){
+    /*993 : makeTestLevel(function(test){
       var userFunc = Sim.players[0].getKI().Bus.getHandler("#Testergebnis")[0]
       function lösung(p) {
         if (p > 80 || p < 0) {
@@ -1832,9 +1832,9 @@
       addTest("Zufall D", arr.slice(0), "D")
       addTest("Zufall E", arr.slice(0), "E")
       addTest("Zufall F", arr.slice(0), "F")
-    }),
+    }),*/
  
-    981 : {
+    101 : {
       init : function(){
         defaultLevelInit()
         Sim.Opts.Runden = 2000
@@ -1853,34 +1853,7 @@
       }
     },
  
-    982 : {
-      init : function(){
-        defaultLevelInit()
-        Sim.Opts.Runden = 2000
-      },
-      create : function(){
-        defaultLevelCreate()
-        var d1 = Sim.rng()*90
-        var d2 = Sim.rng()*90 + 120
-        var d3 = Sim.rng()*90 + 240
-        Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), d1, 250 + Sim.rng()*150)))
-        Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), d2, 250 + Sim.rng()*150)))
-        Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), d3, 250 + Sim.rng()*150)))
-        Sim.Bus.emit('set-ring', locPos(0,0), 0x00aa00, {inner:195,outer:205})
-      },
-      isDone : function(){
-        return Sim.apples.length == 3 && Sim.apples.every(function(a){
-          var dist = Sim.Util.dist(a.getPos(), locPos(0,0))
-          return dist >= 195 && dist <= 205
-          
-        })
-      },
-      failed : function(){
-        return Sim.apples.length != 3
-      }
-    },
- 
-    983 : {
+    103 : {
       init : function(){
         defaultLevelInit()
         Sim.Opts.Runden = 2000
@@ -1909,7 +1882,7 @@
       },
     },
  
-    984 : {
+    105 : {
       init : function(){
         defaultLevelInit()
         Sim.Opts.Runden = 2000
@@ -1959,7 +1932,34 @@
       }
     },
  
-    991 : {
+    107 : {
+      init : function(){
+        defaultLevelInit()
+        Sim.Opts.Runden = 2000
+      },
+      create : function(){
+        defaultLevelCreate()
+        var d1 = Sim.rng()*90
+        var d2 = Sim.rng()*90 + 120
+        var d3 = Sim.rng()*90 + 240
+        Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), d1, 250 + Sim.rng()*150)))
+        Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), d2, 250 + Sim.rng()*150)))
+        Sim.apples.push(new Sim.Apple(Sim.Util.moveDir(locPos(0,0), d3, 250 + Sim.rng()*150)))
+        Sim.Bus.emit('set-ring', locPos(0,0), 0x00aa00, {inner:195,outer:205})
+      },
+      isDone : function(){
+        return Sim.apples.length == 3 && Sim.apples.every(function(a){
+          var dist = Sim.Util.dist(a.getPos(), locPos(0,0))
+          return dist >= 195 && dist <= 205
+          
+        })
+      },
+      failed : function(){
+        return Sim.apples.length != 3
+      }
+    },
+ 
+    /*107 : {
       init : function() {
         defaultLevelInit()
         Sim.Opts.Runden = 1500
@@ -1997,7 +1997,7 @@
       isDone : function(){
         return Sim.players[0].getApple() == 1;
       },
-    },
+    },*/
  
     /*20 : {
       init : function() {

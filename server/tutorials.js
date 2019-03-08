@@ -805,7 +805,7 @@ module.exports.tutorials = {
       
       <p><img src="/images/l7_logikdeep.png" class="img-thumbnail"></p>
       
-      <p>Die nächste Funktion ist nicht schwer zu verstehen, aber man sollte sie mal gesehen haben:
+      <p>Das nächste Thema ist nicht schwer zu verstehen, aber man sollte sie mal gesehen haben:
       </p>
       
       <p><img src="/images/l7_typparam.png" class="img-thumbnail"></p>
@@ -832,31 +832,67 @@ module.exports.tutorials = {
       </p>
     `,
     questions : [
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Bedingungen können mit UND und ODER verknüpft werden.",
+      "Beim UND müssen beide Teile erfüllt sein.",
+      "Beim ODER dürfen nicht beide Teile gleichzeitig erfüllt sein.",
+      "Die Eingaben zu einer Funktion heißen Parameter.",
+      "Nach Vereinbarung nehmen manche Parameter nur ganz spezielle Werte an.",
+      "Für eine Ja/Nein-Antwort nutzt man die Schlüsselwörter Wahr und Falsch."
     ],
-    solution : [0,1,0,1,1,0],
+    solution : [1,1,0,1,1,0],
   },
   83 : {
     level : 8,
     name : "Variablen verwenden",
     text : `
-      <p>
+      <p>Bisher können die Ameisen miteinander kommunizieren, indem sie sich gegenseitig Nachrichten schicken. Das war bei der Nahrungssuche bereits sehr praktisch. Wenn wir allerdings versuche, die Ameise auf komplexere Art zu koordinieren, dann führt diese Methode schnell zu viel Chaos.
+      </p>
+      
+      <p>Eine Alternative dazu sind <em>Variablen</em>. Diese funktionieren nach einem anderen Konzept. Anstatt zwischen den einzelnen Ameisen Nachrichten zu verschicken, gibt es nun ein 'schwarzes Brett' für alle Ameisen, wo die wichtigsten Informationen notiert sind:
+      </p>
+      
+      <p><img src="/images/l8_brett.png" class="img-thumbnail" width=500></p>
+      
+      <p>Die Ameisen können jederzeit auf dieses Brett zugreifen, ganz egal, wo sie sich gerade befinden: Ob im Bau oder mitten auf dem Spielfeld. Sie können dabei die Informationen aus dem Brett verwenden und auch Änderungen vornehmen. Diese Änderungen sind dann sofort für die anderen Ameisen auf dem Brett sichtbar.
+      </p>
+      
+      <p>Schauen wir uns dazu ein erstes Beispiel an:
+      </p>
+      
+      <p><img src="/images/l8_var1.png" class="img-thumbnail"></p>
+      
+      <p>Grundsetzlich durchlaufen Variablen drei Phasen. Die erste Phase ist die <em>Deklaration</em> und <em>Initialisierung</em>. Die findet hier in der Zeile 3 statt. Diese Zeile wird vor Beginn der Simulation ausgeführt und legt eine neue Variable an. Eine Variable besteht aus einem Namen, hier 'anzahlAmeisen', und einem Wert, der hier auf 0 gesetzt wird. Jede Variable muss bevor sie verwendet werden kann, diese erste Phase durchlaufen und deklariert und und initialisiert werden. Man schreibt diese Anweisungen immer zwischen die Ameisendefinition und dem ersten Ereignis.
+      </p>
+      
+      <p>Nun haben wir also auf dem schwarzen Brett einen Eintrag angelegt. Jetzt können wir diese Informationen <em>verwenden</em>. Das ist die zweite Phase. In Zeile 8 und 9 sehen wir dazu zwei Beispiele: Der Gehe-Befehl und der Drehe-Befehl sind vom Wert der Variable abhängig und führen, je nach dem, welchen Wert die Variable hat, zu unterschiedlichen Ergebnissen.
+      </p>
+      
+      <p>Nehmen wir als Beispiel die erste Ameise, die geboren wird. Für diese Ameise wird das Ereignis "IstGeboren" aufgerufen, sie führt die Befehle in Zeile 6 und 7 aus und kommt nun zu Punkt 2. Weil die Variable 'anzahlAmeisen' in diesem Moment den Wert 0 hat, geht die Ameise in Zeile 8 genau 100 Schritte und dreht sich dann um 0 Grad.
+      </p>
+      
+      <p>Jetzt kommen wir zur dritten Phase, der <em>Zuweisung</em> eines neuen Werts. In Zeile 10 schreibt die Ameise für die Variable 'anzahlAmeisen' einen neuen Wert, und zwar um eins höher. Nun hat die Variable also den Wert 1. Wenn die nächste Ameise die Zeilen 8 und 9 ausführt, dann wird diese Ameisen 120 Schritte gehen und sich um 360 Grad drehen. Dann setzt diese Ameisen den Wert auf 2, und so weiter ...
+      </p>
+      
+      <p>Die Phase 2 kann mit allen Befehlen und Verzweigungen kombiniert werden. Dadurch ergibt sich eine große Fülle an Möglichkeiten, Variablen einzusetzen. In den Aufgaben wirst du einige Beispiele kennenlernen.
+      </p>
+      
+      <p>Zum Schluss wollen wir uns noch anschauen, welche weiteren Möglichkeiten es für die Phase 3 gibt. Weil sich viele Aufgaben wiederholen, gibt es ein paar Abkürzungen:
+      </p>
+      
+      <p><img src="/images/l8_var2.png" class="img-thumbnail"></p>
+      
+      <p>Dieses Programm deklariert vier Variablen mit den Namen a, b, c und d und weist ihnen jeweils einen Wert zu. Interessant sind für uns die Zeilen 11 bis 14. Gehen wir diese nacheinander durch: Zeile 11 ist die einfachste Form der Zuweisung. Hier wird a einfach auf einen festen Wert gesetzt. In Zeile 12 begegnet uns schon die erste Abkürzung: Um den Wert einer Variable zu erhöhen (bzw. zu erniedrigen) kann man die Operator <code>+=</code> (oder <code>-=</code>) verwenden. Zeile 13 zeigt das Gleiche mit der Multiplikation. Hier hängt der Wert von c allerdings auch von b ab, wir haben hier also eine Vermischung von Phase 2 und 3! Das ist schon eine ziemlich komplexe Anweisung. Deutlich simpler ist die Zeile 14: Weil es sehr oft vorkommt, dass man eine Variable um genau 1 erhöhen (bzw erniedrigen) will, gibt es den <code>++</code> und den <code>--</code> Operator. Diese werden hinter den Variablenamen geschrieben und erhöhen bzw. erniedrigen die Variable um genau 1.
       </p>
     `,
     questions : [
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Nachrichten verschicken kann schnell chaotisch werden.",
+      "Das 'schwarze Brett' ist für die Ameisen nur im Bau sichtbar.",
+      "Jede Variable muss vor der Verwendung deklariert und initialisiert werden.",
+      "Variablen können mit vielen Befehlen zusammen verwendet werden.",
+      "a += 4 setzt den Wert von a auf 4.",
+      "a-- erniedrigt den Wert von a um 10."
     ],
-    solution : [0,1,0,1,1,0],
+    solution : [1,0,1,1,0,0],
   },
   
   

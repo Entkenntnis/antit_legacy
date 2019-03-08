@@ -775,7 +775,7 @@ module.exports.exercises = {
   },
   */
   
-  91 : {
+  /*91 : {
     name : "Statistik",
     description : `
       <p>Wir wollen ein wenig Statistik betreiben. Selbst mit zwei Zahlen lassen sich schon einige Werte bestimmen. Ergänze folgende Funktion:</p>
@@ -925,9 +925,9 @@ Ergebnis "E": 4.5 ~= 5
 Ergebnis "F": 2 hoch 3 = 8</pre></p>
     `,
     level : 9,
-  },
+  },*/
   
-  103 : {
+  101 : {
     name : "Mittelpunkt",
     description : `
       <p>Auf dem Spielfeld befindet sich ein einzelner Zuckerhaufen. Finde ihn und bewege alle Ameisen genau in den Mittelpunkt zwischen dem Zucker und dem Bau.
@@ -936,7 +936,7 @@ Ergebnis "F": 2 hoch 3 = 8</pre></p>
     level : 9,
   },
   
-  105 : {
+  103 : {
     name : "Gezielter Angriff",
     description : `
       <p>Im Osten befinden sich fünf Wanzen. Vergifte genau die dritte Wanze und lasse die anderen am Leben. Nutze dafür folgende Vorlage:
@@ -948,17 +948,17 @@ Ergebnis "F": 2 hoch 3 = 8</pre></p>
     level : 9,
   },
   
-  107 : {
+  105 : {
     name : "Zuckerhaufen",
     description : `
-      <p>Auf dem Spielfeld befinden sich vier Checkpoints, die von Zuckerhaufen umgeben sind. Laufe alle Checkpoints ab und melde über <code>alert()</code> schließlich, wie viele Zuckerhaufen du insgesamt gesehen hast.
+      <p>Auf dem Spielfeld befinden sich vier Checkpoints, die von Zuckerhaufen umgeben sind. Laufe alle Checkpoints ab und melde über <code>alert()</code> schließlich, wie viele Zuckerhaufen du insgesamt gesehen hast. Gebe dabei nur die Zahl aus.
       </p>
       
     `,
     level : 9,
   },
   
-  109 : {
+  107 : {
     name : "Der richtige Abstand",
     description : `
       <p>Auf dem Spielfeld befinden sich drei Äpfel. Trage sie Richtung Bau und stelle sie auf dem grünen Ring ab. Dieser Ring liegt 200 Schritte um den Bau herum. Die Aufgabe ist geschafft, wenn die drei Äpfel auf dem Ring liegen.
