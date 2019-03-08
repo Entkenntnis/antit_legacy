@@ -3,7 +3,10 @@ module.exports.tutorials = {
     level : 1,
     name : "Herzlich Willkommen!",
     text : ` 
-      <p>Während du diese Zeilen liest, bist du höchstwahrscheinlich Teil einer Schülergruppe, die gerade an einem Ameisen-Workshop teilnimmt. Vielleicht freust du dich schon auf den Tag/die nächsten Tage. Du bist neugierig darauf, was man mit diesen Ameisen alles machen kann. Schön, dass du da bist!
+      <p class="no-public">Während du diese Zeilen liest, bist du höchstwahrscheinlich Teil einer Schülergruppe, die gerade an einem Ameisen-Workshop teilnimmt. Vielleicht freust du dich schon auf den Tag/die nächsten Tage. Du bist neugierig darauf, was man mit diesen Ameisen alles machen kann. Schön, dass du da bist!
+      </p>
+      
+      <p class="public-only">Das sollte nur auf Public erscheinen!
       </p>
       
       <p> Vielleicht aber denkst du dir auch nur: Was soll das schon wieder? Die Wenigsten kommen hier an und haben eine Vorstellung, was sie erwartet. Genausowenig haben die meisten Menschen eine Vorstellung davon, was es heißt zu programmieren. In einer Zeit, in der wir tagtäglich mit IT in Verbindung stehen, ist das ziemlich schade. Denn dadurch entgeht uns die Chance, unsere Lebenswelt besser zu verstehen. Und es entgeht uns die Chance, diese Welt mitzugestalten.

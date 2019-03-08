@@ -80,6 +80,7 @@ module.exports = function(App) {
       done : req.user.done,
       highlightElement:5,
       newtuts: App.getNewTuts(req.user),
+      isPublic : App.colo.get(req.session.colony).isPublic,
     })
   })
   

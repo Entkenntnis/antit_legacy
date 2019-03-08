@@ -47,6 +47,7 @@ module.exports = function(App) {
         maximum: App.ants.maximumAnts(req.user.level),
         highlightElement: 0,
         newtuts: App.getNewTuts(req.user),
+        colonyInfo : App.colo.get(req.session.colony).description,
       })
     } else
       res.render('landing/main', {
@@ -90,7 +91,6 @@ module.exports = function(App) {
       user : req.user,
       highlightElement:-1,
       newtuts: App.getNewTuts(req.user),
-      colonyInfo : App.colo.get(req.session.colony).description,
       competitionDone : App.colo.get(req.session.colony).competitionDone,
     })
   }))
