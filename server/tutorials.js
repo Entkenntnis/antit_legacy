@@ -6,24 +6,27 @@ module.exports.tutorials = {
       <p class="no-public">Während du diese Zeilen liest, bist du höchstwahrscheinlich Teil einer Schülergruppe, die gerade an einem Ameisen-Workshop teilnimmt. Vielleicht freust du dich schon auf den Tag/die nächsten Tage. Du bist neugierig darauf, was man mit diesen Ameisen alles machen kann. Schön, dass du da bist!
       </p>
       
-      <p class="public-only">Das sollte nur auf Public erscheinen!
+      <p class="no-public"> Vielleicht aber denkst du dir auch nur: Was soll das schon wieder? Die Wenigsten kommen hier an und haben eine Vorstellung, was sie erwartet. Genausowenig haben die meisten Menschen eine Vorstellung davon, was es heißt zu programmieren. In einer Zeit, in der wir tagtäglich mit IT in Verbindung stehen, ist das ziemlich schade. Denn dadurch entgeht uns die Chance, unsere Lebenswelt besser zu verstehen. Und es entgeht uns die Chance, diese Welt mitzugestalten.
       </p>
       
-      <p> Vielleicht aber denkst du dir auch nur: Was soll das schon wieder? Die Wenigsten kommen hier an und haben eine Vorstellung, was sie erwartet. Genausowenig haben die meisten Menschen eine Vorstellung davon, was es heißt zu programmieren. In einer Zeit, in der wir tagtäglich mit IT in Verbindung stehen, ist das ziemlich schade. Denn dadurch entgeht uns die Chance, unsere Lebenswelt besser zu verstehen. Und es entgeht uns die Chance, diese Welt mitzugestalten.
+      <p class="public-only">Herzlichen Glückwunsch, den ersten wichtigen Schritt hast du getan: Du hast AntIT! gefunden und dich auf dieser Seite angemeldet. Damit bist du bereit für dein Abenteuer in die Welt der Informatik!
       </p>
       
-      <p>AntIT! ist mit dem Wunsch entstanden, dir das Programmieren beizubringen. Selbst wenn man am Ende des Workshops kein fertiger Programmierer ist - sollte AntIT! doch einen Einblick geben, was Programmieren bedeutet. Beim Programmieren erlebt man, wie der eigene Code das Verhalten des Computers steuert und verändert. Gleichzeitig ist man auch gezwungen, sich mit der Funktionsweise des Computer selber auseinanderzusetzen. Je besser man den Computer und seine Software versteht, umso besser kann man selber Code schreiben. Du lernst hier nicht nur, wie man Ameisen steuert, sondern gleichzeitig auch, wie dein Code vom Computer ausgeführt wird. Und du wirst das nicht nur theoretisch lernen, sondern du wirst das ganz praktisch ausprobieren können.
+      <p>AntIT! ist mit dem Wunsch entstanden, dir das Programmieren beizubringen. Selbst wenn man am Ende des Workshops kein fertiger Programmierer ist - sollte AntIT! doch einen Einblick geben, was Programmieren bedeutet. Beim Programmieren erlebt man, wie der eigene Code das Verhalten des Computers steuert und verändert. Gleichzeitig ist man auch aufgefordert, sich mit der Funktionsweise des Computer selber auseinanderzusetzen. Je besser man den Computer und seine Software versteht, umso besser kann man selber Code schreiben. Du lernst hier nicht nur, wie man Ameisen steuert, sondern gleichzeitig auch, wie dein Code vom Computer ausgeführt wird. Und du wirst das nicht nur theoretisch lernen, sondern du wirst das ganz praktisch ausprobieren können.
       </p>
       
-      <p>Das wird dich hier erwarten. Und das wird eine Herausforderung sein. Etwas Neues zu lernen ist anstrengend und verbraucht Energie und Aufmerksamkeit. Auf diesem Weg wollen wir dich so gut wie möglich begleiten:
+      <p class="no-public">Das wird dich hier erwarten. Und das wird eine Herausforderung sein. Etwas Neues zu lernen ist anstrengend und verbraucht Energie und Aufmerksamkeit. Auf diesem Weg wollen wir dich so gut wie möglich begleiten:
+      </p>
+      
+      <p class="public-only">Das wird eine Herausforderung sein. Etwas Neues zu lernen ist anstrengend und verbraucht Energie und Aufmerksamkeit. Auf diesem Weg wollen wir dich so gut wie möglich begleiten:
       </p>
       
       <ul>
-        <li>Alle Inhalte des Workshops können vollständig über Tutorials gelernt werden. Du kannst ganz nach deinem Tempo arbeiten. Wenn dich Themen besonders interessieren kannst du dir da mehr Zeit nehmen. Solltest du etwas wieder vergessen haben, kannst du jederzeit auf die vorherigen Tutorials zurückgreifen. Damit liegt die Kontrolle ganz bei dir.
+        <li>Alle Inhalte können vollständig über Tutorials gelernt werden. Du kannst ganz nach deinem Tempo arbeiten. Wenn dich Themen besonders interessieren kannst du dir da mehr Zeit nehmen. Solltest du etwas wieder vergessen haben, kannst du jederzeit auf die vorherigen Tutorials zurückgreifen. Damit liegt die Kontrolle ganz bei dir.
         </li>
         <li>Unmittelbar nach dem Tutorial findest du ein kleines Quiz, mit dem du dich abfragen kannst. Ein Quiz enthält sechs Antwortmöglichkeiten, von denen keine bis alle richtig sein können. Kreuze die richtigen Antworten an. Das Quiz ist weniger als Prüfung gedacht, sondern vielmehr als kleiner "Energizer" zwischendurch. Nach dem Quiz wird auch das Tutorial als fertig markiert.
         </li>
-        <li>Die Inhalte der Workshops können praktisch an Aufgaben ausprobiert werden. Diese knüpfen eng an die erlernten Inhalte an, fordern aber manchmal ein bisschen Umdenken. An den Aufgaben kannst du deinen Lernfortschritt ablesen und sehen, ob du es wirklich verstanden hast.
+        <li>Die Inhalte der Tutorials können praktisch an Aufgaben ausprobiert werden. Diese knüpfen eng an die erlernten Inhalte an, fordern aber manchmal ein bisschen Umdenken. An den Aufgaben kannst du deinen Lernfortschritt ablesen und sehen, ob du es wirklich verstanden hast.
         </li>
         <li>Das Auge programmiert mit: Bei AntIT! haben wir uns bemüht, die Oberfläche und die Simulation möglichst anschaulich zu gestalten. Sind diese Ameisen nicht süß?
         </li>
@@ -36,8 +39,8 @@ module.exports.tutorials = {
       </p>
     `,
     questions : [
-      "Viele Menschen können sich unter Programmieren wenig vorstellen.",
-      "Das Tempo des Workshops ist streng vorgegeben.",
+      "AntIT! möchte dir eine Vorstellung von 'Programmierung' geben.",
+      "Das Tempo ist bei AntIT! streng vorgegeben.",
       "Ameisen haben 6 Beine.",
       "Neues zu lernen geht ganz locker.",
       "Man muss dieses Quiz wie eine Prüfung behandeln.",
@@ -608,7 +611,10 @@ module.exports.tutorials = {
     level : 5,
     name : "Der Ameisenwettbewerb [API]",
     text : `
-      <p>Ein Höhepunkt jedes Workshops ist der Ameisenwettbewerb, der bald stattfinden wird. Auf der Stufe 5 hast du nun Zugriff auf die Kampfarena. Dort kannst du deine Ameisen nochmal ausgiebig optimieren und schließlich gegeneinander antreten lassen.
+      <p class="no-public">Ein Höhepunkt jedes Workshops ist der Ameisenwettbewerb, der bald stattfinden wird. Auf der Stufe 5 hast du nun Zugriff auf die Kampfarena. Dort kannst du deine Ameisen nochmal ausgiebig optimieren und schließlich gegeneinander antreten lassen.
+      </p>
+      
+      <p class="public-only">Auf der Stufe 5 hast du nun Zugriff auf die Kampfarena. Dort kannst du deine Ameisen gegeneinander antreten lassen und dich mit deinen Freunden messen.
       </p>
       
       <p>Für den Wettkampf dürfen und sollen alle Teile der API verwendet werden, die bisher vorgestellt wurden. Dazu gehören die Befehle und Ereignisse, Teamarbeit, Reichweite, Kommunikation und Gift. Gegnerische Ameisen zu vergiften kann empfindlichen Schaden verursachen und bringt für diesen Wettbewerb große Vorteile.
@@ -628,13 +634,13 @@ module.exports.tutorials = {
       </li>
       </ul>
       
-      <p>Der Wettbewerb erstreckt sich über mehrere Runden und die Sieger wird nach Turnierregeln, die an die Anzahl der Teilnehmer angepasst ist, bestimmt.
+      <p class="no-public">Der Wettbewerb erstreckt sich über mehrere Runden und die Sieger wird nach Turnierregeln, die an die Anzahl der Teilnehmer angepasst ist, bestimmt.
       </p>
       
-      <p>Vor dem Wettbewerb seien dir hier noch ein paar neue Funktionen vorgestellt:
+      <p class="no-public">Vor dem Wettbewerb seien dir hier noch ein paar neue Funktionen vorgestellt:
       </p>
       
-      <p>Zwei praktische Helfer stehen wir nun zur Verfügung: Einerseits kannst du dir in der Simulation anzeigen lassen, wo und wie deine Ameisen gestorben sind. Drücke dafür während der Simulation auf die Taste T. Andererseits kannst du ab jetzt deine Ameisen freigeben. Freigegebene Ameisen können von anderen Teilnehmern dieser Kolonie in der Arena gestartet werden. Damit kannst du erste Testrunden spielen und die Stärke deiner Ameisen abschätzen.
+      <p>Zwei praktische Helfer stehen dir nun zur Verfügung: Einerseits kannst du dir in der Simulation anzeigen lassen, wo und wie deine Ameisen gestorben sind. Drücke dafür während der Simulation auf die Taste T. Andererseits kannst du ab jetzt deine Ameisen freigeben. Freigegebene Ameisen können von anderen Teilnehmern dieser Kolonie in der Arena gestartet werden. Damit kannst du erste Testrunden spielen und die Stärke deiner Ameisen abschätzen.
       </p>
       
       <p>Außerdem gibt es die neuen Befehle <code>DreheZuObjekt()</code> und <code>DreheWegVonObjekt()</code>. Diese dienen als Ergänzung zu GeheZuZiel() und sind von der Verwendung her flexibler. Beispielsweise kann man damit programmieren, dass die Ameisen, wenn sie einen Zucker sehen, erstmal 100 Schritte davon weggehen:
@@ -656,7 +662,7 @@ module.exports.tutorials = {
       
       <p><img src="/images/l5_tick.png" class="img-thumbnail"></p>
       
-      <p>Vor der Runde 1000 setzt die Ameise beim Zucker das Limit auf 1000. Danach setzt die Ameise das Limit auf 10.
+      <p>Vor der Runde 1000 setzt die Ameise beim Zucker das Limit auf 3. Danach setzt die Ameise das Limit auf 10.
       </p>
     `,
     questions : [
@@ -1312,11 +1318,24 @@ module.exports.tutorials = {
       <p>Die Programmiersprache, die du hier gelernt hast, heißt "JavaScript". Wenn du dich für weitere Programmiertechniken interessiert: Dafür gibt es im Internet sehr viele Ressourcen, Tutorials und Einführungen.
       </p>
       
-      <p>Schwieriger wird es, gute Aufgaben zu finden, an denen du deine Fähigkeiten üben kannst.
+      <p>Ein Projekt möchte ich besonders vorstellen: <a href="https://phaser.io/">Phaser</a>. Das ist eine Plattform, um Spiele in Javascript zu programmieren. Insgesamt enthält sie sehr viele ausführliche Tutorials und Beispiele und zeigt schön, wie Spiele aufgebaut sind:
       </p>
       
-      <p>TODO: Erstelle hier eine Liste mit Links
+      <p><a href="https://phaser.io/"><img src="http://phaser.io/images/img.png" class="img-thumbnail" width=300></a></p>
+      
+      <hr>
+      
+      <p>Eine gute Übersichtsseite ist außerdem <a href="https://www.einstieg-informatik.de/">Einstieg Informatik</a>. Dort findest du eine große Auswahl an Ressourcen und Links zu vielen verschiedenen Sprachen und Lernumgebungen.
       </p>
+      
+      <p><a href="https://www.einstieg-informatik.de/"><img src="https://informatik.schule.de/img/ei.png" class="img-thumbnail" width=300></a></p>
+      
+      <hr>
+      
+      <p>Und für alle, die sich mehr zur dunklen Seite der Macht zugezogen fühlen, gibt es noch eine Website namens <a href="http://www.hacker.org/">hacker.org</a>...
+      </p>
+      
+      <p><a href="http://www.hacker.org/"><img src="http://www.hacker.org/images/chal.png" class="img-thumbnail"></a></p>
     `,
     noq: true,
     questions : [
