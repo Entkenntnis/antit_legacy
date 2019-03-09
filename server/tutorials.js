@@ -688,7 +688,7 @@ module.exports.tutorials = {
       
       <p><img src="/images/l6_funktion_code.png" class="img-thumbnail"></p>
       
-      <p>Das hier ist ein Ameisenvolk, dass Zahlen quadrieren kann. Ereignisse werden nicht benötigt und können aus dem Code gelöscht werden. In Zeile 3 bis 5 ist die eigentliche Definition unserer Funktion. Begonnen wird mit dem Schlüsselwort <code>function</code>, dahinter folgt der Name der Funktion. In die runden Klammern wird der Name der Eingabe geschrieben. In unserem Fall heißt die Funktion 'quadriere' und die Eingabe hat den Namen 'x'. In Zeile 3 öffnen wir geschweifte Klammern und schließen sie wieder in Zeile 5.
+      <p>Das hier ist ein Ameisenvolk, dass Zahlen quadrieren kann. Ereignisse werden nicht benötigt und können aus dem Code gelöscht werden. In Zeile 3 bis 5 ist die eigentliche Definition unserer Funktion. Begonnen wird mit dem Schlüsselwort <code>function</code>, dahinter folgt der Name der Funktion. In die runden Klammern wird der Name der Eingabe geschrieben. In unserem Fall heißt die Funktion 'quadriere' und die Eingabe hat den Namen 'x'. In Zeile 3 öffnen wir geschweifte Klammern und schließen sie wieder in Zeile 5. Die Eingaben zu einer Funktion heißen Parameter. Du kannst den Namen des Parameters frei auswählen, selbst wenn in der Vorlage einer Aufgabe ein anderer Name vorgeschlagen wird. Wichtig ist nur, dass du innerhalb der Funktion den gleichen Namen nutzt. 
       </p>
       
       <p>Innerhalb der geschweiften Klammern kommt nun der Code für die Berechnung. In unserem Fall ist das recht klar: Wir nehmen die Eingabe und multiplizieren sie mit sich selbst. Das wird in Zeile 4 gemacht. Um zu zeigen, dass das bereits unsere Antwort ist, schreiben wir vor die Rechnung das Schlüsselwort <code>return</code>. Damit weiß die Funktion, dass das ihre Ausgabe ist. Und fertig! Damit haben wir unsere erste Funktion definiert.
@@ -1174,6 +1174,16 @@ module.exports.tutorials = {
       <p><img src="/images/l8_status.png" class="img-thumbnail"></p>
       
       <p>Wenn die Ameise einen Apfel sieht, dann prüft sie, ob sie aktuell einen Zucker trägt. Wenn ja, dann lädt sie diesen ab und wird damit "Ballast" los. Eine Besonderheit hier: 'HatZucker' braucht keinen Operator sondern kann direkt als Bedingung verwendet werden. Das liegt daran, dass die Variable selber bereits einen Wahrheitswert dargestellt, also 'wahr' oder 'falsch' ist.
+      </p>
+      
+      
+      
+      <p>Die Ameise erhält einen Hinweis, dass sie gestorben ist. Das passiert mit dem Ereignis <code>"IstGestorben"</code>. Dieses Ereignis enthält einen Parameter, der die Todesursache angibt. Bei "Wanze" ist die Ameise von einer Wanze getötet worden, bei "Müdigkeit" hat sie ihre Reichweite überschritten und bei "Gift" wurde sie vergiftet:
+      </p>
+      
+      <p><img src="/images/l9_istgestorben.png" class="img-thumbnail"></p>
+      
+      <p>Um die anderen Ameisen zu warnen, kann die Ameise innerhalb dieses Ereignisse keine Nachrichten mehr schicken (denn sie ist ja tot), allerdings kann sie innerhalb des Ereignisse weiterhin auf globale Variablen zugreifen. Dort kann sie z.B. ihre Position vermerken.
       </p>
       
       <p>Desweiteren gibt es ein neues Ereignis mit dem Namen <code>"Tick"</code>. Dieses Ereignis wird <em>jeden</em> Simulationstick für <em>jede</em> Ameise aufgerufen. Das Ereignis findet damit quasi ständig statt. Das kann genutzt werden, um zu ganz bestimmten Zeitpunkten ganz bestimmte Aktionen auszulösen:</p>

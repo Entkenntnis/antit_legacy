@@ -18,8 +18,73 @@
           <h2>FAQ</h2>
           <hr>
           
-          <p><strong>Kann man eine Bedingung für mehrere Teams gleichzeitig schreiben?</strong><br>
-            Ja, z.B. mit InTeam(0,1,2). Diese Bedingung gilt dann für die Teams 0, 1 und 2.
+          <h3>Allgemein</h3>
+          
+          <p><strong>Ich bin Teilnehmer eines Workshops. Kann ich außerhalb des Workshops weiter an meinen Ameisen arbeiten?</strong><br>
+            Ja. Diese Website ist unter <code>ants.arrrg.de</code> öffentlich zugänglich und du kannst jederzeit an deinen Ameisen weiterarbeiten. Es kann allerdings sein, dass nach einigen Monaten dein Account in die Kolonie "Archiv" verschoben wird.
+          </p>
+          
+          <p><strong>Können sich mehrere Personen mit einem Account einloggen?</strong><br>
+            Ja, das ist möglich. Es können sich mehrere Personen mit einem Account gleichzeitig anmelden. Aufpassen müsst ihr nur, wenn beide das gleiche Ameisenvolk bearbeiten. Dann kann es passieren, dass ihr eure Arbeit gegenseitig überschreibt.
+          </p>
+          
+          <h3>Simulation</h3>
+          
+          <p><strong>Woran kann ich erkennen, wo welche Himmelsrichtungen ist?</strong><br>
+            Die Flagge des Ameisenbaus zeigt immer nach Osten.<br>
+            <img src="/images/faq_flagge.png"><br><br>
+          </p>
+          
+          <p><strong>Was bedeutet die Anzeige oben links während der Simulation?</strong><br>
+            <img src="/images/faq_tps.png"><br>
+            Diese Anzeige beschreibt die Simulationsgeschwindigkeit in TPS, Ticks pro Sekunde. Normalerweise läuft die Simulation mit 40 TPS, im Schnelldurchlauf (Taste 3) sind es bis zu 140 TPS. Manche rechenlastigen Ameisen können die Simulation verlangsamen.
+          </p>
+          
+          <p><strong>Hilfe, was mache ich bei einem weißen Bildschirm?</strong><br>
+            <img src="/images/faq_error.png"><br>
+            Keine Panik, das ist ein Hinweis, dass in deinem Code etwas fehlt. Meist geht es um eine fehlende Klammer oder Anführungszeichen. Schaue dir den Code nochmal gründlich durch und beachte, dass alle Klammern, etc. wieder geschlossen werden. Ab Stufe 4 kannst du auch mit dem Syntax-Checker arbeiten.
+          </p>
+          
+          <p><strong>In welchem Abstand erscheinen die Ameisen am Anfang im Bau?</strong><br>
+            Die erste Ameise erscheint bei Tick 30. Jede weitere Ameise erscheint 31 Ticks später, also bei Tick 61, 92, ...
+          </p>
+          
+          <p><strong>Hilfe, meine Ameisen sind alle gestorben!</strong><br>
+            Dann haben die Ameisen vermutlich ihre maximale Reichweite von 3000 Schritten überschritten. Kehre zum Bau zurück, um die Reichweite einer Ameise zurückzusetzen.
+          </p>
+          
+          <p><strong>Kann eine Ameise, die gerade Zucker trägt, einen Apfel tragen?</strong><br>
+            Ja. Sie trägt dann den Zucker und den Apfel gleichzeitig.
+          </p>
+          
+          <p><strong>Kann ich Gift früher erkennen?</strong><br>
+            Nein, die einzige Möglichkeit, Gift zu erkennen besteht darin, dass deine Ameise stirbt.
+          </p>
+          
+          <h3>Programmierung</h3>
+          
+          <p><strong>In welcher Programmiersprache werden die Ameisen programmiert?</strong><br>
+            Die Ameisen unterstützen vollwertiges Javascript, auch die API ist in Javascript entwickelt. Die Syntax ist außerdem sehr ähnlich zu Java - nur gibt es keine Typen.
+          </p>
+          
+          <p><strong>Muss ich wie in Java Semikolons setzen?</strong><br>
+            Du darfst, musst aber nicht. Eine neue Zeile reicht, um Befehle abzugrenzen.
+          </p>
+          
+          <p><strong>Kann ich in einer Abfrage für ein Team mehrere Teamnummern angeben?</strong><br>
+            Ja, z.B. mit <code>InTeam(0,1,2)</code>. Der folgende Block wird dann für die Teams 0, 1 und 2 ausgeführt.
+          </p>
+          
+          <p><strong>Wird die Reichweite automatisch zurückgesetzt, wenn die Ameise durch den Bau läuft?</strong><br>
+            Nein. Die Reichweite wird nur zurückgesetzt, wenn die Ameise mit dem Befehl <code>GeheZuBau()</code> zurückgeschickt wurde.
+          </p>
+          
+          <p><strong>Muss ich wie in Java Semikolons setzen?</strong><br>
+            Du darfst, musst aber nicht. Eine neue Zeile reicht, um Befehle abzugrenzen.
+          </p>
+          
+          <p><strong>Sind auf Stufe 5 für den Wettbewerb bereits alle Techniken bekannt?</strong><br>
+            Nein. Es gibt noch einige fortgeschrittenere Techniken, die du auf Stufe 9 kennenlernen wirst.
           </p>
           
         </div>

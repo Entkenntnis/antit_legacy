@@ -41,14 +41,15 @@ module.exports = function(App) {
   function canUpgrade(user, col) {
     if (user.level < 9 && exIndex[user.level]) {
       if (App.colo.get(col).competitionDone === false && user.level == 5)
-        return false
+        return 0
       var count = 0
       exIndex[user.level].forEach(function(l){
         if (user.solved.indexOf(parseInt(l)) >= 0) count++
       })
-      if (count * 2 >= exIndex[user.level].length) return true
+      if (count * 2 >= exIndex[user.level].length) return 2
+      if ((user.level == 4 || user.level == 5) && count > 0) return 1
     }
-    return false
+    return 0
   }
   
   App.getNewTuts = function(user) {
@@ -147,7 +148,7 @@ module.exports = function(App) {
   }))
   
   App.express.get('/upgrade', App.users.auth, co.wrap(function*(req, res, next) {
-    if (canUpgrade(req.user, req.session.colony)) {
+    if (canUpgrade(req.user, req.session.colony) > 0) {
       yield App.colo.getCol(req.session.colony).update({_id:req.user._id},
         { $set: {
           level: ++req.user.level}})

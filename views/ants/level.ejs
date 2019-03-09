@@ -80,8 +80,10 @@
 	          <% if (user.level < 9) {%>
 	            <div class="card">
                 <div class="card-body">
-                  <% if (!upgrade) { %>
-                    <p>Voraussetzungen für die nächste Stufe:<br>Bearbeite <%=Math.ceil(exIndex[user.level].length/2)%> Aufgaben von Stufe <%=user.level%>
+                  <% if (upgrade != 2) { %>
+                    <p>Voraussetzungen für die nächste Stufe:<br>
+                    
+                    Bearbeite <%=user.level == 4 || user.level == 5 ? "1-":"" %><%=Math.ceil(exIndex[user.level].length/2)%> Aufgaben von Stufe <%=user.level%>
                     
                     <% if (user.level == 5 && !competitionDone) { %>
                       <br>Nimm am Wettbewerb teil.
@@ -89,7 +91,21 @@
                     
                     </p>
                   <% } %>
-                  <a href="/upgrade" class="btn btn-sm  btn-warning <%=upgrade?'':'disabled'%>">Stufe aufsteigen</a>
+                  <a href="/upgrade" class="btn btn-sm  btn-warning <%=upgrade==2?'':'disabled'%>">Stufe aufsteigen</a>
+                  
+                  <% let doneLevel4 = user.solved.filter(x => x >= 40 && x < 50).length %>
+                  <% if (user.level == 4 && doneLevel4 > 0 && doneLevel4 < 3) { %>
+                    <br><br>
+                    Beim ersten Durchlauf kannst du diese Stufe <a href="/upgrade">überspringen</a>.
+                  <% } %>
+                  
+                  <% let doneLevel5 = user.solved.filter(x => x >= 50 && x < 60).length %>
+                  <% if (user.level == 5 && doneLevel5 > 0 && doneLevel5 < 2) { %>
+                    <br><br>
+                    Beim ersten Durchlauf kannst du diese Stufe <a href="/upgrade">überspringen</a>.
+                  <% } %>
+                  
+                  
                 </div>
               </div>
 	          <% } %>
