@@ -603,6 +603,7 @@
         })
       }
       deadinfovisible = !deadinfovisible
+      View.Pulse.getBus().emit('redraw')
     })
     
   };
