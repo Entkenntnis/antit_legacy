@@ -303,7 +303,7 @@ module.exports.exercises = {
       <p>Im Supermarkt des Ameisendorfs wird deine Hilfe benötigt! Hier kaufen die Bewohner ihren Zuckervorrat ein und die Kassierer berechnen für jeden Kunden den Preis - aktuell noch per Hand. Vielleicht kann man das mit einem Computerprogramm leichter lösen?
       </p>
       
-      <p>Der Zucker wird pro Kilogramm verkauft. Ein Kilogramm kostet 9,90€. Um den Zucker zu transportieren gibt es einen Zuckerkorb, den man für 2,99€ dazu kaufst. In folgender Vorlage findest du das Grundgerüst für die Funktion:
+      <p>Der Zucker wird pro Kilogramm verkauft. Ein Kilogramm kostet 9,90€. Um den Zucker zu transportieren gibt es einen Zuckerkorb, den man für 2,99€ dazu kauft. In folgender Vorlage findest du das Grundgerüst für die Funktion:
       </p>
       
       <p><img class="img-thumbnail" src="/images/l6_a1.png"></p>
@@ -314,6 +314,9 @@ module.exports.exercises = {
       <p><img class="img-thumbnail" src="/images/l6_a1_bsp1.png"></p>
       
       <p><img class="img-thumbnail" src="/images/l6_a1_bsp2.png"></p>
+      
+      <p>Programme arbeiten normalerweise nur mit Zahlen ohne Einheiten. Daher brauchst du beim Programmieren der Aufgaben hier auch keine Einheiten verwenden. Der Zahlenwert an sich genügt. Entsprechend sind auch in den Diagrammen die Einheiten eingeklammert.
+      </p>
     `,
     level : 6,
     hint: "Dezimalzahlen werden im Code mit Punkt abgetrennt. Statt 2,99 schreibt man 2.99",
@@ -325,7 +328,7 @@ module.exports.exercises = {
       <p>Als nächstes gibt es im Sekretariat einige Aufgaben zu erledigen. Einige Schülerinnen und Schüler sollen eine Benachrichtigung bekommen, die zum Beispiel so aussieht:
       </p>
       
-      <p><code style="color:brown">Hallo Peter, komm bitte ins Seketariat und hole dein Formular ab.</code></p>
+      <p><code style="color:brown">Hallo Peter, komm bitte ins Sekretariat und hole dein Formular ab.</code></p>
       </p>
       
       <p>Da kannst du mit einem Programm helfen. Das Grundgerüst enthält wieder eine Funktion. Diese Funktion erhält als Parameter den Namen des Schülers. Erzeuge daraus die entsprechende Nachricht:
@@ -346,7 +349,7 @@ module.exports.exercises = {
   65 : {
     name : "Rabattaktion",
     description : `
-      <p>Der Supermarkt braucht wieder deine Hilfe! Diesmal geht es um eine Rabattaktion für Äpfel. Es gibt zwei Sorten von Äpfe, rote und grüne. Die roten Äpfel kosten 7,90€ das Kilogramm, die grünen Äpfel kosten 6,90€. Der Korb dazu kostet 2,50€. Wer beide Sorten zusammen kauft, bekommt auf den gesamten Einkaufspreis einen Rabatt von 20%!
+      <p>Der Supermarkt braucht wieder deine Hilfe! Diesmal geht es um eine Rabattaktion für Äpfel. Es gibt zwei Sorten von Äpfeln, rote und grüne. Die roten Äpfel kosten 7,90€ das Kilogramm, die grünen Äpfel kosten 6,90€. Der Korb dazu kostet 2,50€. Außerdem ist heute der Tag des Apfels, weshalb jeder Kunde auf den gesamten Apfeleinkauf einen Rabatt von 20% erhält!
       </p>
       
       <p>Ergänze in dieser Vorlage die dafür notwendige Berechnung:
@@ -407,7 +410,7 @@ module.exports.exercises = {
       
       <p><img class="img-thumbnail" src="/images/l6_a5_.png"></p>
       
-      <p>Der Name <code style="color:blue">f</code> erinnert an eine mathematische Funktion. Der Parameter <code style="color:blue">x</code> entspricht einer Zahl der linken Spalte. Das Ergebnis der Funktion soll die Zahl in der rechten Spalte. Das sieht also so aus:
+      <p>Der Name <code style="color:blue">f</code> erinnert an eine mathematische Funktion. Der Parameter <code style="color:blue">x</code> entspricht einer Zahl der linken Spalte. Das Ergebnis der Funktion soll die Zahl in der rechten Spalte sein. Das sieht dann so aus:
       </p>
       
       <p><img class="img-thumbnail" src="/images/l6_a5_bsp.png"></p>
@@ -419,7 +422,7 @@ module.exports.exercises = {
   69 : {
     name : "Messwerte",
     description : `
-      <p>Die Ameisen betreiben eine Wetterstation und sie wollen die Messerwerte auf einem Display im Dorfzentrum anzeigen lassen. So sollte das aussehen:
+      <p>Die Ameisen betreiben eine Wetterstation und sie wollen die Messwerte auf einem Display im Dorfzentrum anzeigen lassen. So sollte das aussehen:
       </p>
       
       <p><img class="img-thumbnail" src="/images/l6_a6_lcd.png" width="400"></p>

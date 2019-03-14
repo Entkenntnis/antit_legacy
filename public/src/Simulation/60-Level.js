@@ -1000,7 +1000,7 @@
       addTest("Leerer Einkauf", 0)
       for (var i = 1; i <= 4; i++) {
         var number = Math.floor(Math.random()*100)
-        addTest("Zufallsteinkauf " + i + " mit", number)
+        addTest("Zufallseinkauf " + i + " mit", number)
       }
     }),
  
