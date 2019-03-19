@@ -17,6 +17,7 @@ function prepareAnts(users, myid, addSuffix) {
         if (w.published) {
           w.publicName = "@" + v.displayName + "/" + w.name
           w._id = w.antid
+          w.username = v.username
           result.globals.push(w)
         }
       })

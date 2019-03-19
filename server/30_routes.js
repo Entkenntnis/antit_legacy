@@ -74,6 +74,13 @@ module.exports = function(App) {
     }
     let demos = require('./demos.js').demos.filter(d => d.level <= req.user.level)
     
+    // Freunde beachten!
+    if (App.colo.get(req.session.colony).isPublic && req.user.friends && !req.user.superuser) {
+      result.globals = result.globals.filter(x => {
+        return req.user.friends.indexOf(x.username) >= 0
+      })
+    }
+    
     res.render('ants/wettbewerb', {
       user: req.user,
       ants: result.ants,
@@ -81,8 +88,35 @@ module.exports = function(App) {
       demos: demos,
       highlightElement: 4,
       newtuts: App.getNewTuts(req.user),
-      publicServer: App.colo.get(req.session.colony).public,
+      publicServer: App.colo.get(req.session.colony).isPublic,
+      friendFlash: req.flash('friends').join('<br>')
     })
+  }))
+  
+  // Freundes-Management ...
+  App.express.get('/unfriend', App.users.auth, co.wrap(function*(req, res){
+    if (req.user.friends && req.user.friends.indexOf(req.query.name) >= 0) {
+      yield App.colo.getCol(req.session.colony).update({_id:req.user._id},
+                  { $pull: {
+                    friends: req.query.name}})
+    }
+    return res.redirect('/wettbewerb')
+  }))
+  
+  App.express.get('/addfriend', App.users.auth, co.wrap(function*(req, res){
+    if (req.query.friendname.length > 0) {
+      let users = yield App.colo.getCol(req.session.colony).find({username:req.query.friendname}, {_id:1})
+      if (users.length == 1) {
+        yield App.colo.getCol(req.session.colony).update({_id:req.user._id},
+                  { $addToSet: {
+                    friends: req.query.friendname}})
+      } else {
+        req.flash('friends', "Name konnte nicht gefunden werden!")
+      }
+    } else {
+      req.flash('friends', "Bitte Name eingeben!")
+    }
+    return res.redirect('/wettbewerb')
   }))
 
 

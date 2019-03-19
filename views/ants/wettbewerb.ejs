@@ -107,6 +107,53 @@
           </div>
           </form>
           
+          <% if (publicServer && !user.superuser) { %>
+            <% user.friends.sort() %>
+            <br><br><br>
+            <h3>Freundesliste</h3>
+            <p>Wenn deine Freunde ihre Ameisen freigeben, kannst du diese in deiner Arena auswählen und starten. Damit deine Freunde gegen deine Ameisen spielen können, müssen sie deinen Namen zu ihrer Freundesliste hinzufügen.
+            </p>
+            <div class="row">
+              <div class="col-md-3">
+                <p>Dein Name: "<strong><%=user.username%></strong>"</p>
+              </div>
+              <div class="col-md-4">
+                <p>Verknüpfte Freunde:
+                  <ul>
+                    <% for (let i = 0; i < user.friends.length; i++) { %>
+                      <li><%=user.friends[i]%> [<a href="#" onclick="unfriend('<%=user.friends[i]%>');return false;">x</a>]
+                    <% } %>
+                  </ul>
+                </p>
+              </div>
+              
+              <script>
+                function unfriend(name) {
+                  var result = confirm(name + " aus der Freundesliste entfernen?")
+                  if (result) {
+                    window.location.href = "/unfriend?name=" + encodeURIComponent(name)
+                  }
+                }
+              </script>
+              <div class="col-md-5">
+                <% if (friendFlash) { %>
+                  <div class="alert alert-warning">
+                    <p><%=friendFlash%></p>
+                  </div>
+                <% } %>
+                <p>Neuen Freund hinzufügen:<br>
+                
+                  <form action="addfriend" methode="get">
+                    <label>Name: <input type="text" name="friendname"></label><br>
+                    <input type="submit" value="Hinzufügen">
+                  </form>
+                </p>
+              </div>
+            </div>
+            
+            
+          <% } %>
+          
           <% if (user.level >= 7 && user.superuser) { %>
             <div style="height:50px"></div>
             <hr>
