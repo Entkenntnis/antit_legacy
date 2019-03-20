@@ -142,5 +142,27 @@ module.exports = function(App) {
       highlightElement:-1,
     })
   }))
+  
+  App.express.get('/register', App.csurf, co.wrap(function*(req, res) {
+    let col = App.colo.getCol("public")
+    if (!col)
+      return res.redirect('/')
+    // limit checken
+    let users = yield col.find({},  {"_id":1})
+    let noregister = false
+    if (App.colo.get("public").limit > 0 && users.length >= App.colo.get("public").limit) {
+      req.flash('landing/register', "Fehler: Server hat Benutzerlimit erreicht.")
+      noregister = true
+    }
+    res.render('landing/register', {req, noregister})
+  }))
+  
+  App.express.post('/register', App.csurf, co.wrap(function*(req, res){
+    let col = App.colo.getCol("public")
+    if (!col)
+      return res.redirect('/')
+    yield App.users.register(req, col)
+    res.render('landing/register', {req, noregister:false})
+  }))
 
 }

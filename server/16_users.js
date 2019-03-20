@@ -36,10 +36,49 @@ module.exports = function(App) {
       res.redirect('/')
   }
   
+  function* register(req, col) {
+    // ein neuer Benutzer möchte sich registrieren
+    let uname = req.body.username
+    let pw1 = req.body.password1
+    let pw2 = req.body.password2
+    if (uname.length < 3) {
+      return req.flash('landing/register', "Fehler: Benutzername zu kurz!")
+    }
+    let res = yield col.find({username:uname}, {"_id":1})
+    if (res.length > 0) {
+      return req.flash('landing/register', "Fehler: Benutzername bereits vergeben!")
+    }
+    if (pw1.length == 0 || pw2.length == 0) {
+      return req.flash('landing/register', "Fehler: Bitte Passwort eingeben!")
+    }
+    
+    if (pw1.length < 4 || pw2.length < 4) {
+      req.body.password1 = req.body.password2 = ""
+      return req.flash('landing/register', "Fehler: Passwort zu kurz!")
+    }
+    if (pw1 != pw2) {
+      req.body.password1 = req.body.password2 = ""
+      return req.flash('landing/register', "Fehler: Passwörter stimmen nicht überein!")
+    }
+    yield col.insert({
+        username: uname,
+        displayName: uname,
+        password: pw1,
+        superuser: false,
+        ants:[],
+        level:1,
+        done:[],
+        solved:[],
+        friends:[],
+      })
+    req.flash('landing/register', "Herzlichen Glückwunsch, die Registrierung war erfolgreich!")
+  }
+  
   App.users = {
     login: login,
     logout: logout,
     auth: normalAuthMiddleware,
+    register: co.wrap(register),
   }
   
   // load user for every request

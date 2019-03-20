@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <% include ../include/commonHead %>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <a href="/"><div class="jumbotron" style="background-image: url(/deco/startseite.png);background-position: center top;background-repeat:no-repeat">
+      </div></a>
+	    
+	    <br><br>
+	    <div class = "row justify-content-center">
+        <div class="col-sm-12" style="max-width:550px">
+        
+          <%
+          
+            let csrf = req.csrfToken()
+            let flashes = req.flash('landing/register').join("<br>")
+            
+            let isDone = flashes.indexOf('Herz') >= 0
+            let isWarning = flashes.indexOf('Fehler') >= 0
+          
+          %>
+        
+          <h2>Registrierung</h2>
+          <br>
+          
+          <% if (isDone) { %>
+          
+          <div class="alert alert-success">
+            <%=flashes%>
+          </div>
+          
+          <p>Weiter zur <a href="/login/public">Anmeldung</a>
+          </p>
+          
+          <% } else { %>
+          
+            <% if (isWarning) { %>
+              <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <%=flashes%>
+              </div>
+            <% } %>
+            
+            <% if (!noregister) { %>
+          
+            <form method="post">
+              <fieldset>
+                <div class="form-group">
+                  <label for="usernameInput">Benutzername</label>
+                  <input type="text" class="form-control" name="username" id="usernameInput" aria-describedby="usernameHelp" placeholder="Name eingeben" value="<%=req.body.username%>">
+                  <small id="usernameHelp" class="form-text text-muted">Dein Benutzername besteht aus mind. 3 Zeichen.</small>
+                </div>
+                <div class="form-group">
+                  <label for="password1">Passwort</label>
+                  <input type="password" name="password1" class="form-control" id="password1" placeholder="Passwort" value="<%=req.body.password1%>">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" name="password2" id="password2" placeholder="Passwort wiederholen" value="<%=req.body.password2%>">
+                </div>
+                <p>Du hast die Datenschutzerklärung gelesen und erklärst dich damit einverstanden.
+                </p>
+                <input type="hidden" name="_csrf" value="<%=csrf%>">
+                <button type="submit" class="btn btn-primary">Abschicken</button>
+              </fieldset>
+            </form>
+            
+            <% } %>
+          
+          <% } %>
+          
+        </div>
+      </div>
+      
+	    
+      
+      <div style="height:300px"></div>
+    </div>
+  </body>
+</html>
+ 
