@@ -49,10 +49,12 @@ module.exports = function(App) {
         newtuts: App.getNewTuts(req.user),
         colonyInfo : App.colo.get(req.session.colony).description,
       })
-    } else
-      res.render('landing/main', {
+    } else {
+      let col = App.colo.getCol("public")
+      res.render(col?'landing/main2':'landing/main', {
         colonies : App.colo.all()
       })
+    }
   }))
 
   App.express.get("/logout", App.users.auth, co.wrap(function*(req, res) {

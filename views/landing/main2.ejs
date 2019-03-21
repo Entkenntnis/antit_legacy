@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <% include ../include/commonHead %>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <a href="/"><div class="jumbotron" style="background-image: url(/deco/startseite.png);background-position: center top;background-repeat:no-repeat">
+      </div></a>
+	    
+	    <br><br>
+	    
+	    <div class="row">
+        <div class="col-md-4">
+          <h2>Hast du schon einen Account?</h2>
+          <p>Schön, dass du wieder da bist!</p>
+          <p><a class="btn btn-primary" href="/login/public">Login</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2>Neu hier? Bereit für ein Abenteuer?</h2>
+          <p>Erstelle dir einen neuen Account und lege los:</p>
+          <p><a class="btn btn-success" href="/register">Registrierung</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2>Aktuelle Kolonien</h2>
+      
+          <ul class="list-group" style="max-width:350px">
+          <% for(var i = 0; i < colonies.length; i++) { %>
+            <% if (!colonies[i].active) continue %>
+            <li class="list-group-item py-2"><a href="/login/<%=colonies[i].colonyName%>"><%=colonies[i].description%></a></li>
+          <% } %>
+          </ul>
+        </div>
+	    </div>
+	    
+      
+      <div style="height:5rem"></div>
+	    
+      <h2>Bringe die Ameisen in Aktion</h2>
+	  
+      <img class="img-thumbnail" src="/images/landing_img.png">
+      
+      <div style="height:13rem"></div>
+      
+      <h2>Schreibe Code</h2>
+      
+      <img class="img-thumbnail" src="/images/landing_code.png">
+      
+      <div style="height:13rem"></div>
+      
+      <h2>Lerne Schritt für Schritt</h2>
+      
+      <img class="img-thumbnail" src="/images/landing_tut.png">
+      
+      <div style="height:13rem"></div>
+      
+      <h2>Optimal für Klassen und Gruppen</h2>
+      
+      <img class="img-thumbnail" src="/images/landing_overview.png">
+      
+      <div style="height:3rem"></div>
+      
+      <div style="height:13rem"></div>
+      
+      <h2>Programmiersprache: JavaScript</h2>
+      
+      <h2>Empfohlenes Alter: ab 8. Jahrgangsstufe</h2>
+      
+      <h2>Keine Vorkenntnisse notwendig</h2>
+      
+      <div style="height:13rem"></div>
+      
+      <p>Version April 2019 BETA
+      </p>
+        
+      <div style="height:300px"></div>
+    </div>
+  </body>
+</html>
+ 
