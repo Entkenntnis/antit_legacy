@@ -10,15 +10,16 @@
   "author": "David Li <entkenntnis@gmx.net>",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.13.3",
     "co": "^4.6.0",
     "connect-flash": "^0.1.1",
+    "connect-gzip-static": "^2.1.1",
     "csurf": "^1.9.0",
     "ejs": "^2.3.3",
     "express": "^4.16.2",
     "express-session": "^1.15.5",
     "mongodb": "^2.2.9",
-    "monk": "^6.0.3",
-    "connect-gzip-static": "^2.1.1"
+    "monk": "^6.0.3"
   }
 }

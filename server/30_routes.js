@@ -166,5 +166,13 @@ module.exports = function(App) {
     yield App.users.register(req, col)
     res.render('landing/register', {req, noregister:false})
   }))
+  
+  App.express.get('/datenschutz', (req, res) => {
+    res.render('landing/datenschutz', {})
+  })
+  
+  App.express.get('/kontakt', (req, res) => {
+    res.render('landing/kontakt', {post:App.config.post,mail:App.config.mail})
+  })
 
 }

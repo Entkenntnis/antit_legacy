@@ -2,6 +2,7 @@
 // stellt Funktionen bereit, um Benutzerdaten zu verwalten
 
 const co = require('co')
+const bcrypt = require('bcryptjs');
 
 module.exports = function(App) {
   
@@ -9,15 +10,31 @@ module.exports = function(App) {
     return co(function*(){
       var col = App.colo.getCol(colony)
       if (col) {
-        var users = yield col.find({
-          username: uname,
-          password: pwd,
-        }, {ants:false})
-        if (users && users.length == 1) {
-          var user = users[0]
-          req.session.loggedIn = true
-          req.session.userid = user._id
-          req.session.colony = colony
+        if (colony == "public") {
+          // Spezialfall für öffentlich
+          var users = yield col.find({
+            username: uname
+          }, {ants:false})
+          if (users && users.length == 1) {
+            var user = users[0]
+            let success = yield bcrypt.compare(pwd, user.password)
+            if (success) {
+              req.session.loggedIn = true
+              req.session.userid = user._id
+              req.session.colony = colony
+            }
+          }
+        } else {
+          var users = yield col.find({
+            username: uname,
+            password: pwd,
+          }, {ants:false})
+          if (users && users.length == 1) {
+            var user = users[0]
+            req.session.loggedIn = true
+            req.session.userid = user._id
+            req.session.colony = colony
+          }
         }
       }
     })
@@ -60,10 +77,11 @@ module.exports = function(App) {
       req.body.password1 = req.body.password2 = ""
       return req.flash('landing/register', "Fehler: Passwörter stimmen nicht überein!")
     }
+    let pw = yield bcrypt.hash(pw1, 8)
     yield col.insert({
         username: uname,
         displayName: uname,
-        password: pw1,
+        password: pw,
         superuser: false,
         ants:[],
         level:1,
