@@ -1012,7 +1012,7 @@
         test.addTest({
           title:title + " " + name,
           description:"Erzeuge Nachricht an " + name,
-          expected: "Hallo " + name + ", komm bitte ins Seketariat und hole dein Formular ab.",
+          expected: "Hallo " + name + ", komm bitte ins Sekretariat.",
           userFunc:userFunc,
           params:[name]
         })

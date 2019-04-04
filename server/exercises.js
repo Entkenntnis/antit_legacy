@@ -328,7 +328,7 @@ module.exports.exercises = {
       <p>Als nächstes gibt es im Sekretariat einige Aufgaben zu erledigen. Einige Schülerinnen und Schüler sollen eine Benachrichtigung bekommen, die zum Beispiel so aussieht:
       </p>
       
-      <p><code style="color:brown">Hallo Peter, komm bitte ins Sekretariat und hole dein Formular ab.</code></p>
+      <p><code style="color:brown">Hallo Peter, komm bitte ins Sekretariat.</code></p>
       </p>
       
       <p>Da kannst du mit einem Programm helfen. Das Grundgerüst enthält wieder eine Funktion. Diese Funktion erhält als Parameter den Namen des Schülers. Erzeuge daraus die entsprechende Nachricht:
