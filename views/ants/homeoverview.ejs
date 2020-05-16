@@ -5,7 +5,7 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="jumbotron" style="background-image: url(/deco/startseite.png);background-position: center top;background-repeat:no-repeat">
+      <div class="jumbotron" style="background-image: url(deco/startseite.png);background-position: center top;background-repeat:no-repeat">
       </div>
 	
 	    <% include menu %>
@@ -21,13 +21,13 @@
           <%if (user.superuser) {%>
             <br><p>[Administrator]</p>
             
-            <a href="/users" class="btn btn-sm btn-outline-success">Benutzerverwaltung</a>
-            <a href="/stats" class="btn btn-sm btn-outline-primary">Statistik</a>
-            <a href="/overview" class="btn btn-sm btn-outline-primary">Fortschritt</a>
+            <a href="users" class="btn btn-sm btn-outline-success">Benutzerverwaltung</a>
+            <a href="stats" class="btn btn-sm btn-outline-primary">Statistik</a>
+            <a href="overview" class="btn btn-sm btn-outline-primary">Fortschritt</a>
             <% if (competitionDone) { %>
-              <a href="/competitionUndone"  class="btn btn-sm btn-outline-warning">Wettbewerb zurückschalten (aktuell frei)</a>
+              <a href="competitionUndone"  class="btn btn-sm btn-outline-warning">Wettbewerb zurückschalten (aktuell frei)</a>
             <% } else { %>
-              <a href="/competitionDone"  class="btn btn-sm btn-outline-warning">Wettbewerb fertigschalten (aktuell gesperrt)</a>
+              <a href="competitionDone"  class="btn btn-sm btn-outline-warning">Wettbewerb fertigschalten (aktuell gesperrt)</a>
             <% } %>
           <% } // endif superuser %>
         </div>

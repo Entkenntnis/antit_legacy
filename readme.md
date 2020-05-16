@@ -19,3 +19,5 @@ npm start
 
 
 Als nächstes kann man sich über /root auf den Serveradminbereich einloggen. Das Passwort entspricht dem Eintrag "managerPwd" in der config.js. Damit kann dann eine neue Kolonie und darauf ein neuer Admin angelegt werden.
+
+Falls der Server in einem Unterverzeichnis verwendet wird, dann muss "baseUrl" angegeben werden, z.B. "antit" (bitte kein Slash am Schluss)

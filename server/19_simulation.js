@@ -120,7 +120,7 @@ module.exports = function(App) {
       seed:seed,
       repeat:repeat,
       harmony: harmony,
-      prefix:'/wettbewerb',
+      prefix:'wettbewerb',
       devMode:req.user.level == 10,
       fightMode:false,
       level:NaN,

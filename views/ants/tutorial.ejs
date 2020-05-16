@@ -16,7 +16,7 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="jumbotron" style="background-image: url(/deco/tutorials.png);background-position: right top;background-repeat:no-repeat"><!--<h1>Tutorials</h1><p>Lerne, wie man mit den Ameisen umgeht.</p>-->
+      <div class="jumbotron" style="background-image: url(deco/tutorials.png);background-position: right top;background-repeat:no-repeat"><!--<h1>Tutorials</h1><p>Lerne, wie man mit den Ameisen umgeht.</p>-->
 	    </div>
 	    
 	    <% include menu %>
@@ -29,7 +29,7 @@
         <div class = "row justify-content-center">
           <div class="col-sm-12" style="max-width:850px">
             <p class="text-right my-2">
-              <a href="/abstract">Inhaltsübersicht</a> / <a href="/info">FAQ</a
+              <a href="abstract">Inhaltsübersicht</a> / <a href="info">FAQ</a
             </p>
             <% for (var i = 1; i <= user.level; i++) { %>
               <ul class="list-group">
@@ -37,7 +37,7 @@
                 <li class="list-group-item py-2">
                   <div class="d-flex">
                     <div>
-                      <a href="/tutorial?id=<%=index[i][j]%>"><%=tuts[index[i][j]].name%></a>
+                      <a href="tutorial?id=<%=index[i][j]%>"><%=tuts[index[i][j]].name%></a>
                     </div>
                     <% if (done.indexOf(parseInt(index[i][j])) < 0 && !tuts[index[i][j]].noq) { %>
                       <div class="ml-auto"><span class="badge badge-info" style="background-color:#9954bb">neu</span></div>
@@ -86,13 +86,13 @@
                   for (var i = 0; i < <%=t.questions.length%>; i++) {
                     answer.push(document.getElementById("question" + i).checked)
                   }
-                  var link = "/tutorialcheck?data=" + JSON.stringify(answer) + "&id=<%=id%>"
+                  var link = "tutorialcheck?data=" + JSON.stringify(answer) + "&id=<%=id%>"
                   request.open("GET", link);
                   request.addEventListener('load', function(event) {
                      if (request.status >= 200 && request.status < 300) {
                         if (request.responseText == "ok") {
                           alert("Glückwunsch, die Antwort ist richtig!")
-                          window.location = "/tutorial"
+                          window.location = "tutorial"
                         } else {
                           alert("Die Antwort ist falsch.")
                         }

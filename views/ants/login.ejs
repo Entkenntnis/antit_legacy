@@ -5,7 +5,7 @@
   </head>
   <body>
 
-    <div class="container-fluid"  style="background-image: url(/deco/login2.png);background-position: center top;background-repeat:no-repeat">
+    <div class="container-fluid"  style="background-image: url(deco/login2.png);background-position: center top;background-repeat:no-repeat">
     
       <div style="height:194px"></div>
       
@@ -25,14 +25,14 @@
           </div>
           <div class="card-body">
             <p><strong><%=description%></strong></p>
-            <form action="/login/<%=colony%>" method="post">
+            <form action="login/<%=colony%>" method="post">
               <div class="form-group">
                 <label for="startup" class="control-label">Benutzername:</label>
                 <input id="startup" type="text" class="form-control" name="username"/><br>
                 <label for="pw" class="control-label">Passwort:</label>
                 <input type="password" id="pw" class="form-control" name="password"/><br>
                 <div class="d-flex">
-                  <div><a href="/" class="btn btn-outline-primary">zurück</a></div>
+                  <div><a href="" class="btn btn-outline-primary">zurück</a></div>
                   <div class="ml-auto"><input type="submit" value="Anmelden" class="btn btn-primary"/></div>
                 </div>
                 <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>

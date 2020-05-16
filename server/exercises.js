@@ -64,10 +64,10 @@ module.exports.exercises = {
   23 : {
     name : "Schneller in Teams",
     description : `
-      <p>Auf dem Spielfeld befinden sich wieder vier Nahrungsmittel. Diese sollen eingesammelt werden. Wenn die Ameisen sich aufteilen, geht alles viel schnellern. Nutze dafür folgende <a href="/txt/l2_teams.txt">Vorlage</a>:
+      <p>Auf dem Spielfeld befinden sich wieder vier Nahrungsmittel. Diese sollen eingesammelt werden. Wenn die Ameisen sich aufteilen, geht alles viel schnellern. Nutze dafür folgende <a href="txt/l2_teams.txt">Vorlage</a>:
       </p>
       
-      <p><img src="/images/l2_teams.png"></p>
+      <p><img src="images/l2_teams.png"></p>
       
       <p>Klicke auf den obigen Link, um die Vorlage zu kopieren. Ergänze die weiteren bedingten Anweisungen für die Teams. Passe die Befehle so an, dass die Ameisen die Nahrungsmittel einsammeln.
       </p>
@@ -79,10 +79,10 @@ module.exports.exercises = {
   25 : {
     name : "Labyrinth",
     description : `
-      <p>Zwei Zuckerhaufen sind in einem Labyrinth aus Wanzen versteckt. Bilde zwei Teams und sammle den Zucker ein, bevor die Zeit abläuft. Du kannst folgende <a href="/txt/l2_labyrinth.txt">Vorlage</a> verwenden:
+      <p>Zwei Zuckerhaufen sind in einem Labyrinth aus Wanzen versteckt. Bilde zwei Teams und sammle den Zucker ein, bevor die Zeit abläuft. Du kannst folgende <a href="txt/l2_labyrinth.txt">Vorlage</a> verwenden:
       </p>
       
-      <p><img src="/images/l2_labyrinth.png" class="img-thumbnail"></p>
+      <p><img src="images/l2_labyrinth.png" class="img-thumbnail"></p>
       
       <p>In Zeile 5 bis 13 werden zwei Hilfsfunktionen definiert. Der neue Befehl <code>rechts</code> dreht die Ameise um 90 Grad nach rechts und geht 50 Schritte, der Befehl <code>links</code> tut das entsprechende nach links. Diese können wie vorgegebene Befehle verwendet werden, siehe Zeile 23 bis 25. Vergesse die Klammern nicht.
       </p>
@@ -306,14 +306,14 @@ module.exports.exercises = {
       <p>Der Zucker wird pro Kilogramm verkauft. Ein Kilogramm kostet 9,90€. Um den Zucker zu transportieren gibt es einen Zuckerkorb, den man für 2,99€ dazu kauft. In folgender Vorlage findest du das Grundgerüst für die Funktion:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a1.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a1.png"></p>
       
       <p>Der Parameter <code style="color:blue">menge</code> gibt die Einwaage des Kunden in Kilogramm an. Berechne daraus den Preis in Euro und gebe ihn zurück. Du kannst annehmen, dass jeder Kunde einen Zuckerkorb dazukauft. Hier sind zwei Beispiele:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a1_bsp1.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a1_bsp1.png"></p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a1_bsp2.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a1_bsp2.png"></p>
       
       <p>Programme arbeiten normalerweise nur mit Zahlen ohne Einheiten. Daher brauchst du beim Programmieren der Aufgaben hier auch keine Einheiten verwenden. Der Zahlenwert an sich genügt. Entsprechend sind auch in den Diagrammen die Einheiten eingeklammert.
       </p>
@@ -334,14 +334,14 @@ module.exports.exercises = {
       <p>Da kannst du mit einem Programm helfen. Das Grundgerüst enthält wieder eine Funktion. Diese Funktion erhält als Parameter den Namen des Schülers. Erzeuge daraus die entsprechende Nachricht:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a2.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a2.png"></p>
       
       <p>Zwei Beispiele:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a2_bsp1.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a2_bsp1.png"></p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a2_bsp2.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a2_bsp2.png"></p>
     `,
     level : 6,
   },
@@ -355,14 +355,14 @@ module.exports.exercises = {
       <p>Ergänze in dieser Vorlage die dafür notwendige Berechnung:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a3.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a3.png"></p>
       
       <p>Diesmal gibt es zwei Parameter: <code style="color:blue">mengeGrün</code> gibt die Einwaage der grünen Äpfel in Kilogramm an, <code style="color:blue">mengeRot</code> entsprechend die Einwaage der roten Äpfel in Kilogramm. Hier sind zwei Beispiele:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a3_bsp1.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a3_bsp1.png"></p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a3_bsp2.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a3_bsp2.png"></p>
       
       <p>Es kann passieren, dass das Ergebnis zu viele Nachkommastellen hat. Das braucht nicht korrigiert zu werden. Die Kassierer schneiden den Preis einfach nach der zweiten Kommastelle ab.</p>
     `,
@@ -385,14 +385,14 @@ module.exports.exercises = {
       <p>Die Kinder nehmen zwei ähnliche Wörter und bauen sie in dieser Reihenfolge hintereinander. Die Kindergärtner haben das Muster erkannt und würden gerne ein Programm haben, dass solche Kinderreime erzeugt. Hier ist die Vorlage dazu:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a4.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a4.png"></p>
       
       <p>Dabei beschreiben <code style="color:blue">wort1</code> und <code style="color:blue">wort2</code> die zwei Reimbestandteile. Und gleich noch zwei Beispiele:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a4_bsp1.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a4_bsp1.png"></p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a4_bsp2.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a4_bsp2.png"></p>
     `,
     level : 6,
   },
@@ -403,17 +403,17 @@ module.exports.exercises = {
       <p>Auf einem Baumstumpf sind rätselhafte Zahlen eingraviert:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a5.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a5.png"></p>
       
       <p>Aber diese Zahlen sind sicherlich nicht zufällig! Die Spalten stehen in einer exakten Beziehung zu einander. Kannst du ein Programm schreiben, dass solche Zahlen erzeugen kann?
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a5_.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a5_.png"></p>
       
       <p>Der Name <code style="color:blue">f</code> erinnert an eine mathematische Funktion. Der Parameter <code style="color:blue">x</code> entspricht einer Zahl der linken Spalte. Das Ergebnis der Funktion soll die Zahl in der rechten Spalte sein. Das sieht dann so aus:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a5_bsp.png"></p>
+      <p><img class="img-thumbnail" src="images/l6_a5_bsp.png"></p>
     `,
     level : 6,
     hint: "Quadratzahlen spielen bei dieser Aufgabe eine wichtige Rolle.",
@@ -425,12 +425,12 @@ module.exports.exercises = {
       <p>Die Ameisen betreiben eine Wetterstation und sie wollen die Messwerte auf einem Display im Dorfzentrum anzeigen lassen. So sollte das aussehen:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a6_lcd.png" width="400"></p>
+      <p><img class="img-thumbnail" src="images/l6_a6_lcd.png" width="400"></p>
       
       <p>Deine Aufgabe ist es, die Messwerte der Wetterstation in einen solchen Anzeigetext zu übersetzen. Die Wetterstation misst einerseits die Temperatur in Fahrenheit (die Ameisen haben sich einen amerikanischen Sensor gekauft), das ist der erste Parameter. Der zweite Parameter gibt den Luftdruck in Hektopascal direkt an:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l6_a6.png" width="400"></p>
+      <p><img class="img-thumbnail" src="images/l6_a6.png" width="400"></p>
       
       <p>Als Rückgabewert wird folgender Text erwartet:
       </p>
@@ -450,7 +450,7 @@ module.exports.exercises = {
       <p>Das Handy-Unternehmen des Ameisendorfs möchte die Abrechnungen mithilfe eines Programms automatisieren. Der Tarif der Flexi-Flat ist in diesem Diagramm dargestellt:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l7_a1_flow.png"></p>
+      <p><img class="img-thumbnail" src="images/l7_a1_flow.png"></p>
       
       <p>Abgerechnet wird nach der Menge an verbrauchten Megabytes. Wenn man weniger oder gleich 50 MB im Monat genutzt hat, kostet das 2,99€. Verbraucht man mehr als 50 MB, dann wird jedes zusätzliche MB über die 50 MB hinaus mit 0,02€ abgerechnet. Der Vertrag ist außerdem nach oben hin begrenzt. Verbraucht man mehr als 2000 MB, dann zahlt man 41,99€.
       </p>
@@ -458,7 +458,7 @@ module.exports.exercises = {
       <p>Wenn man 51 MB verbracht, zahlt man also 3,01€, wenn man 100 MB verbraucht, sind es 3,99€. Schreibe dein Programm in folgendes Grundgerüst hinein:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l7_a1.png"></p>
+      <p><img class="img-thumbnail" src="images/l7_a1.png"></p>
     `,
     level : 7,
   },
@@ -503,7 +503,7 @@ module.exports.exercises = {
       <p>Hilf den Korrektoren, indem du ein Programm schreibst, das zu einer Punktzahl die entsprechende Bewertung ausgibt. Schreibe dein Programm in folgende Vorlage hinein:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l7_a2.png"></p>
+      <p><img class="img-thumbnail" src="images/l7_a2.png"></p>
     `,
     level : 7,
   },
@@ -526,7 +526,7 @@ module.exports.exercises = {
       <p>Dein Programm sollte das natürlich beachten. Hier ist die Vorlage:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l7_a3.png"></p>
+      <p><img class="img-thumbnail" src="images/l7_a3.png"></p>
       
       <p>Die Funktion hat drei Parameter: Der erste Parameter ist der Name, der zweite Parameter das Alter. Das Geschlecht kann entweder <code style="color:brown">"weiblich"</code> oder <code style="color:brown">"männlich"</code> sein.
       </p>
@@ -543,11 +543,11 @@ module.exports.exercises = {
       <p>Weil du dir die Reihenfolge einfach nicht merken kannst, möchtest du gerne ein Programm schreiben, dass dir bei der Auswertung hilft. Dein Programm erhält zwei Parameter: Der erste Parameter beschreibt, welches Zeichen der erste Spieler macht, der zweite Parameter beschreibt, welches Zeichen der zweite Spieler macht. Du möchtest eines von drei Antwortmöglichkeiten zurückgeben:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l7_a4_info.png"></p>
+      <p><img class="img-thumbnail" src="images/l7_a4_info.png"></p>
       
       <p>Hier ist der Anfang des Programms:</p>
       
-      <p><img class="img-thumbnail" src="/images/l7_a4.png"></p>
+      <p><img class="img-thumbnail" src="images/l7_a4.png"></p>
     `,
     level : 7,
   },
@@ -603,12 +603,12 @@ module.exports.exercises = {
       <p>Ein Expertengremium hat sich nach längerer Beratung auf folgende Kritieren festgelegt:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l7_a5_flow.png"></p>
+      <p><img class="img-thumbnail" src="images/l7_a5_flow.png"></p>
       
       <p>Oh je, Experten machen alles so kompliziert! Und du wurdest beautragt, diese Regeln in ein Programm zu übertragen. Hier ist deine Vorlage:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l7_a5.png"></p>
+      <p><img class="img-thumbnail" src="images/l7_a5.png"></p>
       
       <p><code style="color:blue">true</code> und <code style="color:blue">false</code> sind spezielle Namen in der Programmiersprache. Sie beschreiben, ob etwas wahr oder falsch ist. Wenn das Passwort sicher ist, gib <code style="color:blue">true</code> zurück, sonst <code style="color:blue">false</code>.
       </p>
@@ -622,7 +622,7 @@ module.exports.exercises = {
       <p>Am Eingang des Ameisenmuseums hängt folgende Preistafel:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l7_a6_preise.png" width=600></p>
+      <p><img class="img-thumbnail" src="images/l7_a6_preise.png" width=600></p>
       
       <p>Einzelpersonen zahlen den regulären Preis. Wenn eine Gruppe mit 10 Personen oder mehr das Museum besuchen möchte (Erwachsene und Kinder zusammengerechnet), dann gilt ein ermäßigter Preis. Für eine größere Gruppe von Kindern gilt der Schulklassenpreis, hier dürfen zwei Erwachsene als Begleitpersonen das Museum kostenlos besuchen.
       </p>
@@ -630,7 +630,7 @@ module.exports.exercises = {
       <p>Um den Preis schnell berechnen zu können, sollst du nun ein Programm schreiben, dass diese Regeln umsetzt. Dein Programm erhält die Anzahl an Erwachsenen und Kinder. Berechne daraus den Gesamtpreis:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l7_a6.png"></p>
+      <p><img class="img-thumbnail" src="images/l7_a6.png"></p>
     `,
     level : 7,
   },
@@ -644,7 +644,7 @@ module.exports.exercises = {
       <p>Nutze bei dieser Aufgabe eine Variable. Diese Variable soll den Austrittswinkel beschreiben. Wenn eine Ameise geboren wird, geht sie zu dieser Richtung und erhöhe dann den Austrittswinkel um einen bestimmten Wert. Dadurch werden nach und nach alle Himmelsrichtungen abgedeckt.
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l8_a1_flow.png"></p>
+      <p><img class="img-thumbnail" src="images/l8_a1_flow.png"></p>
     `,
     level : 8,
   },
@@ -664,7 +664,7 @@ module.exports.exercises = {
       <p>Mithilfe von zwei Variablen namens <em>strecke</em> und <em>abstand</em> lässt sich das programmieren. Hier ist ein möglicher Programmablauf:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l8_a2.png"></p>
+      <p><img class="img-thumbnail" src="images/l8_a2.png"></p>
     `,
     level : 8,
   },
@@ -684,7 +684,7 @@ module.exports.exercises = {
       <p>Eine schöne Anwendung von Variablen ist folgendes Pendel:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l8_a4.gif"></p>
+      <p><img class="img-thumbnail" src="images/l8_a4.gif"></p>
       
       
       <p>Die technische Beschreibung sieht so aus: Die erste Ameise soll vom Bau aus 200 Richtung Süden (Winkel 90) gehen und dort eine Giftwolke setzen. Die nächste Ameise geht zwei Grad weiter, also zum Winkel 92, und setzt dort die Giftwolke. Das geht mit den Winkeln 94, 96, 98, ... weiter, bis als letztes der Winkel 136 getroffen wird. Von dort aus gehen die nächsten Ameisen wieder in die andere Richtung, also 132, 134, 136, 134, 132, ... Auf der anderen Seite geht der Winkel bis minimal 44 und dreht sich dann um: 48, 46, 44, 46, 48, ...
@@ -693,7 +693,7 @@ module.exports.exercises = {
       <p>Du kannst dir mal selber überlegen, wie man das mit Variablen programmieren könnte. Ansonsten findest du hier eine Anleitung:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l8_a4flow.png"></p>
+      <p><img class="img-thumbnail" src="images/l8_a4flow.png"></p>
     `,
     level : 8,
   },
@@ -704,7 +704,7 @@ module.exports.exercises = {
       <p>Variablen ermöglichen es dem Ameisenvolk, ihre Bewegungen auf eine sehr präzise Art zu synchronisieren. Das funktioniert, weil unsere Variablen <em>global</em> definiert werden und damit alle Ameisen auf die gleichen Variablen zugreifen - also eine Art von Telepathie. Das wollen wir in dieser Aufgabe ausnutzen und die Ameisen ganz synchron laufen lassen:
       </p>
       
-      <p><img class="img-thumbnail" src="/images/l8_a5.gif"></p>
+      <p><img class="img-thumbnail" src="images/l8_a5.gif"></p>
       
       <p>Genauer: Das Ameisenvolk wird in zwei Gruppen aufgeteilt: Eine einzelne Ameise bleibt im Bau stehen und spielt den Dirigenten (im GIF nicht zu sehen), alle anderen Ameisen folgen den Befehlen dieser Ameise. Die Dirigentenameise legt eine Himmelsrichtung fest, in die alle Ameisen laufen sollen. Diese Richtung ändert sie alle zwei Sekunden zufällig. Die anderen Ameisen versuchen ständig, in diese Richtung zu gehen. Bei dieser Aufgabe ist die Reichweitenbegrenzung der Ameisen aufgehoben.
       </p>
@@ -945,7 +945,7 @@ Ergebnis "F": 2 hoch 3 = 8</pre></p>
       <p>Im Osten befinden sich fünf Wanzen. Vergifte genau die dritte Wanze und lasse die anderen am Leben. Nutze dafür folgende Vorlage:
       </p>
       
-      <p><img src="/images/l8_wanzen.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_wanzen.png" class="img-thumbnail"></p>
       
     `,
     level : 9,

@@ -19,6 +19,7 @@ App.csurf = require('csurf')()
 App.start = App.db
 
 require('./server/00_safeHeaders')(App)
+require('./server/01_baseUrl')(App)
 require('./server/10_dbSessions')(App)
 require('./server/15_colonies')(App)
 require('./server/16_users')(App)

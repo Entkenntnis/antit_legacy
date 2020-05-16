@@ -5,7 +5,7 @@
   </head>
   <body>
     <div class="container-fluid">
-      <a href="/"><div class="jumbotron" style="background-image: url(/deco/startseite.png);background-position: center top;background-repeat:no-repeat">
+      <a href=""><div class="jumbotron" style="background-image: url(deco/startseite.png);background-position: center top;background-repeat:no-repeat">
       </div></a>
 	    
 	    <br><br>
@@ -31,7 +31,7 @@
             <%=flashes%>
           </div>
           
-          <p>Weiter zur <a href="/login/public">Anmeldung</a>
+          <p>Weiter zur <a href="login/public">Anmeldung</a>
           </p>
           
           <% } else { %>
@@ -60,7 +60,7 @@
                   <input type="password" class="form-control" name="password2" id="password2" placeholder="Passwort wiederholen" value="<%=req.body.password2%>">
                   <small class="form-text text-muted">Dein Passwort besteht aus mind. 4 Zeichen.</small>
                 </div>
-                <p>Du hast die <a href="/datenschutz">Datenschutzerklärung</a> gelesen und erklärst dich damit einverstanden.
+                <p>Du hast die <a href="datenschutz">Datenschutzerklärung</a> gelesen und erklärst dich damit einverstanden.
                 </p>
                 <input type="hidden" name="_csrf" value="<%=csrf%>">
                 <button type="submit" class="btn btn-primary">Abschicken</button>

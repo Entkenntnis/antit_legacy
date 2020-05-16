@@ -10,7 +10,7 @@
         <br>
         <h2>Benutzer <%=existing?'bearbeiten':'erstellen'%></h2>
         
-         <form method="post" action="/user/save">
+         <form method="post" action="user/save">
           <input type="hidden" name="_csrf" value="<%=csrf%>"/>
           <% if (existing) { %>
             <input type="hidden" name="userid" value="<%=user._id%>"/>
@@ -51,7 +51,7 @@
           
           <br><br>
           
-          <a href="/users" class="btn btn-warning btn-sm">Abbrechen</a>
+          <a href="users" class="btn btn-warning btn-sm">Abbrechen</a>
           <input type="Submit" class="btn btn-primary btn-sm" value="Speichern"/>
         </form>
         
@@ -61,7 +61,7 @@
           
           <h3>Danger Zone</h3>
         
-          <form method="post" id="danger-form" action="/user/delete">
+          <form method="post" id="danger-form" action="user/delete">
             <input type="hidden" name="_csrf" value="<%=csrf%>"/>
             <input type="hidden" name="userid" value="<%=user._id%>"/>
             Willst du diesen Benutzer löschen?<br>

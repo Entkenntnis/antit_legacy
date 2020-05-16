@@ -166,7 +166,7 @@
       var fontLoader = new THREE.FontLoader(manager)
       
       // floor
-      var floorTexture = textureLoader.load( "/assets/sand.jpg" );
+      var floorTexture = textureLoader.load( "assets/sand.jpg" );
       floorTexture.wrapS = THREE.RepeatWrapping;
       floorTexture.wrapT = THREE.RepeatWrapping;
       floorTexture.repeat.set(4, 4);
@@ -176,7 +176,7 @@
       scene.add(gamefloor);
       
       // ground
-      var groundTexture = textureLoader.load( "/assets/grass.jpg" );
+      var groundTexture = textureLoader.load( "assets/grass.jpg" );
       groundTexture.wrapS = THREE.RepeatWrapping;
       groundTexture.wrapT = THREE.RepeatWrapping;
       groundTexture.repeat.set(15, 15);
@@ -186,7 +186,7 @@
       scene.add(grass);
       
       var skyGeo = new THREE.SphereBufferGeometry(24000, 25, 25);
-      var skyTexture = textureLoader.load( "/assets/sky.jpg" );
+      var skyTexture = textureLoader.load( "assets/sky.jpg" );
       var skyMaterial = new THREE.MeshBasicMaterial({ 
         map: skyTexture
       });
@@ -202,7 +202,7 @@
       scene.add( directionalLight );
     
       // get models
-      objectLoader.load("/models/ant.json", function ( obj ) {
+      objectLoader.load("models/ant.json", function ( obj ) {
         obj.children[0].children.forEach(function(o){
           o.material = new THREE.MeshLambertMaterial({color:0x000000});
         });
@@ -211,8 +211,8 @@
         ant0 = obj
         
       }.bind(this));
-      objectLoader.load("/models/anthill.json", function ( obj ) {
-        var earthTexture = textureLoader.load( "/assets/earth.jpg" );
+      objectLoader.load("models/anthill.json", function ( obj ) {
+        var earthTexture = textureLoader.load( "assets/earth.jpg" );
         var mat = new THREE.MeshPhongMaterial({color:0x999966});
         mat.map = earthTexture;
         obj.children[0].children[1].material = mat;
@@ -223,14 +223,14 @@
         obj.scale.set(s, s, s)
         hill0 = obj;
       }.bind(this));
-      objectLoader.load("/models/apple.json", function ( obj ) {
+      objectLoader.load("models/apple.json", function ( obj ) {
         obj.children[0].children[0].material.color.setHex(0x00cc00);
         obj.children[0].children[1].material.color.setHex(0x66aa00);
         var s = Optionen.ApfelGröße
         obj.scale.set(s, s, s);
         apple0 = obj;
       }.bind(this));
-      objectLoader.load("/models/bug.json", function ( obj ) {
+      objectLoader.load("models/bug.json", function ( obj ) {
         obj.children[0].children.forEach(function(o){
           o.material.color.setHex(0x000000);
           o.material.specular.setHex(0x00dddd);
@@ -239,7 +239,7 @@
         obj.scale.set(s, s, s);
         bug0 = obj;
       }.bind(this));
-      objectLoader.load("/models/sugar.json", function ( obj ) {
+      objectLoader.load("models/sugar.json", function ( obj ) {
         obj.children[0].children[0].material.color.setHex(0xffffff);
         sugar0 = obj;
       }.bind(this));
@@ -273,13 +273,13 @@
       poison20 = poisonRing2
       
       // poisonCloud
-      poisonCloud = textureLoader.load('/assets/particle.jpg')
+      poisonCloud = textureLoader.load('assets/particle.jpg')
       
       // font
       // Character set:
       // ! "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ
       // [\]^_`abcdefghijklmnopqrstuvwxyz{|}~äöüÄÖÜß
-      fontLoader.load('/assets/font.json', function(f) {
+      fontLoader.load('assets/font.json', function(f) {
         font = f
       })
       

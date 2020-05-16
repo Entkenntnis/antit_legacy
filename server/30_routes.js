@@ -5,6 +5,7 @@ const co = require('co')
 module.exports = function(App) {
 // ----------------------------
 // routes
+  
 
   App.express.get('/login/:colony', App.csurf, function(req, res, next) {
     if (req.session.loggedIn)

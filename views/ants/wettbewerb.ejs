@@ -5,7 +5,7 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="jumbotron" style="background-image: url(/deco/arena.png);background-position: center top;background-repeat:no-repeat">
+      <div class="jumbotron" style="background-image: url(deco/arena.png);background-position: center top;background-repeat:no-repeat">
 	    </div>
 	    
 	    <% include menu %>
@@ -30,7 +30,7 @@
               reset("repeatvalue", 'value', "")
             }
           </script>
-          <form method="GET" action="/simulation"><div>
+          <form method="GET" action="simulation"><div>
           <%
             var colors = ['#ff0000', '#0000ff', '#00ff00', '#00ffff',
                           '#ffee00', '#ff00ff', '#000000', '#dddddd'];
@@ -124,7 +124,7 @@
                 function unfriend(name) {
                   var result = confirm(name + " aus der Freundesliste entfernen?")
                   if (result) {
-                    window.location.href = "/unfriend?name=" + encodeURIComponent(name)
+                    window.location.href = "unfriend?name=" + encodeURIComponent(name)
                   }
                 }
               </script>
@@ -136,7 +136,7 @@
                 <% } %>
                 <p>Neuen Freund hinzufügen:<br>
                 
-                  <form action="addfriend" methode="get">
+                  <form action="addfriend" method="GET">
                     <label>Name: <input type="text" name="friendname"></label><br>
                     <input type="submit" value="Hinzufügen">
                   </form>
@@ -168,7 +168,7 @@
             <script>
             function loadData() {
               var request = new XMLHttpRequest()
-              request.open("GET", "/ranking")
+              request.open("GET", "ranking")
               request.addEventListener('load', function(event) {
                 if (request.status >= 200 && request.status < 300) {
                   var table = document.getElementById('data')

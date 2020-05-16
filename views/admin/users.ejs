@@ -21,14 +21,14 @@
         
           <% for (var i = 0; i < users.length; i++) { %>
           
-            <li><%=users[i].username%> <%-users[i].superuser?'<strong>[admin]</strong>':''%> <a href="/users/edit/<%=users[i]._id%>">Bearbeiten</a>
+            <li><%=users[i].username%> <%-users[i].superuser?'<strong>[admin]</strong>':''%> <a href="users/edit/<%=users[i]._id%>">Bearbeiten</a>
             </li>
           
           <% } %>
         
         </ul>
         
-        <a href="/user/new">Neuer Benutzer</a>
+        <a href="user/new">Neuer Benutzer</a>
         
         <% if (false) { %>
         
@@ -46,7 +46,7 @@
         
         <hr>
         
-        <a href="/<%=root?'root':'home'%>">zurück</a>
+        <a href="<%=root?'root':'home'%>">zurück</a>
         
         <div style="height:300px"></div>
       </div>

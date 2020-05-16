@@ -9,7 +9,7 @@
         
         <h2>Kolonie <%=existing?'bearbeiten':'erstellen'%></h2>
         
-        <form method="post" action="/root/save">
+        <form method="post" action="root/save">
           <input type="hidden" name="_csrf" value="<%=csrf%>"/>
           
           Name der Kolonie: <input name="colonyName" <%-existing?`readonly value="${colony.colonyName}"`:''%> required minlength="3"/><br>
@@ -33,14 +33,14 @@
           (<%=stats.userNames.join(', ')%>)<br>
           <%=stats.ants%> Ameise<%=stats.ants!=1?'n':''%><br>
           <%=stats.published%> Freigabe<%=stats.published!=1?'n':''%><br>
-          <a href="/users/<%=colony.colonyName%>">Benutzer verwalten</a><br>
+          <a href="users/<%=colony.colonyName%>">Benutzer verwalten</a><br>
           <br>
           
           <% } %>
           
           <br>
           
-          <a href="/root" class="btn btn-warning btn-sm">Abbrechen</a>
+          <a href="root" class="btn btn-warning btn-sm">Abbrechen</a>
           <input type="Submit" class="btn btn-primary btn-sm" value="Speichern"/>
         </form>
         
@@ -52,7 +52,7 @@
           
           <h3>Danger Zone</h3>
         
-          <form method="post" action="/root/delete">
+          <form method="post" action="root/delete">
             <input type="hidden" name="_csrf" value="<%=csrf%>"/>
             <input type="hidden" name="colonyName" value="<%=colony.colonyName%>"/>
             Willst du diese Kolonie löschen?<br>

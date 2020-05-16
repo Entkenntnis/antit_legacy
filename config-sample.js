@@ -2,6 +2,7 @@ module.exports = {
   databaseUrl : "",
   serverIp : "localhost",
   serverPort: 3000,
+  baseUrl: "",
   managerPwd: "",
   devmode : false,
 }

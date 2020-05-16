@@ -5,7 +5,7 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="jumbotron" style="background-image: url(/deco/Aufgaben.png);background-position: left top;background-repeat:no-repeat"><!--<h1>Aufgaben</h1><p>Versuche diese Aufgaben zu lösen. Daran kannst du zeigen, wie gut du schon mit deinen Ameisen umgehen kannst und steige auf.</p>-->
+      <div class="jumbotron" style="background-image: url(deco/Aufgaben.png);background-position: left top;background-repeat:no-repeat"><!--<h1>Aufgaben</h1><p>Versuche diese Aufgaben zu lösen. Daran kannst du zeigen, wie gut du schon mit deinen Ameisen umgehen kannst und steige auf.</p>-->
 	    </div>
 	    
 	    <% include menu %>
@@ -16,7 +16,7 @@
 	      
         <div class = "row justify-content-center">
           <div class="col-sm-12" style="max-width:850px">
-            <p class="my-2 text-right"><a href="#" onclick="flipAll()" id="flipall">alle aufklappen</a></p>
+            <p class="my-2 text-right"><a href="level#" onclick="flipAll()" id="flipall">alle aufklappen</a></p>
 	          <% for (var i = 1; i <= user.level; i++) { %>
 	            <div class="card bg-light py-0">
                 <%
@@ -66,9 +66,9 @@
                 </script>
                 <div class="card-body py-2" <%=ok?"style=display:none":''%> id="level<%=i%>">
                   <% for (var j = 0; j < exIndex[i].length; j++) { var e = exercises[exIndex[i][j]]%>
-	                  <p class="my-2"><a href="/level?id=<%=exIndex[i][j]%>"><%=e.name%></a>
+	                  <p class="my-2"><a href="level?id=<%=exIndex[i][j]%>"><%=e.name%></a>
 	                    <% if (solved.indexOf(parseInt(exIndex[i][j])) >= 0) {  %>
-	                      <img src="/static/gruener_Haken.gif" height="20px" style="margin-left:5px">
+	                      <img src="static/gruener_Haken.gif" height="20px" style="margin-left:5px">
 	                    <% } %>
 	                  </p>
 	                <% } %>
@@ -91,18 +91,18 @@
                     
                     </p>
                   <% } %>
-                  <a href="/upgrade" class="btn btn-sm  btn-warning <%=upgrade==2?'':'disabled'%>">Stufe aufsteigen</a>
+                  <a href="upgrade" class="btn btn-sm  btn-warning <%=upgrade==2?'':'disabled'%>">Stufe aufsteigen</a>
                   
                   <% let doneLevel4 = user.solved.filter(x => x >= 40 && x < 50).length %>
                   <% if (user.level == 4 && doneLevel4 > 0 && doneLevel4 < 3) { %>
                     <br><br>
-                    Beim ersten Durchlauf kannst du diese Stufe <a href="/upgrade">überspringen</a>.
+                    Beim ersten Durchlauf kannst du diese Stufe <a href="upgrade">überspringen</a>.
                   <% } %>
                   
                   <% let doneLevel5 = user.solved.filter(x => x >= 50 && x < 60).length %>
                   <% if (user.level == 5 && doneLevel5 > 0 && doneLevel5 < 2) { %>
                     <br><br>
-                    Beim ersten Durchlauf kannst du diese Stufe <a href="/upgrade">überspringen</a>.
+                    Beim ersten Durchlauf kannst du diese Stufe <a href="upgrade">überspringen</a>.
                   <% } %>
                   
                   
@@ -113,7 +113,7 @@
             <div style="height:250px"></div>
             
             <% if (user.level > 1) { %>
-              <p>Zu schnell hochgestuft? Du kannst dich hier wieder <a href="/downgrade">zurückstufen.</a></p>
+              <p>Zu schnell hochgestuft? Du kannst dich hier wieder <a href="downgrade">zurückstufen.</a></p>
             <% } %>
 	        </div>
 	      </div>
@@ -184,7 +184,7 @@
             <div class="card">
               <div class="card-header py-2">Lösung einreichen</div>
               <div class="card-body">
-                <form method="GET" action="/levelsim">
+                <form method="GET" action="levelsim">
                   <input type="hidden" name="num" value="<%=id%>">
                 <% if (ants.length > 0) { %>
                   <select name="id" style="max-width:350px;">

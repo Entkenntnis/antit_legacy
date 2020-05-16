@@ -5,7 +5,7 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="jumbotron" style="background-image: url(/deco/Dorf.png);background-position: center top;background-repeat:no-repeat">
+      <div class="jumbotron" style="background-image: url(deco/Dorf.png);background-position: center top;background-repeat:no-repeat">
       </div>
 	
 	    <% include menu %>
@@ -16,7 +16,7 @@
             function newAnt() {
               var x = prompt("Name des neuen Ameisenvolks:")
               if (x) {
-                window.location = "/new?name=" + x
+                window.location = "new?name=" + x
               } else {
                 alert("Kein Name angegeben")
               }
@@ -33,15 +33,15 @@
 	              <strong><%=ants[i].name%></strong>
 	              <%if(ants[i].published){%> (freigegeben)<%}%>
 	              <div style="float:right;">
-	                <a href="/edit?id=<%=ants[i]._id%>" class="btn btn-sm btn-outline-primary">Bearbeiten</a>
+	                <a href="edit?id=<%=ants[i]._id%>" class="btn btn-sm btn-outline-primary">Bearbeiten</a>
 	                <% if (user.level >= 5) { %>
 	                  <%if(ants[i].published){%>
-	                  <a href="/unpublish?id=<%=ants[i]._id%>" class="btn btn-sm btn-outline-warning">Freigabe entfernen</a>
+	                  <a href="unpublish?id=<%=ants[i]._id%>" class="btn btn-sm btn-outline-warning">Freigabe entfernen</a>
 	                  <%} else {%>
-	                  <a href="/publish?id=<%=ants[i]._id%>" class="btn btn-sm btn-outline-info">Freigeben</a>
+	                  <a href="publish?id=<%=ants[i]._id%>" class="btn btn-sm btn-outline-info">Freigeben</a>
 	                  <%}%>
                   <% } %>
-	                <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='/delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-sm btn-outline-danger">Löschen</button>
+	                <button onClick="var r = confirm('Willst du \'<%=ants[i].name%>\' sicher löschen?');if (r == true) {window.location.href='delete?id=<%=ants[i]._id%>';}" href="#" class="btn btn-sm btn-outline-danger">Löschen</button>
 	               </div>
 	              </li>
             	<% } %>

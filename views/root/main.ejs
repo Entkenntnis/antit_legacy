@@ -19,15 +19,15 @@
         
           <ul>
             <% for (var i = 0; i < colonies.length; i++) { %>
-              <li style="color:<%=colonies[i].active?'black':'grey'%>"><%=colonies[i].colonyName%> | <a href="/root/edit/<%=colonies[i].colonyName%>">Bearbeiten</a></li>
+              <li style="color:<%=colonies[i].active?'black':'grey'%>"><%=colonies[i].colonyName%> | <a href="root/edit/<%=colonies[i].colonyName%>">Bearbeiten</a></li>
             <% } %>
           </ul>
           
-          <p><a href="/root/new">Neue Kolonie</a></p>
+          <p><a href="root/new">Neue Kolonie</a></p>
           
           <hr>
           
-          <a class="btn btn-sm btn-warning" href="/root/logout">Ausloggen</a>
+          <a class="btn btn-sm btn-warning" href="root/logout">Ausloggen</a>
         
         <% } else { %>
         

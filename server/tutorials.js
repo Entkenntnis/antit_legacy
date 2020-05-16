@@ -34,7 +34,7 @@ module.exports.tutorials = {
         </li>
       </ul>
       
-      <img src="/images/l1_ameiseapfel.png" class="img-thumbnail" title="Hey Jo!">
+      <img src="images/l1_ameiseapfel.png" class="img-thumbnail" title="Hey Jo!">
     
       <br><br>
       <p>Ach, herrlich ... So, das ist jetzt genug an Informationen. Bearbeite zum Schluss noch dieses Quiz und gehe danach gleich zum zweiten Tutorial weiter.
@@ -65,7 +65,7 @@ module.exports.tutorials = {
         <li><p>Öffne die Ameisen, in dem du auf "Bearbeiten" klickst.</p>
         </li>
         <li><p>Trage die fehlenden Teile in Zeile 3 und Zeile 4 ein:<br>
-        <img src="/images/l1_schnipsel_hallowelt.png" class="img-thumbnail" title="Der Code wird automatisch gefärbt."></p>
+        <img src="images/l1_schnipsel_hallowelt.png" class="img-thumbnail" title="Der Code wird automatisch gefärbt."></p>
         </li>
         <li><p>Gehe auf den Trainingsplatz.
         </p></li>
@@ -76,7 +76,7 @@ module.exports.tutorials = {
       </ol>
       
       <p>Fertig. Wenn alles gutgegangen ist sieht du folgenden Bildschirm:</p>
-      <p><img src="/images/l1_overview.png" class="img-thumbnail" title="Der gelbe Kreis hinten rechts ist Teil der ersten Aufgabe.">
+      <p><img src="images/l1_overview.png" class="img-thumbnail" title="Der gelbe Kreis hinten rechts ist Teil der ersten Aufgabe.">
       </p>
       
       <p>Der Startpunkt der Ameisen ist der Ameisenbau. Ameisen werden dort in der Mitte geboren. Dein Programm hat bewirkt, dass sie sich aus dem Bau herausbewegen. Dein Ameisenvolk hat die Farbe rot. Die Körperteile der Ameise sind passend zur Farbe des Baus.
@@ -113,17 +113,17 @@ module.exports.tutorials = {
     text : `
       <p>Im letzten Tutorial hast du bereits dein erstes Ameisenvolk programmiert. Jetzt werden wir den Ameisen ein nützliches Verhalten geben. Schauen wir uns dazu nochmal den Code aus dem vorherigen Tutorial an:</p>
       
-      <p><img src="/images/l1_schnipsel_hallowelt.png" class="img-thumbnail" title="Hey, das gleiche Bild wieder."></p>
+      <p><img src="images/l1_schnipsel_hallowelt.png" class="img-thumbnail" title="Hey, das gleiche Bild wieder."></p>
       
       <p>Der Code besteht aus zwei wichtigen Blöcken: der ersten Zeile und den Zeilen 3 bis 5. Die erste Zeile ist die <em>Ameisendefinition</em>. Diese legt den Namen des Ameisenvolks fest und sagt der Simulation, dass ein neuer Ameisenbau erstellt werden soll. Jedes unserer Programme beginnt mit einer Ameisendefinition. Der Name lässt sich jederzeit ändern.
       </p>
       
-      <p><img src="/images/l1_nameanders.png" class="img-thumbnail" title="Hey, das gleiche Bild wieder."></p>
+      <p><img src="images/l1_nameanders.png" class="img-thumbnail" title="Hey, das gleiche Bild wieder."></p>
       
       <p>Schauen wir uns nun Zeile 3 bis Zeile 5 an. Das ist eine <em>Ereignisdefinition</em>. Das Verhalten der Ameisen wird über Ereignisse gesteuert. Ereignisse sind ein ziemlich mächtiges Mittel, um Software zu bauen. Gleichzeitig braucht es etwas Zeit, bis man sich daran gewöhnt hat. Für den Anfang werden wir uns daher nur mit einem einzigen Ereignis namens <code>"IstGeboren"</code> beschäftigen. Wie der Name schon sagt, definieren wir damit das Verhalten der Ameise, nachdem sie geboren wurde. Für die ersten Programme kommen wir mit diesem einen Ereignis aus. Innerhalb der Ereignisdefinition schreiben wir unsere <em>Anweisungen</em> (Zeile 4 bis 6):
       </p>
       
-      <p><img src="/images/l1_schnipsel_event.png" class="img-thumbnail" title="Befehle innerhalb von Ereignisse werden eingerückt. Nutze die Tab-Taste."></p>
+      <p><img src="images/l1_schnipsel_event.png" class="img-thumbnail" title="Befehle innerhalb von Ereignisse werden eingerückt. Nutze die Tab-Taste."></p>
       
       <p>Achte darauf, dass die Anweisungen innerhalb einer Ereignisdefinition eingerückt sind. Das funktioniert meist automatisch. Falls nicht, kannst du eine Zeile einrücken, indem du an den Anfang der Zeile klickst und dann die TAB-Taste auf der Tastatur drückst (die große Taste links neben dem Q mit den zwei Pfeilen). Das Einrücken macht den Code leserlicher und bei größeren Ameisenvölkern mit vielen Definitionen hilft es, den Überblick zu bewahren.
       </p>
@@ -140,7 +140,7 @@ module.exports.tutorials = {
       <p>Schließlich gibt es noch den Befehl <code>DreheZuRichtung()</code>. Dieser nimmt als Parameter eine Himmelsrichtung. Dabei beginnt man im Osten und zählt die Grad im Uhrzeigersinn weiter. Es gilt damit Osten = 0, Süden = 90, Westen = 180 und Norden = 270. Mit DreheZuRichtung kann man die Ameise also in eine bestimmte Richtung des Spielsfelds ausrichten:
       </p>
       
-      <p><img src="/images/l1_koordinaten2.jpg" class="img-thumbnail" title=""></p>
+      <p><img src="images/l1_koordinaten2.jpg" class="img-thumbnail" title=""></p>
       
       <p>Mit diesem Wissen kannst du nun die Aufgaben dieser Stufe bearbeiten. Ein letzter Hinweis zum Schluss: Tutorials mit dem Zusatz [API] stellen neue Befehle oder Ereignisse vor. Diese werden im Text rot hervorgehoben und erleichtern damit die Suche nach bestimmten Funktionen. Außerdem findest du in der Bibliothek auch einen Inhaltsüberblick mit den wichtigsten Inhalten.
       </p>
@@ -166,7 +166,7 @@ module.exports.tutorials = {
       <p>Um Zucker zu sammeln, musst du deine Ameise zuerst ganz nah an den Zuckerhaufen hinbewegen. Wenn die Ameise am Zucker steht, führst du den Befehl <code>NimmZucker()</code> aus. Damit lädt sich die Ameise ein Stückchen Zucker auf.
       </p>
       
-      <p><img src="/images/l2_ameisezucker.jpg" class="img-thumbnail" title="Ein richtig perfekter Zuckerwürfel auf ihrem Rücken!"></p>
+      <p><img src="images/l2_ameisezucker.jpg" class="img-thumbnail" title="Ein richtig perfekter Zuckerwürfel auf ihrem Rücken!"></p>
       
       <p>Jetzt muss die Ameise nach Hause. Dazu gibt es den Befehl <code>GeheZuBau()</code>, der die Ameise direkt in den Bau führt. Die Ameisen sind wie Geister - sie müssen nicht um Hindernisse herumgehen, sondern können einfach durch alles hindurchlaufen (fast alles: Wanzen sind aggressiv und bringen die Ameisen um). Auch wenn das komisch aussieht: Es ist für dich als Entwickler ziemlich praktisch.
       </p>
@@ -174,7 +174,7 @@ module.exports.tutorials = {
       <p>Die zwei Befehle, die du gerade kennengelernt hast, brauchen keinen Parameter. Deshalb steht nichts in den runden Klammern. Die Klammern sind aber trotzdem wichtig! Wenn du sie vergisst, wird der Befehl nicht ausgeführt.
       </p>
       
-      <p><img src="/images/l2_ameisezucker2.png" width="400px" class="img-thumbnail" title="Huch!"></p>
+      <p><img src="images/l2_ameisezucker2.png" width="400px" class="img-thumbnail" title="Huch!"></p>
       
       <p>Am Ende, wenn die Ameise im Bau steht, kann sie mit dem Befehl <code>LadeZuckerAb()</code> den Zucker in den Bau geben. Dann erhälst du Punkte dafür und die Menge wird in der Statistik angezeigt.
       </p>
@@ -182,7 +182,7 @@ module.exports.tutorials = {
       <p>Für Äpfel gibt es nur einen Befehl: <code>TrageApfel()</code>. Sobald die Ameise am Apfel steht, kann sie diesen Befehl ausführen. Dann fängt sie an, auf ihre Kollegen zu warten. Wenn vier Ameisen zusammenkommen, tragen sie den Apfel zurück zum Bau. Das alles steckt in diesem einen Befehl. Du musst dich nur darum kümmern, dass die Kollegen zum Apfel hinfinden. Falls du TrageApfel() an einen Ort ausführst, wo sich kein Apfel befindet, dann tut die Ameise nichts und macht mit den nächsten Befehlen weiter.
       </p>
       
-      <p><img src="/images/l2_apfel.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></p>
+      <p><img src="images/l2_apfel.png" class="img-thumbnail" title="Wie schön die Sonne sich spiegelt ..."></p>
       
       <p>Mit der eingesammelten Nahrung können neue Ameisen geboren werden. Das Volk vergrößert sich und die Ameisen können noch schneller Nahrung sammeln. 
       </p>
@@ -215,7 +215,7 @@ module.exports.tutorials = {
       <p>Nur in einem Tab zu arbeiten ist oft sehr umständlich: Es braucht viele Klicks, die Ameise zu bearbeiten und dann die Aufgabe zu starten. Das Problem lässt sich geschickt lösen, indem du zwei Tabs im Browser verwendest:
       </p>
       
-      <p><img src="/images/l2_tabs.png" class="img-thumbnail" title="Firefox, Chrome, Edge - nutze den Browser, der dir gefällt."></p>
+      <p><img src="images/l2_tabs.png" class="img-thumbnail" title="Firefox, Chrome, Edge - nutze den Browser, der dir gefällt."></p>
       
       <p>In einem Tab kannst du den Editor öffen, in dem anderen die Simulation laufen lassen. Wenn du die Ameise speicherst, reicht es, die Simulation neu zu laden (mit einem Klick auf den runden Pfeil oder mit der Taste F5) - schon wird die neue Version der Ameise ausgeführt. Wer will kann auch den Bildschirm teilen und einen Tab links und den anderen Tab rechts anzeigen lassen.
       </p>
@@ -269,7 +269,7 @@ module.exports.tutorials = {
       <p>Oft möchte man etwas ausprobieren, aber nicht den ganzen Code löschen. In dieser Situation können einzelne Zeilen mit <code>//</code> auskommentiert werden:
       </p>
       
-      <p><img src="/images/l2_kommentar.png" class="img-thumbnail" title="Da hat jemand den Ereignisnamen vergessen."></p>
+      <p><img src="images/l2_kommentar.png" class="img-thumbnail" title="Da hat jemand den Ereignisnamen vergessen."></p>
       
       <p>Zeile 7 und 8 sind auskommentiert und werden nicht ausgeführt.
       </p>
@@ -294,7 +294,7 @@ module.exports.tutorials = {
       <p>Über eine <em>Teamdefinition</em> kannst du festlegen, in wie viele Teams das Volk unterteilt wird. Der wesentliche Parameter ist dabei die Anzahl der Teams. Diese übergeben wir an eine Funktion namens "SetzeTeams" (die aber kein normaler Befehl ist!). Die Teamdefinition kommt direkt nach der Ameisendefinition und über alle Ereignisdefinitionen:
       </p>
       
-      <p><img src="/images/l2_teamdef.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l2_teamdef.png" class="img-thumbnail" title=""></p>
       
       <p>Sind Teams definiert, dann werden die Ameisen der Reihenfolge ihrer Geburt nach abwechselnd in die Teams eingeteilt. Die Teams haben jeweils eine Nummer, die Informatiker-typisch mit 0 beginnen. Hier konkret: Sind 3 Teams gesetzt, dann wird die erste Ameise in das Team 0 eingeteilt, die zweite Ameise in das Team 1 und die dritte Ameise in das Team 2. Die vierte Ameise kommt dann in das Team 0, die fünfte in das Team 1 und so weiter ... Damit sind alle Teams von der Größe her ausgeglichen.
       </p>
@@ -302,7 +302,7 @@ module.exports.tutorials = {
       <p>Innerhalb der Anweisungen können die Befehle dann für die einzelnen Teams festgelegt werden. Dabei wird der normale Anweisungsblock nochmal in einzelne <em>bedingte Anweisungsblöcke</em> unterteilt: 
       </p>
       
-      <p><img src="/images/l2_inteam.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l2_inteam.png" class="img-thumbnail" title=""></p>
       
       <p>Alle Befehle finden sich hier also innerhalb von bedingten Anweisungen. Die erste Zeile einer bedingten Anweisung ist eine Kopfzeile, die die <em>Bedingung</em> festlegt. Die Funktion <code>InTeam()</code> nimmt als Parameter die Nummer des Teams und sagt, ob eine Ameise innerhalb dieses Teams ist oder nicht. Trifft diese Bedingung ein, dann werden die Anweisungen ausgeführt, sonst nicht. Die Kopfzeile öffnet eine geschweifte Klammer, die in der Schlusszeile wieder geschlossen wird. Die Befehle innerhalb einer bedingten Anweisungen werden nochmal eingerückt, also insgesamt zweimal eingerückt.
       </p>
@@ -335,29 +335,29 @@ module.exports.tutorials = {
       <p>Nehmen wir an, wir wollen, dass eine Ameise ständig zwischen dem Bau und einem bestimmten Punkt hin und her läuft, z.B. um etwas zu bewachen. Wir können die Anweisungen 10-Mal hinschreiben, oder 100-Mal, aber immer wird es einen Zeitpunkt geben, an dem die Ameise mit allen Anweisungen fertig ist und aufhört. Wir können also nicht sagen, dass eine Ameise etwas <em>immer</em> tun soll. Der folgende Codeausschnitt zeigt eine solche Situation:
       </p>
       
-      <p><img src="/images/l3_schleife.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l3_schleife.png" class="img-thumbnail" title=""></p>
       
       <p>Wir wollen, dass die Ameise immer wieder 200 Schritte nach Osten geht. Aber wir müssen jede einzelne Wiederholung selber programmieren. Das ist eine ziemliche Einschränkung. Das Ereignis <code>"IstUntätig"</code> kommt uns hier zur Rettung. Dieses Ereignis wird in dem Moment aktiviert, wo die Ameise fertig ist mit ihren Aufgaben. Anweisungen, die hier programmiert werden, werden also immer wieder aufgerufen. Konkret sieht das so aus:
       </p>
       
-      <p><img src="/images/l3_schleife2.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l3_schleife2.png" class="img-thumbnail" title=""></p>
       
       <p>Geändert hat sich der Name in der Ereignisdefinition. Dieser lautet nun "IstUntätig". Wir schreiben die Anweisungen, die wir wiederholen wollen, einmal hin. Bei der Geburt ist die Ameise automatisch untätig und das Ereignis wird aufgerufen. Sind alle Anweisungen ausgeführt, dann wird "IstUntätig" erneut aufgerufen und die Schleife beginnt von vorne. Damit haben wir es geschafft, eine Aufgabe immer zu tun. Sollte die Ameise zwischendrin noch andere Anweisungen erhalten, dann führt sie diese aus und begibt sich danach zurück in ihre Schleife. Auf ein zusätzliches "IstGeboren" kann verzichtet werden, weil die Ameise am Anfang ja automatisch untätig ist.</p>
       
       <p>Soweit dazu. Im nächsten Tutorial werden wir sehen, dass eine Programm auch mit mehreren Ereignissen gleichzeitig arbeiten kann und damit dann suchen und finden kann. Als Hilfsmittel kannst du mit der Schaltfläche "Ereignis hinzufügen" eine neue Ereignisdefinition zum Code hinzufügen. Ergänze darin dann den Ereignisnamen:</p>
       
-      <p><img src="/images/l3_hinzu.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l3_hinzu.png" class="img-thumbnail" title=""></p>
       
-      <p><img src="/images/l3_ereignisneu.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l3_ereignisneu.png" class="img-thumbnail" title=""></p>
       
       <p>Noch zwei wichtige Hinweise: Jedes Ereignis kann im Programm maximal einmal definiert werden. Ereignisse dürfen also nicht mehrfach vorkommen:</p>
       
-      <p><img src="/images/l3_doppel.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l3_doppel.png" class="img-thumbnail" title=""></p>
       
       <p>Genausowenig dürfen Ereignisse verschachtelt werden. Ereignisdefinition kommen niemals innerhalb von Ereignissen vor:
       </p>
       
-      <p><img src="/images/l3_schachtel.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l3_schachtel.png" class="img-thumbnail" title=""></p>
     `,
     questions : [
       "Ereignisse sind sehr flexibel.",
@@ -382,7 +382,7 @@ module.exports.tutorials = {
       <p>Nehmen wir das Beispiel des Zuckers. Sobald die Ameise den Zucker sieht, soll sie darauf zulaufen. Das funktioniert mit dem neuen Befehl <code>GeheZuZiel()</code>.
       </p>
       
-      <p><img src="/images/l3_zucker.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l3_zucker.png" class="img-thumbnail" title=""></p>
       
       <p>In die Ereignisdefinition wird nun zusätzlich zum Ereignisnamen noch der Name des Parameters angegeben. Dieser Name gibt an, wie das Sichtungsobjekt heißt, das die Ameise gerade gesehen hat. Passend dazu erwartet GeheZuZiel() genau diesen Namen, um zum jeweiligen Nahrungsmittel zu laufen. In diesem Fall lautet der Parameter 'zucker', er kann aber frei gewählt werden. Wichtig ist nur, dass die beiden Namen gleich sind.
       </p>
@@ -390,7 +390,7 @@ module.exports.tutorials = {
       <p>Das Programm ist hier noch nicht vollständig. Ab jetzt können noch die bekannten Befehle ergänzt werden, um den Zucker abzubauen und zum Bau zu bringen. Dieses ganze System funktioniert natürlich auch mit Äpfeln. Diesmal wurde als Parameter ein etwas anderer Name gewählt:
       </p>
       
-      <p><img src="/images/l3_apfel.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l3_apfel.png" class="img-thumbnail" title=""></p>
       
       <p>Diese Sichtungsereignisse werden immer dann aufgerufen, wenn ein Nahrungsmittel in die Reichweite der Ameise von 70 Schritten kommen. Die Ameise vergisst dann alle bisherigen Befehle und führt die Anweisungen aus, die sie neu erhält. Wenn sie das Nahrungsmittel verlässt und nach einer Weile wieder sieht, dann wird das Ereignis erneut aufgerufen.
       </p>
@@ -404,16 +404,16 @@ module.exports.tutorials = {
       <p>Zusatz: An manchen Stellen kannst du (als Lösungsvariante) die Ameisen auch auf den Rand reagieren lassen. Dazu gibt es das Ereignis <code>"RandErreicht"</code>. Dieses Ereignis wird aufgerufen, sobald die Ameise gegen den Rand läuft. Ein Beispiel, bei dem sich die Ameise um 180 Grad dreht:
       </p>
       
-      <p><img src="/images/l3_rand.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l3_rand.png" class="img-thumbnail" title=""></p>
       
       <p>Es gilt weiterhin, dass Ereignisse nicht verschachtelt werden dürfen. Solcher Code ist also falsch:
       </p>
       
-      <p><img src="/images/l3_falsch.png" class="img-thumbnail"></p>
+      <p><img src="images/l3_falsch.png" class="img-thumbnail"></p>
       
       <p>Die richtige Version sieht so aus:</p>
       
-      <p><img src="/images/l3_richtig.png" class="img-thumbnail"></p>
+      <p><img src="images/l3_richtig.png" class="img-thumbnail"></p>
     `,
     questions : [
       "Ereignisse können keine Sichtungsobjekte übergeben.",
@@ -435,7 +435,7 @@ module.exports.tutorials = {
       <p>Dafür hast den den neuen Befehl <code>SetzeGift()</code> zur Verfügung. Diese lässt die Ameise eine Giftwolke versprühen, die sich wie ein Nebel um die Ameise legt:
       </p>
       
-      <p><img src="/images/l4_gift.png" class="img-thumbnail" title="Es kommt immer auf die Dosis an!"></p>
+      <p><img src="images/l4_gift.png" class="img-thumbnail" title="Es kommt immer auf die Dosis an!"></p>
       
       <p>Für den optimalen Einsatz des Gifts sind ein paar Punkte zu beachten:
       <ul>
@@ -459,12 +459,12 @@ module.exports.tutorials = {
       <p>Zum einen gibt es die Möglichkeit, feiner zu steuern, die die Ameisen in die Teams eingeteilt werden. Bisher konntest du die Anzahl der Teams setzen und dann wurden die Ameisen nacheinander in die Teams zugeteilt. Wenn du 4 Teams setzt, dann werden die Ameisen in der Reihenfolge der Geburt in die Teams 0, 1, 2, 3, 0, 1, 2, 3, usw. zugeordnet:
       </p>
       
-      <p><img src="/images/l4_teams.png" class="img-thumbnail"></p>
+      <p><img src="images/l4_teams.png" class="img-thumbnail"></p>
       
       <p>Für den Einsatz von Gift ist das ungünstig. Die Ameisen aus einem bestimmten Team sind zu weit auseinander und die Giftwolken verschwinden, bevor sich drei überlappen können. Es wäre besser, wenn sich die Teams in Gruppen einteilen könnten. Das geht mit der neuen Teamdefinition <code>SetzeTeamFolge()</code>. Diese ersetzt die alte Definition und wird an ihre Stelle geschrieben. In diesem Befehl schreibst du direkt auf, in welche Teams die Ameisen in der Reihe der Geburt eingeteilt werden sollen:
       </p>
       
-      <p><img src="/images/l4_teamfolge.png" class="img-thumbnail"></p>
+      <p><img src="images/l4_teamfolge.png" class="img-thumbnail"></p>
       
       <p>Jetzt werden die ersten drei Ameisen in das Team 0 gesetzt, die nächsten drei Ameisen in Team 1, und so weiter bis zum vierten Team. Wenn die Folge zu Ende ist, dann beginnt sie von vorne, die 13. Ameise kommt also wieder ins Team 0. Mit der Teamfolge hast du nun eine sehr flexible Möglichkeit zur Hand, die Teams einzuteilen. Du entscheidest, wie groß die Teams sind und in welcher Folge sie zugeteilt werden.
       </p>
@@ -472,7 +472,7 @@ module.exports.tutorials = {
       <p>Außerdem gibt es die Möglichkeit, Zufallszahlen zu erzeugen. Für eine Computerameise, die ein komplett vorherbestimmtes Leben hat, ist dies keine einfache Leistung. Ohne sich in die technischen Details zu verstricken ist es trotzdem möglich und es steht die Funktion <code>Zufall()</code> zur Verfügung. Diese Funktion nimmt zwei Parameter, die den Bereich angeben, innerhalb dessen eine Zahl erzeugt werden soll. Ein paar Beispiele:
       </p>
       
-      <p><img src="/images/l4_zufall.png" class="img-thumbnail" title="* = Multiplikation"></p>
+      <p><img src="images/l4_zufall.png" class="img-thumbnail" title="* = Multiplikation"></p>
       
       <p>Die Funktion Zufall ist kein selbstständiger Befehl, sondern kann nur in Kombination mit einem bekannten Befehl verwendet werden und zwar dort, wo sonst eine feste Zahl stehen würde. Diese Zahl wird nun zufällig bestimmt. In Zeile 5 geht die Ameise zwischen 100 und 300 Schritte, in Zeile 6 dreht sich die Ameise zwischen -30 bis 30 Grad. In Zeile 7 dreht sich die Ameise in eine der Richtung 0, 90, 180 oder 270.
       </p>
@@ -480,7 +480,7 @@ module.exports.tutorials = {
       <p>Schließlich kann es manchmal nützlich sein, wenn die Ameise kurz innehält. Dazu gibt es den neuen Befehl <code>Warte()</code>. Diese veranlasst die Ameise, eine bestimmte Zeitspanne stehen zu bleiben. Der Parameter gibt die Wartezeit in Ticks an (zur Erinnerung: 40 Ticks entsprechen einer Sekunde). Um die Ameise 2 Sekunden warten zu lassen schreibst du also:
       </p>
       
-      <p><img src="/images/l4_warte.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l4_warte.png" class="img-thumbnail" title=""></p>
     `,
     questions : [
       "Wanzen sind unsterblich.",
@@ -502,19 +502,19 @@ module.exports.tutorials = {
       <p>Das erste Ereignis, um auf Wanzen zu reagieren, heißt <code>"SiehtWanze"</code>. Dieses Ereignis wird aktiviert, wenn die Ameise innerhalb ihrer Sichtweite eine Wanze sieht. Dieses Ereignis stellt auch ein Sichtungsobjekt zur Verfügung und man kann zur Wanze gehen (was aber gefährlich ist!). Besser ist es aber, einfach Gift zu setzen und zum Bau zurückzukehren. Der Befehl in Zeile 4 ist auskommentiert und wird daher nicht ausgeführt:
       </p>
       
-      <p><img src="/images/l4_wanze.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l4_wanze.png" class="img-thumbnail" title=""></p>
       
       <p>Dieses Ereignis gibt es auch in einer speziellen Variante, die nur auf Wanzen reagiert, die sich im 45-Grad-Bereich vor der Ameise befinden. Das Ereignis heißt <code>"SiehtWanzeVoraus"</code> und verhält sich sonst genauso wie "SiehtWanze". Beide werden unabhängig voneinander aufgerufen, man sollte sich also für eine der beiden Varianten entscheiden und nicht beide gleichzeitig verwenden.
       </p>
       
-      <p><img src="/images/l4_wanzevoraus.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l4_wanzevoraus.png" class="img-thumbnail" title=""></p>
       
-      <p><img src="/images/l4_winkel.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l4_winkel.png" class="img-thumbnail" title=""></p>
 
       <p>Eine weitere Version gibt es, um auf gegnerische Ameisen zu reagieren. Dieses Ereignis heißt <code>"SiehtGegner"</code> und wird aktiviert, sobald sich eine gegnerische Ameise im Sichtbereich befinden. Dieses Ereignis liefert auch ein Sichtungsobjekt mit, hat aber keine Variant mit 45-Grad-Bereich:
       </p>
       
-      <p><img src="/images/l4_gegner.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l4_gegner.png" class="img-thumbnail" title=""></p>
       
       <p>Kleiner Hinweis: Die Befehle GeheZuBauDirekt() und GeheZuZielDirekt() wirken sich nicht auf die Sichtung von Wanzen und Gegner aus. Diese sind immer aktiviert und werden mit diesen Befehlen nicht ignoriert.
       </p>
@@ -525,22 +525,22 @@ module.exports.tutorials = {
       <p>Ein Beispiel: Die Ameise hat die Anweisungen, zu einem festen Zuckerhaufen zu gehen und dort Zucker zu holen:
       </p>
       
-      <p><img src="/images/l4_beispiel.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l4_beispiel.png" class="img-thumbnail" title=""></p>
       
       <p>Die Ameise hat den Zuckerhaufen bereits erreicht und sich den Zucker aufgeladen. Sie führt gerade Zeile 7 aus (GeheZuBau()) und hat noch Zeile 8 vorgemerkt. Auf dem Rückweg trifft sie auf eine Wanze. Diese ist erstmal so programmiert:
       </p>
       
-      <p><img src="/images/l4_wanzeloesche.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l4_wanzeloesche.png" class="img-thumbnail" title=""></p>
       
       <p>Die Ameise weicht der Wanze aus. Sie hat immer noch ihren Zucker geladen, aber weil alle alten Befehle gelöscht wurden, bleibt sie mit dem Zucker auf dem Spielfeld stehen! Das wollen wir vermeiden. Dazu können wir innerhalb eines Ereignis sagen, dass die alten Befehle weiter ausgeführt werden sollen. Das passiert mit dem Befehl <code>FühreAlteBefehleAus()</code>. An Stelle dieses Befehls werden nun die bisherigen Befehle weiter ausgeführt:
       </p>
       
-      <p><img src="/images/l4_wanzegut.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l4_wanzegut.png" class="img-thumbnail" title=""></p>
       
       <p>Für alle die bis zum Schluss durchgehalten haben: Es gibt im Editor eine neues Tool, den Syntax-Checker! Dieser liest deinen Programmcode ein und prüft ihn auf Klammerfehler. Sollte irgendwo eine Klammer zu wenig oder zu viel sein, gibt er eine Fehlermeldung aus und sagt auch, was er auszusetzen hat. Einfach draufklicken und der Code wird überprüft.
       </p>
       
-      <p><img src="/images/l4_syntax.png" class="img-thumbnail" title=""></p>
+      <p><img src="images/l4_syntax.png" class="img-thumbnail" title=""></p>
     `,
     questions : [
       "Eine Ameise kann auf Gegner und Wanzen reagieren.",
@@ -565,12 +565,12 @@ module.exports.tutorials = {
       <p>In diesem Tutorial wird es genau darum gehen, wie man kommuniziert. Dazu können die Ameisen Nachrichten senden. Eine Nachricht kann mit dem Befehl <code>SendeNachricht()</code> verschickt werden. Eine Nachricht besteht aus einem Betreff und einem (optionalen) Inhalt. Der Betreff ist ein frei wählbarer Text, der verwendet wird, um verschiedene Nachrichtentypen zu unterscheiden. Sehen wir uns dazu mal ein erstes Beispiel an:
       </p>
       
-      <p><img src="/images/l5_sendetanzt.png" class="img-thumbnail"></p>
+      <p><img src="images/l5_sendetanzt.png" class="img-thumbnail"></p>
       
       <p>Die Ameise geht 1000 Schritte. Dann sendet sie eine Nachricht mit dem Betreff "Tanzt!". Danach geht sie zum Bau. Der Nachrichtenbefehl kann jederzeit wie ein normaler Befehl eingesetzt werden. Um auf diese Nachricht zu reagieren, fügen wir dem Code eine weitere Ereignisdefinition hinzu:
       </p>
       
-      <p><img src="/images/l5_empfangetanzt.png" class="img-thumbnail"></p>
+      <p><img src="images/l5_empfangetanzt.png" class="img-thumbnail"></p>
       
       <p>Der Ereignisname entspricht dem Betreff mit einem Doppelpunkt vorangestellt. Dieser Doppelpunkt bedeutet: Das hier ist eine Nachricht. Jede Ameise empfängt diese Nachricht und führt dann die Anweisungen aus. In diesem Fall dreht sie sich einmal um 360 Grad. Es gibt eine Ausnahme: Sollte die Ameise gerade einen der Befehle GeheZuZielDirekt() oder GeheZuBauDirekt() ausführen, dann empfängt sie keine Nachrichten.
       </p>
@@ -578,26 +578,26 @@ module.exports.tutorials = {
       <p>Je näher eine Ameise am Sender, umso früher bekommt sie die Nachricht. Man kann festlegen, dass nur eine bestimmte Anzahl an Ameisen eine Nachricht bekommt. Wenn eine feste Anzahl an Ameisen um den Sender herum die Nachricht erhalten haben, dann wird sie nicht mehr weitergegeben. Dafür schreibt man unmittelbar vor dem Nachrichtenbefehl den Befehl <code>SetzeLimit()</code> und gibt als Parameter an, wie viele Ameisen die Nachricht erhalten sollen:
       </p>
       
-      <p><img src="/images/l5_sendetanztlimit.png" class="img-thumbnail"></p>
+      <p><img src="images/l5_sendetanztlimit.png" class="img-thumbnail"></p>
       
       <hr>
       
       <p>Die Nachrichten haben eine weitere coole Funktion: Mit ihnen kann man auch zusätzliche Informationen übertragen. Deine Ameise hat zum Beispiel einen Apfel gesehen und du möchtest den anderen Ameisen sagen, wo dieser Apfel ist. Dann kannst du das Apfelobjekt als Parameter zum Nachrichtenbefehl hinzufügen:
       </p>
       
-      <p><img src="/images/l5_sende.png" class="img-thumbnail"></p>
+      <p><img src="images/l5_sende.png" class="img-thumbnail"></p>
       
       <p>In diesem Beispiel sieht die Ameise einen Apfel und sendet eine Nachricht mit dem Betreff "ApfelGesehen" und dem Apfelobjekt als Inhalt. Auf entsprechende Weise kannst du der Ereignisdefinition einen Parameter hinzufügen und beispielsweise auf diesen Apfel zulaufen:
       </p>
       
-      <p><img src="/images/l5_empfange.png" class="img-thumbnail"></p>
+      <p><img src="images/l5_empfange.png" class="img-thumbnail"></p>
       
       <hr>
       
       <p>Der Inhalt ist nicht auf Objekte beschränkt. Es spricht nichts dagegen, auch Zahlen oder andere Daten zu übertragen. Wenn wir nochmal kurz zu unserem Anfangsbeispiel zurückkehren. Hier können wir angeben, wie viele Runden die Ameisen tanzen sollen:
       </p>
       
-      <p><img src="/images/l5_tanztparameter.png" class="img-thumbnail"></p>
+      <p><img src="images/l5_tanztparameter.png" class="img-thumbnail"></p>
     `,
     questions : [
       "Ameisen können nicht miteinander reden.",
@@ -648,21 +648,21 @@ module.exports.tutorials = {
       <p>Außerdem gibt es die neuen Befehle <code>DreheZuObjekt()</code> und <code>DreheWegVonObjekt()</code>. Diese dienen als Ergänzung zu GeheZuZiel() und sind von der Verwendung her flexibler. Beispielsweise kann man damit programmieren, dass die Ameisen, wenn sie einen Zucker sehen, erstmal 100 Schritte davon weggehen:
       </p>
       
-      <p><img src="/images/l5_drehezu.png" class="img-thumbnail"></p>
+      <p><img src="images/l5_drehezu.png" class="img-thumbnail"></p>
       
       <p>DreheWegVonObjekt() dreht die Ameise so, dass sie vom Zuckerhaufen wegschaut. Dann geht sie 100 Schritte und dreht sich mit DreheZuObjekt() dann zum Zuckerhaufen. Dieses Programm kann nützlich sein, um sich zum Beispiel davor zu schützen, in eine Giftwolke reinzulaufen, die um den Zucker herum besteht. Diese zwei Befehle können auch im Zusammenhang mit Wanzen und Gegner verwendet werden.</p>
       
       <p>Schließlich können über die Variablen <code>SchrittZahl</code> und <code>TickZahl</code> auf Informationen über die Ameise und die Simulation zugegriffen werden. SchrittZahl gibt an, wie viele Schritte die Ameise schon gelaufen ist. Das Maximum beträgt 3000. Ähnlich wie bei Teamabfragen kann ein Teil der Anweisungen nur unter einer bestimmen Bedingung aufgerufen werden, wenn z.B. die Anzahl der Schritt größer oder kleiner ist als eine bestimmte Zahl:
       </p>
       
-      <p><img src="/images/l5_bedingt.png" class="img-thumbnail"></p>
+      <p><img src="images/l5_bedingt.png" class="img-thumbnail"></p>
       
       <p>In der ersten Abfrage (Zeile 4 bis 7) werden die Anweisungen nur ausgeführt, wenn die Ameise noch weniger als 1000 Schritte gegangen ist. In der zweiten Abfrage geht die Ameise zum Bau zurück, wenn sie mehr als 2500 Schritte gegangen ist. Es können die Vergleichsoperatoren <, <=, > und >= verwendet werden. Auf Stufe 7 werden wir uns nochmal ausführlich mit solchen If-Anweisungen beschäftigen.</p>
       
       <p>Ähnlich kann man mit der TickZahl das Verhalten der Ameise ändern, je nach dem, wie viele Ticks vergangen sind. Hier ist nochmal ein Beispiel dafür:
       </p>
       
-      <p><img src="/images/l5_tick.png" class="img-thumbnail"></p>
+      <p><img src="images/l5_tick.png" class="img-thumbnail"></p>
       
       <p>Vor der Runde 1000 setzt die Ameise beim Zucker das Limit auf 3. Danach setzt die Ameise das Limit auf 10.
       </p>
@@ -687,14 +687,14 @@ module.exports.tutorials = {
       <p>Dazu brauchen wir <em>Funktionen</em>. Du kannst dir eine Funktion wie eine automatische Maschine vorstellen, die Daten als Eingabe nimmt und nach der Verarbeitung Daten als Ausgabe wieder ausspuckt: 
       </p>
       
-      <p><img src="/images/l6_funktion_q.png" class="img-thumbnail"></p>
+      <p><img src="images/l6_funktion_q.png" class="img-thumbnail"></p>
       
       <p>Hier ist eine "Maschine", die Zahlen quadriert. Erhält sie eine 11 als Eingabe, dann spuckt sie die Zahl 121 als Ausgabe aus. Die Eingaben werden allgemein als <em>Parameter</em> bezeichnet. Der Parameter dieser Maschine heißt x - und das erinnert schon sehr an die Mathematik.</p>
       
       <p>Diese Funktionen lässt sich nun in Code schreiben:
       </p>
       
-      <p><img src="/images/l6_funktion_code.png" class="img-thumbnail"></p>
+      <p><img src="images/l6_funktion_code.png" class="img-thumbnail"></p>
       
       <p>Das hier ist ein Ameisenvolk, das Zahlen quadrieren kann. Ereignisse werden nicht benötigt und können aus dem Code gelöscht werden. In Zeile 3 bis 5 ist die eigentliche Definition unserer Funktion. Begonnen wird mit dem Schlüsselwort <code>function</code>, dahinter folgt der Name der Funktion. In die runden Klammern wird der Parametername geschrieben. In unserem Fall heißt die Funktion 'quadriere' und der Parameter hat den Namen 'x'. Du kannst den Namen des Parameters frei auswählen, selbst wenn in der Vorlage der Aufgabe ein anderer Name vorgeschlagen wird. Wichtig ist nur, dass du innerhalb der Funktion den gleichen Namen nutzt, wie du ihn in der Zeile 3 definiert hast. In Zeile 3 öffnen wir außerdem eine geschweifte Klammer und schließen sie wieder in Zeile 5. 
       </p>
@@ -705,7 +705,7 @@ module.exports.tutorials = {
       <p>Diese kann dann zum Beispiel mit <code style="color:blue">quadriere(11)</code> aufgerufen werden. Das liefert das Ergebnis 121. Der Aufruf <code style="color:blue">quadriere(101)</code> liefert das Ergebnis 10201. Bei den Aufgaben auf dieser Stufe werden wir die Funktion nicht selber verwenden, sondern anderen zur Verfügung stellen. Dazu brauchen wir die Zeile 7: Mit dem Befehl <code>Exportiere()</code> geben wir die Funktion 'quadriere' frei und andere Leute können sie dann verwenden.
       </p>
       
-      <p><img src="/images/l6_tester.png" class="img-thumbnail"></p>
+      <p><img src="images/l6_tester.png" class="img-thumbnail"></p>
       
       <p>Hier siehst du das Beispiel einer Aufgabe, bei der Zahlen quadriert werden sollen. Unsere Funktion erfüllt ihren Zweck und hat alle Testaufrufe bestanden. In den runden Klammern stehen die Eingaben, in den eckigen Klammern unsere Ausgabe.
       </p>
@@ -713,7 +713,7 @@ module.exports.tutorials = {
       <p>Bei einer anderen Aufgabe könnte allerdings das passieren:
       </p>
       
-      <p><img src="/images/l6_test_fail.png" class="img-thumbnail"></p>
+      <p><img src="images/l6_test_fail.png" class="img-thumbnail"></p>
       
       <p>Unser Ameisenvolk kann Zahlen quadrieren, aber bei der Aufgabe war nach der dritten Potenz gefragt. Das führt natürlich zu einer Fehlermeldung und der Test scheitert.
       </p>
@@ -724,7 +724,7 @@ module.exports.tutorials = {
       <p>Ein kleines Beispiel, wo eine Funktion auch mehr als einen Parameter haben kann. (p und q sind dabei die Seitenlängen der Diagonalen, auch hier können die Namen frei gewählt werden - wichtig ist die Reihenfolge):
       </p>
       
-      <p><img src="/images/l6_raute.png" class="img-thumbnail"></p>
+      <p><img src="images/l6_raute.png" class="img-thumbnail"></p>
       
       <p>
       </p>
@@ -732,7 +732,7 @@ module.exports.tutorials = {
       <p>Außer mit Zahlen können wir auch mit <em>Text</em> arbeiten. Hier ist eine Funktion, die eine Begrüßung erzeugt:
       </p>
       
-      <p><img src="/images/l6_strings.png" class="img-thumbnail"></p>
+      <p><img src="images/l6_strings.png" class="img-thumbnail"></p>
       
       <p>Ein Text wird immer in doppelte Anführungszeichen geschrieben. Um Texte miteinander zu verbinden, wird der Operator <code>+</code> verwendet. Dieses plus hat also eine ganz andere Funktion als das plus für Zahlen. Die Zeile 4 ist wie eine Schablone, in die die Eingabe an die entsprechenden Stellen eingefügt wird.
       </p>
@@ -740,7 +740,7 @@ module.exports.tutorials = {
       <p>Ein Beispielaufruf sieht so aus:
       </p>
       
-      <p><img src="/images/l6_begr.png" class="img-thumbnail"></p>
+      <p><img src="images/l6_begr.png" class="img-thumbnail"></p>
     `,
     questions : [
       "Funktionen werden mit dem Schlüsselwort 'funktion' eingeleitet.",
@@ -762,7 +762,7 @@ module.exports.tutorials = {
       <p>Ein Beispiel ist die Preisermittlung bei einem Großhändler, z.B. für Holzbretter. Ein einzelnes Brett kostet 10€. Wenn man genau 400 Bretter kauft, passen die genau auf eine Palette und kosten im Aktionspreis statt 4000€ nur 3000€. Wenn man mehr als 400 Bretter kauft, gibt es einen Mengenrabatt und man zahlt nur 8€ pro Brett. Puh, das lässt sich nicht mehr in einer einfachen Formel darstellen. Am besten, wir zeichnen uns die Situation auf:
       </p>
       
-      <p><img src="/images/l7_flow1.png" class="img-thumbnail"></p>
+      <p><img src="images/l7_flow1.png" class="img-thumbnail"></p>
       
       <p>Das ist ein Flussdiagramm und kann folgendermaßen gelesen werden: Beginne bei Start und laufe zur ersten Verzweigung. Kauft der Kunde weniger als 400 Bretter, dann gehe nach rechts zum ersten Kasten. Der Preis berechnet sich dann mit 10€ pro Brett (x = Anzahl der Bretter). Ansonsten geht man zur zweiten Verzweigung. Dort wird geprüft, ob der Kunde genau 400 Bretter kauft. Ist das der Fall, zahlt er 3000€. Falls das nicht zutrifft, dann kauft der Kunde mehr als 400 Bretter und dann gilt der ermäßigte Preis von 8€.
       </p>
@@ -770,7 +770,7 @@ module.exports.tutorials = {
       <p>Genau das lässt sich nun mit <em>If-Anweisungen</em> in Code ausdrücken:
       </p>
       
-      <p><img src="/images/l7_preis.png" class="img-thumbnail"></p>
+      <p><img src="images/l7_preis.png" class="img-thumbnail"></p>
       
       <p>Zeile 4 bildet die erste Verzweigung. Die Verzweigung beginnt mit dem Schlüsselwort <code>if</code> und wird gefolgt von runden Klammern, in denen die <em>Bedingung</em> steht. In diesem Fall ist die Bedingung, dass die Anzahl der gekauften Bretter (das x) kleiner als 400 ist. Trifft die Bedingung zu, dann wird der Code innerhalb der geschweiften Klammern ausgeführt, also Zeile 5. Diese Zeile gibt den Preis zurück und beendet damit die Funktion
       </p>
@@ -787,7 +787,7 @@ module.exports.tutorials = {
       <p>If-Anweisungen sind einer der wesentlichen Grundbausteine von Software. Daher hier nochmal ein Beispiel. Diesmal wird kein Ergebnis berechnet, sondern ein Text zurückgegeben. Die neuen Vergleichsoperatoren sind im Einsatz:
       </p>
       
-      <p><img src="/images/l7_zahl.png" class="img-thumbnail"></p>
+      <p><img src="images/l7_zahl.png" class="img-thumbnail"></p>
     `,
     questions : [
       "Eigentlich lassen sich alle Dinge der Welt in einer einzelnen Formel darstellen.",
@@ -809,17 +809,17 @@ module.exports.tutorials = {
       <p>Die erste solche Funktion ermöglicht es uns, Bedingungen aus mehreren Teilen zusammenzusetzen. Dabei helfen uns die Operatoren <code>&&</code> (UND) bzw. <code>||</code> (ODER). Mit UND tritt die Bedingung ein, wenn BEIDE Teile erfüllt sind, bei ODER tritt die Bedingung ein, wenn ein oder beide Teile erfüllt sind. Ein kleines Beispiel: 
       </p>
       
-      <p><img src="/images/l7_logik.png" class="img-thumbnail"></p>
+      <p><img src="images/l7_logik.png" class="img-thumbnail"></p>
       
       <p>Die Bedingung in Zeile 4 tritt nur ein, wenn sowohl a als auch b gleich 3 ist. Schlägt einer der Teile fehl, dann trifft die Bedingung nicht zu. Anders in Zeile 7. Hier reicht es, wenn mindestens eine der Zahlen gleich 5 ist. Sie trifft auch dann zu, wenn beide Zahlen gleich 5 sind (also ist das <em>kein</em> entweder-oder). Logische Verknüpfungen lassen sich wie Rechenoperatoren mit Klammern gliedern und es dürfen auch mehrere Verknüpfungen auf einmal vorkommen. Dann wird es aber immer schwerer, die Logik zu verstehen ...
       </p>
       
-      <p><img src="/images/l7_logikdeep.png" class="img-thumbnail"></p>
+      <p><img src="images/l7_logikdeep.png" class="img-thumbnail"></p>
       
       <p>Das nächste Thema ist ein Muster, das in der Praxis häufig vorkommt:
       </p>
       
-      <p><img src="/images/l7_typparam.png" class="img-thumbnail"></p>
+      <p><img src="images/l7_typparam.png" class="img-thumbnail"></p>
       
       <p>Der Parameter 'anzahl' gibt die Anzahl von Menschen an, ist also eine ganz normale Zahl. Der Parameter 'typ' dagegen ist speziell an unsere Funktion angepasst und nimmt nur einen der Werte "Kind" oder "Erwachsener" an. Das wird im Vorfeld, z.B. in der Aufgabenstellung, so festgelegt. Mit dieser Annahme schreiben wir die Funktion so, dass sie entsprechend auch nur auf diese beiden Fälle reagiert.
       </p>
@@ -827,17 +827,17 @@ module.exports.tutorials = {
       <p>Manchmal reicht auf eine Frage ein ganz simples Ja oder Nein. In der Informatik übersetzt sich das in die Schlüsselwörter <code>true</code> und <code>false</code>. Diese können von einer Funktion zurückgegeben werden und entsprechen einer Ja/Nein-Antwort:
       </p>
       
-      <p><img src="/images/l7_iq.png" class="img-thumbnail"></p>
+      <p><img src="images/l7_iq.png" class="img-thumbnail"></p>
       
       <p>Ist der IQ größer als 180, dann ist die Person superschlau und die Antwort lautet true (= ja). Bei einem IQ darunter lautet die Antwort false (= nein). Dieses Beispiel lässt sich noch etwas umschreiben, und zwar mit dem Schlüsselwort <code>else</code>:
       </p>
       
-      <p><img src="/images/l7_else.png" class="img-thumbnail"></p>
+      <p><img src="images/l7_else.png" class="img-thumbnail"></p>
       
       <p>Hinter den if-Block fügt am das Wort 'else' hinzu und eröffnet einen neuen Block. Wichtig zu wissen: Es wird immer nur einer der beiden Blöcke ausgeführt. Wenn die Bedingung wahr ist, wird der erste Block (Zeile 5) ausgeführt. Ist die Bedingung falsch, dann wird der zweite Block (Zeile 7) ausgeführt. Es kann nicht passieren, dass beide Blöcke zusammen ausgeführt werden - genauso passiert es nicht, dass keiner der beiden Blöcke ausgeführt wird. In diesem Fall ist es natürlich ziemlich egal, ob wir den else-Block verwenden, weil unsere Funktion beim 'return' einfach abbricht. Beim nächsten Beispiel allerdings ist es notwendig, einen else-Block zu verwenden:
       </p>
       
-      <p><img src="/images/l7_else2.png" class="img-thumbnail"></p>
+      <p><img src="images/l7_else2.png" class="img-thumbnail"></p>
       
       <p>Die Ameise tut eine von zwei Dingen: Zum Bau zurückkehren oder weiterlaufen. Was die Ameise tut, entscheidet sich an der Bedingung in Zeile 4. Die Ameise soll sich immer für eine der beiden Alternativen entscheiden und zwar so, wie es der Situation angemessen ist. Das wird mit dieser If-Else-Anweisung erreicht.
       </p>
@@ -862,7 +862,7 @@ module.exports.tutorials = {
       <p>Eine Alternative dazu sind <em>Variablen</em>. Diese funktionieren nach einem anderen Konzept. Anstatt zwischen den einzelnen Ameisen Nachrichten zu verschicken, gibt es nun ein 'schwarzes Brett' für alle Ameisen, wo die wichtigsten Informationen notiert sind:
       </p>
       
-      <p><img src="/images/l8_brett.png" class="img-thumbnail" width=500></p>
+      <p><img src="images/l8_brett.png" class="img-thumbnail" width=500></p>
       
       <p>Die Ameisen können jederzeit auf dieses Brett zugreifen, ganz egal, wo sie sich gerade befinden: Ob im Bau oder mitten auf dem Spielfeld. Sie können dabei die Informationen aus dem Brett verwenden und auch Änderungen vornehmen. Diese Änderungen sind dann sofort für die anderen Ameisen auf dem Spielfeld sichtbar.
       </p>
@@ -870,7 +870,7 @@ module.exports.tutorials = {
       <p>Schauen wir uns dazu ein erstes Beispiel an:
       </p>
       
-      <p><img src="/images/l8_var1.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_var1.png" class="img-thumbnail"></p>
       
       <p>Grundsetzlich durchlaufen Variablen drei Phasen. Die erste Phase ist die <em>Deklaration und Initialisierung</em>. Die findet hier in der Zeile 3 statt. Diese Zeile wird vor Beginn der Simulation ausgeführt und legt eine neue Variable an. Eine Variable besteht aus einem Namen, hier 'anzahlAmeisen', und einem Wert, der hier auf 0 gesetzt wird. Jede Variable muss bevor sie verwendet werden kann, diese erste Phase durchlaufen und deklariert und und initialisiert werden. Man schreibt diese Anweisungen immer zwischen die Ameisendefinition und dem ersten Ereignis.
       </p>
@@ -890,7 +890,7 @@ module.exports.tutorials = {
       <p>Zum Schluss wollen wir uns noch anschauen, welche weiteren Möglichkeiten es für die Phase 3 gibt. Hier gibt es ein paar Abkürzungen:
       </p>
       
-      <p><img src="/images/l8_var2.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_var2.png" class="img-thumbnail"></p>
       
       <p>Dieses Programm deklariert vier Variablen mit den Namen a, b, c und d und weist ihnen jeweils einen Wert zu. Interessant sind für uns die Zeilen 11 bis 14. Gehen wir diese nacheinander durch: Zeile 11 ist die einfachste Form der Zuweisung. Hier wird a einfach auf einen festen Wert gesetzt. In Zeile 12 begegnet uns schon die erste Abkürzung: Um den Wert einer Variable zu erhöhen (bzw. zu erniedrigen) kann man die Operatoren <code>+=</code> (oder <code>-=</code>) verwenden. Zeile 13 zeigt das Gleiche mit der Multiplikation. Hier hängt der Wert von c allerdings auch von b ab, wir haben hier also eine Vermischung von Phase 2 und 3! Das ist schon eine ziemlich komplexe Anweisung. Deutlich simpler ist die Zeile 14: Weil es sehr oft vorkommt, dass man eine Variable um genau 1 erhöhen (bzw erniedrigen) will, gibt es den <code>++</code> und den <code>--</code> Operator. Diese werden hinter den Variablenamen geschrieben und erhöhen bzw. erniedrigen die Variable um genau 1.
       </p>
@@ -1161,17 +1161,17 @@ module.exports.tutorials = {
       <p>Beide Befehle braucht zwei Parameter. Diese stellen Orte auf dem Spielfeld dar. Distanz berechnet den Abstand zwischen diesen zwei Orten. Richtung berechnet die Richtung, in die man schauen muss, um vom ersten Ort zum zweiten Ort zu gelangen. Die Richtung wird als Himmelsrichtung (0 bis 359) angegeben. Ein Beispiel mit einem Zuckerhaufen (A) als ersten Parameter und einer Ameise (B) als zweiten Parameter:
       </p>
       
-      <p><img src="/images/l8_vermessung.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_vermessung.png" class="img-thumbnail"></p>
       
       <p>Als Orte können Sichtungsobjekte verwendet werden. Außerdem kann mit der Variablen <code>Bau</code> auf dem Heimatbau, mit <code>Position</code> auf die aktuelle Position der Ameise zugegriffen werden. Hier ein Beispiel mit allem in Kombination:
       </p>
       
-      <p><img src="/images/l8_vermessungcode.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_vermessungcode.png" class="img-thumbnail"></p>
       
       <p>Wenn die Ameise einen Zuckerhaufen sieht, dann prüft sie, ob die Entfernung zum Bau maximal 1000 ist und geht erst dann dahin. Eine andere Art der Verwendung besteht darin, die Zahl, die diese Funktionen zurückgeben, in einem Befehl zu verwenden:
       </p>
       
-      <p><img src="/images/l8_vermessungcode2.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_vermessungcode2.png" class="img-thumbnail"></p>
       
       <p>Die Ameise bestimmt hier die Himmelsrichtung von ihrer Position aus zum Bau und dreht sich dann in diese Richtung. Das ist übrigens das Gleiche wie DreheZuObjekt(Bau).
       </p>
@@ -1179,7 +1179,7 @@ module.exports.tutorials = {
       <p>Es gibt außerdem drei neue Statuswerte, auf die über Variablen zugegriffen werden kann. Kennen tust du bereits den Status SchrittZahl und TickZahl, jetzt kommen die Variablen <code>HatZucker</code>, <code>HatApfel</code> und <code>Blickrichtung</code> hinzu. Der letzte Status ist eine Zahl die angibt, in welche Himmelsrichtung die Ameise gerade schaut. In fortgeschrittenen Programmen kann das manchmal wichtig sein. Die anderen zwei neuen Statuswerte geben an, ob die Ameise aktuell einen Zucker trägt bzw. ob die Ameise an einem Apfel steht bzw. diesen trägt. Dazu ein Beispiel:
       </p>
       
-      <p><img src="/images/l8_status.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_status.png" class="img-thumbnail"></p>
       
       <p>Wenn die Ameise einen Apfel sieht, dann prüft sie, ob sie aktuell einen Zucker trägt. Wenn ja, dann lädt sie diesen ab und wird damit "Ballast" los. Eine Besonderheit hier: 'HatZucker' braucht keinen Operator sondern kann direkt als Bedingung verwendet werden. Das liegt daran, dass die Variable selber bereits einen Wahrheitswert dargestellt, also true oder false ist.
       </p>
@@ -1189,14 +1189,14 @@ module.exports.tutorials = {
       <p>Die Ameise erhält einen Hinweis, dass sie gestorben ist. Das passiert mit dem Ereignis <code>"IstGestorben"</code>. Dieses Ereignis enthält einen Parameter, der die Todesursache angibt. Bei "Wanze" ist die Ameise von einer Wanze getötet worden, bei "Müdigkeit" hat sie ihre Reichweite überschritten und bei "Gift" wurde sie vergiftet:
       </p>
       
-      <p><img src="/images/l9_istgestorben.png" class="img-thumbnail"></p>
+      <p><img src="images/l9_istgestorben.png" class="img-thumbnail"></p>
       
       <p>Um die anderen Ameisen zu warnen, kann die Ameise innerhalb dieses Ereignisse keine Nachrichten mehr schicken (denn sie ist ja tot), allerdings kann sie innerhalb des Ereignisse weiterhin auf globale Variablen zugreifen. Dort kann sie z.B. ihre Position vermerken.
       </p>
       
       <p>Desweiteren gibt es ein neues Ereignis mit dem Namen <code>"Tick"</code>. Dieses Ereignis wird <em>jeden</em> Simulationstick für <em>jede</em> Ameise aufgerufen. Das Ereignis findet damit quasi ständig statt. Das kann genutzt werden, um zu ganz bestimmten Zeitpunkten ganz bestimmte Aktionen auszulösen:</p>
       
-      <p><img src="/images/l8_tick.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_tick.png" class="img-thumbnail"></p>
       
       <p>Genau im Tick 1000 werden alle Ameisen zum Bau zurückgeschickt. Das bewirkt diese Ereignisdefinition. Eine andere Anwendung wäre es, die Ameisen über einer gewissen Schrittzahl sofort zum Bau zurückzuschicken. Das ist nicht ganz einfach und sprengt leider den Umfang dieses Tutorials. Für die Aufgaben wird es mit diesen Informationen reichen.
       </p>
@@ -1204,17 +1204,17 @@ module.exports.tutorials = {
       <p>Globalen Variablen hast du nun kennengelernt. Es gibt dazu noch die Möglichkeit, jeder Ameise persönlich Variablen zuzuordnen. Diese Variablen werden im <code>Gedächtnis</code> gespeichert. Im Gegensatz zu globalen Variablen müssen die Einträge im Gedächtnis nicht deklariert werden, sondern werden automatisch bei der ersten Zuweisung erstellt. Die Namen für die Einträge werden mit einem Punkt hinter das Objekt 'Gedächtnis' geschrieben:
       </p>
       
-      <p><img src="/images/l8_gedaechtnis.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_gedaechtnis.png" class="img-thumbnail"></p>
       
       <p>Die Ameise kann mit jeder Zuckersichtung den Wert im Gedächtnis erhöhen. Außerdem können Gedächtniseinträge in Abfragen verwendet werden:
       </p>
       
-      <p><img src="/images/l8_ged2.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_ged2.png" class="img-thumbnail"></p>
       
       <p>Beim zehnten Zucker gibt sie über den Befehl <code>alert</code> eine Meldung aus:
       </p>
       
-      <p><img src="/images/l8_ged3.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_ged3.png" class="img-thumbnail"></p>
       
       <p>Eine andere Möglichkeit, Informationen auszugeben, ist über <code>console.log()</code>. Dabei gibt es keinen Popup, sondern die Informationen werden auf der Konsole ausgegeben, auf die man über F12 zugreifen kann. Zum Schluss gibt es noch die Funktion <code>Aktiv()</code>, mit der man gespeicherte Nahrungsmittel darauf prüfen kann, ob sie noch auf dem Spielfeld vorhanden sind. 
       </p>
@@ -1281,7 +1281,7 @@ module.exports.tutorials = {
       <p>Probleme treten auf, wenn Befehle mit anderen Anweisungen gemischt werden, die sofort ausgeführt werden. Dazu gehören Bedingungen und Zuweisungen zu Variablen. Diese stören sich dann untereinander:
       </p>
       
-      <p><img src="/images/l8_async.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_async.png" class="img-thumbnail"></p>
       
       <p>Das ist ein typisches Beispiel: Man würde erwarten, dass die Ameise nach dem Aufladen des Zuckers eine Meldung gibt. Allerdings kommt nie eine Meldung. Das liegt daran, dass die Bedingung zum Zeitpunkt des Ereignis sofort ausgeführt werden, die Befehle aber im AAV zwischengespeichert werden und später erst ausgeführt werden. Beim Zeitpunkt des Ereignis hat die Ameise noch einen Zucker geladen.
       </p>
@@ -1289,7 +1289,7 @@ module.exports.tutorials = {
       <p>Weil das ärgerlich ist, gibt es eine offizielle Möglickeit, das Programm zu 'unterbrechen' und bis zu bestimmten Befehlen zu warten. Das geht dadurch, dass man in der Ereignisdefinition ein Sternchen hinzufügt und beim entsprechenden Befehl das Schlüsselwort <code>yield</code> anwendet:
       </p>
       
-      <p><img src="/images/l8_yield.png" class="img-thumbnail"></p>
+      <p><img src="images/l8_yield.png" class="img-thumbnail"></p>
       
       <p>Anweisungen sind also unterbrochen. Der erste Teil geht bis zum Befehl 'NimmZucker()'. Durch das yield bleibt das Programm "stehen" und wird erst zu dem Zeitpunkt ausgeführt, wo der Befehl 'NimmZucker()' fertig ausgeführt wurde. Erst dann wird die Bedingung ausgewertet und dann erscheint auch die richtige Meldung.
       </p>

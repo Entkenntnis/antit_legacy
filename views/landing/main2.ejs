@@ -5,7 +5,7 @@
   </head>
   <body>
     <div class="container-fluid">
-      <a href="/"><div class="jumbotron" style="background-image: url(/deco/startseite.png);background-position: center top;background-repeat:no-repeat">
+      <a href=""><div class="jumbotron" style="background-image: url(deco/startseite.png);background-position: center top;background-repeat:no-repeat">
       </div></a>
 	    
 	    <br><br>
@@ -14,12 +14,12 @@
         <div class="col-md-4">
           <h2>Hast du schon einen Account?</h2>
           <p>Schön, dass du wieder da bist!</p>
-          <p><a class="btn btn-primary" href="/login/public">Login</a></p>
+          <p><a class="btn btn-primary" href="login/public">Login</a></p>
         </div>
         <div class="col-md-4">
           <h2>Neu hier? Bereit für ein Abenteuer?</h2>
           <p>Erstelle einen neuen Account und lege los:</p>
-          <p><a class="btn btn-success" href="/register">Registrierung</a></p>
+          <p><a class="btn btn-success" href="register">Registrierung</a></p>
         </div>
         <div class="col-md-4">
           <h2>Aktuelle Kolonien</h2>
@@ -27,7 +27,7 @@
           <ul class="list-group" style="max-width:350px">
           <% for(var i = 0; i < colonies.length; i++) { %>
             <% if (!colonies[i].active) continue %>
-            <li class="list-group-item py-2"><a href="/login/<%=colonies[i].colonyName%>"><%=colonies[i].description%></a></li>
+            <li class="list-group-item py-2"><a href="login/<%=colonies[i].colonyName%>"><%=colonies[i].description%></a></li>
           <% } %>
           </ul>
         </div>
@@ -38,7 +38,7 @@
 	    
       <h2>Bringe die Ameisen in Aktion</h2>
 	  
-      <img class="img-thumbnail" src="/images/landing_img.png">
+      <img class="img-thumbnail" src="images/landing_img.png">
       
       <p class="lead my-3">Programmieren ist langweilig? Nicht bei AntIT! Steuere die Ameisen mit deinem Code und erlebe, wie sich die Ameisen in Bewegung setzen und deine Befehle ausführen. Das visuelle Feedback hilft dir, deinen Code zu verstehen und ermöglicht es dir spielerisch, auch komplexe Programme zu schreiben. Fehlersuche in ellenlangen Konsolenausgaben gibt es hier nicht: Du siehst sofort, was los ist!
       </p>
@@ -47,7 +47,7 @@
       
       <h2>Löse spannende Aufgaben</h2>
       
-      <img class="img-thumbnail" src="/images/landing_aufgaben.jpg">
+      <img class="img-thumbnail" src="images/landing_aufgaben.jpg">
       
       <p class="lead my-3">Über 40 spannende und abwechslungsreiche Aufgaben laden dich dazu ein, deine Programmierfähigkeiten zu entwickeln. Neue Techniken werden behutsam eingeführt und in größere Zusammenhänge gesetzt. Einige Aufgaben fordern auch deine Kreativität heraus! Bei anderen Aufgaben erlebst du, wie du ganz praktische Probleme lösen kannst. Es ist also für jeden etwas dabei.
       </p>
@@ -56,7 +56,7 @@
       
       <h2>Schreibe Code</h2>
       
-      <img class="img-thumbnail" src="/images/landing_code.png">
+      <img class="img-thumbnail" src="images/landing_code.png">
       
       <p class="lead my-3">Hier schiebst du keine Blöckchen herum, sondern arbeitest direkt mit Code. Damit hast du später keine Schwierigkeiten, auf eine andere Programmiersprache umzusteigen, wie Java oder C++. Außerdem ist der Editor ein sehr mächtiges Werkzeug. Er ist im Browser integriert und bietet Autovervollständigung, automatische Einrückungen und Syntaxhervorhebung - für ein komfortables und produktives Arbeiten.
       </p>
@@ -65,7 +65,7 @@
       
       <h2>Lerne Schritt für Schritt</h2>
       
-      <img class="img-thumbnail" src="/images/landing_tut.png">
+      <img class="img-thumbnail" src="images/landing_tut.png">
       
       <p class="lead my-3">Nichts ist beim Lernen einer Programmiersprache wichtiger als eine ausführliche Dokumentation. In mehr als 15 Tutorials lernst du alle Feinheiten der Ameisen kennen. Sie sind speziell für den Einstieg in die Programmierung ausgelegt und nutzen eine zugängliche Sprache. Der enge Bezug zu den Aufgaben ermöglichen es dir, neue Funktionen sofort auszuprobieren - Erfolgserlebnis garantiert!
       </p>
@@ -73,7 +73,7 @@
       
       <h2>Erstelle jetzt kostenlos einen Account:</h2>
       <br>
-      <p>----&gt; &nbsp; &nbsp;<a class="btn btn-success" href="/register">Registrierung</a>&nbsp;&nbsp; &lt;----</p>
+      <p>----&gt; &nbsp; &nbsp;<a class="btn btn-success" href="register">Registrierung</a>&nbsp;&nbsp; &lt;----</p>
       
       <br>
       
@@ -85,7 +85,7 @@
       
       <div style="height:13rem"></div>
       
-      <p>Version: April 2019 | <a href="/kontakt">Kontakt/Impressum</a> | <a href="/datenschutz"> Datenschutzerklärung</a>
+      <p>Version: April 2019 | <a href="kontakt">Kontakt/Impressum</a> | <a href="datenschutz"> Datenschutzerklärung</a>
       </p>
     </div>
   </body>
